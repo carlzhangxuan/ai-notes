@@ -1,0 +1,5 @@
+title: Research Notes
+markdown: kramdown
+kramdown:
+  input: GFM
+  math_engine: mathjax

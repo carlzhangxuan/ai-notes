@@ -1,3 +1,8 @@
+---
+layout: default
+title: Diffusion Models Intro
+---
+
 # Diffusion Models Intro
 
 ## Chapter 1 — From fluid mechanics to the manifold hypothesis
