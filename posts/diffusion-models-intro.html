@@ -12,7 +12,7 @@
         <link rel="prev" href="../index.html">
       
       
-        <link rel="next" href="transformer.html">
+        <link rel="next" href="introduction-C-compare-and-code.html">
       
       
         
@@ -807,6 +807,146 @@
   
   
     <li class="md-nav__item">
+      <a href="introduction-C-compare-and-code.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diffusion — Compare and Code
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="introduction-B-flow-matching.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diffusion — Flow Matching
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="mathematics-foundation.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diffusion — Mathematics Foundation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="interlude-alpha-year-1757.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diffusion — Interlude α (1757)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="introduction-beta-CFM-and-ELBO.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diffusion — CFM and ELBO
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="transformer.html" class="md-nav__link">
         
   
@@ -1400,8 +1540,8 @@ p_0(\phi_t^{-1}(x))\;
 $$
 Equivalently, <span class="arithmatex">\(p_0(x)=p_t(\phi_t(x))\big|\det(\partial_x\phi_t(x))\big|\)</span>.</p>
 <p>We say that a vector field <span class="arithmatex">\(v_t\)</span> <strong>generates</strong> a density path <span class="arithmatex">\((p_t)\)</span> if its flow <span class="arithmatex">\(\phi_t\)</span> satisfies (3). One practical way to check whether a candidate <span class="arithmatex">\((p_t,v_t)\)</span> is consistent is the continuity equation, which we introduce next.</p>
-<p>For the full classical fluid-mechanics PDE system (beyond this kinematic ODE viewpoint), see <a href="interlude-alpha-year-1757.md">Interlude <span class="arithmatex">\(\alpha\)</span> — Year 1757</a>.</p>
-<p>For a more detailed treatment of <strong>first-order ODEs</strong> and the viewpoint of an ODE with a <strong>random initial condition</strong> (random initial value problem) <span class="arithmatex">\(\mathbf{X}_t=\phi_t(\mathbf{X}_0)\)</span>, see <a href="mathematics-foundation.md">Mathematics Foundation</a>.</p>
+<p>For the full classical fluid-mechanics PDE system (beyond this kinematic ODE viewpoint), see <a href="interlude-alpha-year-1757.html">Interlude <span class="arithmatex">\(\alpha\)</span> — Year 1757</a>.</p>
+<p>For a more detailed treatment of <strong>first-order ODEs</strong> and the viewpoint of an ODE with a <strong>random initial condition</strong> (random initial value problem) <span class="arithmatex">\(\mathbf{X}_t=\phi_t(\mathbf{X}_0)\)</span>, see <a href="mathematics-foundation.html">Mathematics Foundation</a>.</p>
 <h3 id="12-density-conservation-eulerian-view-the-continuity-equation">1.2 Density conservation (Eulerian view): the continuity equation<a class="headerlink" href="#12-density-conservation-eulerian-view-the-continuity-equation" title="Permanent link">&para;</a></h3>
 <p>Switch from particles to distributions. Let <span class="arithmatex">\(\mu_t\)</span> be the law of a random variable <span class="arithmatex">\(\mathbf{x}_t\in\mathbb{R}^D\)</span>. If <span class="arithmatex">\(\mu_t\)</span> admits a density <span class="arithmatex">\(p_t\)</span> with respect to Lebesgue measure, we write <span class="arithmatex">\(\mu_t(dx)=p_t(x)\,dx\)</span>.</p>
 <p>The conservation-of-mass statement for transport by the vector field <span class="arithmatex">\(v_t\)</span> is the <strong>continuity equation</strong>
@@ -1532,7 +1672,7 @@ Then the pair <span class="arithmatex">\((p_t,u_t)\)</span> satisfies the contin
 </ul>
 <p>This resolves the practical bottleneck in the <em>marginal</em> formulation: we do not need closed-form access to <span class="arithmatex">\(p_t\)</span> or <span class="arithmatex">\(u_t\)</span>. Instead, we can sample <span class="arithmatex">\(x_1\sim q\)</span>, sample <span class="arithmatex">\(x\sim p_t(\cdot\mid x_1)\)</span>, and compute <span class="arithmatex">\(u_t(x\mid x_1)\)</span> to build a tractable training objective (developed next via conditional flow matching).</p>
 <p>In words: since for each fixed <span class="arithmatex">\(x_1\)</span> the conditional pair <span class="arithmatex">\(\big(p_t(\cdot\mid x_1),u_t(\cdot\mid x_1)\big)\)</span> satisfies the conditional continuity equation, Theorem 1 shows that the induced marginal pair <span class="arithmatex">\((p_t,u_t)\)</span> (via the mixture constructions (6)–(8)) satisfies the marginal continuity equation as well.</p>
-<p>The proof of Theorem 1 can be found in the appendix of <em>Flow Matching for Generative Modeling</em> (see References). For an additional exposition, see <a href="introduction-B-flow-matching.md">introduction-B-flow-matching</a>.</p>
+<p>The proof of Theorem 1 can be found in the appendix of <em>Flow Matching for Generative Modeling</em> (see References). For an additional exposition, see <a href="introduction-B-flow-matching.html">introduction-B-flow-matching</a>.</p>
 <h3 id="22-conditional-flow-matching">2.2 CONDITIONAL FLOW MATCHING<a class="headerlink" href="#22-conditional-flow-matching" title="Permanent link">&para;</a></h3>
 <p>Operationally, CFM makes training possible by working with per-sample training pairs: sample <span class="arithmatex">\(x_1\sim q\)</span>, sample <span class="arithmatex">\(x\sim p_t(\cdot\mid x_1)\)</span>, compute the conditional target <span class="arithmatex">\(u_t(x\mid x_1)\)</span>, and regress <span class="arithmatex">\(v(t,x;\theta)\)</span> toward it.</p>
 <p>The mixture constructions (6)–(8) show that a marginal path <span class="arithmatex">\(p_t\)</span> and a marginal vector field <span class="arithmatex">\(u_t\)</span> exist and satisfy the continuity equation. However, because <span class="arithmatex">\(q\)</span> is only accessible through samples, the integrals in (6)–(8) are typically intractable. In particular, we cannot naïvely compute <span class="arithmatex">\(u_t(x)\)</span>, so we cannot directly build an unbiased estimator of the marginal flow-matching regression loss
@@ -1562,7 +1702,7 @@ $$</p>
 Expanding the square and applying the law of total expectation shows that the only difference between (5) and (9) is a conditional-variance term
 <span class="arithmatex">\(\mathbb{E}\big[\|u_t(X_t\mid X_1)\|^2-\|u_t(X_t)\|^2\big]\)</span>,
 which is independent of <span class="arithmatex">\(\theta\)</span>. Therefore, optimizing the tractable conditional objective (9) is equivalent (in expectation) to optimizing the intractable marginal objective (5).</p>
-<p>The proof of Theorem 2 can be found in <em>Flow Matching for Generative Modeling</em> and in <em>Flow Matching Guide and Code</em> (see References). For an additional exposition, see <a href="introduction-B-flow-matching.md">introduction-B-flow-matching</a>.</p>
+<p>The proof of Theorem 2 can be found in <em>Flow Matching for Generative Modeling</em> and in <em>Flow Matching Guide and Code</em> (see References). For an additional exposition, see <a href="introduction-B-flow-matching.html">introduction-B-flow-matching</a>.</p>
 <h3 id="23-conditional-probability-paths-and-vector-fields">2.3 CONDITIONAL PROBABILITY PATHS AND VECTOR FIELDS<a class="headerlink" href="#23-conditional-probability-paths-and-vector-fields" title="Permanent link">&para;</a></h3>
 <p>The CFM objective is general: it works with any choice of conditional probability paths <span class="arithmatex">\(p_t(\cdot\mid x_1)\)</span> and conditional vector fields <span class="arithmatex">\(u_t(\cdot\mid x_1)\)</span> (as long as they are sampleable/evaluable). A particularly convenient family is given by Gaussian conditional paths, because both sampling and closed-form conditional targets can be obtained.</p>
 <h4 id="gaussian-conditional-paths">Gaussian conditional paths<a class="headerlink" href="#gaussian-conditional-paths" title="Permanent link">&para;</a></h4>
@@ -1661,7 +1801,7 @@ $$
 \Big[\big|v(t,\psi_t(x_0;x_1);\theta)-\big(x_1-(1-\sigma_{\min})x_0\big)\big|^2\Big].\tag{23}
 $$
 Compared with diffusion-inspired choices, the OT-style conditional vector field often has a simpler structure (e.g., its direction can be constant in time up to a scalar factor), which can make the regression task easier.</p>
-<p>For practical experimental-design details (e.g., path/schedule choices, loss weighting, and numerical solvers), see <a href="introduction-B-flow-matching.md">introduction-B-flow-matching</a>.</p>
+<p>For practical experimental-design details (e.g., path/schedule choices, loss weighting, and numerical solvers), see <a href="introduction-B-flow-matching.html">introduction-B-flow-matching</a>.</p>
 <h3 id="25-practical-notes-implementation-gotchas">2.5 Practical notes (implementation “gotchas”)<a class="headerlink" href="#25-practical-notes-implementation-gotchas" title="Permanent link">&para;</a></h3>
 <p>This chapter intentionally focuses on the modeling algebra. In practice, a few design choices matter disproportionately:</p>
 <ul>
@@ -1671,11 +1811,11 @@ Compared with diffusion-inspired choices, the OT-style conditional vector field 
 <li><strong>Choice of conditional path family.</strong> Diffusion-inspired vs. OT-inspired conditionals can change the geometry of trajectories (e.g., “straight” vs. “noisy/curved” conditionals), which changes the difficulty of the regression problem and the behavior of sampling.</li>
 <li><strong>Sampling solver and error.</strong> Training uses exact conditional targets, but generation still integrates an ODE induced by the learned <span class="arithmatex">\(v_\theta\)</span>; solver choice and step count (and whether to use adaptive stepping) can materially affect sample quality and speed.</li>
 </ul>
-<p>For a more hands-on discussion of these choices (including code-level details), see <a href="introduction-B-flow-matching.md">introduction-B-flow-matching</a>.</p>
+<p>For a more hands-on discussion of these choices (including code-level details), see <a href="introduction-B-flow-matching.html">introduction-B-flow-matching</a>.</p>
 <h2 id="chapter-3-diffusion-models-a-noising-path-and-a-learnable-reverse-process">Chapter 3 — Diffusion models: a noising path and a learnable reverse process<a class="headerlink" href="#chapter-3-diffusion-models-a-noising-path-and-a-learnable-reverse-process" title="Permanent link">&para;</a></h2>
 <p>In ODE-based flow models, the dynamics are deterministic: under standard regularity, the flow map is (locally) invertible and the Eulerian density evolution obeys the continuity equation. In diffusion models, the forward dynamics are stochastic (a Markov kernel rather than a bijection), so density evolution must account for diffusion and is governed by the Fokker–Planck equation.</p>
 <p>The key design choice in diffusion models is to <strong>pick a probability path</strong> that connects data <span class="arithmatex">\(\mu_0=\mu_\text{data}\)</span> to a simple distribution <span class="arithmatex">\(\mu_1\)</span> (usually close to <span class="arithmatex">\(\mathcal{N}(0,I)\)</span>), by <strong>injecting Gaussian noise according to a schedule</strong>. This makes intermediate marginals “thick” (typically admitting nice ambient-space densities), and it gives a principled way to define a reverse-time generative dynamics.</p>
-<p>We present both the discrete-time (DDPM-style) and continuous-time (SDE-style) viewpoints. Detailed derivations about SDEs and the Fokker–Planck equation are collected separately in <a href="mathematics-foundation.md">Mathematics Foundation</a>.</p>
+<p>We present both the discrete-time (DDPM-style) and continuous-time (SDE-style) viewpoints. Detailed derivations about SDEs and the Fokker–Planck equation are collected separately in <a href="mathematics-foundation.html">Mathematics Foundation</a>.</p>
 <h3 id="31-eulerian-view-density-evolution-by-fokkerplanck">3.1 Eulerian view: density evolution by Fokker–Planck<a class="headerlink" href="#31-eulerian-view-density-evolution-by-fokkerplanck" title="Permanent link">&para;</a></h3>
 <p>To mirror the Eulerian viewpoint of Section 1.2, we start from <strong>density evolution</strong> rather than from a discrete Markov chain.</p>
 <p>Let <span class="arithmatex">\(t\in[0,1]\)</span>. Consider a forward Itô SDE
@@ -1700,7 +1840,7 @@ dX_t
 \qquad t:1\to 0,
 $$
 where <span class="arithmatex">\(\bar W_t\)</span> is a Brownian motion in reverse time.</p>
-<p>For background on SDEs, Itô interpretation, and the Fokker–Planck equation (including derivations), see <a href="mathematics-foundation.md">Mathematics Foundation</a>.</p>
+<p>For background on SDEs, Itô interpretation, and the Fokker–Planck equation (including derivations), see <a href="mathematics-foundation.html">Mathematics Foundation</a>.</p>
 <p>There is also an associated <strong>probability flow ODE</strong> (deterministic dynamics with the same marginals <span class="arithmatex">\((p_t)\)</span>):
 $$
 \frac{d}{dt}X_t
@@ -1742,7 +1882,7 @@ If the marginal law <span class="arithmatex">\(\mu_t=\mathcal{L}(X_t)\)</span> a
 $$
 \partial_t p_t(x) = -\nabla!\cdot\big(f(x,t)p_t(x)\big) + \frac12 g(t)^2\,\Delta p_t(x).
 $$
-In other words, the SDE defines a <strong>stochastic flow of measures</strong> <span class="arithmatex">\((\mu_t)\)</span>, and Fokker–Planck is its Eulerian “mass conservation + diffusion” statement. (A step-by-step derivation is in <a href="mathematics-foundation.md">Mathematics Foundation</a>, Appendix B.)</p>
+In other words, the SDE defines a <strong>stochastic flow of measures</strong> <span class="arithmatex">\((\mu_t)\)</span>, and Fokker–Planck is its Eulerian “mass conservation + diffusion” statement. (A step-by-step derivation is in <a href="mathematics-foundation.html">Mathematics Foundation</a>, Appendix B.)</p>
 <p>Reverse-time generation is another stochastic flow. To move probability mass from a simple <span class="arithmatex">\(\mu_1\)</span> back to <span class="arithmatex">\(\mu_0\)</span>, we run a reverse-time dynamics whose drift depends on the score <span class="arithmatex">\(\nabla_x\log p_t\)</span>. This is the origin of “learn the score/velocity field, then integrate backward”.</p>
 <h3 id="42-the-vp-diffusion-as-a-canonical-forward-sde-a-continuous-scheduler">4.2 The VP diffusion as a canonical forward SDE (a continuous scheduler)<a class="headerlink" href="#42-the-vp-diffusion-as-a-canonical-forward-sde-a-continuous-scheduler" title="Permanent link">&para;</a></h3>
 <p>A widely used forward process is the <strong>variance-preserving (VP) SDE</strong>, parameterized by a scalar noise-rate schedule <span class="arithmatex">\(\beta(t)\ge 0\)</span>:

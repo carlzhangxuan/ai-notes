@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="520" viewBox="0 0 900 520">
+  <style>
+    .title { font: 18px system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; fill: #111; }
+    .label { font: 14px system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; fill: #111; }
+    .small { font: 12px system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; fill: #444; }
+    .line { stroke: #222; stroke-width: 2; }
+    .tick { stroke: #222; stroke-width: 2; }
+    .dot { fill: #111; }
+  </style>
+
+  <text x="30" y="35" class="title">A tiny Enlightenment-era timeline (classical math/physics context)</text>
+
+  <!-- vertical spine -->
+  <line x1="180" y1="80" x2="180" y2="450" class="line" />
+
+  <!-- events: 1684, 1748, 1751, 1755, 1757 -->
+  <g>
+    <line x1="168" y1="110" x2="192" y2="110" class="tick" />
+    <circle cx="180" cy="110" r="4" class="dot" />
+    <text x="120" y="115" class="label" text-anchor="end">1684</text>
+    <text x="215" y="105" class="small">Leibniz publishes (calculus notation)</text>
+    <text x="215" y="123" class="small">Math becomes a native language for change.</text>
+  </g>
+
+  <g>
+    <line x1="168" y1="190" x2="192" y2="190" class="tick" />
+    <circle cx="180" cy="190" r="4" class="dot" />
+    <text x="120" y="195" class="label" text-anchor="end">1748</text>
+    <text x="215" y="185" class="small">Montesquieu — The Spirit of Laws</text>
+    <text x="215" y="203" class="small">“Social Newtonianism”: seek stable formulas.</text>
+  </g>
+
+  <g>
+    <line x1="168" y1="260" x2="192" y2="260" class="tick" />
+    <circle cx="180" cy="260" r="4" class="dot" />
+    <text x="120" y="265" class="label" text-anchor="end">1751</text>
+    <text x="215" y="255" class="small">Encyclopédie begins (Diderot, d'Alembert)</text>
+    <text x="215" y="273" class="small">Classify and record — knowledge as a database.</text>
+  </g>
+
+  <g>
+    <line x1="168" y1="335" x2="192" y2="335" class="tick" />
+    <circle cx="180" cy="335" r="4" class="dot" />
+    <text x="120" y="340" class="label" text-anchor="end">1755</text>
+    <text x="215" y="330" class="small">Lisbon earthquake (Voltaire reacts)</text>
+    <text x="215" y="348" class="small">A push toward explanation by causes, not decree.</text>
+  </g>
+
+  <g>
+    <line x1="168" y1="410" x2="192" y2="410" class="tick" />
+    <circle cx="180" cy="410" r="4" class="dot" />
+    <text x="120" y="415" class="label" text-anchor="end">1757</text>
+    <text x="215" y="405" class="small">Euler equations (fluids as fields)</text>
+    <text x="215" y="423" class="small">ρ(x,t), v(x,t), p(x,t) + conservation PDEs.</text>
+  </g>
+
+  <text x="30" y="500" class="small">Original diagram for these notes; vertical layout to avoid label overlap (not to scale).</text>
+</svg>

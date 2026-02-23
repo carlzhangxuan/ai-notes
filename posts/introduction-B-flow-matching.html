@@ -1,0 +1,3607 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="introduction-C-compare-and-code.html">
+      
+      
+        <link rel="next" href="mathematics-foundation.html">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.2">
+    
+    
+      
+        <title>Diffusion — Flow Matching - AI Notes</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#section-b-flow-matching-as-the-default-protagonist" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../index.html" title="AI Notes" class="md-header__button md-logo" aria-label="AI Notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            AI Notes
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Diffusion — Flow Matching
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../index.html" title="AI Notes" class="md-nav__button md-logo" aria-label="AI Notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    AI Notes
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Posts
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Posts
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="diffusion-models-intro.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diffusion Models Intro
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="introduction-C-compare-and-code.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diffusion — Compare and Code
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diffusion — Flow Matching
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="introduction-B-flow-matching.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diffusion — Flow Matching
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#b0-section-goal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        B0. Section goal
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#interlude-alpha-year-1757" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Interlude \(\alpha\) — Year 1757
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#b1-flow-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        B1. Flow Model
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#b11-prerequisites-smoothness-lipschitzness-and-ode-order" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        B1.1. Prerequisites: smoothness, Lipschitzness, and ODE order
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#b12-diffeomorphisms-and-push-forward-maps-definitions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        B1.2. Diffeomorphisms and push-forward maps (definitions)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="B1.2. Diffeomorphisms and push-forward maps (definitions)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diffeomorphism-a-nice-invertible-map" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Diffeomorphism (a “nice” invertible map)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#push-forward-how-a-map-acts-on-distributions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Push-forward (how a map acts on distributions)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#if-densities-exist-change-of-variables" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        If densities exist: change of variables
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#b13-flows-and-velocity-fields" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        B1.3. Flows and velocity fields
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="B1.3. Flows and velocity fields">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#local-existence-uniqueness-and-when-psi_t-is-a-diffeomorphism" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Local existence, uniqueness, and when \(\psi_t\) is a diffeomorphism
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#flow-rightarrow-distribution-transport" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Flow \(\Rightarrow\) distribution transport
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#flow-leftrightarrow-velocity-field" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Flow \(\Leftrightarrow\) velocity field
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#b14-probability-paths-and-the-continuity-equation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        B1.4. Probability paths and the continuity equation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="B1.4. Probability paths and the continuity equation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#probability-path-a-time-indexed-family-of-distributions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Probability path = a time-indexed family of distributions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-do-we-say-a-velocity-field-generates-a-probability-path" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When do we say a velocity field “generates” a probability path?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-continuity-equation-conservation-of-probability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The continuity equation (conservation of probability)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a-mass-conservation-equivalence-pde-leftrightarrow-generated-path" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A “mass conservation” equivalence (PDE \(\Leftrightarrow\) generated path)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#weak-form-often-the-cleanest-statement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Weak form (often the cleanest statement)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#characteristics-the-particle-view-recovers-the-pde" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Characteristics: the particle view recovers the PDE
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#log-density-along-a-trajectory-connects-to-likelihood-bookkeeping" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Log-density along a trajectory (connects to likelihood bookkeeping)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#b15-instantaneous-change-of-variables" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        B1.5. Instantaneous change of variables
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="B1.5. Instantaneous change of variables">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#jacobian-dynamics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Jacobian dynamics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#density-dynamics-along-the-flow-the-icov-formula" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Density dynamics along the flow (the ICoV formula)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#b2-flow-matching" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        B2. Flow Matching
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="B2. Flow Matching">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#data-pairs-couplings-and-why-fm-feels-supervised" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Data pairs, couplings, and why FM feels supervised
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#building-a-probability-path-from-a-coupling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Building a probability path from a coupling
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#from-a-path-to-a-generating-velocity-field" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        From a path to a generating velocity field
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#b21-deriving-generating-velocity-fields" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        B2.1. Deriving generating velocity fields
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#b22-general-conditioning-and-the-marginalization-trick" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        B2.2. General conditioning and the Marginalization Trick
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="B2.2. General conditioning and the Marginalization Trick">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#marginalization-trick-from-conditional-velocities-to-a-marginal-generating-velocity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Marginalization trick: from conditional velocities to a marginal (generating) velocity
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-ell_2-regression-recovers-this-conditional-expectation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why \(\ell_2\) regression recovers this conditional expectation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-do-we-condition-turning-an-implicit-target-into-supervised-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why do we condition? (Turning an implicit target into supervised data)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-this-theorem-is-really-saying-and-why-it-matters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What this theorem is really saying (and why it matters)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-int_omega-nablacdotcdotdx-becomes-a-boundary-term-and-when-it-vanishes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why \(\int_\Omega \nabla\cdot(\cdot)\,dx\) becomes a boundary term (and when it vanishes)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Why \(\int_\Omega \nabla\cdot(\cdot)\,dx\) becomes a boundary term (and when it vanishes)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-does-the-boundary-term-is-zero-mean" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What does “the boundary term is zero” mean?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#b23-flow-matching-loss" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        B2.3. Flow Matching loss
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="B2.3. Flow Matching loss">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#conditional-flow-matching-cfm-supervised-labels-from-a-latent-variable" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conditional Flow Matching (CFM): supervised labels from a latent variable
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#general-time-sampling-engineering-note" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        General time sampling (engineering note)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#b24-solving-unconditional-generation-with-conditional-flows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        B2.4. Solving unconditional generation with conditional flows
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="B2.4. Solving unconditional generation with conditional flows">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a-flexible-construction-via-conditional-flows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A flexible construction via conditional flows
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="A flexible construction via conditional flows">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#derivation-rewriting-the-cfm-loss-using-a-conditional-flow-psi_tcdotmid-x_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Derivation: rewriting the CFM loss using a conditional flow \(\psi_t(\cdot\mid x_1)\)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#b25-optimal-transport-and-linear-conditional-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        B2.5 Optimal Transport and linear conditional flow
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="B2.5 Optimal Transport and linear conditional flow">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dynamic-ot-with-quadratic-cost-kinetic-energy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dynamic OT with quadratic cost (kinetic energy)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Dynamic OT with quadratic cost (kinetic energy)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-ot-is-a-reasonable-but-not-mandatory-choice" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why OT is a reasonable (but not mandatory) choice
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#from-marginal-kinetic-energy-to-a-conditional-flow-objective-jensen-bound" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        From marginal kinetic energy to a conditional-flow objective (Jensen bound)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-per-pair-variational-problem-rightarrow-linear-conditional-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The per-pair variational problem \(\Rightarrow\) linear conditional flow
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#b26-affine-conditional-flows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        B2.6 Affine conditional flows
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="B2.6 Affine conditional flows">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#setup-an-affine-conditional-flow-with-a-scheduler" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Setup: an affine conditional flow with a scheduler
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#labels-marginal-velocity-and-the-cfm-loss" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Labels, marginal velocity, and the CFM loss
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-theorem-6-is-saying-in-practice" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What Theorem 6 is saying (in practice)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b261-velocity-parameterizations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        B2.6.1 Velocity parameterizations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#matching-vs-conditional-matching-a-general-recipe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Matching vs. conditional matching (a general recipe)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b262-post-training-velocity-scheduler-change" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        B2.6.2 Post-training velocity scheduler change
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="B2.6.2 Post-training velocity scheduler change">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#scaletime-st-transformation-between-two-affine-conditional-flows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scale–time (ST) transformation between two affine conditional flows
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#transforming-the-marginal-velocity-field" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Transforming the marginal velocity field
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#equivalence-at-the-endpoint-why-scheduler-changes-can-preserve-t1-samples" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Equivalence at the endpoint (why scheduler changes can preserve \(t=1\) samples)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b263-gaussian-paths-and-the-score" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        B2.6.3 Gaussian paths and the score
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b27-data-couplings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        B2.7 Data couplings
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="B2.7 Data couplings">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#common-choices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common choices
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-changes-when-you-change-pi_01" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What changes when you change \(\pi_{0,1}\)?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b28-conditional-generation-and-guidance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        B2.8 Conditional generation and guidance
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="B2.8 Conditional generation and guidance">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#conditional-models-learn-qx_1mid-y-directly" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conditional models (learn \(q(x_1\mid y)\) directly)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#classifier-guidance-and-classifier-free-guidance-score-based-view" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Classifier guidance and classifier-free guidance (score-based view)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="mathematics-foundation.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diffusion — Mathematics Foundation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="interlude-alpha-year-1757.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diffusion — Interlude α (1757)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="introduction-beta-CFM-and-ELBO.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diffusion — CFM and ELBO
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="transformer.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Transformer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="vit-dit.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ViT and DiT
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#b0-section-goal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        B0. Section goal
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#interlude-alpha-year-1757" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Interlude \(\alpha\) — Year 1757
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#b1-flow-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        B1. Flow Model
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#b11-prerequisites-smoothness-lipschitzness-and-ode-order" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        B1.1. Prerequisites: smoothness, Lipschitzness, and ODE order
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#b12-diffeomorphisms-and-push-forward-maps-definitions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        B1.2. Diffeomorphisms and push-forward maps (definitions)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="B1.2. Diffeomorphisms and push-forward maps (definitions)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diffeomorphism-a-nice-invertible-map" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Diffeomorphism (a “nice” invertible map)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#push-forward-how-a-map-acts-on-distributions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Push-forward (how a map acts on distributions)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#if-densities-exist-change-of-variables" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        If densities exist: change of variables
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#b13-flows-and-velocity-fields" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        B1.3. Flows and velocity fields
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="B1.3. Flows and velocity fields">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#local-existence-uniqueness-and-when-psi_t-is-a-diffeomorphism" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Local existence, uniqueness, and when \(\psi_t\) is a diffeomorphism
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#flow-rightarrow-distribution-transport" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Flow \(\Rightarrow\) distribution transport
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#flow-leftrightarrow-velocity-field" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Flow \(\Leftrightarrow\) velocity field
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#b14-probability-paths-and-the-continuity-equation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        B1.4. Probability paths and the continuity equation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="B1.4. Probability paths and the continuity equation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#probability-path-a-time-indexed-family-of-distributions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Probability path = a time-indexed family of distributions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-do-we-say-a-velocity-field-generates-a-probability-path" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When do we say a velocity field “generates” a probability path?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-continuity-equation-conservation-of-probability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The continuity equation (conservation of probability)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a-mass-conservation-equivalence-pde-leftrightarrow-generated-path" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A “mass conservation” equivalence (PDE \(\Leftrightarrow\) generated path)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#weak-form-often-the-cleanest-statement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Weak form (often the cleanest statement)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#characteristics-the-particle-view-recovers-the-pde" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Characteristics: the particle view recovers the PDE
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#log-density-along-a-trajectory-connects-to-likelihood-bookkeeping" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Log-density along a trajectory (connects to likelihood bookkeeping)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#b15-instantaneous-change-of-variables" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        B1.5. Instantaneous change of variables
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="B1.5. Instantaneous change of variables">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#jacobian-dynamics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Jacobian dynamics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#density-dynamics-along-the-flow-the-icov-formula" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Density dynamics along the flow (the ICoV formula)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#b2-flow-matching" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        B2. Flow Matching
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="B2. Flow Matching">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#data-pairs-couplings-and-why-fm-feels-supervised" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Data pairs, couplings, and why FM feels supervised
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#building-a-probability-path-from-a-coupling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Building a probability path from a coupling
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#from-a-path-to-a-generating-velocity-field" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        From a path to a generating velocity field
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#b21-deriving-generating-velocity-fields" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        B2.1. Deriving generating velocity fields
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#b22-general-conditioning-and-the-marginalization-trick" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        B2.2. General conditioning and the Marginalization Trick
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="B2.2. General conditioning and the Marginalization Trick">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#marginalization-trick-from-conditional-velocities-to-a-marginal-generating-velocity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Marginalization trick: from conditional velocities to a marginal (generating) velocity
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-ell_2-regression-recovers-this-conditional-expectation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why \(\ell_2\) regression recovers this conditional expectation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-do-we-condition-turning-an-implicit-target-into-supervised-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why do we condition? (Turning an implicit target into supervised data)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-this-theorem-is-really-saying-and-why-it-matters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What this theorem is really saying (and why it matters)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-int_omega-nablacdotcdotdx-becomes-a-boundary-term-and-when-it-vanishes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why \(\int_\Omega \nabla\cdot(\cdot)\,dx\) becomes a boundary term (and when it vanishes)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Why \(\int_\Omega \nabla\cdot(\cdot)\,dx\) becomes a boundary term (and when it vanishes)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-does-the-boundary-term-is-zero-mean" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What does “the boundary term is zero” mean?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#b23-flow-matching-loss" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        B2.3. Flow Matching loss
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="B2.3. Flow Matching loss">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#conditional-flow-matching-cfm-supervised-labels-from-a-latent-variable" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conditional Flow Matching (CFM): supervised labels from a latent variable
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#general-time-sampling-engineering-note" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        General time sampling (engineering note)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#b24-solving-unconditional-generation-with-conditional-flows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        B2.4. Solving unconditional generation with conditional flows
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="B2.4. Solving unconditional generation with conditional flows">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a-flexible-construction-via-conditional-flows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A flexible construction via conditional flows
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="A flexible construction via conditional flows">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#derivation-rewriting-the-cfm-loss-using-a-conditional-flow-psi_tcdotmid-x_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Derivation: rewriting the CFM loss using a conditional flow \(\psi_t(\cdot\mid x_1)\)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#b25-optimal-transport-and-linear-conditional-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        B2.5 Optimal Transport and linear conditional flow
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="B2.5 Optimal Transport and linear conditional flow">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dynamic-ot-with-quadratic-cost-kinetic-energy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dynamic OT with quadratic cost (kinetic energy)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Dynamic OT with quadratic cost (kinetic energy)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-ot-is-a-reasonable-but-not-mandatory-choice" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why OT is a reasonable (but not mandatory) choice
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#from-marginal-kinetic-energy-to-a-conditional-flow-objective-jensen-bound" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        From marginal kinetic energy to a conditional-flow objective (Jensen bound)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-per-pair-variational-problem-rightarrow-linear-conditional-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The per-pair variational problem \(\Rightarrow\) linear conditional flow
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#b26-affine-conditional-flows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        B2.6 Affine conditional flows
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="B2.6 Affine conditional flows">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#setup-an-affine-conditional-flow-with-a-scheduler" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Setup: an affine conditional flow with a scheduler
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#labels-marginal-velocity-and-the-cfm-loss" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Labels, marginal velocity, and the CFM loss
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-theorem-6-is-saying-in-practice" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What Theorem 6 is saying (in practice)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b261-velocity-parameterizations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        B2.6.1 Velocity parameterizations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#matching-vs-conditional-matching-a-general-recipe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Matching vs. conditional matching (a general recipe)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b262-post-training-velocity-scheduler-change" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        B2.6.2 Post-training velocity scheduler change
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="B2.6.2 Post-training velocity scheduler change">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#scaletime-st-transformation-between-two-affine-conditional-flows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scale–time (ST) transformation between two affine conditional flows
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#transforming-the-marginal-velocity-field" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Transforming the marginal velocity field
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#equivalence-at-the-endpoint-why-scheduler-changes-can-preserve-t1-samples" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Equivalence at the endpoint (why scheduler changes can preserve \(t=1\) samples)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b263-gaussian-paths-and-the-score" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        B2.6.3 Gaussian paths and the score
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b27-data-couplings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        B2.7 Data couplings
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="B2.7 Data couplings">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#common-choices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common choices
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-changes-when-you-change-pi_01" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What changes when you change \(\pi_{0,1}\)?
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b28-conditional-generation-and-guidance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        B2.8 Conditional generation and guidance
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="B2.8 Conditional generation and guidance">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#conditional-models-learn-qx_1mid-y-directly" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conditional models (learn \(q(x_1\mid y)\) directly)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#classifier-guidance-and-classifier-free-guidance-score-based-view" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Classifier guidance and classifier-free guidance (score-based view)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="section-b-flow-matching-as-the-default-protagonist">Section B — Flow Matching as the default protagonist<a class="headerlink" href="#section-b-flow-matching-as-the-default-protagonist" title="Permanent link">&para;</a></h1>
+<p><strong>Thesis opener (to avoid confusion).</strong> Flow models borrow the <em>mathematical language</em> of classical transport/fluids (vector fields, continuity, trajectories). They are not claiming that “images behave like fluids” in any physical sense. (for now...)</p>
+<ul>
+<li>Why it still matters for image generation:</li>
+<li>An image is just a point <span class="arithmatex">\(x\in\mathbb{R}^d\)</span> (a very high-dimensional coordinate), and a dataset defines a distribution <span class="arithmatex">\(p_\text{data}(x)\)</span>.</li>
+<li>Generative modeling can be phrased as <em>moving probability mass</em> from a simple base distribution to <span class="arithmatex">\(p_\text{data}\)</span>.</li>
+<li>A time-dependent vector field <span class="arithmatex">\(v_\theta(x,t)\)</span> provides a deterministic “transport plan” for that mass; sampling is integrating an ODE.</li>
+<li>Intuition is basically:</li>
+<li>If there exists a well-posed deterministic flow <span class="arithmatex">\(\psi_{0\to 1}\)</span> (generated by an ODE) such that <span class="arithmatex">\(p_\text{data} = (\psi_{0\to 1})_\# p_0\)</span>, then generation can be done by ODE integration—noise and SDEs are optional modeling/training choices, not a requirement. and the moving path is like the path of the missile.</li>
+<li>The connection to fluids is conceptual (transport/fields), not semantic (“water-like images”).</li>
+<li>The payoff is a clean, classical, deterministic backbone; we add stochasticity later only when we choose to.</li>
+</ul>
+<h2 id="b0-section-goal">B0. Section goal<a class="headerlink" href="#b0-section-goal" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Treat flow/ODE as the mainline</li>
+<li>Training = learn a vector field</li>
+<li>Sampling = numerical integration (Euler/Heun/RK)</li>
+</ul>
+<p><img src="../assets/figures/B-fig2.png" width="800"></p>
+<h2 id="interlude-alpha-year-1757">Interlude <span class="arithmatex">\(\alpha\)</span> — Year 1757<a class="headerlink" href="#interlude-alpha-year-1757" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="interlude-alpha-year-1757.html">interlude-alpha-year-1757.md</a></li>
+</ul>
+<h2 id="b1-flow-model">B1. Flow Model<a class="headerlink" href="#b1-flow-model" title="Permanent link">&para;</a></h2>
+<p>We define <span class="arithmatex">\(\mathbf{x}\)</span> as a <strong>random vector</strong>, i.e., a random variable taking values in <span class="arithmatex">\(\mathbb{R}^d\)</span>. This narrows the scope of “random variable” to the Euclidean setting, which is the convenient regime for the mathematical discussion that follows (e.g., addition, scalar multiplication, and density/flow-based transformations).</p>
+<p>In this post, we <strong>stick to this convention</strong> and represent our data (images) as vectors in <span class="arithmatex">\(\mathbb{R}^d\)</span>. This is mainly a modeling choice rather than a conceptual departure: the intuition is the same as treating an image as a point in a high-dimensional space, which is standard in much of the generative modeling literature.</p>
+<p>A notation we will use frequently is the <strong>expectation</strong>. If <span class="arithmatex">\(\mathbf{x}\)</span> has density <span class="arithmatex">\(p\)</span> on <span class="arithmatex">\(\mathbb{R}^d\)</span> and <span class="arithmatex">\(f:\mathbb{R}^d\to\mathbb{R}\)</span> is integrable, we define:</p>
+<div class="arithmatex">\[
+\mathbb{E}\big[f(\mathbf{x})\big] = \int_{\mathbb{R}^d} f(x)\,p(x)\,dx.
+\tag{1}
+\]</div>
+<p>Another recurring object is the <strong>conditional expectation</strong>. A good engineering way to read <span class="arithmatex">\(\mathbb{E}[\mathbf{x}\mid \mathbf{y}]\)</span> is: <strong>use <span class="arithmatex">\(\mathbf{y}\)</span> to predict <span class="arithmatex">\(\mathbf{x}\)</span></strong>, and choose the predictor that minimizes mean squared error. Concretely, given two <span class="arithmatex">\(\mathbb{R}^d\)</span>-valued random vectors <span class="arithmatex">\(\mathbf{x}\)</span> and <span class="arithmatex">\(\mathbf{y}\)</span>, define the best approximating function <span class="arithmatex">\(g_\star\)</span> in the least-squares sense:</p>
+<div class="arithmatex">\[
+g_\star \;:=\; \arg\min_{g:\mathbb{R}^d\to\mathbb{R}^d}\; \mathbb{E}\big[\lVert \mathbf{x} - g(\mathbf{y})\rVert^2\big].
+\tag{2}
+\]</div>
+<p>We will write densities without subscripts (e.g., <span class="arithmatex">\(p(x,y)\)</span>, <span class="arithmatex">\(p(x\mid y)\)</span>, <span class="arithmatex">\(p(y)\)</span>) when the meaning is clear from context. For <span class="arithmatex">\(y\in\mathbb{R}^d\)</span> such that <span class="arithmatex">\(p(y)&gt;0\)</span>, the conditional expectation function is then:</p>
+<div class="arithmatex">\[
+\mathbb{E}[\mathbf{x}\mid \mathbf{y}=y] \;:=\; g_\star(y)
+\;=\; \int_{\mathbb{R}^d} x\,p(x\mid y)\,dx.
+\tag{3}
+\]</div>
+<h2 id="b11-prerequisites-smoothness-lipschitzness-and-ode-order">B1.1. Prerequisites: smoothness, Lipschitzness, and ODE order<a class="headerlink" href="#b11-prerequisites-smoothness-lipschitzness-and-ode-order" title="Permanent link">&para;</a></h2>
+<p>Before we talk about diffeomorphisms and push-forward maps, it helps to keep three easy-to-mix concepts separate.</p>
+<ul>
+<li><strong>Smoothness is a property of a function of <span class="arithmatex">\(x\)</span></strong> (e.g., <span class="arithmatex">\(T(x)\)</span> or <span class="arithmatex">\(u(x,t)\)</span>), not a property of “the space <span class="arithmatex">\(\mathbb{R}^d\)</span>”. Not every function can be differentiated indefinitely (e.g., <span class="arithmatex">\(|x|\)</span> is not differentiable at <span class="arithmatex">\(x=0\)</span>). In many flow-model derivations we assume <span class="arithmatex">\(C^1\)</span> regularity in <span class="arithmatex">\(x\)</span> so that Jacobians / divergences are well-defined and change-of-variables statements are clean.</li>
+<li><strong>Second-order dynamics can be rewritten as a first-order system by augmenting the state.</strong> For example, <span class="arithmatex">\(\ddot x(t)=a(x(t),\dot x(t),t)\)</span> becomes a first-order system by introducing <span class="arithmatex">\(w(t)=\dot x(t)\)</span> and treating <span class="arithmatex">\((x(t),w(t))\)</span> as the state.</li>
+</ul>
+<p>Finally, a regularity condition that shows up repeatedly for ODEs is <strong>local Lipschitzness</strong> (in <span class="arithmatex">\(x\)</span>).</p>
+<blockquote>
+<p>A function <span class="arithmatex">\(f:\mathbb{R}^d\to\mathbb{R}^m\)</span> is <em>locally Lipschitz</em> if for every compact set <span class="arithmatex">\(K\subset\mathbb{R}^d\)</span> there exists a constant <span class="arithmatex">\(L_K&lt;\infty\)</span> such that for all <span class="arithmatex">\(x,x'\in K\)</span>,
+$$
+\lVert f(x)-f(x')\rVert \le L_K\,\lVert x-x'\rVert.
+\tag{4}
+$$</p>
+</blockquote>
+<p>Intuition: on any bounded region, <span class="arithmatex">\(f\)</span> cannot change “too fast”. For ODEs <span class="arithmatex">\(\dot x=u(x,t)\)</span>, local Lipschitzness of <span class="arithmatex">\(u(\cdot,t)\)</span> (together with mild conditions in <span class="arithmatex">\(t\)</span>) is a standard way to guarantee well-posed trajectories (in particular, uniqueness).</p>
+<h2 id="b12-diffeomorphisms-and-push-forward-maps-definitions">B1.2. Diffeomorphisms and push-forward maps (definitions)<a class="headerlink" href="#b12-diffeomorphisms-and-push-forward-maps-definitions" title="Permanent link">&para;</a></h2>
+<p>At a high level, a (normalizing) flow model does two things:</p>
+<ol>
+<li>It applies a deterministic map <span class="arithmatex">\(T\)</span> to points <span class="arithmatex">\(x\in\mathbb{R}^d\)</span>.</li>
+<li>It tracks how this map moves probability mass, i.e., how a distribution changes under <span class="arithmatex">\(T\)</span>.</li>
+</ol>
+<p>These are captured by two standard notions: <strong>diffeomorphisms</strong> (nice invertible maps) and <strong>push-forward maps</strong> (how a map acts on distributions).</p>
+<h3 id="diffeomorphism-a-nice-invertible-map">Diffeomorphism (a “nice” invertible map)<a class="headerlink" href="#diffeomorphism-a-nice-invertible-map" title="Permanent link">&para;</a></h3>
+<p>Let <span class="arithmatex">\(U,V\subseteq\mathbb{R}^d\)</span> be open sets. A map <span class="arithmatex">\(T:U\to V\)</span> is a <span class="arithmatex">\(C^1\)</span>-<strong>diffeomorphism</strong> if it is bijective, continuously differentiable, and its inverse is also continuously differentiable:</p>
+<div class="arithmatex">\[
+T \text{ is a \(C^1\)-diffeomorphism}
+\quad\Longleftrightarrow\quad
+T \text{ is bijective},\; T\in C^1(U),\; T^{-1}\in C^1(V).
+\tag{5}
+\]</div>
+<p>Intuition: <span class="arithmatex">\(T\)</span> can stretch / compress / warp space, but it does not tear it or fold distinct points onto the same point. In flow-based generative modeling, this “invertible and differentiable” structure is what makes likelihood tracking possible.</p>
+<h3 id="push-forward-how-a-map-acts-on-distributions">Push-forward (how a map acts on distributions)<a class="headerlink" href="#push-forward-how-a-map-acts-on-distributions" title="Permanent link">&para;</a></h3>
+<p>Suppose <span class="arithmatex">\(\mathbf{x}\)</span> is a random vector on <span class="arithmatex">\(\mathbb{R}^d\)</span> with distribution <span class="arithmatex">\(p\)</span>, and we define a new random vector <span class="arithmatex">\(\mathbf{y}=T(\mathbf{x})\)</span>. The distribution of <span class="arithmatex">\(\mathbf{y}\)</span> is called the <strong>push-forward</strong> of <span class="arithmatex">\(p\)</span> by <span class="arithmatex">\(T\)</span>, written <span class="arithmatex">\(T_\# p\)</span> (this is the “<span class="arithmatex">\(\#\)</span>” symbol you saw). Formally, for any measurable set <span class="arithmatex">\(A\subseteq\mathbb{R}^d\)</span>,</p>
+<div class="arithmatex">\[
+(T_\# p)(A) \;:=\; p\big(T^{-1}(A)\big).
+\tag{6}
+\]</div>
+<p>This definition says: “the probability that <span class="arithmatex">\(\mathbf{y}\)</span> lands in <span class="arithmatex">\(A\)</span> equals the probability that <span class="arithmatex">\(\mathbf{x}\)</span> lands in the preimage <span class="arithmatex">\(T^{-1}(A)\)</span>.”</p>
+<h3 id="if-densities-exist-change-of-variables">If densities exist: change of variables<a class="headerlink" href="#if-densities-exist-change-of-variables" title="Permanent link">&para;</a></h3>
+<p>When <span class="arithmatex">\(p\)</span> admits a density <span class="arithmatex">\(p(x)\)</span> and <span class="arithmatex">\(T\)</span> is a <span class="arithmatex">\(C^1\)</span>-diffeomorphism, the push-forward distribution <span class="arithmatex">\(q:=T_\# p\)</span> also admits a density <span class="arithmatex">\(q(y)\)</span> given by the change-of-variables formula:</p>
+<div class="arithmatex">\[
+q(y) \;=\; p\big(T^{-1}(y)\big)\,\left|\det \nabla T^{-1}(y)\right|.
+\tag{7}
+\]</div>
+<p>Equivalently, writing <span class="arithmatex">\(y=T(x)\)</span>,</p>
+<div class="arithmatex">\[
+q\big(T(x)\big)\,\left|\det \nabla T(x)\right| \;=\; p(x).
+\tag{8}
+\]</div>
+<p>This is the basic “bookkeeping rule” behind likelihood-based flows: a flow model specifies <span class="arithmatex">\(T\)</span>, samples via <span class="arithmatex">\(\mathbf{y}=T(\mathbf{x})\)</span>, and computes log-likelihoods by tracking the Jacobian determinant (or its continuous-time analogue).</p>
+<p><strong>Interpretation (Of “<span class="arithmatex">\(\#\)</span>” ).</strong> The push-forward <span class="arithmatex">\(T_\# p\)</span> is a measure-theoretic notion: it describes how the <em>entire probability distribution</em> <span class="arithmatex">\(p\)</span> changes when we transform samples by <span class="arithmatex">\(T\)</span>. In likelihood-based flow models, we typically choose a simple base distribution <span class="arithmatex">\(p_0\)</span> and parameterize <span class="arithmatex">\(T\)</span> (e.g., <span class="arithmatex">\(T=T_\theta\)</span>), so the model distribution is <span class="arithmatex">\(q_\theta := (T_\theta)_\# p_0\)</span>. Training by maximum likelihood then adjusts <span class="arithmatex">\(\theta\)</span> so that <span class="arithmatex">\(q_\theta\)</span> assigns high likelihood to real data—informally, it “pushes” the model distribution toward the data distribution.</p>
+<p>It is helpful to view this as two layers: push-forward is the <strong>modeling viewpoint</strong> (how a map <span class="arithmatex">\(T\)</span> acts on distributions), while likelihood is one possible <strong>training objective</strong> for selecting parameters <span class="arithmatex">\(\theta\)</span> after choosing a parameterized family <span class="arithmatex">\(T_\theta\)</span>. The push-forward construction itself does not require likelihood; the same viewpoint can be paired with other fitting criteria (e.g., adversarial objectives, moment matching, or flow/score matching).</p>
+<h2 id="b13-flows-and-velocity-fields">B1.3. Flows and velocity fields<a class="headerlink" href="#b13-flows-and-velocity-fields" title="Permanent link">&para;</a></h2>
+<p>So far, we have discussed a single map <span class="arithmatex">\(T\)</span>. A <strong>flow</strong> generalizes this to a <em>time-indexed family</em> of maps <span class="arithmatex">\(\psi_t\)</span>, generated by a <strong>time-dependent velocity field</strong> <span class="arithmatex">\(u_t\)</span>.</p>
+<p>A <span class="arithmatex">\(C^r\)</span> flow <span class="arithmatex">\(\psi\)</span> can be defined in terms of a <span class="arithmatex">\(C^r([0,1]\times\mathbb{R}^d,\mathbb{R}^d)\)</span> velocity field <span class="arithmatex">\(u:[0,1]\times\mathbb{R}^d\to\mathbb{R}^d\)</span>, written as <span class="arithmatex">\(u(t,x)=u_t(x)\)</span>, via the following ODE:</p>
+<div class="arithmatex">\[
+\frac{d}{dt}\psi_t(x) = u_t\big(\psi_t(x)\big).
+\tag{9}
+\]</div>
+<p>with initial condition</p>
+<div class="arithmatex">\[
+\psi_0(x)=x.
+\tag{10}
+\]</div>
+<p>Intuition: at each time <span class="arithmatex">\(t\)</span>, the vector <span class="arithmatex">\(u_t(x)\)</span> tells you which direction the point at location <span class="arithmatex">\(x\)</span> should move next, and <span class="arithmatex">\(\psi_t(x)\)</span> is “where <span class="arithmatex">\(x\)</span> ends up” after flowing for time <span class="arithmatex">\(t\)</span>.</p>
+<h3 id="local-existence-uniqueness-and-when-psi_t-is-a-diffeomorphism">Local existence, uniqueness, and when <span class="arithmatex">\(\psi_t\)</span> is a diffeomorphism<a class="headerlink" href="#local-existence-uniqueness-and-when-psi_t-is-a-diffeomorphism" title="Permanent link">&para;</a></h3>
+<p>A standard result from ODE theory is: if <span class="arithmatex">\(u\)</span> is <span class="arithmatex">\(C^r\)</span> in <span class="arithmatex">\((t,x)\)</span> with <span class="arithmatex">\(r\ge 1\)</span> (in particular, locally Lipschitz in <span class="arithmatex">\(x\)</span>), then the ODE above has a unique local solution, and <span class="arithmatex">\(\psi_t(\cdot)\)</span> is a <span class="arithmatex">\(C^r\)</span> diffeomorphism on its domain of definition (for each fixed <span class="arithmatex">\(t\)</span>). This guarantees <strong>local</strong> existence/uniqueness: solutions may still blow up in finite time unless we assume more (e.g., global Lipschitzness or other growth/integrability conditions). Later we will rely on conditions that guarantee the flow exists almost everywhere up to <span class="arithmatex">\(t=1\)</span>.</p>
+<h3 id="flow-rightarrow-distribution-transport">Flow <span class="arithmatex">\(\Rightarrow\)</span> distribution transport<a class="headerlink" href="#flow-rightarrow-distribution-transport" title="Permanent link">&para;</a></h3>
+<p>If <span class="arithmatex">\(\mathbf{x}_0\sim p_0\)</span> and <span class="arithmatex">\(\mathbf{x}_t := \psi_t(\mathbf{x}_0)\)</span>, then the marginal distribution at time <span class="arithmatex">\(t\)</span> is the push-forward</p>
+<div class="arithmatex">\[
+p_t \;=\; (\psi_t)_\# p_0.
+\tag{11}
+\]</div>
+<p>When densities exist, this viewpoint leads directly to the <strong>continuity equation</strong>, which will serve as a backbone for both diffusion- and flow-based generative models.</p>
+<h3 id="flow-leftrightarrow-velocity-field">Flow <span class="arithmatex">\(\Leftrightarrow\)</span> velocity field<a class="headerlink" href="#flow-leftrightarrow-velocity-field" title="Permanent link">&para;</a></h3>
+<p>Conversely, given a <span class="arithmatex">\(C^1\)</span> flow <span class="arithmatex">\(\psi_t\)</span>, one can recover its (unique) defining velocity field by using invertibility. Differentiating <span class="arithmatex">\(\psi_t(x')\)</span> and setting <span class="arithmatex">\(x'=\psi_t^{-1}(x)\)</span> gives</p>
+<div class="arithmatex">\[
+u_t(x) \;=\; \frac{d}{dt}\psi_t\big(\psi_t^{-1}(x)\big).
+\tag{12}
+\]</div>
+<p>In conclusion: (under suitable regularity) flows <span class="arithmatex">\(\psi_t\)</span> and velocity fields <span class="arithmatex">\(u_t\)</span> are equivalent ways to represent the same deterministic transport. In ML we often parameterize <span class="arithmatex">\(u_t\)</span> by a neural network (e.g., <span class="arithmatex">\(u_t(x)\approx v_\theta(x,t)\)</span>).</p>
+<h2 id="b14-probability-paths-and-the-continuity-equation">B1.4. Probability paths and the continuity equation<a class="headerlink" href="#b14-probability-paths-and-the-continuity-equation" title="Permanent link">&para;</a></h2>
+<p>The flow viewpoint above (<span class="arithmatex">\(\mathbf{x}_t=\psi_t(\mathbf{x}_0)\)</span>) is a convenient <em>sufficient</em> way to generate a family of distributions <span class="arithmatex">\((p_t)_{t\in[0,1]}\)</span>. However, it is not the most general way to think about “moving probability mass”.</p>
+<h3 id="probability-path-a-time-indexed-family-of-distributions">Probability path = a time-indexed family of distributions<a class="headerlink" href="#probability-path-a-time-indexed-family-of-distributions" title="Permanent link">&para;</a></h3>
+<p>A <strong>probability path</strong> is simply a family of distributions <span class="arithmatex">\((p_t)_{t\in[0,1]}\)</span> on <span class="arithmatex">\(\mathbb{R}^d\)</span> that interpolates between <span class="arithmatex">\(p_0\)</span> and <span class="arithmatex">\(p_1\)</span>. You can view it as a “movie of densities”.</p>
+<ul>
+<li>In the <em>flow-induced</em> case, <span class="arithmatex">\(p_t=(\psi_t)_\# p_0\)</span> as in <span class="arithmatex">\(\tag{11}\)</span>.</li>
+<li>More generally, one can specify <span class="arithmatex">\((p_t)\)</span> without specifying a global deterministic map <span class="arithmatex">\(\psi_t\)</span> (e.g., stochastic dynamics, mixture paths, or paths defined via couplings).</li>
+</ul>
+<p>In Flow Matching, it is common to build a probability path by choosing a <strong>coupling</strong> <span class="arithmatex">\(\pi\)</span> between endpoints and an interpolation map <span class="arithmatex">\(\gamma_t\)</span>:</p>
+<ul>
+<li>Sample <span class="arithmatex">\((\mathbf{x}_0,\mathbf{x}_1)\sim \pi\)</span> where the marginals are <span class="arithmatex">\(p_0\)</span> and <span class="arithmatex">\(p_1\)</span>.</li>
+<li>Define an interpolation <span class="arithmatex">\(\gamma_t:\mathbb{R}^d\times\mathbb{R}^d\to\mathbb{R}^d\)</span>, e.g., <span class="arithmatex">\(\gamma_t(x_0,x_1)=(1-t)x_0+t x_1\)</span>.</li>
+<li>Let <span class="arithmatex">\(\mathbf{x}_t:=\gamma_t(\mathbf{x}_0,\mathbf{x}_1)\)</span>. Then <span class="arithmatex">\(p_t\)</span> is the push-forward of <span class="arithmatex">\(\pi\)</span> under <span class="arithmatex">\(\gamma_t\)</span>.</li>
+</ul>
+<p>This “path-first” viewpoint is one reason Flow Matching can be presented without starting from a likelihood objective.</p>
+<h3 id="when-do-we-say-a-velocity-field-generates-a-probability-path">When do we say a velocity field “generates” a probability path?<a class="headerlink" href="#when-do-we-say-a-velocity-field-generates-a-probability-path" title="Permanent link">&para;</a></h3>
+<p>The guide makes a useful distinction: given an <em>arbitrary</em> probability path <span class="arithmatex">\((p_t)\)</span>, we say a velocity field <span class="arithmatex">\(u_t\)</span> <strong>generates</strong> <span class="arithmatex">\((p_t)\)</span> if, when we solve the flow ODE
+<span class="arithmatex">\(\frac{d}{dt}\psi_t(x)=u_t(\psi_t(x))\)</span> and set <span class="arithmatex">\(\mathbf{x}_t:=\psi_t(\mathbf{x}_0)\)</span> with <span class="arithmatex">\(\mathbf{x}_0\sim p_0\)</span>, the marginal law of <span class="arithmatex">\(\mathbf{x}_t\)</span> is exactly <span class="arithmatex">\(p_t\)</span> for every <span class="arithmatex">\(t\in[0,1)\)</span>.</p>
+<p>The interval is often written as <span class="arithmatex">\([0,1)\)</span> (open on the right) to handle cases where the target <span class="arithmatex">\(p_1\)</span> has compact support and the velocity field is not well-defined exactly at <span class="arithmatex">\(t=1\)</span>.</p>
+<p>Operationally: to check whether <span class="arithmatex">\(u_t\)</span> generates a given <span class="arithmatex">\((p_t)\)</span>, you do not need to reason about particles <span class="arithmatex">\(\mathbf{x}_t\)</span> directly—you can verify a PDE.</p>
+<h3 id="the-continuity-equation-conservation-of-probability">The continuity equation (conservation of probability)<a class="headerlink" href="#the-continuity-equation-conservation-of-probability" title="Permanent link">&para;</a></h3>
+<p>If a probability path <span class="arithmatex">\((p_t)\)</span> is transported by a (sufficiently regular) velocity field <span class="arithmatex">\(u_t\)</span>, then <span class="arithmatex">\(p_t\)</span> must satisfy the <strong>continuity equation</strong></p>
+<div class="arithmatex">\[
+\partial_t p_t(x) + \nabla\cdot\big(p_t(x)\,u_t(x)\big)=0.
+\tag{13}
+\]</div>
+<p>Interpretation: probability is neither created nor destroyed; it only <em>moves</em> with velocity <span class="arithmatex">\(u_t\)</span>.</p>
+<p>It is often convenient to name the <strong>probability flux</strong></p>
+<div class="arithmatex">\[
+j_t(x) := p_t(x)\,u_t(x),
+\tag{13a}
+\]</div>
+<p>so <span class="arithmatex">\(\tag{13}\)</span> becomes <span class="arithmatex">\(\partial_t p_t + \nabla\cdot j_t=0\)</span>.</p>
+<p>Where does <span class="arithmatex">\(\tag{13}\)</span> come from? It is the differential form of a conservation law. </p>
+<div class="arithmatex">\[
+\frac{d}{dt}\int_{\Omega} p_t(x)\,dx \;=\; -\int_{\partial\Omega} p_t(x)\,u_t(x)\cdot n(x)\,dS.
+\tag{13b}
+\]</div>
+<p><strong>(1) Notation note: <span class="arithmatex">\(\partial\)</span> is overloaded.</strong> The symbol <span class="arithmatex">\(\partial\)</span> is used in two different ways in this section:</p>
+<ul>
+<li><span class="arithmatex">\(\partial_t p_t(x)\)</span> means a <strong>partial derivative</strong> with respect to time <span class="arithmatex">\(t\)</span>.</li>
+<li><span class="arithmatex">\(\partial\Omega\)</span> means the <strong>boundary</strong> of the region <span class="arithmatex">\(\Omega\)</span> (a geometric object), not a derivative.</li>
+</ul>
+<p>In <span class="arithmatex">\(\tag{13b}\)</span>, <span class="arithmatex">\(\Omega\subset\mathbb{R}^d\)</span> is any fixed region, <span class="arithmatex">\(\partial\Omega\)</span> is its boundary, <span class="arithmatex">\(n(x)\)</span> is the outward unit normal on <span class="arithmatex">\(\partial\Omega\)</span>, and <span class="arithmatex">\(dS\)</span> is the <span class="arithmatex">\((d-1)\)</span>-dimensional surface-area element. The derivative <span class="arithmatex">\(\frac{d}{dt}\int_{\Omega} p_t(x)\,dx\)</span> is taken with respect to time <span class="arithmatex">\(t\)</span> (the set <span class="arithmatex">\(\Omega\)</span> is fixed); it measures how the total probability mass inside <span class="arithmatex">\(\Omega\)</span> changes over time.</p>
+<p><strong>(2) The key equivalence is the divergence theorem.</strong> For a smooth vector field <span class="arithmatex">\(F:\mathbb{R}^d\to\mathbb{R}^d\)</span>,</p>
+<div class="arithmatex">\[
+\int_{\Omega} \nabla\cdot F(x)\,dx \;=\; \int_{\partial\Omega} F(x)\cdot n(x)\,dS.
+\tag{13c}
+\]</div>
+<p>This is the mathematical statement that connects “what happens inside a volume” to “what flows through its boundary”. Taking <span class="arithmatex">\(F(x)=p_t(x)\,u_t(x)\)</span> turns <span class="arithmatex">\(\tag{13c}\)</span> into <span class="arithmatex">\(\tag{13d}\)</span>.</p>
+<p>Now the derivation is a sequence of standard “accounting” steps:</p>
+<p>1) <strong>Convert the boundary flux to a volume integral</strong> (divergence theorem):</p>
+<div class="arithmatex">\[
+\int_{\partial\Omega} p_t(x)\,u_t(x)\cdot n(x)\,dS
+\;=\;
+\int_{\Omega} \nabla\cdot\big(p_t(x)\,u_t(x)\big)\,dx.
+\tag{13d}
+\]</div>
+<p>2) <strong>Move the time derivative inside the integral</strong> (for a fixed <span class="arithmatex">\(\Omega\)</span> and regular enough <span class="arithmatex">\(p_t\)</span>):</p>
+<div class="arithmatex">\[
+\frac{d}{dt}\int_{\Omega} p_t(x)\,dx
+\;=\;
+\int_{\Omega}\partial_t p_t(x)\,dx.
+\tag{13e}
+\]</div>
+<p>3) <strong>Combine the two</strong> to get an integral identity over <span class="arithmatex">\(\Omega\)</span>:</p>
+<div class="arithmatex">\[
+\int_{\Omega}\Big(\partial_t p_t(x) + \nabla\cdot\big(p_t(x)\,u_t(x)\big)\Big)\,dx = 0.
+\tag{13f}
+\]</div>
+<p><img src="../assets/figures/fig8.png" width="200"></p>
+<p>4) <strong>Localize</strong>: since <span class="arithmatex">\(\Omega\)</span> is arbitrary, the only way this integral can be zero for every region is that the integrand vanishes (almost everywhere), which yields <span class="arithmatex">\(\tag{13}\)</span>.</p>
+<p>This is exactly the same derivation as in classical fluid mechanics, with <span class="arithmatex">\(p_t\)</span> playing the role of density <span class="arithmatex">\(\rho\)</span> and <span class="arithmatex">\(u_t\)</span> playing the role of velocity <span class="arithmatex">\(v\)</span>. The key difference is interpretational: in generative modeling, <span class="arithmatex">\(u_t\)</span> is a <em>learned transport field</em> for probability mass, not a physically constrained fluid velocity (we do not impose momentum balance or an equation of state unless we explicitly do physics-informed modeling).</p>
+<p>Equivalently, rearranging <span class="arithmatex">\(\tag{13}\)</span>, the continuity equation can be read as an explicit “density update rule”
+<span class="arithmatex">\(\partial_t p_t(x) = -\nabla\cdot\big(p_t(x)\,u_t(x)\big)\)</span>,
+which emphasizes that local density changes are fully determined by the divergence of the probability flux <span class="arithmatex">\(p_t u_t\)</span> (not merely by <span class="arithmatex">\(\nabla\cdot u_t\)</span>).</p>
+<h3 id="a-mass-conservation-equivalence-pde-leftrightarrow-generated-path">A “mass conservation” equivalence (PDE <span class="arithmatex">\(\Leftrightarrow\)</span> generated path)<a class="headerlink" href="#a-mass-conservation-equivalence-pde-leftrightarrow-generated-path" title="Permanent link">&para;</a></h3>
+<p>Under mild regularity assumptions (in the guide: <span class="arithmatex">\(u_t\)</span> locally Lipschitz in <span class="arithmatex">\(x\)</span> and an integrability condition), the following two statements are equivalent:</p>
+<p>1) The pair <span class="arithmatex">\((p_t,u_t)\)</span> satisfies the continuity equation <span class="arithmatex">\(\tag{13}\)</span> for <span class="arithmatex">\(t\in[0,1)\)</span>.<br />
+2) The velocity field <span class="arithmatex">\(u_t\)</span> generates the probability path <span class="arithmatex">\((p_t)\)</span> via the flow ODE (i.e., <span class="arithmatex">\(\mathbf{x}_t=\psi_t(\mathbf{x}_0)\sim p_t\)</span>).</p>
+<p>The integrability condition can be written as a finite expected speed along the path:</p>
+<div class="arithmatex">\[
+\int_0^1 \int_{\mathbb{R}^d} \lVert u_t(x)\rVert\,p_t(x)\,dx\,dt &lt; \infty.
+\tag{13g}
+\]</div>
+<p>It also makes the flow ODE meaningful in integral form:</p>
+<div class="arithmatex">\[
+\psi_t(x) = x + \int_0^t u_s\big(\psi_s(x)\big)\,ds,
+\tag{13h}
+\]</div>
+<p>which is often the cleanest way to see why additional assumptions beyond local Lipschitzness may be needed to guarantee existence all the way up to <span class="arithmatex">\(t=1\)</span>.</p>
+<h3 id="weak-form-often-the-cleanest-statement">Weak form (often the cleanest statement)<a class="headerlink" href="#weak-form-often-the-cleanest-statement" title="Permanent link">&para;</a></h3>
+<p>For a smooth test function <span class="arithmatex">\(\varphi:\mathbb{R}^d\to\mathbb{R}\)</span> with sufficient decay, <span class="arithmatex">\(\tag{13}\)</span> is equivalent to</p>
+<div class="arithmatex">\[
+\frac{d}{dt}\int_{\mathbb{R}^d}\varphi(x)\,p_t(x)\,dx
+\;=\;
+\int_{\mathbb{R}^d}\nabla\varphi(x)\cdot u_t(x)\,p_t(x)\,dx.
+\tag{14}
+\]</div>
+<p>This is just integration by parts applied to <span class="arithmatex">\(\tag{13}\)</span>. It is also the cleanest way to define solutions when <span class="arithmatex">\(p_t\)</span> is not smooth.</p>
+<h3 id="characteristics-the-particle-view-recovers-the-pde">Characteristics: the particle view recovers the PDE<a class="headerlink" href="#characteristics-the-particle-view-recovers-the-pde" title="Permanent link">&para;</a></h3>
+<p>If <span class="arithmatex">\(\mathbf{x}_t\)</span> follows the ODE <span class="arithmatex">\(\dot{\mathbf{x}}_t=u_t(\mathbf{x}_t)\)</span> and its law is <span class="arithmatex">\(p_t\)</span>, then <span class="arithmatex">\(\tag{13}\)</span> describes how that law evolves. Conversely, when <span class="arithmatex">\(\tag{13}\)</span> holds and <span class="arithmatex">\(u_t\)</span> is regular enough, one can interpret <span class="arithmatex">\(\mathbf{x}_t\)</span> as “particles” moving with velocity <span class="arithmatex">\(u_t\)</span>, whose density is <span class="arithmatex">\(p_t\)</span>.</p>
+<h3 id="log-density-along-a-trajectory-connects-to-likelihood-bookkeeping">Log-density along a trajectory (connects to likelihood bookkeeping)<a class="headerlink" href="#log-density-along-a-trajectory-connects-to-likelihood-bookkeeping" title="Permanent link">&para;</a></h3>
+<p>Assume <span class="arithmatex">\(p_t\)</span> is differentiable and strictly positive on the region of interest. Along a trajectory <span class="arithmatex">\(t\mapsto x(t)\)</span> that solves <span class="arithmatex">\(\dot x(t)=u_t(x(t))\)</span>, the continuity equation implies</p>
+<div class="arithmatex">\[
+\frac{d}{dt}\log p_t(x(t)) = -\nabla\cdot u_t(x(t)).
+\tag{15}
+\]</div>
+<p>This identity is the infinitesimal form of change-of-variables: it is the term that becomes the “<span class="arithmatex">\(-\mathrm{div}\)</span>” contribution in continuous normalizing flows.</p>
+<h2 id="b15-instantaneous-change-of-variables">B1.5. Instantaneous change of variables<a class="headerlink" href="#b15-instantaneous-change-of-variables" title="Permanent link">&para;</a></h2>
+<p>The change-of-variables rule <span class="arithmatex">\(\tag{7}\)</span>–<span class="arithmatex">\(\tag{8}\)</span> tells us how densities transform under a single diffeomorphism <span class="arithmatex">\(T\)</span>. In continuous time, the transformation from <span class="arithmatex">\(t=0\)</span> to <span class="arithmatex">\(t=1\)</span> is built from <em>infinitesimal</em> diffeomorphisms along the flow <span class="arithmatex">\(\psi_t\)</span>. The resulting bookkeeping identity is usually called the <strong>instantaneous change of variables</strong> (ICoV).</p>
+<h3 id="jacobian-dynamics">Jacobian dynamics<a class="headerlink" href="#jacobian-dynamics" title="Permanent link">&para;</a></h3>
+<p>Assume <span class="arithmatex">\(\psi_t\)</span> is generated by the velocity field <span class="arithmatex">\(u_t\)</span> as in <span class="arithmatex">\(\tag{9}\)</span>–<span class="arithmatex">\(\tag{10}\)</span>, and <span class="arithmatex">\(\psi_t(\cdot)\)</span> is differentiable in <span class="arithmatex">\(x\)</span>. Let <span class="arithmatex">\(J_t(x):=\nabla\psi_t(x)\in\mathbb{R}^{d\times d}\)</span> denote the Jacobian of the flow map. Differentiating <span class="arithmatex">\(\psi_t\)</span> with respect to <span class="arithmatex">\(x\)</span> gives the Jacobian ODE</p>
+<div class="arithmatex">\[
+\frac{d}{dt}J_t(x) = \nabla u_t\big(\psi_t(x)\big)\,J_t(x),
+\qquad J_0(x)=I.
+\tag{16}
+\]</div>
+<p>Taking the log-determinant and using <span class="arithmatex">\(\frac{d}{dt}\log\det J_t = \mathrm{Tr}\big(J_t^{-1}\frac{d}{dt}J_t\big)\)</span>, we obtain</p>
+<div class="arithmatex">\[
+\frac{d}{dt}\log\big|\det J_t(x)\big|
+= \mathrm{Tr}\big(\nabla u_t(\psi_t(x))\big)
+= \nabla\cdot u_t\big(\psi_t(x)\big).
+\tag{17}
+\]</div>
+<h3 id="density-dynamics-along-the-flow-the-icov-formula">Density dynamics along the flow (the ICoV formula)<a class="headerlink" href="#density-dynamics-along-the-flow-the-icov-formula" title="Permanent link">&para;</a></h3>
+<p>Let <span class="arithmatex">\(\mathbf{x}_0\sim p_0\)</span> and <span class="arithmatex">\(\mathbf{x}_t=\psi_t(\mathbf{x}_0)\)</span> so that <span class="arithmatex">\(p_t=(\psi_t)_\#p_0\)</span> as in <span class="arithmatex">\(\tag{11}\)</span>. When densities exist, the discrete change-of-variables formula applied to <span class="arithmatex">\(\psi_t\)</span> reads</p>
+<div class="arithmatex">\[
+p_t\big(\psi_t(x)\big)\,\big|\det \nabla\psi_t(x)\big| = p_0(x).
+\tag{18}
+\]</div>
+<p>Differentiating <span class="arithmatex">\(\log p_t(\psi_t(x)) + \log|\det\nabla\psi_t(x)|\)</span> in time and using <span class="arithmatex">\(\tag{17}\)</span> yields exactly the along-trajectory identity <span class="arithmatex">\(\tag{15}\)</span>:</p>
+<div class="arithmatex">\[
+\frac{d}{dt}\log p_t(\mathbf{x}_t) = -\nabla\cdot u_t(\mathbf{x}_t).
+\tag{19}
+\]</div>
+<p>Integrating <span class="arithmatex">\(\tag{19}\)</span> gives the practical likelihood bookkeeping rule used in continuous normalizing flows:</p>
+<div class="arithmatex">\[
+\log p_1(\mathbf{x}_1) = \log p_0(\mathbf{x}_0) - \int_{0}^{1}\nabla\cdot u_t(\mathbf{x}_t)\,dt,
+\qquad \mathbf{x}_t=\psi_t(\mathbf{x}_0).
+\tag{20}
+\]</div>
+<p>This is why “divergence of the velocity field” is the continuous-time analogue of the log-Jacobian determinant in ordinary normalizing flows.</p>
+<h2 id="b2-flow-matching">B2. Flow Matching<a class="headerlink" href="#b2-flow-matching" title="Permanent link">&para;</a></h2>
+<p><img src="../assets/figures/B-fig9.png" width="800"></p>
+<p><em>B-fig9. Flow Matching training pipeline (high level).</em></p>
+<p>Given a known source distribution <span class="arithmatex">\(p\)</span> and a target (data) distribution <span class="arithmatex">\(q\)</span>, Flow Matching (FM) trains a flow model by learning a time-dependent velocity field <span class="arithmatex">\(u_{\theta,t}(x)\)</span>. The goal is to learn a velocity field whose induced flow transports probability mass along a prescribed probability path <span class="arithmatex">\((p_t)_{t\in[0,1]}\)</span> from <span class="arithmatex">\(p_0=p\)</span> to <span class="arithmatex">\(p_1=q\)</span>:</p>
+<div class="arithmatex">\[
+\frac{d}{dt}\psi_t(x)=u_{\theta,t}\big(\psi_t(x)\big),
+\qquad p_t=(\psi_t)_\#p,
+\qquad p_0=p,\;p_1=q.
+\tag{21}
+\]</div>
+<p>Revisiting the FM blueprint (B-fig9): (a) pick a known source <span class="arithmatex">\(p\)</span> and an unknown data target <span class="arithmatex">\(q\)</span>; (b) prescribe an interpolation path <span class="arithmatex">\(p_t\)</span> from <span class="arithmatex">\(p\)</span> to <span class="arithmatex">\(q\)</span>; (c) learn a neural velocity field <span class="arithmatex">\(u_{\theta,t}\)</span> that generates that path; and (d) sample by solving an ODE using the learned <span class="arithmatex">\(u_{\theta,t}\)</span>.</p>
+<p>To learn <span class="arithmatex">\(u_{\theta,t}\)</span>, FM minimizes a regression loss that matches <span class="arithmatex">\(u_{\theta,t}\)</span> to a “ground-truth” velocity field <span class="arithmatex">\(u_t\)</span> known to generate the chosen probability path <span class="arithmatex">\(p_t\)</span>:</p>
+<div class="arithmatex">\[
+\mathcal{L}_{\mathrm{FM}}(\theta)
+=
+\mathbb{E}_{t\sim U[0,1],\;\mathbf{x}_t\sim p_t}
+\Big[
+D\big(u_t(\mathbf{x}_t),\,u_{\theta,t}(\mathbf{x}_t)\big)
+\Big].
+\tag{22}
+\]</div>
+<p>A common choice is the squared <span class="arithmatex">\(\ell_2\)</span> distance</p>
+<div class="arithmatex">\[
+D(a,b)=\lVert a-b\rVert^2.
+\tag{23}
+\]</div>
+<h4 id="data-pairs-couplings-and-why-fm-feels-supervised">Data pairs, couplings, and why FM feels supervised<a class="headerlink" href="#data-pairs-couplings-and-why-fm-feels-supervised" title="Permanent link">&para;</a></h4>
+<p>FM often looks like supervised learning because we end up with training tuples of the form
+<span class="arithmatex">\((t,\mathbf{x}_t,\text{target velocity})\)</span>, and we regress <span class="arithmatex">\(u_{\theta,t}(\mathbf{x}_t)\)</span> to that target using an <span class="arithmatex">\(\ell_2\)</span> loss.</p>
+<p>Where do those “labels” come from? They are <em>not</em> human annotations. They come from a chosen <strong>coupling</strong> <span class="arithmatex">\(\pi\)</span> between the endpoints:</p>
+<ul>
+<li>draw a source sample <span class="arithmatex">\(\mathbf{x}_0\sim p\)</span></li>
+<li>draw a data sample <span class="arithmatex">\(\mathbf{x}_1\sim q\)</span></li>
+<li>pair them into <span class="arithmatex">\((\mathbf{x}_0,\mathbf{x}_1)\sim\pi\)</span></li>
+</ul>
+<p>This pairing is the key modeling choice. In most generative settings, there is no natural one-to-one correspondence between a particular <span class="arithmatex">\(\mathbf{x}_0\)</span> and a particular data point <span class="arithmatex">\(\mathbf{x}_1\)</span>, so <span class="arithmatex">\(\pi\)</span> is <em>synthetic</em> (e.g., independent coupling <span class="arithmatex">\(\pi=p\otimes q\)</span>, or a more structured/OT-inspired coupling). The coupling determines what “teacher signal” FM will produce.</p>
+<h4 id="building-a-probability-path-from-a-coupling">Building a probability path from a coupling<a class="headerlink" href="#building-a-probability-path-from-a-coupling" title="Permanent link">&para;</a></h4>
+<p>Given a coupling <span class="arithmatex">\(\pi\)</span> and an interpolation map <span class="arithmatex">\(\gamma_t:\mathbb{R}^d\times\mathbb{R}^d\to\mathbb{R}^d\)</span>, we define</p>
+<p><img src="../assets/figures/B-fig3.png" width="800"></p>
+<div class="arithmatex">\[
+\mathbf{x}_t := \gamma_t(\mathbf{x}_0,\mathbf{x}_1),
+\qquad (\mathbf{x}_0,\mathbf{x}_1)\sim \pi.
+\tag{24}
+\]</div>
+<p>Then the probability path is simply the law of <span class="arithmatex">\(\mathbf{x}_t\)</span>:</p>
+<div class="arithmatex">\[
+\mathbf{x}_t\sim p_t.
+\tag{25}
+\]</div>
+<p>A minimal (and very common) choice is linear interpolation
+<span class="arithmatex">\(\gamma_t(x_0,x_1)=(1-t)x_0+t x_1\)</span>, but other paths are possible and can change the learning dynamics.</p>
+<h4 id="from-a-path-to-a-generating-velocity-field">From a path to a generating velocity field<a class="headerlink" href="#from-a-path-to-a-generating-velocity-field" title="Permanent link">&para;</a></h4>
+<p>Along a paired trajectory <span class="arithmatex">\(t\mapsto \gamma_t(x_0,x_1)\)</span>, there is an obvious “pairwise” velocity:</p>
+<div class="arithmatex">\[
+\dot\gamma_t(x_0,x_1) := \frac{\partial}{\partial t}\gamma_t(x_0,x_1).
+\tag{26}
+\]</div>
+<p>However, a generating velocity field <span class="arithmatex">\(u_t(x)\)</span> must be a function of <span class="arithmatex">\((t,x)\)</span> alone (it cannot depend on the hidden pair <span class="arithmatex">\((x_0,x_1)\)</span>). The standard construction is to take a conditional expectation with respect to the induced <span class="arithmatex">\(\mathbf{x}_t\)</span>:</p>
+<div class="arithmatex">\[
+u_t(x)
+:=
+\mathbb{E}\big[\dot\gamma_t(\mathbf{x}_0,\mathbf{x}_1)\mid \mathbf{x}_t=x\big].
+\tag{27}
+\]</div>
+<p>Intuition: many different endpoint pairs can pass through the same intermediate location <span class="arithmatex">\(x\)</span> at time <span class="arithmatex">\(t\)</span>; <span class="arithmatex">\(\tag{27}\)</span> says the “best” single-valued velocity field at <span class="arithmatex">\((t,x)\)</span> (in the least-squares sense) is the conditional mean of those pairwise velocities. This is exactly why we introduced conditional expectation as “the best predictor under MSE”.</p>
+<p>With <span class="arithmatex">\(\tag{27}\)</span> in hand, <span class="arithmatex">\(\mathcal{L}_{\mathrm{FM}}\)</span> in <span class="arithmatex">\(\tag{22}\)</span> becomes a standard regression objective: sample <span class="arithmatex">\(t\)</span>, sample a pair <span class="arithmatex">\((\mathbf{x}_0,\mathbf{x}_1)\sim\pi\)</span>, form <span class="arithmatex">\(\mathbf{x}_t=\gamma_t(\mathbf{x}_0,\mathbf{x}_1)\)</span>, compute (or approximate) the target <span class="arithmatex">\(u_t(\mathbf{x}_t)\)</span>, and fit <span class="arithmatex">\(u_{\theta,t}\)</span> to it.</p>
+<h2 id="b21-deriving-generating-velocity-fields">B2.1. Deriving generating velocity fields<a class="headerlink" href="#b21-deriving-generating-velocity-fields" title="Permanent link">&para;</a></h2>
+<ul>
+<li><span class="arithmatex">\(p_t(x)\)</span> is typically a <strong>mixture distribution whose density is not available in closed form</strong>;</li>
+<li><span class="arithmatex">\(p_{t\mid 1}(x\mid x_1)\)</span> is a family of <strong>simple conditional distributions</strong> (usually chosen to be analytically tractable and easy to sample from, e.g. Gaussians);</li>
+<li>the generating velocity field <span class="arithmatex">\(u_t(x)\)</span> is the posterior-weighted average of a “conditional velocity” <span class="arithmatex">\(u_t(x\mid x_1)\)</span> under <span class="arithmatex">\(p_{1\mid t}(x_1\mid x)\)</span>.</li>
+</ul>
+<p>Continuing from the previous subsection’s notation <span class="arithmatex">\((\mathbf{x}_0,\mathbf{x}_1)\sim\pi\)</span> and <span class="arithmatex">\(\mathbf{x}_t=\gamma_t(\mathbf{x}_0,\mathbf{x}_1)\)</span>, it is often convenient to denote the “intermediate distribution given the endpoint <span class="arithmatex">\(x_1\)</span>” by <span class="arithmatex">\(p_{t\mid 1}(\cdot\mid x_1)\)</span> (with the randomness of <span class="arithmatex">\(\mathbf{x}_0\)</span> understood to have been marginalized out).</p>
+<p>More concretely, let <span class="arithmatex">\(\mathbf{x}_1\sim p_1\)</span> (the endpoint distribution, usually the data distribution), and for each <span class="arithmatex">\(t\in[0,1]\)</span> specify a conditional family <span class="arithmatex">\(p_{t\mid 1}(x\mid x_1)\)</span>, meaning the distribution of <span class="arithmatex">\(\mathbf{x}_t\)</span> given <span class="arithmatex">\(\mathbf{x}_1=x_1\)</span>. The marginal distribution is then</p>
+<div class="arithmatex">\[
+p_t(x)
+\;=\;
+\int_{\mathbb{R}^d} p_{t\mid 1}(x\mid x_1)\,p_1(x_1)\,dx_1,
+\qquad x\in\mathbb{R}^d.
+\tag{28}
+\]</div>
+<p>Since <span class="arithmatex">\(\tag{28}\)</span> is a mixture (an integral over <span class="arithmatex">\(x_1\)</span>), <span class="arithmatex">\(p_t(x)\)</span> generally does not admit a closed-form expression. Suppose that for each fixed <span class="arithmatex">\(x_1\)</span> we have a (relatively simple) conditional velocity field <span class="arithmatex">\(u_t(\cdot\mid x_1)\)</span> that generates the conditional path <span class="arithmatex">\((p_{t\mid 1}(\cdot\mid x_1))_{t\in[0,1]}\)</span> (e.g. by satisfying the corresponding continuity equation). Then the global (marginal) generating velocity field is the posterior average of these conditional velocities:</p>
+<div class="arithmatex">\[
+u_t(x)
+\;=\;
+\mathbb{E}\!\left[u_t(x\mid \mathbf{x}_1)\mid \mathbf{x}_t=x\right]
+\;=\;
+\int_{\mathbb{R}^d} u_t(x\mid x_1)\,p_{1\mid t}(x_1\mid x)\,dx_1,
+\tag{29}
+\]</div>
+<p>where the posterior weight is given by Bayes’ rule:</p>
+<div class="arithmatex">\[
+p_{1\mid t}(x_1\mid x)
+\;=\;
+\frac{p_{t\mid 1}(x\mid x_1)\,p_1(x_1)}{p_t(x)}.
+\tag{30}
+\]</div>
+<p><strong>Insight (constraint vs. construction).</strong> The continuity equation <span class="arithmatex">\(\tag{13}\)</span> is simultaneously (i) a <em>dynamical constraint</em>—a necessary condition that any pair <span class="arithmatex">\((p_t,u_t)\)</span> must satisfy if <span class="arithmatex">\(u_t\)</span> is to generate the path <span class="arithmatex">\((p_t)\)</span>—and (ii) the <em>bridge</em> that ties together “density evolution” (<span class="arithmatex">\(p_t\)</span>) and “transport field” (<span class="arithmatex">\(u_t\)</span>). In classical PDE language one often <strong>solves</strong> <span class="arithmatex">\(\partial_t p_t + \nabla\cdot(p_t u_t)=0\)</span> for <span class="arithmatex">\(p_t\)</span> given <span class="arithmatex">\(u_t\)</span> and an initial condition <span class="arithmatex">\(p_0\)</span>. In Flow Matching we frequently take the opposite stance: we <strong>construct</strong> a probability path <span class="arithmatex">\((p_t)\)</span> (e.g. via a coupling <span class="arithmatex">\(\pi\)</span> and an interpolation <span class="arithmatex">\(\gamma_t\)</span>) and then build a generating field <span class="arithmatex">\(u_t\)</span> that satisfies the constraint. This perspective also highlights a non-uniqueness: for a fixed path <span class="arithmatex">\((p_t)\)</span>, there can be many velocity fields <span class="arithmatex">\(u_t\)</span> that satisfy <span class="arithmatex">\(\tag{13}\)</span>; FM’s “conditional expectation” recipe <span class="arithmatex">\(\tag{27}\)</span> is one principled way to pick a single-valued <span class="arithmatex">\(u_t(x)\)</span> from latent pairwise velocities.</p>
+<h2 id="b22-general-conditioning-and-the-marginalization-trick">B2.2. General conditioning and the Marginalization Trick<a class="headerlink" href="#b22-general-conditioning-and-the-marginalization-trick" title="Permanent link">&para;</a></h2>
+<p>In the previous subsection, the conditioning variable was the endpoint <span class="arithmatex">\(\mathbf{x}_1\)</span> (so we wrote <span class="arithmatex">\(p_{t\mid 1}(x\mid x_1)\)</span>). More generally, we can condition the path on an <em>arbitrary</em> auxiliary random variable <span class="arithmatex">\(\mathbf{Z}\)</span> taking values in some space <span class="arithmatex">\(\mathcal{Z}\)</span>. Concretely, for each <span class="arithmatex">\(t\in[0,1]\)</span> and <span class="arithmatex">\(z\in\mathcal{Z}\)</span>, suppose we specify a simple conditional distribution <span class="arithmatex">\(p_{t\mid Z}(x\mid z)\)</span>. The resulting marginal path is the mixture over <span class="arithmatex">\(\mathbf{Z}\)</span>:</p>
+<div class="arithmatex">\[
+p_t(x) \;=\; \int_{\mathcal{Z}} p_{t\mid Z}(x\mid z)\,p_Z(z)\,dz,
+\qquad x\in\mathbb{R}^d,
+\tag{31}
+\]</div>
+<p>with the integral understood in the appropriate sense (sum / integral) depending on the law of <span class="arithmatex">\(\mathbf{Z}\)</span>.</p>
+<p><strong>Insight.</strong> This “general conditioning” viewpoint simply enlarges the previous construction: <span class="arithmatex">\(\mathbf{Z}\)</span> does <em>not</em> have to be <span class="arithmatex">\(\mathbf{x}_1\)</span>; it can be any variable that indexes a convenient family of conditional paths.</p>
+<h3 id="marginalization-trick-from-conditional-velocities-to-a-marginal-generating-velocity">Marginalization trick: from conditional velocities to a marginal (generating) velocity<a class="headerlink" href="#marginalization-trick-from-conditional-velocities-to-a-marginal-generating-velocity" title="Permanent link">&para;</a></h3>
+<p>Assume that for each <span class="arithmatex">\(z\in\mathcal{Z}\)</span>, the conditional density <span class="arithmatex">\(p_{t\mid Z}(\cdot\mid z)\)</span> is transported by a conditional velocity field <span class="arithmatex">\(u_t(\cdot\mid z)\)</span> in the sense of the continuity equation:</p>
+<div class="arithmatex">\[
+\partial_t p_{t\mid Z}(x\mid z) + \nabla\cdot\big(p_{t\mid Z}(x\mid z)\,u_t(x\mid z)\big)=0.
+\tag{32}
+\]</div>
+<p>Multiply <span class="arithmatex">\(\tag{32}\)</span> by <span class="arithmatex">\(p_Z(z)\)</span> and integrate over <span class="arithmatex">\(z\)</span>. Under mild regularity that justifies swapping <span class="arithmatex">\(\partial_t\)</span> / <span class="arithmatex">\(\nabla\cdot\)</span> with the <span class="arithmatex">\(z\)</span>-integral, we obtain</p>
+<div class="arithmatex">\[
+\partial_t p_t(x)
+\, + \,
+\nabla\cdot\left(
+\int_{\mathcal{Z}} p_{t\mid Z}(x\mid z)\,u_t(x\mid z)\,p_Z(z)\,dz
+\right)=0,
+\tag{33}
+\]</div>
+<p>where we used <span class="arithmatex">\(\tag{31}\)</span> to identify <span class="arithmatex">\(p_t(x)=\int p_{t\mid Z}(x\mid z)p_Z(z)\,dz\)</span>. Equation <span class="arithmatex">\(\tag{33}\)</span> is again a continuity equation for the marginal path <span class="arithmatex">\((p_t)\)</span>, with probability flux</p>
+<div class="arithmatex">\[
+j_t(x)
+:=
+\int_{\mathcal{Z}} p_{t\mid Z}(x\mid z)\,u_t(x\mid z)\,p_Z(z)\,dz.
+\tag{34}
+\]</div>
+<p>Whenever <span class="arithmatex">\(p_t(x)&gt;0\)</span>, we can therefore define the <strong>marginal (generating) velocity field</strong> <span class="arithmatex">\(u_t(x)\)</span> via <span class="arithmatex">\(j_t(x)=p_t(x)\,u_t(x)\)</span>, i.e.</p>
+<div class="arithmatex">\[
+u_t(x)
+\;:=\;
+\frac{1}{p_t(x)}
+\int_{\mathcal{Z}} u_t(x\mid z)\,p_{t\mid Z}(x\mid z)\,p_Z(z)\,dz.
+\tag{35}
+\]</div>
+<p>Now apply Bayes’ rule to form the posterior over the conditioning variable at time <span class="arithmatex">\(t\)</span>:</p>
+<div class="arithmatex">\[
+p_{Z\mid t}(z\mid x)
+\;:=\;
+p_{Z\mid \mathbf{X}_t}(z\mid x)
+\;=\;
+\frac{p_{t\mid Z}(x\mid z)\,p_Z(z)}{p_t(x)},
+\qquad p_t(x)&gt;0.
+\tag{36}
+\]</div>
+<p>Substituting <span class="arithmatex">\(\tag{36}\)</span> into <span class="arithmatex">\(\tag{35}\)</span> yields the advertised “posterior-weighted average” form:</p>
+<div class="arithmatex">\[
+u_t(x)
+\;=\;
+\int_{\mathcal{Z}} u_t(x\mid z)\,p_{Z\mid t}(z\mid x)\,dz
+\;=\;
+\mathbb{E}\!\left[u_t(x\mid \mathbf{Z})\mid \mathbf{X}_t=x\right].
+\tag{37}
+\]</div>
+<p>This is the general version of the earlier special case <span class="arithmatex">\(\mathbf{Z}=\mathbf{x}_1\)</span>.</p>
+<h3 id="why-ell_2-regression-recovers-this-conditional-expectation">Why <span class="arithmatex">\(\ell_2\)</span> regression recovers this conditional expectation<a class="headerlink" href="#why-ell_2-regression-recovers-this-conditional-expectation" title="Permanent link">&para;</a></h3>
+<p>Fix <span class="arithmatex">\(t\in[0,1]\)</span> and consider the regression viewpoint with <span class="arithmatex">\(X:=\mathbf{X}_t\in\mathbb{R}^d\)</span> as the observed input and <span class="arithmatex">\(Y:=u_t(\mathbf{X}_t\mid \mathbf{Z})\in\mathbb{R}^d\)</span> as the “label” (a random vector because <span class="arithmatex">\(\mathbf{Z}\)</span> is latent given <span class="arithmatex">\(X\)</span>). For any measurable <span class="arithmatex">\(g:\mathbb{R}^d\to\mathbb{R}^d\)</span> with <span class="arithmatex">\(\mathbb{E}\|Y-g(X)\|^2&lt;\infty\)</span>, the minimizer of</p>
+<div class="arithmatex">\[
+\mathbb{E}\big[\|Y-g(X)\|^2\big]
+\tag{38}
+\]</div>
+<p>is</p>
+<div class="arithmatex">\[
+g^\star(x) = \mathbb{E}[Y\mid X=x].
+\tag{39}
+\]</div>
+<p>Therefore, the population-optimal <span class="arithmatex">\(\ell_2\)</span> regressor implied by the conditional-velocity construction is exactly the marginal velocity <span class="arithmatex">\(\tag{37}\)</span>:</p>
+<div class="arithmatex">\[
+g^\star(x)=\mathbb{E}\!\left[u_t(\mathbf{X}_t\mid \mathbf{Z})\mid \mathbf{X}_t=x\right] = u_t(x).
+\tag{40}
+\]</div>
+<p><strong>Note (why not <span class="arithmatex">\(\ell_1\)</span>).</strong> In 1D, <span class="arithmatex">\(\ell_1\)</span> regression returns a (conditional) median, not a mean:
+$$
+g^\star \in \arg\min_g \mathbb{E}\big[|Y-g(X)|\big]
+\quad\Longrightarrow\quad
+g^\star(x)\in \mathrm{Med}(Y\mid X=x),
+\tag{40a}
+$$
+since the optimality condition is the subgradient balance <span class="arithmatex">\(\mathbb{P}(Y\le g\mid X=x)\ge \tfrac12\)</span> and <span class="arithmatex">\(\mathbb{P}(Y\ge g\mid X=x)\ge \tfrac12\)</span>. For an empirical 1D sample, the minimizer is the usual median (odd <span class="arithmatex">\(n\)</span>: one observed instance; even <span class="arithmatex">\(n\)</span>: any point between the two middle instances).</p>
+<p>The marginalization trick above is fundamentally <strong>linear</strong>: mixing conditional solutions mixes their fluxes, which yields the posterior <strong>mean</strong> <span class="arithmatex">\(u_t(x)=\mathbb{E}[u_t(x\mid \mathbf{Z})\mid \mathbf{X}_t=x]\)</span>. The mean is linear; the median is not. So swapping <span class="arithmatex">\(\ell_2\)</span> for <span class="arithmatex">\(\ell_1\)</span> generally selects an order-statistic-type field (a median of conditional velocities) rather than a linear mixture, and need not satisfy the continuity equation for the prescribed <span class="arithmatex">\(p_t\)</span>.</p>
+<p><strong>Note (what is linear in the continuity equation).</strong> The continuity equation
+<span class="arithmatex">\(\partial_t p_t + \nabla\cdot(p_t u_t)=0\)</span> is linear in <span class="arithmatex">\((p_t,j_t)\)</span> when written in <strong>flux form</strong>, where <span class="arithmatex">\(j_t := p_t u_t\)</span>:
+$$
+\partial_t p_t(x) + \nabla\cdot j_t(x) = 0.
+\tag{40b}
+$$
+It is <em>not</em> linear in <span class="arithmatex">\(u_t\)</span> itself, since <span class="arithmatex">\(u_t=j_t/p_t\)</span> is nonlinear. The marginalization step in Theorem 3 uses exactly this <span class="arithmatex">\((p,j)\)</span>-linearity plus the ability to interchange <span class="arithmatex">\(\partial_t\)</span> and <span class="arithmatex">\(\nabla\cdot\)</span> with the <span class="arithmatex">\(z\)</span>-integral (justified by the regularity / integrability assumptions): define
+<span class="arithmatex">\(p_t(x)=\int p_{t\mid Z}(x\mid z)\,p_Z(z)\,dz\)</span> and
+<span class="arithmatex">\(j_t(x)=\int j_{t\mid Z}(x\mid z)\,p_Z(z)\,dz\)</span> with <span class="arithmatex">\(j_{t\mid Z}:=p_{t\mid Z}u_t(\cdot\mid z)\)</span>,
+then integrating <span class="arithmatex">\(\partial_t p_{t\mid Z}+\nabla\cdot j_{t\mid Z}=0\)</span> over <span class="arithmatex">\(z\)</span> yields <span class="arithmatex">\(\partial_t p_t+\nabla\cdot j_t=0\)</span>.</p>
+<p>As a related aside: the (forward) Fokker–Planck equation for an SDE is also <strong>linear in <span class="arithmatex">\(p\)</span></strong>, even though it contains a second-order term. In one common notation,
+$$
+\partial_t p
+=
+-\nabla\cdot(f\,p)
++
+\frac{1}{2}\nabla^2!\big(g^2\,p\big),
+\tag{40c}
+$$
+so the key issue is not “first-order vs. second-order”, but whether the PDE is linear in the density.</p>
+<p>In this sense, both Flow Matching (deterministic transport; first-order generator) and Diffusion (stochastic dynamics; second-order generator) fit the same <em>generator-based</em> template: the induced density evolution equation is linear in <span class="arithmatex">\(p\)</span>.</p>
+<p><strong>Summary (two theorems glued together, not a coincidence).</strong></p>
+<ol>
+<li>(<strong>PDE / marginalization</strong>) If each conditional path <span class="arithmatex">\((p_{t\mid Z}(\cdot\mid z))\)</span> is generated by <span class="arithmatex">\(u_t(\cdot\mid z)\)</span>, then the marginal path <span class="arithmatex">\((p_t)\)</span> is generated by the posterior average <span class="arithmatex">\(u_t(x)=\mathbb{E}[u_t(x\mid \mathbf{Z})\mid \mathbf{X}_t=x]\)</span>.</li>
+<li>(<strong>Projection / <span class="arithmatex">\(\ell_2\)</span> optimality</strong>) The minimizer of an <span class="arithmatex">\(\ell_2\)</span> regression loss is the conditional expectation <span class="arithmatex">\(\mathbb{E}[Y\mid X]\)</span>.</li>
+<li>Putting them together: FM (i) identifies the marginal generating velocity as a conditional expectation, and (ii) uses <span class="arithmatex">\(\ell_2\)</span> regression whose population optimum is exactly that conditional expectation.</li>
+</ol>
+<h3 id="why-do-we-condition-turning-an-implicit-target-into-supervised-data">Why do we condition? (Turning an implicit target into supervised data)<a class="headerlink" href="#why-do-we-condition-turning-an-implicit-target-into-supervised-data" title="Permanent link">&para;</a></h3>
+<p>At the level of the generator’s <em>structure</em>, the object we ultimately want is the marginal generating velocity <span class="arithmatex">\(u_t(x)\)</span> in <span class="arithmatex">\(\tag{37}\)</span>. But <span class="arithmatex">\(u_t(x)\)</span> is typically <strong>not directly labelable</strong>: evaluating it at a given <span class="arithmatex">\(x\)</span> requires the posterior integral <span class="arithmatex">\(\int u_t(x\mid z)\,p_{Z\mid t}(z\mid x)\,dz\)</span>, and <span class="arithmatex">\(p_{Z\mid t}(z\mid x)\)</span> involves the intractable marginal <span class="arithmatex">\(p_t(x)\)</span> in the denominator <span class="arithmatex">\(\tag{36}\)</span>. So even if we can write down (and sample from) the conditional mechanism <span class="arithmatex">\(p_{t\mid Z}(\cdot\mid z)\)</span> and compute <span class="arithmatex">\(u_t(\cdot\mid z)\)</span>, we usually cannot form “ground-truth” pairs <span class="arithmatex">\((x, u_t(x))\)</span>.</p>
+<p>Conditional Flow Matching resolves this by <strong>manufacturing supervised training pairs</strong> from the conditional world:</p>
+<ul>
+<li>sample a time <span class="arithmatex">\(t\)</span>,</li>
+<li>sample a latent <span class="arithmatex">\(z\sim p_Z\)</span>,</li>
+<li>sample an intermediate state <span class="arithmatex">\(x_t\sim p_{t\mid Z}(\cdot\mid z)\)</span>,</li>
+<li>compute the <em>tractable</em> conditional label <span class="arithmatex">\(y := u_t(x_t\mid z)\)</span>,</li>
+<li>regress a model <span class="arithmatex">\(g(x,t)\)</span> on pairs <span class="arithmatex">\((x_t,t)\mapsto y\)</span> using an <span class="arithmatex">\(\ell_2\)</span> loss.</li>
+</ul>
+<p>The “supervised learning essence” is that conditioning turns an implicit marginal target into an explicit random label <span class="arithmatex">\(Y=u_t(\mathbf{X}_t\mid \mathbf{Z})\)</span> paired with an observable input <span class="arithmatex">\(X=\mathbf{X}_t\)</span>. Then the standard <span class="arithmatex">\(\ell_2\)</span> projection theorem <span class="arithmatex">\(\tag{39}\)</span> guarantees that, at the population level,</p>
+<div class="arithmatex">\[
+g^\star(x,t)
+=
+\mathbb{E}\!\left[u_t(\mathbf{X}_t\mid \mathbf{Z})\mid \mathbf{X}_t=x\right]
+=
+u_t(x),
+\tag{41}
+\]</div>
+<p>so <strong>regressing conditional velocities automatically recovers the marginal velocity</strong> without ever explicitly computing the posterior weights <span class="arithmatex">\(p_{Z\mid t}(z\mid x)\)</span>.</p>
+<blockquote>
+<p><strong>Assumption 1.</strong> <span class="arithmatex">\(p_{t\mid Z}(x\mid z)\in C^1([0,1)\times\mathbb{R}^d)\)</span> as a function of <span class="arithmatex">\((t,x)\)</span>, and <span class="arithmatex">\(u_t(x\mid z)\in C^1([0,1)\times\mathbb{R}^d,\mathbb{R}^d)\)</span> as a function of <span class="arithmatex">\((t,x)\)</span>. Furthermore, <span class="arithmatex">\(p_Z\)</span> has bounded support, i.e. there exists a bounded set <span class="arithmatex">\(K\subset\mathbb{R}^m\)</span> such that <span class="arithmatex">\(p_Z(z)=0\)</span> for all <span class="arithmatex">\(z\notin K\)</span>. Finally, <span class="arithmatex">\(p_t(x)&gt;0\)</span> for all <span class="arithmatex">\(x\in\mathbb{R}^d\)</span> and <span class="arithmatex">\(t\in[0,1)\)</span>.</p>
+<p><strong>Theorem 3 (Marginalization Trick).</strong> Under Assumption 1, if <span class="arithmatex">\(u_t(x\mid z)\)</span> is conditionally integrable and generates the conditional probability path <span class="arithmatex">\(p_t(\cdot\mid z)\)</span>, then the marginal velocity field <span class="arithmatex">\(u_t\)</span> generates the marginal probability path <span class="arithmatex">\(p_t\)</span>, for all <span class="arithmatex">\(t\in[0,1)\)</span>.</p>
+</blockquote>
+<h3 id="what-this-theorem-is-really-saying-and-why-it-matters">What this theorem is really saying (and why it matters)<a class="headerlink" href="#what-this-theorem-is-really-saying-and-why-it-matters" title="Permanent link">&para;</a></h3>
+<p>Theorem 3 proves a clean <em>closure property</em> of probability transport: <strong>if every conditional flow is valid, then the mixture flow is valid as well.</strong> Conceptually, you can think of having one “probability fluid” for each <span class="arithmatex">\(z\)</span>; each one obeys a conservation law; and since the conservation law is linear in the right variables, superposing (mixing) these fluids preserves conservation.</p>
+<p>The key points behind the proof are:</p>
+<ol>
+<li><strong>Linearity is in <span class="arithmatex">\((p,j)\)</span>, not in <span class="arithmatex">\(u\)</span>.</strong> The continuity equation is linear in density <span class="arithmatex">\(p\)</span> and flux <span class="arithmatex">\(j:=p u\)</span>: <span class="arithmatex">\(\partial_t p+\nabla\cdot j=0\)</span>. It is not linear in <span class="arithmatex">\(u\)</span> itself.</li>
+<li><strong>Regularity survives mixing (under the stated assumptions).</strong> With <span class="arithmatex">\(p_{t\mid Z}(\cdot\mid z)\in C^1\)</span> in <span class="arithmatex">\((t,x)\)</span> and mild conditions that justify interchanging differentiation and integration in <span class="arithmatex">\(z\)</span>, the marginal <span class="arithmatex">\(p_t(x)=\int p_{t\mid Z}(x\mid z)p_Z(z)\,dz\)</span> inherits the needed differentiability.</li>
+<li><strong>Integrability is controlled by convexity / Jensen.</strong> Since the marginal velocity is a conditional expectation <span class="arithmatex">\(u_t(x)=\mathbb{E}[u_t(x\mid \mathbf{Z})\mid \mathbf{X}_t=x]\)</span>, Jensen gives
+   <span class="arithmatex">\(\|u_t(x)\|\le \mathbb{E}[\|u_t(x\mid \mathbf{Z})\|\mid \mathbf{X}_t=x]\)</span>,
+   which helps ensure the expected speed condition (e.g. <span class="arithmatex">\(\int_0^1\!\int \|u_t(x)\|p_t(x)\,dx\,dt&lt;\infty\)</span>) whenever the conditional one is integrable.</li>
+</ol>
+<p><strong>Flow Matching takeaway.</strong> This is the theoretical hinge that lets us go from <em>conditionally supervised</em> training signals <span class="arithmatex">\(u_t(x_t\mid z)\)</span> to an <em>unconditional</em> global ODE sampler: conditional flow matching can be marginalized into a single velocity field that transports the marginal path.</p>
+<p><strong>The path of implications .</strong></p>
+<ol>
+<li>CE is linear in <span class="arithmatex">\((p,j)\)</span>.</li>
+<li>Each conditional flow <span class="arithmatex">\((p_{t\mid Z}(\cdot\mid z), j_{t\mid Z}(\cdot\mid z))\)</span> satisfies CE.</li>
+<li>Mixing over <span class="arithmatex">\(z\)</span> preserves CE, so the marginal <span class="arithmatex">\((p_t,j_t)\)</span> satisfies CE.</li>
+<li>Under the usual boundary/decay assumptions, CE implies global mass conservation <span class="arithmatex">\(\int p_t=1\)</span>.</li>
+</ol>
+<h3 id="why-int_omega-nablacdotcdotdx-becomes-a-boundary-term-and-when-it-vanishes">Why <span class="arithmatex">\(\int_\Omega \nabla\cdot(\cdot)\,dx\)</span> becomes a boundary term (and when it vanishes)<a class="headerlink" href="#why-int_omega-nablacdotcdotdx-becomes-a-boundary-term-and-when-it-vanishes" title="Permanent link">&para;</a></h3>
+<p>Start from the continuity equation, most transparently written in flux form. Let <span class="arithmatex">\(p_t:\mathbb{R}^d\to\mathbb{R}_{\ge 0}\)</span> be a density and <span class="arithmatex">\(u_t:\mathbb{R}^d\to\mathbb{R}^d\)</span> a velocity field, and define the probability flux
+<span class="arithmatex">\(j_t(x):=p_t(x)\,u_t(x)\)</span>. The continuity equation is</p>
+<div class="arithmatex">\[
+\partial_t p_t(x) + \nabla\cdot j_t(x)=0.
+\tag{A1}
+\]</div>
+<p>Let <span class="arithmatex">\(\Omega\subset\mathbb{R}^d\)</span> be a region with piecewise smooth boundary <span class="arithmatex">\(\partial\Omega\)</span>, outward unit normal <span class="arithmatex">\(n(x)\)</span>, and surface-area element <span class="arithmatex">\(dS\)</span>. Integrating over <span class="arithmatex">\(\Omega\)</span> and (under sufficient regularity) moving <span class="arithmatex">\(\partial_t\)</span> inside the integral gives</p>
+<div class="arithmatex">\[
+\frac{d}{dt}\int_\Omega p_t(x)\,dx
+\;+\;
+\int_\Omega \nabla\cdot j_t(x)\,dx
+\;=\;0.
+\tag{A2}
+\]</div>
+<p>The key is the second term. The <strong>Gauss (divergence) theorem</strong> states that for any sufficiently smooth vector field <span class="arithmatex">\(F:\Omega\to\mathbb{R}^d\)</span>,</p>
+<div class="arithmatex">\[
+\int_\Omega \nabla\cdot F(x)\,dx
+\;=\;
+\int_{\partial\Omega} F(x)\cdot n(x)\,dS.
+\tag{A3}
+\]</div>
+<p>Taking <span class="arithmatex">\(F=j_t\)</span> (i.e. <span class="arithmatex">\(F=p_t u_t\)</span>) yields</p>
+<div class="arithmatex">\[
+\int_\Omega \nabla\cdot j_t(x)\,dx
+\;=\;
+\int_{\partial\Omega} j_t(x)\cdot n(x)\,dS
+\;=\;
+\int_{\partial\Omega} \big(p_t(x)\,u_t(x)\big)\cdot n(x)\,dS.
+\tag{A4}
+\]</div>
+<p>Substituting into <span class="arithmatex">\(\tag{A2}\)</span> gives the “mass balance / net flux” identity:</p>
+<div class="arithmatex">\[
+\frac{d}{dt}\int_\Omega p_t(x)\,dx
+\;=\;
+-\int_{\partial\Omega} j_t(x)\cdot n(x)\,dS.
+\tag{A5}
+\]</div>
+<p>Interpretation: <span class="arithmatex">\(\int_\Omega p_t\)</span> is the total probability mass inside <span class="arithmatex">\(\Omega\)</span>. The right-hand side is the net outward flux through <span class="arithmatex">\(\partial\Omega\)</span>. Hence the mass changes exactly by “minus net outflow”.</p>
+<h4 id="what-does-the-boundary-term-is-zero-mean">What does “the boundary term is zero” mean?<a class="headerlink" href="#what-does-the-boundary-term-is-zero-mean" title="Permanent link">&para;</a></h4>
+<p>Common ways to make <span class="arithmatex">\(\int_{\partial\Omega} j_t\cdot n\,dS=0\)</span> (think: different domain choices / boundary conditions) include:</p>
+<ol>
+<li><strong><span class="arithmatex">\(\Omega=\mathbb{R}^d\)</span> with sufficient decay at infinity.</strong> Consider <span class="arithmatex">\(\Omega_R=\{x:\|x\|\le R\}\)</span> and send <span class="arithmatex">\(R\to\infty\)</span>. If <span class="arithmatex">\(j_t(x)\)</span> decays fast enough that <span class="arithmatex">\(\int_{\partial\Omega_R} j_t\cdot n\,dS\to 0\)</span>, the boundary contribution vanishes. Intuition: no probability mass flows in/out “from infinity”.</li>
+<li><strong>Periodic boundary conditions (a torus / periodic box).</strong> Contributions from opposite faces cancel, so the net flux is zero.</li>
+<li><strong>No-flux (reflecting / Neumann-type) boundary conditions.</strong> Impose
+   $$
+   j_t(x)\cdot n(x) = 0,\qquad x\in\partial\Omega,
+   \tag{A6}
+   $$
+   meaning probability mass cannot cross the boundary.</li>
+</ol>
+<p>When the boundary term is zero, <span class="arithmatex">\(\tag{A5}\)</span> reduces to <span class="arithmatex">\(\frac{d}{dt}\int_\Omega p_t(x)\,dx=0\)</span>, so the total mass <span class="arithmatex">\(\int_\Omega p_t(x)\,dx\)</span> is conserved in time. In particular, if <span class="arithmatex">\(\int_\Omega p_0(x)\,dx=1\)</span>, then <span class="arithmatex">\(\int_\Omega p_t(x)\,dx=1\)</span> for all <span class="arithmatex">\(t\)</span>.</p>
+<h2 id="b23-flow-matching-loss">B2.3. Flow Matching loss<a class="headerlink" href="#b23-flow-matching-loss" title="Permanent link">&para;</a></h2>
+<p><img src="../assets/figures/B-fig10.png" width="300"></p>
+<p><em>B-fig10. Flow matching loss as a path-matching objective.</em></p>
+<p>The key modeling stance is: <strong>Flow Matching matches a <em>path</em>, not just the final density.</strong> Instead of directly minimizing a discrepancy between <span class="arithmatex">\(p_1\)</span> and some model density <span class="arithmatex">\(q_\theta\)</span>, FM matches the <em>generator</em> (a velocity field) along the prescribed intermediate marginals <span class="arithmatex">\((p_t)\)</span>. If <span class="arithmatex">\(u_{\theta,t}\)</span> matches the true generating field <span class="arithmatex">\(u_t\)</span> for <span class="arithmatex">\(t\in[0,1)\)</span>, then the ODE it defines transports mass along the intended path and reaches the desired endpoint.</p>
+<p>At the loss level, this is written as an expected discrepancy between vectors <span class="arithmatex">\(u_{\theta,t}(x)\)</span> and <span class="arithmatex">\(u_t(x)\)</span>, averaged over <span class="arithmatex">\(t\)</span> and <span class="arithmatex">\(x\sim p_t\)</span>. A central class of losses is <strong>Bregman divergences</strong>: given a strictly convex, differentiable potential <span class="arithmatex">\(\Phi:\mathbb{R}^d\to\mathbb{R}\)</span>, define
+$$
+D_\Phi(a,b)
+:=
+\Phi(a)-\Phi(b)-\langle\nabla\Phi(b),a-b\rangle.
+\tag{42a}
+$$
+Then the (population) flow matching loss is
+$$
+\mathcal{L}<em>{\mathrm{FM}}(\theta)
+:=
+\mathbb{E}</em>{t\sim U[0,1],\,\mathbf{X}<em>t\sim p_t}
+\Big[
+D</em>\Phi\big(u_t(\mathbf{X}<em>t),\,u</em>{\theta,t}(\mathbf{X}_t)\big)
+\Big].
+\tag{42}
+$$</p>
+<p>The squared <span class="arithmatex">\(\ell_2\)</span> loss is the special case <span class="arithmatex">\(\Phi(v)=\frac12\|v\|^2\)</span>, for which <span class="arithmatex">\(D_\Phi(a,b)=\frac12\|a-b\|^2\)</span>.</p>
+<p>The only remaining question is: <strong>where do the labels <span class="arithmatex">\(u_t(\mathbf{X}_t)\)</span> come from?</strong> In general, the marginal target <span class="arithmatex">\(u_t(x)\)</span> is not directly computable because it is defined via a latent-variable marginalization (Theorem 3): it contains a posterior average over <span class="arithmatex">\(\mathbf{Z}\)</span> given <span class="arithmatex">\(\mathbf{X}_t=x\)</span>.</p>
+<h3 id="conditional-flow-matching-cfm-supervised-labels-from-a-latent-variable">Conditional Flow Matching (CFM): supervised labels from a latent variable<a class="headerlink" href="#conditional-flow-matching-cfm-supervised-labels-from-a-latent-variable" title="Permanent link">&para;</a></h3>
+<p>Assume we have a latent variable <span class="arithmatex">\(\mathbf{Z}\sim p_Z\)</span>, a conditional family <span class="arithmatex">\(p_{t\mid Z}(\cdot\mid z)\)</span>, and a tractable conditional velocity field <span class="arithmatex">\(u_t(\cdot\mid z)\)</span> that generates <span class="arithmatex">\(p_{t\mid Z}(\cdot\mid z)\)</span>. Then we can construct supervised samples by:</p>
+<ul>
+<li>sample <span class="arithmatex">\(t\sim U[0,1]\)</span>,</li>
+<li>sample <span class="arithmatex">\(z\sim p_Z\)</span>,</li>
+<li>sample <span class="arithmatex">\(\mathbf{X}_t\sim p_{t\mid Z}(\cdot\mid z)\)</span>,</li>
+<li>set the label <span class="arithmatex">\(Y:=u_t(\mathbf{X}_t\mid z)\)</span>,</li>
+<li>regress <span class="arithmatex">\(u_{\theta,t}(\mathbf{X}_t)\)</span> onto <span class="arithmatex">\(Y\)</span>.</li>
+</ul>
+<p>This yields the <strong>conditional flow matching</strong> objective:</p>
+<div class="arithmatex">\[
+\mathcal{L}_{\mathrm{CFM}}(\theta)
+:=
+\mathbb{E}_{t\sim U[0,1],\,\mathbf{Z}\sim p_Z,\,\mathbf{X}_t\sim p_{t\mid Z}(\cdot\mid \mathbf{Z})}
+\Big[
+D_\Phi\big(u_t(\mathbf{X}_t\mid \mathbf{Z}),\,u_{\theta,t}(\mathbf{X}_t)\big)
+\Big].
+\tag{43}
+\]</div>
+<p>Even though <span class="arithmatex">\(\mathcal{L}_{\mathrm{FM}}\)</span> in <span class="arithmatex">\(\tag{42}\)</span> is generally not directly computable (because it depends on the intractable marginal velocity <span class="arithmatex">\(u_t\)</span>), CFM is designed so that it has the <em>same gradient signal</em> under a Bregman loss.</p>
+<blockquote>
+<p><strong>Theorem 4 (Gradient equivalence).</strong> Under suitable regularity, for Bregman divergences <span class="arithmatex">\(D_\Phi\)</span> one has
+$$
+\nabla_\theta \mathcal{L}<em>{\mathrm{FM}}(\theta) \;=\; \nabla</em>\theta \mathcal{L}_{\mathrm{CFM}}(\theta).
+\tag{44}
+$$</p>
+</blockquote>
+<p><strong>Proof sketch (the “Bregman magic”).</strong> For fixed <span class="arithmatex">\(t\)</span> and <span class="arithmatex">\(x\)</span>, write the marginal target as a conditional expectation
+<span class="arithmatex">\(u_t(x)=\mathbb{E}[u_t(x\mid \mathbf{Z})\mid \mathbf{X}_t=x]\)</span>. The key identity is that the gradient of a Bregman divergence is affine in its first argument:
+$$
+\nabla_b D_\Phi(a,b) \;=\; \nabla^2\Phi(b)\,(b-a),
+\tag{45}
+$$
+so for any <span class="arithmatex">\(\alpha,\beta\in\mathbb{R}\)</span> with <span class="arithmatex">\(\alpha+\beta=1\)</span> and any <span class="arithmatex">\(u_1,u_2,v\in\mathbb{R}^d\)</span>,
+$$
+\nabla_v D_\Phi(\alpha u_1 + \beta u_2, v)
+\;=\;
+\alpha\,\nabla_v D_\Phi(u_1,v)
+\;+\;
+\beta\,\nabla_v D_\Phi(u_2,v),
+\tag{45a}
+$$
+and, more generally, for any integrable random vector <span class="arithmatex">\(Y\in\mathbb{R}^d\)</span>,
+$$
+\nabla_v D_\Phi\big(\mathbb{E}[Y],v\big)
+\;=\;
+\mathbb{E}\big[\nabla_v D_\Phi(Y,v)\big].
+\tag{45b}
+$$
+so <span class="arithmatex">\(\nabla_b D_\Phi(\mathbb{E}[A],b)=\mathbb{E}[\nabla_b D_\Phi(A,b)]\)</span>. Plug this into the chain rule expression for <span class="arithmatex">\(\nabla_\theta \mathcal{L}_{\mathrm{FM}}\)</span>, and the conditional expectation over <span class="arithmatex">\(\mathbf{Z}\)</span> moves “through the gradient”, turning the marginal label into the conditional label and yielding <span class="arithmatex">\(\nabla_\theta \mathcal{L}_{\mathrm{CFM}}\)</span>.</p>
+<blockquote>
+<p><strong>Proposition 1 (Bregman regression learns conditional expectations).</strong> Let <span class="arithmatex">\(X\)</span> and <span class="arithmatex">\(Y\)</span> be random variables with <span class="arithmatex">\(X\in\mathbb{R}^d\)</span> and <span class="arithmatex">\(Y\in\mathrm{dom}(\Phi)\)</span>. The population minimizer of
+$$
+\mathbb{E}\big[D_\Phi(Y, g(X))\big]
+$$
+over measurable functions <span class="arithmatex">\(g\)</span> is
+$$
+g^\star(x) \;=\; (\nabla\Phi)^{-1}!\Big(\mathbb{E}\big[\nabla\Phi(Y)\mid X=x\big]\Big).
+\tag{46a}
+$$
+In particular, for <span class="arithmatex">\(\Phi(v)=\frac12\|v\|^2\)</span>, this reduces to <span class="arithmatex">\(g^\star(x)=\mathbb{E}[Y\mid X=x]\)</span>.</p>
+</blockquote>
+<p>Fix <span class="arithmatex">\(t\)</span> and define <span class="arithmatex">\(X:=\mathbf{X}_t\)</span> and <span class="arithmatex">\(Y:=u_t(\mathbf{X}_t\mid \mathbf{Z})\)</span>. By the <span class="arithmatex">\(\ell_2\)</span> projection theorem (already used in <span class="arithmatex">\(\tag{39}\)</span>), the population minimizer of <span class="arithmatex">\(\mathbb{E}[\|Y-g(X)\|^2]\)</span> is
+<span class="arithmatex">\(g^\star(x)=\mathbb{E}[Y\mid X=x]\)</span>. Therefore, if we had infinite data and enough model capacity, minimizing <span class="arithmatex">\(\mathcal{L}_{\mathrm{CFM}}\)</span> would recover</p>
+<div class="arithmatex">\[
+u_{\theta,t}(x)
+\;\approx\;
+\mathbb{E}\!\left[u_t(x\mid \mathbf{Z})\mid \mathbf{X}_t=x\right]
+\;=\;
+u_t(x),
+\tag{46}
+\]</div>
+<p>which is exactly the marginal generating velocity identified by the marginalization trick.</p>
+<p>More generally, Bregman divergences give an analogous “conditional expectation” principle: minimizing <span class="arithmatex">\(\mathbb{E}[D_\Phi(Y, g(X))]\)</span> recovers a conditional expectation in the geometry induced by <span class="arithmatex">\(\Phi\)</span> (with squared <span class="arithmatex">\(\ell_2\)</span> as the familiar Euclidean case).</p>
+<h3 id="general-time-sampling-engineering-note">General time sampling (engineering note)<a class="headerlink" href="#general-time-sampling-engineering-note" title="Permanent link">&para;</a></h3>
+<p>The uniform choice <span class="arithmatex">\(t\sim U[0,1]\)</span> can be replaced by any density <span class="arithmatex">\(\omega(t)\)</span> on <span class="arithmatex">\([0,1]\)</span>: it simply reweights the contribution of different times in <span class="arithmatex">\(\mathcal{L}_{\mathrm{FM}}\)</span> / <span class="arithmatex">\(\mathcal{L}_{\mathrm{CFM}}\)</span>. In practice, changing the sampling distribution for <span class="arithmatex">\(t\)</span> is often a convenient variance-control knob.</p>
+<h2 id="b24-solving-unconditional-generation-with-conditional-flows">B2.4. Solving unconditional generation with conditional flows<a class="headerlink" href="#b24-solving-unconditional-generation-with-conditional-flows" title="Permanent link">&para;</a></h2>
+<p>At this point, training a flow model <span class="arithmatex">\(u_{\theta,t}\)</span> can be reduced to three concrete steps:</p>
+<ol>
+<li>Find a family of conditional probability paths <span class="arithmatex">\(p_{t\mid Z}(x\mid z)\)</span> whose mixture <span class="arithmatex">\(p_t(x)=\int p_{t\mid Z}(x\mid z)p_Z(z)\,dz\)</span> defines the desired marginal path (and satisfies the usual boundary / mass-conservation requirements).</li>
+<li>Find conditional velocity fields <span class="arithmatex">\(u_t(x\mid z)\)</span> that generate each conditional path <span class="arithmatex">\(p_{t\mid Z}(\cdot\mid z)\)</span>.</li>
+<li>Train <span class="arithmatex">\(u_{\theta,t}\)</span> using the Conditional Flow Matching loss (B2.3), which only requires sampling <span class="arithmatex">\(z\)</span> and evaluating <span class="arithmatex">\(u_t(\cdot\mid z)\)</span>, not the intractable marginal velocity <span class="arithmatex">\(u_t(\cdot)\)</span>.</li>
+</ol>
+<p>What remains is a practical question: <strong>how do we design such conditional paths and conditional velocity fields?</strong></p>
+<h3 id="a-flexible-construction-via-conditional-flows">A flexible construction via conditional flows<a class="headerlink" href="#a-flexible-construction-via-conditional-flows" title="Permanent link">&para;</a></h3>
+<p>One general approach is to <em>build a conditional flow map</em> and obtain both <span class="arithmatex">\(p_{t\mid 1}(x\mid x_1)\)</span> and <span class="arithmatex">\(u_t(x\mid x_1)\)</span> from it. Here the conditioning variable is the endpoint <span class="arithmatex">\(\mathbf{X}_1=x_1\)</span>.</p>
+<p>Define a conditional flow
+<span class="arithmatex">\(\psi:[0,1)\times\mathbb{R}^d\times\mathbb{R}^d\to\mathbb{R}^d\)</span>, written <span class="arithmatex">\(\psi_t(x\mid x_1)\)</span>, such that
+$$
+\psi_0(x\mid x_1)=x,
+\qquad
+\lim_{t\uparrow 1}\psi_t(x\mid x_1)=x_1,
+\tag{47}
+$$</p>
+<p>and assume <span class="arithmatex">\(\psi\)</span> is smooth in <span class="arithmatex">\((t,x)\)</span> and a diffeomorphism in <span class="arithmatex">\(x\)</span> for each <span class="arithmatex">\(t\in[0,1)\)</span> (conditions can be relaxed, but smoothness keeps the discussion simple).</p>
+<p>Now define the conditional flow model</p>
+<div class="arithmatex">\[
+\mathbf{X}_{t\mid 1} := \psi_t(\mathbf{X}_{0\mid 1}\mid \mathbf{X}_1),
+\qquad
+\mathbf{X}_{0\mid 1}\sim \pi_{0\mid 1}(\cdot\mid \mathbf{X}_1).
+\tag{48}
+\]</div>
+<p>The conditional density <span class="arithmatex">\(p_{t\mid 1}(\cdot\mid x_1)\)</span> is the push-forward of <span class="arithmatex">\(\pi_{0\mid 1}(\cdot\mid x_1)\)</span> under <span class="arithmatex">\(\psi_t(\cdot\mid x_1)\)</span>:</p>
+<div class="arithmatex">\[
+p_{t\mid 1}(x\mid x_1)
+:=
+\big(\psi_t(\cdot\mid x_1)\big)_\#\pi_{0\mid 1}(\cdot\mid x_1)\,(x).
+\tag{49}
+\]</div>
+<p>Finally, by the standard equivalence between flows and velocity fields, the corresponding conditional velocity field is uniquely determined by <span class="arithmatex">\(\psi\)</span> via differentiation:</p>
+<div class="arithmatex">\[
+u_t(x\mid x_1)
+\;=\;
+\frac{\partial}{\partial t}\psi_t\!\big(\psi_t^{-1}(x\mid x_1)\mid x_1\big),
+\qquad t\in[0,1).
+\tag{50}
+\]</div>
+<p><strong>Summary.</strong> This further reduces “design <span class="arithmatex">\(p_{t\mid 1}\)</span> and <span class="arithmatex">\(u_t(\cdot\mid x_1)\)</span>” to a single task: <strong>build a conditional flow map <span class="arithmatex">\(\psi_t(\cdot\mid x_1)\)</span> satisfying the endpoint constraints <span class="arithmatex">\(\tag{47}\)</span>.</strong> Different choices of <span class="arithmatex">\(\psi\)</span> (e.g. OT-inspired conditional flows, affine conditional flows, etc.) induce different conditional paths and learning dynamics.</p>
+<p><img src="../assets/figures/B-fig11.png" width="800"></p>
+<h4 id="derivation-rewriting-the-cfm-loss-using-a-conditional-flow-psi_tcdotmid-x_1">Derivation: rewriting the CFM loss using a conditional flow <span class="arithmatex">\(\psi_t(\cdot\mid x_1)\)</span><a class="headerlink" href="#derivation-rewriting-the-cfm-loss-using-a-conditional-flow-psi_tcdotmid-x_1" title="Permanent link">&para;</a></h4>
+<p>Revisit the CFM objective <span class="arithmatex">\(\tag{43}\)</span> in the special case <span class="arithmatex">\(\mathbf{Z}=\mathbf{X}_1\)</span>. Using the conditional path induced by the conditional flow <span class="arithmatex">\(\psi_t(\cdot\mid x_1)\)</span>, we can write</p>
+<div class="arithmatex">\[
+\mathcal{L}_{\mathrm{CFM}}(\theta)
+\;=\;
+\mathbb{E}_{t,\mathbf{X}_1,\mathbf{X}_t\sim p_{t\mid 1}(\cdot\mid \mathbf{X}_1)}
+\Big[
+D_\Phi\!\big(u_t(\mathbf{X}_t\mid \mathbf{X}_1),\,u_{\theta,t}(\mathbf{X}_t)\big)
+\Big].
+\tag{51}
+\]</div>
+<p>Now use the sampling representation <span class="arithmatex">\(\tag{48}\)</span>: for a given <span class="arithmatex">\(\mathbf{X}_1\)</span>, sample <span class="arithmatex">\(\mathbf{X}_{0\mid 1}\sim \pi_{0\mid 1}(\cdot\mid \mathbf{X}_1)\)</span> and set <span class="arithmatex">\(\mathbf{X}_t=\psi_t(\mathbf{X}_{0\mid 1}\mid \mathbf{X}_1)\)</span>. By the Law of the Unconscious Statistician (LOTUS), <span class="arithmatex">\(\mathbf{X}_t\sim p_{t\mid 1}(\cdot\mid \mathbf{X}_1)\)</span> can therefore be replaced by <span class="arithmatex">\((\mathbf{X}_{0\mid 1},\mathbf{X}_1)\)</span> sampling:</p>
+<div class="arithmatex">\[
+\mathcal{L}_{\mathrm{CFM}}(\theta)
+\;=\;
+\mathbb{E}_{t,\;(\mathbf{X}_{0\mid 1},\mathbf{X}_1)\sim \pi_{0,1}}
+\Big[
+D_\Phi\!\big(u_t(\psi_t(\mathbf{X}_{0\mid 1}\mid \mathbf{X}_1)\mid \mathbf{X}_1),\,u_{\theta,t}(\psi_t(\mathbf{X}_{0\mid 1}\mid \mathbf{X}_1))\big)
+\Big].
+\tag{52}
+\]</div>
+<p>Here <span class="arithmatex">\(\pi_{0,1}\)</span> denotes the joint law of <span class="arithmatex">\((\mathbf{X}_{0\mid 1},\mathbf{X}_1)\)</span>, i.e. sample <span class="arithmatex">\(\mathbf{X}_1\sim p_1\)</span> and then <span class="arithmatex">\(\mathbf{X}_{0\mid 1}\sim \pi_{0\mid 1}(\cdot\mid \mathbf{X}_1)\)</span>.</p>
+<p>Finally, the conditional velocity field induced by <span class="arithmatex">\(\psi\)</span> satisfies (by definition <span class="arithmatex">\(\tag{50}\)</span>) the identity</p>
+<div class="arithmatex">\[
+u_t(\mathbf{X}_t\mid \mathbf{X}_1)
+\;=\;
+\frac{\partial}{\partial t}\psi_t(\mathbf{X}_{0\mid 1}\mid \mathbf{X}_1)
+\;=:\;
+\dot\psi_t(\mathbf{X}_{0\mid 1}\mid \mathbf{X}_1),
+\qquad
+\mathbf{X}_t=\psi_t(\mathbf{X}_{0\mid 1}\mid \mathbf{X}_1).
+\tag{53}
+\]</div>
+<p>Substituting <span class="arithmatex">\(\tag{53}\)</span> into <span class="arithmatex">\(\tag{52}\)</span> yields the practical “supervised” form: the label is simply <span class="arithmatex">\(\dot\psi_t(\mathbf{X}_{0\mid 1}\mid \mathbf{X}_1)\)</span> evaluated along the sampled conditional flow trajectory.</p>
+<p>In the squared-<span class="arithmatex">\(\ell_2\)</span> case (i.e. <span class="arithmatex">\(D_\Phi(a,b)=\frac12\|a-b\|^2\)</span>), Proposition 1 reduces to the usual conditional mean optimality. The population minimizer of <span class="arithmatex">\(\mathcal{L}_{\mathrm{CFM}}\)</span> therefore satisfies</p>
+<div class="arithmatex">\[
+u_t(x)
+\;=\;
+\mathbb{E}\!\left[\dot\psi_t(\mathbf{X}_{0\mid 1}\mid \mathbf{X}_1)\;\middle|\;\mathbf{X}_t=x\right],
+\tag{54}
+\]</div>
+<p>which matches the earlier “marginal velocity = conditional expectation” principle, now expressed directly in terms of the conditional flow map <span class="arithmatex">\(\psi_t(\cdot\mid x_1)\)</span>.</p>
+<blockquote>
+<p><strong>Corollary 1 (meaning; conditional-flow version of marginalization).</strong> If we build the conditional probability path <span class="arithmatex">\(p_{t\mid 1}(\cdot\mid x_1)\)</span> by pushing forward a <span class="arithmatex">\(C^1\)</span> base conditional <span class="arithmatex">\(\pi_{0\mid 1}(\cdot\mid x_1)\)</span> through a sufficiently smooth conditional flow map <span class="arithmatex">\(\psi_t(\cdot\mid x_1)\)</span> (with the endpoint constraints <span class="arithmatex">\(\psi_0(x\mid x_1)=x\)</span> and <span class="arithmatex">\(\lim_{t\uparrow 1}\psi_t(x\mid x_1)=x_1\)</span>), and if the induced conditional velocity <span class="arithmatex">\(u_t(\cdot\mid x_1)\)</span> is conditionally integrable (e.g. <span class="arithmatex">\(\mathbb{E}\|\dot\psi_t(\mathbf{X}_{0\mid 1}\mid \mathbf{X}_1)\|&lt;\infty\)</span>), then Theorem 3 applies with <span class="arithmatex">\(\mathbf{Z}=\mathbf{X}_1\)</span>: the posterior-averaged marginal velocity field <span class="arithmatex">\(u_t(x)\)</span> generates the mixed marginal path <span class="arithmatex">\(p_t(x)=\int p_{t\mid 1}(x\mid x_1)\,p_1(x_1)\,dx_1\)</span>. In short: <strong>valid conditional flows <span class="arithmatex">\(\Rightarrow\)</span> a valid marginal (unconditional) probability path and generator</strong>, so conditional-flow constructions are a principled way to design <span class="arithmatex">\(p_t\)</span> and <span class="arithmatex">\(u_t\)</span> for Flow Matching.</p>
+<p><strong>Note (pair-conditioned vs. endpoint-conditioned flows, and a cautionary counterexample).</strong> In the guide, one can define an intermediate state either via an endpoint-conditioned flow <span class="arithmatex">\(X_t=\psi_t(X_0\mid X_1)\)</span> or more symmetrically via a pair-conditioned interpolant <span class="arithmatex">\(X_t=\psi_t(X_0,X_1)\)</span>. Under additional invertibility assumptions (e.g. <span class="arithmatex">\(\psi_t(\cdot,x_1)\)</span> is a diffeomorphism in <span class="arithmatex">\(x_0\)</span> for each fixed <span class="arithmatex">\(x_1\)</span>, and <span class="arithmatex">\(\psi_t(x_0,\cdot)\)</span> is a diffeomorphism in <span class="arithmatex">\(x_1\)</span> for each fixed <span class="arithmatex">\(x_0\)</span>), these viewpoints lead to the same marginal probability path <span class="arithmatex">\((p_t)\)</span> and the same marginal velocity field <span class="arithmatex">\(u_t\)</span> (the “conditioning choice” is then largely an equivalent parametrization).</p>
+<p>However, <strong>not every smooth endpoint interpolant is valid</strong> for defining a marginal generating velocity. A standard counterexample is</p>
+<div class="arithmatex">\[
+\psi_t(x_0,x_1)
+:=
+\big((1-2t)_+\big)^\tau\,x_0
++
+\big((2t-1)_+\big)^\tau\,x_1,
+\qquad
+(s)_+ := \max\{s,0\},
+\qquad
+\tau&gt;2,
+\tag*{}
+\]</div>
+<p>for which <span class="arithmatex">\(\psi_0(x_0,x_1)=x_0\)</span>, <span class="arithmatex">\(\psi_1(x_0,x_1)=x_1\)</span>, but <span class="arithmatex">\(\psi_{1/2}(x_0,x_1)=0\)</span> for <em>all</em> <span class="arithmatex">\((x_0,x_1)\)</span>. Hence, if <span class="arithmatex">\(X_t:=\psi_t(X_0,X_1)\)</span>, then <span class="arithmatex">\(X_{1/2}=0\)</span> almost surely and the marginal <span class="arithmatex">\(p_{1/2}\)</span> collapses to a delta mass. If a well-posed deterministic Markov velocity field <span class="arithmatex">\(u_t(x)\)</span> were to generate this marginal path (in the sense of the continuity equation and the flow ODE), that delta collapse would force <span class="arithmatex">\(p_t\)</span> to remain a delta for all <span class="arithmatex">\(t&gt;1/2\)</span>, contradicting a non-degenerate endpoint distribution at <span class="arithmatex">\(t=1\)</span>. The takeaway is: when constructing <span class="arithmatex">\(\psi_t\)</span> we need conditions (non-collapse / invertibility and integrability) that guarantee the existence of a sensible marginal generator <span class="arithmatex">\(u_t\)</span>.</p>
+</blockquote>
+<h2 id="b25-optimal-transport-and-linear-conditional-flow">B2.5 Optimal Transport and linear conditional flow<a class="headerlink" href="#b25-optimal-transport-and-linear-conditional-flow" title="Permanent link">&para;</a></h2>
+<p>This subsection is a “borrow-the-conclusion” stop: we will not dive into OT theory, but we will use one clean variational fact—<strong>a linear conditional flow arises from a kinetic-energy minimization principle (or, more precisely, from a tight upper bound thereof).</strong></p>
+<h3 id="dynamic-ot-with-quadratic-cost-kinetic-energy">Dynamic OT with quadratic cost (kinetic energy)<a class="headerlink" href="#dynamic-ot-with-quadratic-cost-kinetic-energy" title="Permanent link">&para;</a></h3>
+<p>A canonical “choose a nice path” principle is the Benamou–Brenier (dynamic OT) formulation with quadratic cost: find a probability path <span class="arithmatex">\((p_t)_{t\in[0,1]}\)</span> and a velocity field <span class="arithmatex">\((u_t)\)</span> that minimize kinetic energy subject to mass conservation and endpoint constraints:</p>
+<div class="arithmatex">\[
+(p_t^\star,u_t^\star)
+\in
+\arg\min_{(p_t,u_t)}
+\int_{0}^{1}\int_{\mathbb{R}^d}\|u_t(x)\|^2\,p_t(x)\,dx\,dt
+\tag{55a}
+\]</div>
+<p>subject to</p>
+<div class="arithmatex">\[
+p_0=p,\qquad p_1=q,
+\tag{55b}
+\]</div>
+<p>and the continuity equation</p>
+<div class="arithmatex">\[
+\partial_t p_t(x) + \nabla\cdot\big(p_t(x)\,u_t(x)\big)=0.
+\tag{55c}
+\]</div>
+<p>When an optimal transport map <span class="arithmatex">\(\varphi:\mathbb{R}^d\to\mathbb{R}^d\)</span> exists, the resulting marginal path is the OT displacement interpolant (McCann):</p>
+<div class="arithmatex">\[
+\psi_t^\star(x) = (1-t)\,x + t\,\varphi(x),
+\qquad
+X_t=\psi_t^\star(X_0),\ \ X_0\sim p.
+\tag{56}
+\]</div>
+<p>It yields straight sample trajectories
+<span class="arithmatex">\(X_t = X_0 + t(\varphi(X_0)-X_0)\)</span> with constant velocity <span class="arithmatex">\(\varphi(X_0)-X_0\)</span>, which is numerically friendly.</p>
+<h4 id="why-ot-is-a-reasonable-but-not-mandatory-choice">Why OT is a reasonable (but not mandatory) choice<a class="headerlink" href="#why-ot-is-a-reasonable-but-not-mandatory-choice" title="Permanent link">&para;</a></h4>
+<p>The OT viewpoint is often used here for geometric intuition rather than as a claim of universal optimality.</p>
+<ul>
+<li><strong>Geometric meaning.</strong> The dynamic OT objective <span class="arithmatex">\(\tag{55a}\)</span>–<span class="arithmatex">\(\tag{55c}\)</span> picks, among all mass-preserving transports from <span class="arithmatex">\(p\)</span> to <span class="arithmatex">\(q\)</span>, the one with minimal kinetic energy in the ambient Euclidean geometry. Equivalently (informally), it chooses a “least-effort” probability flow.</li>
+<li><strong>Straight trajectories.</strong> The displacement interpolant <span class="arithmatex">\(\tag{56}\)</span> moves individual samples along straight lines with constant velocity, which tends to be easier for ODE solvers (less curvature, less stiffness).</li>
+<li><strong>A principled baseline.</strong> Even if we do not solve OT exactly, it provides a clean reference path that is well-motivated by an explicit variational principle.</li>
+<li><strong>Not necessarily best for learning.</strong> The quadratic cost uses the Euclidean metric in <span class="arithmatex">\(\mathbb{R}^d\)</span>, which may not align with semantic similarity (e.g. in pixel space). Different couplings and different paths can yield better training dynamics or sample quality, and in practice FM often uses simpler couplings / interpolants for efficiency.</li>
+</ul>
+<p><strong>Geometric insight (why “minimum kinetic energy” is a straight line in distribution space).</strong> If we equip the space of probability measures with the quadratic Wasserstein distance
+$$
+W_2^2(p,q)
+:=
+\min_{\pi\in\Pi(p,q)}
+\mathbb{E}_{(X_0,X_1)\sim\pi}\big[|X_1-X_0|^2\big],
+\tag{56a}
+$$
+then the Benamou–Brenier formulation says that <span class="arithmatex">\(W_2\)</span>-geodesics are exactly the paths that minimize the kinetic energy <span class="arithmatex">\(\int_0^1\!\int \|u_t(x)\|^2 p_t(x)\,dx\,dt\)</span> subject to the continuity equation and endpoint constraints. In words: <strong>minimum kinetic energy corresponds to “straight-line motion” in <span class="arithmatex">\(W_2\)</span> geometry</strong>—this is a geometric statement about the metric structure of distribution space, not a physical claim about images as fluids.</p>
+<p><strong>Why squared speed (<span class="arithmatex">\(\ell_2\)</span> kinetic energy) is a natural regularizer.</strong> Many alternative “effort” functionals are possible (e.g. <span class="arithmatex">\(\ell_1\)</span>-type speed, minimum-time criteria, or adding stochasticity), but the <span class="arithmatex">\(\ell_2\)</span> kinetic energy is special: it is smooth, convex in the flux variables, and in Euclidean space it often yields well-behaved (and sometimes analytic) interpolants. For Flow Matching, OT therefore serves as a canonical, geometry-consistent choice of <span class="arithmatex">\(\psi_t\)</span>: not a universal truth, but a particularly natural regularization principle that produces elegant mathematics and stable numerics.</p>
+<h3 id="from-marginal-kinetic-energy-to-a-conditional-flow-objective-jensen-bound">From marginal kinetic energy to a conditional-flow objective (Jensen bound)<a class="headerlink" href="#from-marginal-kinetic-energy-to-a-conditional-flow-objective-jensen-bound" title="Permanent link">&para;</a></h3>
+<p>In our conditional-flow construction, the marginal velocity can be written (squared-<span class="arithmatex">\(\ell_2\)</span> case) as a conditional expectation, e.g.
+<span class="arithmatex">\(u_t(x)=\mathbb{E}[\dot\psi_t(X_{0\mid 1}\mid X_1)\mid X_t=x]\)</span> from <span class="arithmatex">\(\tag{54}\)</span>.
+Plugging this into the kinetic energy integrand and applying Jensen’s inequality gives a bound:</p>
+<div class="arithmatex">\[
+\int_0^1 \mathbb{E}\big[\|u_t(X_t)\|^2\big]\,dt
+\;=\;
+\int_0^1 \mathbb{E}\Big[\big\|\mathbb{E}[\dot\psi_t(X_{0\mid 1}\mid X_1)\mid X_t]\big\|^2\Big]\,dt
+\;\le\;
+\int_0^1 \mathbb{E}\Big[\mathbb{E}\big[\|\dot\psi_t(X_{0\mid 1}\mid X_1)\|^2\mid X_t\big]\Big]\,dt.
+\tag{57}
+\]</div>
+<p>Using the tower property, the right-hand side simplifies to an expectation over paired endpoints:</p>
+<div class="arithmatex">\[
+\int_0^1 \mathbb{E}\big[\|u_t(X_t)\|^2\big]\,dt
+\;\le\;
+\mathbb{E}_{(X_{0\mid 1},X_1)\sim\pi_{0,1}}
+\left[
+\int_0^1 \|\dot\psi_t(X_{0\mid 1}\mid X_1)\|^2\,dt
+\right].
+\tag{58}
+\]</div>
+<p>Crucially, the bound in <span class="arithmatex">\(\tag{58}\)</span> <strong>decouples over pairs</strong>: for each fixed <span class="arithmatex">\((x,x_1)\)</span>, minimizing the inner integral becomes a classical variational problem.</p>
+<h3 id="the-per-pair-variational-problem-rightarrow-linear-conditional-flow">The per-pair variational problem <span class="arithmatex">\(\Rightarrow\)</span> linear conditional flow<a class="headerlink" href="#the-per-pair-variational-problem-rightarrow-linear-conditional-flow" title="Permanent link">&para;</a></h3>
+<p>For a fixed pair <span class="arithmatex">\((x,x_1)\)</span>, consider a trajectory <span class="arithmatex">\(\gamma:[0,1]\to\mathbb{R}^d\)</span> with <span class="arithmatex">\(\gamma(0)=x\)</span>, <span class="arithmatex">\(\gamma(1)=x_1\)</span>. The variational problem is</p>
+<div class="arithmatex">\[
+\min_{\gamma}\ \int_0^1 \|\dot\gamma(t)\|^2\,dt
+\quad\text{s.t.}\quad
+\gamma(0)=x,\ \gamma(1)=x_1.
+\tag{59}
+\]</div>
+<p>The Euler–Lagrange equation for the Lagrangian <span class="arithmatex">\(L(\gamma,\dot\gamma)=\|\dot\gamma\|^2\)</span> gives <span class="arithmatex">\(\ddot\gamma(t)=0\)</span>, hence <span class="arithmatex">\(\gamma(t)\)</span> must be a straight line. Enforcing the boundary conditions yields</p>
+<div class="arithmatex">\[
+\psi_t(x\mid x_1)
+=
+(1-t)\,x + t\,x_1.
+\tag{60}
+\]</div>
+<p>This is the <strong>linear conditional flow</strong>. It minimizes the Jensen upper bound <span class="arithmatex">\(\tag{58}\)</span> among conditional flows (and in a degenerate target case <span class="arithmatex">\(q=\delta_{x_1}\)</span>, it coincides with the exact OT solution).</p>
+<p>One additional useful consequence is an explicit kinetic-energy bound:</p>
+<div class="arithmatex">\[
+\int_0^1 \mathbb{E}\big[\|u_t(X_t)\|^2\big]\,dt
+\;\le\;
+\mathbb{E}\big[\|X_1-X_{0\mid 1}\|^2\big],
+\tag{61}
+\]</div>
+<p>where <span class="arithmatex">\((X_{0\mid 1},X_1)\sim\pi_{0,1}\)</span>. This explains why linear / affine conditional flows are often a good default: they encourage straight trajectories and keep the implied marginal kinetic energy controlled.</p>
+<h2 id="b26-affine-conditional-flows">B2.6 Affine conditional flows<a class="headerlink" href="#b26-affine-conditional-flows" title="Permanent link">&para;</a></h2>
+<p>In B2.5, the linear conditional flow emerged as the minimizer of a (tight) upper bound on the marginal kinetic energy. A natural generalization is the family of <strong>affine conditional flows</strong>, which keep the conditional dynamics simple while retaining enough flexibility to shape the probability path.</p>
+<h3 id="setup-an-affine-conditional-flow-with-a-scheduler">Setup: an affine conditional flow with a scheduler<a class="headerlink" href="#setup-an-affine-conditional-flow-with-a-scheduler" title="Permanent link">&para;</a></h3>
+<p>Define a conditional flow of the form</p>
+<div class="arithmatex">\[
+\psi_t(x\mid x_1) := \alpha_t\,x_1 + \sigma_t\,x,
+\tag{62}
+\]</div>
+<p>where <span class="arithmatex">\(\alpha_t,\sigma_t:[0,1]\to[0,1]\)</span> are smooth “schedulers” satisfying the endpoint constraints</p>
+<div class="arithmatex">\[
+\alpha_0=0,\quad \alpha_1=1,\qquad \sigma_0=1,\quad \sigma_1=0,
+\tag{63}
+\]</div>
+<p>and strict monotonicity on <span class="arithmatex">\((0,1)\)</span>,</p>
+<div class="arithmatex">\[
+\dot\alpha_t&gt;0,\qquad \dot\sigma_t&lt;0,\qquad t\in(0,1).
+\tag{64}
+\]</div>
+<p>For each fixed <span class="arithmatex">\(t\in[0,1)\)</span>, <span class="arithmatex">\(\psi_t(\cdot\mid x_1)\)</span> is an affine (hence smooth) map in <span class="arithmatex">\(x\)</span>, and it satisfies the same “endpoint-conditioning” spirit as <span class="arithmatex">\(\tag{47}\)</span>: it is the identity at <span class="arithmatex">\(t=0\)</span> and collapses to <span class="arithmatex">\(x_1\)</span> as <span class="arithmatex">\(t\uparrow 1\)</span>.</p>
+<h3 id="labels-marginal-velocity-and-the-cfm-loss">Labels, marginal velocity, and the CFM loss<a class="headerlink" href="#labels-marginal-velocity-and-the-cfm-loss" title="Permanent link">&para;</a></h3>
+<p>Under the independent coupling <span class="arithmatex">\(\pi_{0,1}(x_0,x_1)=p(x_0)\,q(x_1)\)</span>, we can sample <span class="arithmatex">\(X_0\sim p\)</span>, <span class="arithmatex">\(X_1\sim q\)</span>, and define</p>
+<div class="arithmatex">\[
+X_t := \psi_t(X_0\mid X_1) = \alpha_t X_1 + \sigma_t X_0.
+\tag{65}
+\]</div>
+<p>Differentiating <span class="arithmatex">\(\psi_t\)</span> in time gives a tractable conditional-velocity label along the sampled pair:</p>
+<div class="arithmatex">\[
+\dot\psi_t(X_0\mid X_1) = \dot\alpha_t\,X_1 + \dot\sigma_t\,X_0.
+\tag{66}
+\]</div>
+<p>The corresponding marginal generating velocity is the posterior average (cf. <span class="arithmatex">\(\tag{54}\)</span>):</p>
+<div class="arithmatex">\[
+u_t(x)
+=
+\mathbb{E}\!\left[\dot\alpha_t\,X_1 + \dot\sigma_t\,X_0 \;\middle|\; X_t=x\right].
+\tag{67}
+\]</div>
+<p>In this affine case, the conditional flow matching objective <span class="arithmatex">\(\tag{52}\)</span> becomes simply</p>
+<div class="arithmatex">\[
+\mathcal{L}_{\mathrm{CFM}}(\theta)
+=
+\mathbb{E}_{t,\,(X_0,X_1)\sim\pi_{0,1}}
+\Big[
+D_\Phi\big(\dot\alpha_t X_1 + \dot\sigma_t X_0,\ u_{\theta,t}(X_t)\big)
+\Big],
+\qquad X_t=\alpha_t X_1 + \sigma_t X_0.
+\tag{68}
+\]</div>
+<blockquote>
+<p><strong>Theorem 6 (Affine conditional flows generate a valid marginal path).</strong> Assume that <span class="arithmatex">\(q\)</span> has bounded support. Assume that <span class="arithmatex">\(p\in C^1(\mathbb{R}^d)\)</span> is strictly positive and has finite second moments. Let the coupling be independent, <span class="arithmatex">\(\pi_{0,1}(x_0,x_1)=p(x_0)\,q(x_1)\)</span>. Let <span class="arithmatex">\(p_{t\mid 1}(x\mid x_1)\)</span> be defined by the conditional-flow push-forward <span class="arithmatex">\(\tag{49}\)</span> with <span class="arithmatex">\(\psi_t\)</span> given by <span class="arithmatex">\(\tag{62}\)</span>, and define the marginal path by mixing over <span class="arithmatex">\(x_1\)</span> as in <span class="arithmatex">\(\tag{69}\)</span>. Then the marginal velocity field <span class="arithmatex">\(u_t\)</span> defined by <span class="arithmatex">\(\tag{67}\)</span> generates the marginal probability path <span class="arithmatex">\((p_t)_{t\in[0,1)}\)</span>, which interpolates <span class="arithmatex">\(p\)</span> and <span class="arithmatex">\(q\)</span>.</p>
+</blockquote>
+<div class="arithmatex">\[
+p_t(x) := \int_{\mathbb{R}^d} p_{t\mid 1}(x\mid x_1)\,q(x_1)\,dx_1.
+\tag{69}
+\]</div>
+<h3 id="what-theorem-6-is-saying-in-practice">What Theorem 6 is saying (in practice)<a class="headerlink" href="#what-theorem-6-is-saying-in-practice" title="Permanent link">&para;</a></h3>
+<p>Using Corollary 1, one can show (under mild regularity/integrability assumptions, e.g. <span class="arithmatex">\(q\)</span> bounded support and <span class="arithmatex">\(p\in C^1(\mathbb{R}^d)\)</span> strictly positive with finite second moments) that the marginal velocity <span class="arithmatex">\(u_t\)</span> in <span class="arithmatex">\(\tag{67}\)</span> indeed generates the marginal path <span class="arithmatex">\(p_t\)</span> interpolating <span class="arithmatex">\(p\)</span> and <span class="arithmatex">\(q\)</span>. Informally: <strong>affine conditional flows give a broad, still-checkable family of conditional constructions that produce a legitimate unconditional probability path and a trainable CFM objective.</strong></p>
+<h3 id="b261-velocity-parameterizations">B2.6.1 Velocity parameterizations<a class="headerlink" href="#b261-velocity-parameterizations" title="Permanent link">&para;</a></h3>
+<p>Different parameterizations can be mathematically equivalent (representing the same underlying velocity field or path), yet lead to different optimization dynamics in practice; this subsection treats parameterization choice as an engineering problem of finding what trains best.</p>
+<p>As a simple example, for the affine conditional flow in <span class="arithmatex">\(\tag{65}\)</span>, for any <span class="arithmatex">\(t\in(0,1)\)</span> such that <span class="arithmatex">\(\alpha_t&gt;0\)</span> and <span class="arithmatex">\(\sigma_t&gt;0\)</span>,</p>
+<div class="arithmatex">\[
+\begin{aligned}
+X_t &amp;= \alpha_t X_1 + \sigma_t X_0 \\
+&amp;\Longleftrightarrow\quad
+X_1 = \frac{X_t-\sigma_t X_0}{\alpha_t} \\
+&amp;\Longleftrightarrow\quad
+X_0 = \frac{X_t-\alpha_t X_1}{\sigma_t}.
+\end{aligned}
+\tag{70}
+\]</div>
+<p>These identities are simple algebra, but they will be used repeatedly: they are exactly <span class="arithmatex">\(\tag{70}\)</span> substituted into the conditional-expectation formula <span class="arithmatex">\(\tag{67}\)</span>.</p>
+<p>First, by linearity of conditional expectation, <span class="arithmatex">\(\tag{67}\)</span> can be expanded as</p>
+<div class="arithmatex">\[
+u_t(x)
+=
+\dot\alpha_t\,\mathbb{E}[X_1\mid X_t=x]
+\;+\;
+\dot\sigma_t\,\mathbb{E}[X_0\mid X_t=x].
+\tag{71}
+\]</div>
+<p>Next, taking conditional expectation of <span class="arithmatex">\(X_t=\alpha_t X_1+\sigma_t X_0\)</span> given <span class="arithmatex">\(X_t=x\)</span> yields</p>
+<div class="arithmatex">\[
+x
+=
+\alpha_t\,\mathbb{E}[X_1\mid X_t=x]
+\;+\;
+\sigma_t\,\mathbb{E}[X_0\mid X_t=x],
+\tag{72}
+\]</div>
+<p>and therefore the two equivalent rearrangements</p>
+<div class="arithmatex">\[
+\mathbb{E}[X_1\mid X_t=x]
+=
+\frac{x-\sigma_t\,\mathbb{E}[X_0\mid X_t=x]}{\alpha_t},
+\tag{73}
+\]</div>
+<div class="arithmatex">\[
+\mathbb{E}[X_0\mid X_t=x]
+=
+\frac{x-\alpha_t\,\mathbb{E}[X_1\mid X_t=x]}{\sigma_t}.
+\tag{74}
+\]</div>
+<p>Plugging <span class="arithmatex">\(\tag{73}\)</span> or <span class="arithmatex">\(\tag{74}\)</span> into <span class="arithmatex">\(\tag{71}\)</span> gives two equivalent parameterizations of the same marginal velocity:</p>
+<div class="arithmatex">\[
+u_t(x)
+=
+\frac{\dot\sigma_t}{\sigma_t}\,x
+\;+\;
+\left(\dot\alpha_t - \alpha_t\,\frac{\dot\sigma_t}{\sigma_t}\right)\mathbb{E}[X_1\mid X_t=x],
+\tag{75}
+\]</div>
+<div class="arithmatex">\[
+u_t(x)
+=
+\frac{\dot\alpha_t}{\alpha_t}\,x
+\;+\;
+\left(\dot\sigma_t - \sigma_t\,\frac{\dot\alpha_t}{\alpha_t}\right)\mathbb{E}[X_0\mid X_t=x].
+\tag{76}
+\]</div>
+<p>where we have used the basic identity <span class="arithmatex">\(\mathbb{E}[Z\mid Z=z]=z\)</span>.
+Next, denote the deterministic conditional-mean predictors</p>
+<div class="arithmatex">\[
+x_{1\mid t}(x) := \mathbb{E}[X_1\mid X_t=x]
+\qquad\text{(the \(x_1\)-prediction / target)},
+\tag{77}
+\]</div>
+<div class="arithmatex">\[
+x_{0\mid t}(x) := \mathbb{E}[X_0\mid X_t=x]
+\qquad\text{(the \(x_0\)-prediction / source)}.
+\tag{78}
+\]</div>
+<p>These provide two additional ways to parameterize <span class="arithmatex">\(u_t\)</span>: via the target prediction <span class="arithmatex">\(x_{1\mid t}\)</span> and via the source prediction <span class="arithmatex">\(x_{0\mid t}\)</span>, by plugging <span class="arithmatex">\(\tag{77}\)</span>–<span class="arithmatex">\(\tag{78}\)</span> into <span class="arithmatex">\(\tag{75}\)</span>–<span class="arithmatex">\(\tag{76}\)</span>.</p>
+<blockquote>
+<p><strong>Sanity check (your interpretation).</strong> Your statement is essentially correct <em>with one important qualifier</em>: given paired endpoints <span class="arithmatex">\((X_0,X_1)\)</span> and a known construction of <span class="arithmatex">\(X_t\)</span> from the pair, conditional-matching losses let us learn many useful conditional expectations of the form <span class="arithmatex">\(\mathbb{E}[f_t(X_0,X_1)\mid X_t=x]\)</span>, which include <span class="arithmatex">\(x_{1\mid t}\)</span>, <span class="arithmatex">\(x_{0\mid t}\)</span>, and (through identities like <span class="arithmatex">\(\tag{75}\)</span>–<span class="arithmatex">\(\tag{76}\)</span>) the marginal velocity <span class="arithmatex">\(u_t\)</span>. For a <strong>score</strong> <span class="arithmatex">\(\nabla_x\log p_t(x)\)</span>, this is only true when the score can be expressed (or closely approximated) as such a conditional expectation for a tractable choice of <span class="arithmatex">\(f_t\)</span> (as happens in diffusion/denoising constructions). In general, “having pairs” alone does not automatically make the score a conditional expectation of a known <span class="arithmatex">\(f_t(X_0,X_1)\)</span>.</p>
+</blockquote>
+<h3 id="matching-vs-conditional-matching-a-general-recipe">Matching vs. conditional matching (a general recipe)<a class="headerlink" href="#matching-vs-conditional-matching-a-general-recipe" title="Permanent link">&para;</a></h3>
+<p>Let <span class="arithmatex">\(f_t(X_0,X_1)\in\mathbb{R}^m\)</span> be any time-dependent random vector that we can evaluate on paired samples, and define the corresponding conditional expectation function</p>
+<div class="arithmatex">\[
+g_t(x) := \mathbb{E}\big[f_t(X_0,X_1)\mid X_t=x\big].
+\tag{79}
+\]</div>
+<p>If we could evaluate <span class="arithmatex">\(g_t(X_t)\)</span>, we could fit a model <span class="arithmatex">\(g_{\theta,t}\)</span> via the “matching” objective</p>
+<div class="arithmatex">\[
+\mathcal{L}_{\mathrm{M}}(\theta)
+:=
+\mathbb{E}_{t\sim U[0,1],\,X_t\sim p_t}
+\Big[
+D_\Phi\big(g_t(X_t),\,g_{\theta,t}(X_t)\big)
+\Big].
+\tag{80}
+\]</div>
+<p>But <span class="arithmatex">\(g_t\)</span> is typically intractable. Conditional matching replaces the intractable label <span class="arithmatex">\(g_t(X_t)\)</span> by the tractable paired label <span class="arithmatex">\(f_t(X_0,X_1)\)</span>:</p>
+<div class="arithmatex">\[
+\mathcal{L}_{\mathrm{CM}}(\theta)
+:=
+\mathbb{E}_{t\sim U[0,1],\,(X_0,X_1)\sim\pi_{0,1}}
+\Big[
+D_\Phi\big(f_t(X_0,X_1),\,g_{\theta,t}(X_t)\big)
+\Big],
+\qquad X_t=\psi_t(X_0\mid X_1).
+\tag{81}
+\]</div>
+<blockquote>
+<p><strong>Theorem 7 (Gradient equivalence for conditional matching).</strong> For Bregman divergences <span class="arithmatex">\(D_\Phi\)</span> and under suitable regularity, the losses <span class="arithmatex">\(\mathcal{L}_{\mathrm{M}}\)</span> and <span class="arithmatex">\(\mathcal{L}_{\mathrm{CM}}\)</span> have the same gradients:
+<span class="arithmatex">\(\nabla_\theta \mathcal{L}_{\mathrm{M}}(\theta)=\nabla_\theta \mathcal{L}_{\mathrm{CM}}(\theta)\)</span>.
+In particular, the population minimizer satisfies <span class="arithmatex">\(g_{\theta,t}(x)=g_t(x)=\mathbb{E}[f_t(X_0,X_1)\mid X_t=x]\)</span>.</p>
+</blockquote>
+<p>This is exactly the mechanism we have already used for velocities: choosing <span class="arithmatex">\(f_t(X_0,X_1)=\dot\psi_t(X_0\mid X_1)\)</span> yields <span class="arithmatex">\(g_t(x)=u_t(x)\)</span>; choosing <span class="arithmatex">\(f_t(X_0,X_1)=X_1\)</span> yields <span class="arithmatex">\(g_t(x)=x_{1\mid t}(x)\)</span>; and choosing <span class="arithmatex">\(f_t(X_0,X_1)=X_0\)</span> yields <span class="arithmatex">\(g_t(x)=x_{0\mid t}(x)\)</span>.</p>
+<p><img src="../assets/figures/B-table1.png" width="800"></p>
+<h3 id="b262-post-training-velocity-scheduler-change">B2.6.2 Post-training velocity scheduler change<a class="headerlink" href="#b262-post-training-velocity-scheduler-change" title="Permanent link">&para;</a></h3>
+<p>Affine conditional flows admit a useful “scheduler transfer” trick: after training a velocity model under one scheduler <span class="arithmatex">\((\alpha_t,\sigma_t)\)</span>, we can <strong>reuse the same trained field</strong> to sample under a different scheduler <span class="arithmatex">\((\bar\alpha_r,\bar\sigma_r)\)</span>. In other words, the scheduler used for <em>training</em> and the scheduler used for <em>inference</em> need not coincide.</p>
+<h4 id="scaletime-st-transformation-between-two-affine-conditional-flows">Scale–time (ST) transformation between two affine conditional flows<a class="headerlink" href="#scaletime-st-transformation-between-two-affine-conditional-flows" title="Permanent link">&para;</a></h4>
+<p>Let the “old” affine conditional flow be</p>
+<div class="arithmatex">\[
+\psi_t(x_0\mid x_1) := \alpha_t\,x_1 + \sigma_t\,x_0,
+\tag{82}
+\]</div>
+<p>and the “new” one be</p>
+<div class="arithmatex">\[
+\bar\psi_r(x_0\mid x_1) := \bar\alpha_r\,x_1 + \bar\sigma_r\,x_0.
+\tag{83}
+\]</div>
+<p>We relate them by a scale–time transform: choose functions <span class="arithmatex">\(t_r\in[0,1]\)</span> and <span class="arithmatex">\(s_r\ge 0\)</span> such that</p>
+<div class="arithmatex">\[
+\bar\psi_r(x_0\mid x_1) = s_r\,\psi_{t_r}(x_0\mid x_1).
+\tag{84}
+\]</div>
+<p>Matching the coefficients of <span class="arithmatex">\(x_1\)</span> and <span class="arithmatex">\(x_0\)</span> in <span class="arithmatex">\(\tag{84}\)</span> yields
+<span class="arithmatex">\(\bar\alpha_r = s_r\alpha_{t_r}\)</span> and <span class="arithmatex">\(\bar\sigma_r = s_r\sigma_{t_r}\)</span>. Dividing these equations suggests introducing the (affine) signal-to-noise ratio</p>
+<div class="arithmatex">\[
+\rho(t) := \frac{\alpha_t}{\sigma_t},
+\qquad
+\bar\rho(r) := \frac{\bar\alpha_r}{\bar\sigma_r},
+\tag{85}
+\]</div>
+<p>and assuming <span class="arithmatex">\(\rho\)</span> is invertible on <span class="arithmatex">\([0,1)\)</span> (which typically holds for strictly increasing <span class="arithmatex">\(\alpha_t\)</span> and strictly decreasing <span class="arithmatex">\(\sigma_t\)</span> on <span class="arithmatex">\((0,1)\)</span>). Then</p>
+<div class="arithmatex">\[
+t_r = \rho^{-1}\!\big(\bar\rho(r)\big),
+\qquad
+s_r = \frac{\bar\sigma_r}{\sigma_{t_r}}.
+\tag{86}
+\]</div>
+<h4 id="transforming-the-marginal-velocity-field">Transforming the marginal velocity field<a class="headerlink" href="#transforming-the-marginal-velocity-field" title="Permanent link">&para;</a></h4>
+<p>Let <span class="arithmatex">\(X_t:=\psi_t(X_0\mid X_1)\)</span> be the old conditional flow and <span class="arithmatex">\(\bar X_r:=\bar\psi_r(X_0\mid X_1)\)</span> the new one, with the same endpoint coupling <span class="arithmatex">\((X_0,X_1)\sim\pi_{0,1}\)</span>. By <span class="arithmatex">\(\tag{84}\)</span>, we have <span class="arithmatex">\(\bar X_r = s_r X_{t_r}\)</span>. Differentiating in <span class="arithmatex">\(r\)</span> gives</p>
+<div class="arithmatex">\[
+\frac{d}{dr}\bar X_r
+=
+\dot s_r\,X_{t_r} + s_r\,\dot t_r\,\frac{d}{dt}X_t\big|_{t=t_r}.
+\tag{87}
+\]</div>
+<p>Define the old marginal velocity <span class="arithmatex">\(u_t(x):=\mathbb{E}[\frac{d}{dt}X_t\mid X_t=x]\)</span> and the new one <span class="arithmatex">\(\bar u_r(x):=\mathbb{E}[\frac{d}{dr}\bar X_r\mid \bar X_r=x]\)</span>. Conditioning <span class="arithmatex">\(\bar X_r=x\)</span> implies <span class="arithmatex">\(X_{t_r}=x/s_r\)</span>, so taking conditional expectations in <span class="arithmatex">\(\tag{87}\)</span> yields the closed-form transformation</p>
+<div class="arithmatex">\[
+\bar u_r(x)
+=
+\frac{\dot s_r}{s_r}\,x
+\;+\;
+s_r\,\dot t_r\,u_{t_r}\!\left(\frac{x}{s_r}\right).
+\tag{88}
+\]</div>
+<p>Operationally: if you trained a neural model <span class="arithmatex">\(u_{\theta,t}(x)\approx u_t(x)\)</span> under the old scheduler, you can sample under the new scheduler by evaluating <span class="arithmatex">\(u_{\theta,t_r}(x/s_r)\)</span> and applying the rescaling in <span class="arithmatex">\(\tag{88}\)</span>. This is one concrete sense in which “the scheduler can be changed post-training”.</p>
+<h4 id="equivalence-at-the-endpoint-why-scheduler-changes-can-preserve-t1-samples">Equivalence at the endpoint (why scheduler changes can preserve <span class="arithmatex">\(t=1\)</span> samples)<a class="headerlink" href="#equivalence-at-the-endpoint-why-scheduler-changes-can-preserve-t1-samples" title="Permanent link">&para;</a></h4>
+<p>Under mild conditions (and to avoid an infinite <span class="arithmatex">\(\rho(1)\)</span>, often by taking <span class="arithmatex">\(\sigma_1=\bar\sigma_1=\varepsilon&gt;0\)</span> and letting <span class="arithmatex">\(\varepsilon\downarrow 0\)</span> in the end), one can show that the transformed flow reaches the same endpoint map at <span class="arithmatex">\(t=1\)</span> (informally, different schedulers are reparameterizations of the same transport). Practically, this motivates trying different inference schedulers even when the training scheduler is fixed: the change mainly affects the <em>numerics / stiffness / step allocation</em> of the ODE, not the intended endpoint distribution.</p>
+<h3 id="b263-gaussian-paths-and-the-score">B2.6.3 Gaussian paths and the score<a class="headerlink" href="#b263-gaussian-paths-and-the-score" title="Permanent link">&para;</a></h3>
+<p>At the time of writing, the most commonly used affine probability paths in diffusion/flow practice are built from:</p>
+<ul>
+<li>the <strong>independent coupling</strong> <span class="arithmatex">\(\pi_{0,1}(x_0,x_1)=p(x_0)\,q(x_1)\)</span>,</li>
+<li>a <strong>Gaussian source</strong> <span class="arithmatex">\(p\)</span> (so <span class="arithmatex">\(X_0\)</span> is Gaussian), and</li>
+<li>an affine conditional flow <span class="arithmatex">\(X_t=\alpha_t X_1+\sigma_t X_0\)</span>.</li>
+</ul>
+<p>Because Gaussians are closed under affine transformations, the resulting conditional probability path is Gaussian:</p>
+<div class="arithmatex">\[
+p_{t\mid 1}(x\mid x_1)
+=
+\mathcal{N}\!\big(x\mid \alpha_t x_1,\ \sigma_t^2 I\big).
+\tag{89}
+\]</div>
+<p>The marginal <span class="arithmatex">\(p_t\)</span> is then a Gaussian convolution / mixture:</p>
+<div class="arithmatex">\[
+p_t(x)
+=
+\int_{\mathbb{R}^d}\mathcal{N}\!\big(x\mid \alpha_t x_1,\ \sigma_t^2 I\big)\,q(x_1)\,dx_1.
+\tag{90}
+\]</div>
+<p>This family subsumes the <strong>marginal probability paths</strong> used by standard diffusion models: in diffusion, generation is stochastic (an SDE), but the prescribed forward noising process defines the same marginal densities <span class="arithmatex">\(p_t\)</span>. In “flow language”, one can equivalently generate the same marginals using the <strong>probability flow ODE</strong>, whose velocity depends on the score <span class="arithmatex">\(\nabla_x\log p_t(x)\)</span>.</p>
+<p>Concretely, a diffusion model specifies a forward SDE</p>
+<div class="arithmatex">\[
+dX_t = f(t,X_t)\,dt + g(t)\,dW_t,
+\tag{91}
+\]</div>
+<p>whose marginals <span class="arithmatex">\(p_t\)</span> satisfy the Fokker–Planck equation. The same marginals are generated by the deterministic probability flow ODE</p>
+<div class="arithmatex">\[
+\frac{d}{dt}X_t
+=
+f(t,X_t)
+-\frac12 g(t)^2\,\nabla_x\log p_t(X_t).
+\tag{92}
+\]</div>
+<p>In the Gaussian-mixture path <span class="arithmatex">\(\tag{90}\)</span>, the score can be written in terms of the conditional-mean predictors <span class="arithmatex">\(x_{1\mid t}(x)=\mathbb{E}[X_1\mid X_t=x]\)</span> and <span class="arithmatex">\(x_{0\mid t}(x)=\mathbb{E}[X_0\mid X_t=x]\)</span>:</p>
+<div class="arithmatex">\[
+\nabla_x \log p_t(x)
+=
+-\frac{1}{\sigma_t^2}\Big(x-\alpha_t\,\mathbb{E}[X_1\mid X_t=x]\Big)
+=
+\frac{\alpha_t}{\sigma_t^2}\,x_{1\mid t}(x) - \frac{1}{\sigma_t^2}\,x,
+\tag{93}
+\]</div>
+<p>One useful quantity admitting a simple form in this Gaussian case is also the <strong>conditional score</strong>. From <span class="arithmatex">\(\tag{89}\)</span>,</p>
+<div class="arithmatex">\[
+\nabla_x\log p_{t\mid 1}(x\mid x_1)
+=
+-\frac{1}{\sigma_t^2}\big(x-\alpha_t x_1\big).
+\tag{94}
+\]</div>
+<p>The <strong>marginal score</strong> <span class="arithmatex">\(\nabla_x\log p_t(x)\)</span> can be derived from <span class="arithmatex">\(\tag{90}\)</span> by straightforward calculus:</p>
+<div class="arithmatex">\[
+\nabla_x\log p_t(x)
+=
+\frac{1}{p_t(x)}
+\int_{\mathbb{R}^d}\nabla_x p_{t\mid 1}(x\mid x_1)\,q(x_1)\,dx_1,
+\tag{95}
+\]</div>
+<div class="arithmatex">\[
+\nabla_x\log p_t(x)
+=
+\int_{\mathbb{R}^d}\nabla_x\log p_{t\mid 1}(x\mid x_1)\;
+\frac{p_{t\mid 1}(x\mid x_1)\,q(x_1)}{p_t(x)}\,dx_1
+=
+\mathbb{E}\big[\nabla_x\log p_{t\mid 1}(X_t\mid X_1)\mid X_t=x\big],
+\tag{96}
+\]</div>
+<p>and therefore, using <span class="arithmatex">\(\tag{94}\)</span>,</p>
+<div class="arithmatex">\[
+\nabla_x\log p_t(x)
+=
+\mathbb{E}\!\left[-\frac{1}{\sigma_t^2}\big(X_t-\alpha_t X_1\big)\;\middle|\;X_t=x\right].
+\tag{97}
+\]</div>
+<p>If we instantiate the affine Gaussian path as <span class="arithmatex">\(X_t=\alpha_t X_1+\sigma_t X_0\)</span> with <span class="arithmatex">\(X_0\sim\mathcal{N}(0,I)\)</span> independent of <span class="arithmatex">\(X_1\)</span>, then <span class="arithmatex">\(X_t-\alpha_t X_1=\sigma_t X_0\)</span>, so <span class="arithmatex">\(\tag{97}\)</span> simplifies to</p>
+<div class="arithmatex">\[
+\nabla_x\log p_t(x)
+=
+\mathbb{E}\!\left[-\frac{1}{\sigma_t}X_0\;\middle|\;X_t=x\right]
+=
+-\frac{1}{\sigma_t}\,x_{0\mid t}(x).
+\tag{98}
+\]</div>
+<p>In diffusion terminology, <span class="arithmatex">\(x_{0\mid t}(x)\)</span> is the <strong>noise prediction</strong> (often called <span class="arithmatex">\(\varepsilon\)</span>-prediction).
+Equation <span class="arithmatex">\(\tag{98}\)</span> gives an explicit conversion between the score and the noise-prediction parameterization for Gaussian affine paths (cf. Table 1).</p>
+<p>Two widely used diffusion-style choices of schedulers (Song et al., 2021) can be expressed in this affine-path language (up to the time direction / endpoint conventions):</p>
+<ul>
+<li><strong>VP-style</strong> (noise-to-data, heuristic at <span class="arithmatex">\(t=0\)</span>): <span class="arithmatex">\(\alpha_t\equiv 1\)</span>, with <span class="arithmatex">\(\sigma_1=0\)</span> and <span class="arithmatex">\(\sigma_0\gg 1\)</span> so that <span class="arithmatex">\(p_0(x)=\int \mathcal{N}(x\mid x_1,\sigma_0^2 I)\,q(x_1)\,dx_1\)</span> is close to a known Gaussian.</li>
+<li><strong>VE-style</strong>: choose a decreasing <span class="arithmatex">\(\beta_t\)</span> with <span class="arithmatex">\(\beta_0\gg 1\)</span> and <span class="arithmatex">\(\beta_1=0\)</span>, and set
+  $$
+  \alpha_t = e^{-\beta_t/2},
+  \qquad
+  \sigma_t = \sqrt{1-e^{-\beta_t}}.
+  \tag{101}
+  $$</li>
+</ul>
+<p><strong>Kinetic optimality of the marginal velocity (Gaussian paths).</strong> For Gaussian affine paths, the marginal velocity can be written directly in terms of the score. Starting from <span class="arithmatex">\(\tag{76}\)</span>,
+<span class="arithmatex">\(u_t(x)=\frac{\dot\alpha_t}{\alpha_t}x+\left(\dot\sigma_t-\sigma_t\frac{\dot\alpha_t}{\alpha_t}\right)x_{0\mid t}(x)\)</span>,
+and using <span class="arithmatex">\(x_{0\mid t}(x)=-\sigma_t\nabla_x\log p_t(x)\)</span> from <span class="arithmatex">\(\tag{98}\)</span>, we obtain</p>
+<div class="arithmatex">\[
+u_t(x)
+=
+\frac{\dot\alpha_t}{\alpha_t}\,x
+\;+\;
+\left(\frac{\dot\alpha_t}{\alpha_t}\sigma_t^2-\sigma_t\dot\sigma_t\right)\nabla_x\log p_t(x).
+\tag{99}
+\]</div>
+<p>Equivalently, <span class="arithmatex">\(u_t\)</span> is a gradient field:</p>
+<div class="arithmatex">\[
+u_t(x)
+=
+\nabla_x\left(
+\frac{\dot\alpha_t}{2\alpha_t}\,\|x\|^2
+\;+\;
+\left(\frac{\dot\alpha_t}{\alpha_t}\sigma_t^2-\sigma_t\dot\sigma_t\right)\log p_t(x)
+\right).
+\tag{100}
+\]</div>
+<p>This “gradient form” is exactly what one expects from kinetic-energy minimization with a <em>fixed</em> density path: among all velocity fields that generate the same <span class="arithmatex">\((p_t)\)</span>, the kinetic-energy minimizer can be taken to be (a version of) a gradient field (see, e.g., discussions of dynamic OT / Benamou–Brenier and the role of potentials).</p>
+<p><strong>Takeaway.</strong> Gaussian affine paths make the “diffusion ↔ flow” connection explicit: the same marginal path <span class="arithmatex">\((p_t)\)</span> can be generated stochastically (SDE) or deterministically (probability flow ODE), and the score <span class="arithmatex">\(\nabla_x\log p_t\)</span> is directly tied to learnable predictors <span class="arithmatex">\(x_{1\mid t}\)</span> or <span class="arithmatex">\(x_{0\mid t}\)</span> via <span class="arithmatex">\(\tag{93}\)</span> and <span class="arithmatex">\(\tag{98}\)</span>, with the marginal velocity admitting the explicit score-based form <span class="arithmatex">\(\tag{99}\)</span>.</p>
+<p>To summarize the most common <strong>parameterizations</strong> used in practice (in this Gaussian affine setting), define the scalar coefficient
+<span class="arithmatex">\(c_t := \frac{\dot\alpha_t}{\alpha_t}\sigma_t^2 - \sigma_t\dot\sigma_t\)</span> as in <span class="arithmatex">\(\tag{99}\)</span>. Then we have the following “network output <span class="arithmatex">\(\leftrightarrow\)</span> math target <span class="arithmatex">\(\leftrightarrow\)</span> conversions”:</p>
+<table>
+<thead>
+<tr>
+<th>Parameterization</th>
+<th>Network output</th>
+<th>Mathematical target</th>
+<th>Relation to score <span class="arithmatex">\(s_t(x):=\nabla_x\log p_t(x)\)</span></th>
+<th>Relation to velocity <span class="arithmatex">\(u_t(x)\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="arithmatex">\(\varepsilon\)</span>-prediction</td>
+<td><span class="arithmatex">\(\hat\varepsilon_\theta(x_t,t)\)</span></td>
+<td><span class="arithmatex">\(\mathbb{E}[X_0\mid X_t=x_t]\)</span> (here <span class="arithmatex">\(X_0\equiv \varepsilon\)</span>)</td>
+<td><span class="arithmatex">\(\hat s_\theta(x_t,t)= -\hat\varepsilon_\theta(x_t,t)/\sigma_t\)</span> (from <span class="arithmatex">\(\tag{98}\)</span>)</td>
+<td><span class="arithmatex">\(\hat u_\theta(x_t,t)=\frac{\dot\alpha_t}{\alpha_t}x_t + c_t\,\hat s_\theta(x_t,t)\)</span> (from <span class="arithmatex">\(\tag{99}\)</span>)</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(x_0\)</span>-prediction</td>
+<td><span class="arithmatex">\(\hat x_{0,\theta}(x_t,t)\)</span></td>
+<td><span class="arithmatex">\(x_{0\mid t}(x_t)=\mathbb{E}[X_0\mid X_t=x_t]\)</span> (<span class="arithmatex">\(\tag{78}\)</span>)</td>
+<td><span class="arithmatex">\(\hat s_\theta(x_t,t)= -\hat x_{0,\theta}(x_t,t)/\sigma_t\)</span> (<span class="arithmatex">\(\tag{98}\)</span>)</td>
+<td>same as above via <span class="arithmatex">\(\hat s_\theta\)</span></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(x_1\)</span>-prediction</td>
+<td><span class="arithmatex">\(\hat x_{1,\theta}(x_t,t)\)</span></td>
+<td><span class="arithmatex">\(x_{1\mid t}(x_t)=\mathbb{E}[X_1\mid X_t=x_t]\)</span> (<span class="arithmatex">\(\tag{77}\)</span>)</td>
+<td><span class="arithmatex">\(\hat s_\theta(x_t,t)=\frac{\alpha_t}{\sigma_t^2}\hat x_{1,\theta}(x_t,t)-\frac{1}{\sigma_t^2}x_t\)</span> (<span class="arithmatex">\(\tag{93}\)</span>)</td>
+<td><span class="arithmatex">\(\hat u_\theta(x_t,t)=\frac{\dot\alpha_t}{\alpha_t}x_t + c_t\,\hat s_\theta(x_t,t)\)</span></td>
+</tr>
+<tr>
+<td>score-prediction</td>
+<td><span class="arithmatex">\(\hat s_\theta(x_t,t)\)</span></td>
+<td><span class="arithmatex">\(s_t(x_t)=\nabla_x\log p_t(x_t)\)</span></td>
+<td>direct</td>
+<td><span class="arithmatex">\(\hat u_\theta(x_t,t)=\frac{\dot\alpha_t}{\alpha_t}x_t + c_t\,\hat s_\theta(x_t,t)\)</span> (<span class="arithmatex">\(\tag{99}\)</span>)</td>
+</tr>
+<tr>
+<td>velocity-prediction</td>
+<td><span class="arithmatex">\(\hat u_\theta(x_t,t)\)</span></td>
+<td><span class="arithmatex">\(u_t(x_t)\)</span> (FM target)</td>
+<td><span class="arithmatex">\(\hat s_\theta(x_t,t)=\big(\hat u_\theta(x_t,t)-\frac{\dot\alpha_t}{\alpha_t}x_t\big)/c_t\)</span> (when <span class="arithmatex">\(c_t\ne 0\)</span>)</td>
+<td>direct</td>
+</tr>
+</tbody>
+</table>
+<p>All entries above are mathematically equivalent ways to represent the same underlying objects for the <em>Gaussian affine path</em>; they are not guaranteed to be equivalent outside this setting.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>                Gaussian Affine Path
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>            X_t = α_t X₁ + σ_t X₀
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>                        │
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>                        ▼
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>                Conditional Expectations
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>                        │
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>       ┌────────────────┼────────────────┐
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>       ▼                ▼                ▼
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>   x1-pred          x0-pred           score
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>  E[X1|X_t=x]     E[X0|X_t=x]     ∇ log p_t(x)
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>       │                │                │
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>       └────────────── linear transforms ──────────────┘
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>                                │
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>                                ▼
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>                           velocity u_t(x)
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>                                │
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>                                ▼
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>                            ODE sampling
+</code></pre></div>
+<h3 id="b27-data-couplings">B2.7 Data couplings<a class="headerlink" href="#b27-data-couplings" title="Permanent link">&para;</a></h3>
+<p>Flow Matching requires a way to sample <em>paired endpoints</em> <span class="arithmatex">\((X_0,X_1)\)</span> whose marginals match the chosen <strong>source</strong> and <strong>target</strong> distributions. Throughout this note, we typically denote the source by <span class="arithmatex">\(p\)</span> and the target/data by <span class="arithmatex">\(q\)</span>. A <strong>data coupling</strong> is any joint distribution <span class="arithmatex">\(\pi_{0,1}\)</span> on <span class="arithmatex">\(\mathbb{R}^d\times\mathbb{R}^d\)</span> such that</p>
+<div class="arithmatex">\[
+(X_0,X_1)\sim\pi_{0,1},
+\qquad
+X_0\sim p,\ \ X_1\sim q.
+\tag{102}
+\]</div>
+<p>The coupling <span class="arithmatex">\(\pi_{0,1}\)</span> is not “just a detail”: once you fix a conditional flow construction <span class="arithmatex">\(X_t=\psi_t(X_0\mid X_1)\)</span> (or more generally <span class="arithmatex">\(X_t=\psi_t(X_0,X_1)\)</span>), the resulting <em>training labels</em> (e.g. <span class="arithmatex">\(\dot\psi_t(X_0\mid X_1)\)</span>) and the induced marginal target <span class="arithmatex">\(u_t(x)=\mathbb{E}[\dot\psi_t(X_0\mid X_1)\mid X_t=x]\)</span> are both taken with respect to <span class="arithmatex">\((X_0,X_1)\sim\pi_{0,1}\)</span>. Changing <span class="arithmatex">\(\pi_{0,1}\)</span> changes the teacher signal, even if <span class="arithmatex">\(p\)</span> and <span class="arithmatex">\(q\)</span> are unchanged.</p>
+<h4 id="common-choices">Common choices<a class="headerlink" href="#common-choices" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Independent coupling:</strong> <span class="arithmatex">\(\pi_{0,1}=p\otimes q\)</span>. Sample <span class="arithmatex">\(X_0\sim p\)</span> and <span class="arithmatex">\(X_1\sim q\)</span> independently. This is the simplest and most common default, and it pairs naturally with affine/Gaussian paths. A drawback is that <span class="arithmatex">\(\|X_1-X_0\|\)</span> can be large, which can make conditional labels higher-variance / harder to regress.</li>
+<li><strong>Heuristic mini-batch pairing:</strong> in practice, one often samples mini-batches from <span class="arithmatex">\(p\)</span> and <span class="arithmatex">\(q\)</span> and pairs them by a simple rule (same index, random permutation, nearest neighbor within the batch, etc.). This implicitly defines an empirical coupling and can affect variance and stability.</li>
+<li><strong>Structured / OT-inspired coupling:</strong> choose <span class="arithmatex">\(\pi_{0,1}\)</span> to reduce a transport cost such as <span class="arithmatex">\(\mathbb{E}_{\pi_{0,1}}\|X_1-X_0\|^2\)</span>. This often leads to “shorter” pairings, which can produce straighter / lower-energy sample trajectories and easier regression targets, at the cost of computing (or approximating) the coupling.</li>
+</ul>
+<h4 id="what-changes-when-you-change-pi_01">What changes when you change <span class="arithmatex">\(\pi_{0,1}\)</span>?<a class="headerlink" href="#what-changes-when-you-change-pi_01" title="Permanent link">&para;</a></h4>
+<p>Even when the endpoint marginals <span class="arithmatex">\(p,q\)</span> are fixed, changing <span class="arithmatex">\(\pi_{0,1}\)</span> changes the <em>training pairs</em> and therefore the induced conditional/marginal objects. Concretely, for a fixed conditional flow map <span class="arithmatex">\(\psi_t\)</span>, the conditional label <span class="arithmatex">\(\dot\psi_t(X_0\mid X_1)\)</span> is evaluated on <span class="arithmatex">\((X_0,X_1)\sim\pi_{0,1}\)</span>, and the marginal target is a conditional expectation under the induced random variable <span class="arithmatex">\(X_t\)</span>. So <span class="arithmatex">\(\pi_{0,1}\)</span> is a modeling choice that trades off:</p>
+<ul>
+<li>computational cost (easy sampling vs. coupling computation),</li>
+<li>target variance / regression difficulty,</li>
+<li>and the geometric character of the induced trajectories.</li>
+</ul>
+<p>In short: <strong>FM becomes a supervised regression problem only after you choose a coupling.</strong> Different couplings give different teacher signals, even when they share the same endpoint marginals.</p>
+<h3 id="b28-conditional-generation-and-guidance">B2.8 Conditional generation and guidance<a class="headerlink" href="#b28-conditional-generation-and-guidance" title="Permanent link">&para;</a></h3>
+<p>We now consider conditional generation under a <em>guidance</em> variable. Assume target samples are labeled <span class="arithmatex">\((x_1,y)\)</span>, where <span class="arithmatex">\(x_1\in\mathbb{R}^d\)</span>, <span class="arithmatex">\(y\in\mathcal{Y}\subseteq\mathbb{R}^k\)</span>, and <span class="arithmatex">\(t\in[0,1)\)</span>.</p>
+<h4 id="conditional-models-learn-qx_1mid-y-directly">Conditional models (learn <span class="arithmatex">\(q(x_1\mid y)\)</span> directly)<a class="headerlink" href="#conditional-models-learn-qx_1mid-y-directly" title="Permanent link">&para;</a></h4>
+<p>A natural conditional objective is to learn to sample from the conditional data distribution <span class="arithmatex">\(q(x_1\mid y)\)</span>. Following the same “path + velocity” blueprint as the unconditional case, we prescribe (for each fixed <span class="arithmatex">\(y\)</span>) a conditional probability path <span class="arithmatex">\((p_{t\mid Y}(\cdot\mid y))_{t\in[0,1)}\)</span> interpolating <span class="arithmatex">\(p_{0\mid Y}(\cdot\mid y)=p(\cdot)\)</span> and <span class="arithmatex">\(p_{1\mid Y}(\cdot\mid y)=q(\cdot\mid y)\)</span>.</p>
+<p>One convenient construction is to reuse an <span class="arithmatex">\(x_1\)</span>-conditioned path <span class="arithmatex">\(p_{t\mid 1}(x\mid x_1)\)</span> that does <strong>not</strong> depend on <span class="arithmatex">\(y\)</span>, and define the guided path by marginalizing over <span class="arithmatex">\(q(x_1\mid y)\)</span>:</p>
+<div class="arithmatex">\[
+p_{t\mid Y}(x\mid y)
+:=
+\int_{\mathbb{R}^d} p_{t\mid 1}(x\mid x_1)\,q(x_1\mid y)\,dx_1.
+\tag{103}
+\]</div>
+<p>Under the same regularity assumptions as in the unconditional marginalization trick, the corresponding guided marginal velocity field is the posterior-weighted conditional velocity:</p>
+<div class="arithmatex">\[
+u_t(x\mid y)
+=
+\int_{\mathbb{R}^d} u_t(x\mid x_1)\,p_{1\mid t,Y}(x_1\mid x,y)\,dx_1,
+\tag{104}
+\]</div>
+<p>where Bayes’ rule gives the posterior</p>
+<div class="arithmatex">\[
+p_{1\mid t,Y}(x_1\mid x,y)
+=
+\frac{p_{t\mid 1}(x\mid x_1)\,q(x_1\mid y)}{p_{t\mid Y}(x\mid y)}.
+\tag{105}
+\]</div>
+<p>In practice, we train a single network <span class="arithmatex">\(u_{\theta,t}:\mathbb{R}^d\times\mathbb{R}^k\to\mathbb{R}^d\)</span> to approximate <span class="arithmatex">\(u_t(x\mid y)\)</span> for all <span class="arithmatex">\(y\)</span>. If we build <span class="arithmatex">\(p_{t\mid 1}\)</span> via a conditional flow <span class="arithmatex">\(X_t=\psi_t(X_0\mid X_1)\)</span>, then the guided CFM objective has the same supervised form as before, just with <span class="arithmatex">\(y\)</span> as an extra input:</p>
+<div class="arithmatex">\[
+\mathcal{L}_{\mathrm{CFM}}(\theta)
+=
+\mathbb{E}_{t,\,(X_0,X_1,Y)\sim\pi_{0,1,Y}}
+D\!\Big(\dot\psi_t(X_0\mid X_1),\ u_{\theta,t}(X_t\mid Y)\Big).
+\tag{106}
+\]</div>
+<p>Here <span class="arithmatex">\(\pi_{0,1,Y}\)</span> is a joint coupling consistent with <span class="arithmatex">\(Y\sim p_Y\)</span> and <span class="arithmatex">\(X_1\sim q(\cdot\mid Y)\)</span> (and <span class="arithmatex">\(X_0\sim p\)</span>).</p>
+<h4 id="classifier-guidance-and-classifier-free-guidance-score-based-view">Classifier guidance and classifier-free guidance (score-based view)<a class="headerlink" href="#classifier-guidance-and-classifier-free-guidance-score-based-view" title="Permanent link">&para;</a></h4>
+<p>For Gaussian affine paths, we have a linear relation between velocity and score (cf. Table 1): there exist scalar schedules <span class="arithmatex">\(a_t,b_t\)</span> such that</p>
+<div class="arithmatex">\[
+u_t(x) = a_t x + b_t\,\nabla_x\log p_t(x).
+\tag{107}
+\]</div>
+<p>The same form holds conditionally:</p>
+<div class="arithmatex">\[
+u_t(x\mid y) = a_t x + b_t\,\nabla_x\log p_{t\mid Y}(x\mid y).
+\tag{108}
+\]</div>
+<p>Using Bayes’ rule, <span class="arithmatex">\(p_{t\mid Y}(x\mid y)\propto p_{Y\mid t}(y\mid x)\,p_t(x)\)</span>, so taking <span class="arithmatex">\(\nabla_x\log\)</span> yields the key score identity</p>
+<div class="arithmatex">\[
+\nabla_x\log p_{t\mid Y}(x\mid y)
+=
+\nabla_x\log p_{Y\mid t}(y\mid x)
+\;+\;
+\nabla_x\log p_t(x).
+\tag{109}
+\]</div>
+<p>This suggests <strong>classifier guidance</strong>: train an <em>unconditional</em> model for <span class="arithmatex">\(p_t\)</span> (hence <span class="arithmatex">\(u_t\)</span> or <span class="arithmatex">\(\nabla_x\log p_t\)</span>), train a time-dependent classifier <span class="arithmatex">\(p_{Y\mid t}(y\mid x)\)</span>, then guide sampling by adding the classifier term:</p>
+<div class="arithmatex">\[
+\tilde u_t(x\mid y)
+=
+u_t(x)
+\;+\;
+w\,b_t\,\nabla_x\log p_{Y\mid t}(y\mid x),
+\qquad w&gt;0.
+\tag{110}
+\]</div>
+<p><strong>Classifier-free guidance (CFG)</strong> avoids an explicit classifier by learning conditional and unconditional models together (e.g. by randomly dropping the condition during training). In the velocity parameterization, the standard CFG heuristic takes the convex-combination form</p>
+<div class="arithmatex">\[
+\tilde u_t(x\mid y)
+=
+(1-w)\,u_t(x\mid \varnothing) + w\,u_t(x\mid y),
+\tag{111}
+\]</div>
+<p>where <span class="arithmatex">\(\varnothing\)</span> denotes a null condition and <span class="arithmatex">\(w\)</span> is the guidance scale.</p>
+<p>We will keep this section intentionally lightweight: conditional generation and guidance quickly become an “engineering-meets-theory” topic on its own, and it is worth treating separately once the unconditional FM/CFM story is fully digested.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.expand", "navigation.sections", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../javascripts/mathjax.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

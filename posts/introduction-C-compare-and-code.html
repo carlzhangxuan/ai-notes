@@ -1,0 +1,1416 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="diffusion-models-intro.html">
+      
+      
+        <link rel="next" href="introduction-B-flow-matching.html">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.2">
+    
+    
+      
+        <title>Diffusion — Compare and Code - AI Notes</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#section-c-comparison-table-code-playbook" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../index.html" title="AI Notes" class="md-header__button md-logo" aria-label="AI Notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            AI Notes
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Diffusion — Compare and Code
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../index.html" title="AI Notes" class="md-nav__button md-logo" aria-label="AI Notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    AI Notes
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Posts
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Posts
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="diffusion-models-intro.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diffusion Models Intro
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diffusion — Compare and Code
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="introduction-C-compare-and-code.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diffusion — Compare and Code
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#c0-notation-shared" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C0. Notation (shared)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#c1-comparison-table-what-is-modeled-learned-sampled" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C1. Comparison table (what is modeled / learned / sampled)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#c2-training-pseudocode-comparison-side-by-side" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C2. Training pseudocode comparison (side-by-side)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="C2. Training pseudocode comparison (side-by-side)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#c21-score-based-diffusion-denoising-score-matching" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C2.1 Score-based diffusion (denoising score matching)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c22-ddpm-noise-prediction-loss" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C2.2 DDPM (noise-prediction loss)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c23-flow-matching-velocity-regression-on-a-designed-path" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C2.3 Flow matching (velocity regression on a designed path)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#c3-sampling-pseudocode-comparison-side-by-side" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C3. Sampling pseudocode comparison (side-by-side)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="C3. Sampling pseudocode comparison (side-by-side)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#c31-score-based-diffusion-predictorcorrector-reverse-sde-sampler" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C3.1 Score-based diffusion: predictor–corrector reverse-SDE sampler
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c32-ddpm-ancestral-reverse-diffusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C3.2 DDPM: ancestral reverse diffusion
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c33-flow-matching-ode-sampling-by-heun-improved-euler" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C3.3 Flow matching: ODE sampling by Heun (improved Euler)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#c4-minimal-pytorch-code-snippets-training-sampling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C4. Minimal PyTorch code snippets (training + sampling)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="C4. Minimal PyTorch code snippets (training + sampling)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#c41-score-based-diffusion-vevp-schedules-dsm-loss-pc-sampler" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C4.1 Score-based diffusion (VE/VP schedules + DSM loss + PC sampler)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c42-ddpm-noise-prediction-training-ancestral-sampler" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C4.2 DDPM (noise-prediction training + ancestral sampler)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c43-flow-matching-linear-bridge-ode-sampling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C4.3 Flow matching (linear bridge + ODE sampling)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#c5-elbo-policy-keep-it-light" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C5. ELBO policy (keep it light)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#c6-section-close-template" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C6. Section close template
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="introduction-B-flow-matching.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diffusion — Flow Matching
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="mathematics-foundation.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diffusion — Mathematics Foundation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="interlude-alpha-year-1757.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diffusion — Interlude α (1757)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="introduction-beta-CFM-and-ELBO.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diffusion — CFM and ELBO
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="transformer.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Transformer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="vit-dit.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ViT and DiT
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#c0-notation-shared" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C0. Notation (shared)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#c1-comparison-table-what-is-modeled-learned-sampled" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C1. Comparison table (what is modeled / learned / sampled)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#c2-training-pseudocode-comparison-side-by-side" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C2. Training pseudocode comparison (side-by-side)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="C2. Training pseudocode comparison (side-by-side)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#c21-score-based-diffusion-denoising-score-matching" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C2.1 Score-based diffusion (denoising score matching)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c22-ddpm-noise-prediction-loss" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C2.2 DDPM (noise-prediction loss)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c23-flow-matching-velocity-regression-on-a-designed-path" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C2.3 Flow matching (velocity regression on a designed path)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#c3-sampling-pseudocode-comparison-side-by-side" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C3. Sampling pseudocode comparison (side-by-side)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="C3. Sampling pseudocode comparison (side-by-side)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#c31-score-based-diffusion-predictorcorrector-reverse-sde-sampler" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C3.1 Score-based diffusion: predictor–corrector reverse-SDE sampler
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c32-ddpm-ancestral-reverse-diffusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C3.2 DDPM: ancestral reverse diffusion
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c33-flow-matching-ode-sampling-by-heun-improved-euler" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C3.3 Flow matching: ODE sampling by Heun (improved Euler)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#c4-minimal-pytorch-code-snippets-training-sampling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C4. Minimal PyTorch code snippets (training + sampling)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="C4. Minimal PyTorch code snippets (training + sampling)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#c41-score-based-diffusion-vevp-schedules-dsm-loss-pc-sampler" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C4.1 Score-based diffusion (VE/VP schedules + DSM loss + PC sampler)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c42-ddpm-noise-prediction-training-ancestral-sampler" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C4.2 DDPM (noise-prediction training + ancestral sampler)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c43-flow-matching-linear-bridge-ode-sampling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C4.3 Flow matching (linear bridge + ODE sampling)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#c5-elbo-policy-keep-it-light" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C5. ELBO policy (keep it light)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#c6-section-close-template" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C6. Section close template
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="section-c-comparison-table-code-playbook">Section C — Comparison table + code playbook<a class="headerlink" href="#section-c-comparison-table-code-playbook" title="Permanent link">&para;</a></h1>
+<p>This section is a compact <strong>algorithm ↔ code</strong> playbook for three mainstream dynamics-based generative model families:</p>
+<ul>
+<li><strong>Score-based diffusion (SDE)</strong>: learn a time-dependent score <span class="arithmatex">\(s_\theta(x,t)\)</span> and sample with a reverse-time SDE (often with a predictor–corrector scheme), or deterministically via the probability-flow ODE.</li>
+<li><strong>Discrete diffusion (DDPM)</strong>: learn a denoiser parameterization (commonly <span class="arithmatex">\(\varepsilon_\theta\)</span>) and sample a reverse Markov chain.</li>
+<li><strong>Flow matching (ODE)</strong>: learn a velocity field <span class="arithmatex">\(v_\theta(x,t)\)</span> by regression and sample by ODE integration.</li>
+</ul>
+<p>To avoid duplication, we keep derivations elsewhere:</p>
+<ul>
+<li>Numerical ODE/SDE solvers: <a href="mathematics-foundation.html">mathematics-foundation.md</a></li>
+<li>Continuity / Fokker–Planck and reverse-time constructions: <a href="mathematics-foundation.html">mathematics-foundation.md</a> and <a href="diffusion-models-intro.html">diffusion-models-intro.md</a></li>
+<li>Flow matching theory (CFM, Theorems 1–3, Gaussian paths): <a href="diffusion-models-intro.html">diffusion-models-intro.md</a> and <a href="introduction-B-flow-matching.html">introduction-B-flow-matching.md</a></li>
+</ul>
+<h2 id="c0-notation-shared">C0. Notation (shared)<a class="headerlink" href="#c0-notation-shared" title="Permanent link">&para;</a></h2>
+<p>We work in <span class="arithmatex">\(\mathbb{R}^D\)</span>.</p>
+<ul>
+<li>Data distribution: <span class="arithmatex">\(x_\text{data}\sim q(x)\)</span> (we only have sample access).</li>
+<li>Simple prior: <span class="arithmatex">\(x_\text{prior}\sim p(x)\)</span> (often <span class="arithmatex">\(p=\mathcal{N}(0,I)\)</span>).</li>
+<li>Discrete time (DDPM): <span class="arithmatex">\(t\in\{1,\dots,T\}\)</span>.</li>
+<li>Continuous time (SDE/ODE): <span class="arithmatex">\(t\in[0,1]\)</span>.</li>
+<li>Model outputs:</li>
+<li>score: <span class="arithmatex">\(s_\theta(x,t)\approx \nabla_x\log p_t(x)\)</span>,</li>
+<li>noise: <span class="arithmatex">\(\varepsilon_\theta(x_t,t)\approx \varepsilon\)</span> in the forward noising formula,</li>
+<li>velocity: <span class="arithmatex">\(v_\theta(x,t)\approx \dot\gamma_t\)</span> along a chosen path <span class="arithmatex">\(\gamma_t\)</span>.</li>
+</ul>
+<h2 id="c1-comparison-table-what-is-modeled-learned-sampled">C1. Comparison table (what is modeled / learned / sampled)<a class="headerlink" href="#c1-comparison-table-what-is-modeled-learned-sampled" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th>Score-based diffusion (SDE)</th>
+<th>Discrete diffusion (DDPM)</th>
+<th>Flow matching (ODE)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Dynamics type</td>
+<td>Itô SDE <span class="arithmatex">\(dX_t=f(X_t,t)\,dt+g(t)\,dW_t\)</span> (forward), sample via reverse-time SDE (or PF-ODE)</td>
+<td>Forward Markov chain <span class="arithmatex">\(q(x_t\mid x_{t-1})\)</span> with designed <span class="arithmatex">\(\beta_t\)</span>, sample via reverse chain</td>
+<td>Deterministic ODE <span class="arithmatex">\(\frac{d}{dt}X_t=v_\theta(X_t,t)\)</span></td>
+</tr>
+<tr>
+<td>What is designed</td>
+<td>SDE coefficients <span class="arithmatex">\((f,g)\)</span> / schedule (e.g., VP/VE)</td>
+<td>discrete schedule <span class="arithmatex">\(\beta_t\)</span> (equiv. <span class="arithmatex">\(\alpha_t,\bar\alpha_t\)</span>)</td>
+<td>a probability path (bridge) <span class="arithmatex">\(\gamma_t\)</span> and a time grid</td>
+</tr>
+<tr>
+<td>What is learned</td>
+<td><span class="arithmatex">\(s_\theta(x,t)\)</span> (score), or equivalent parameterization</td>
+<td>typically <span class="arithmatex">\(\varepsilon_\theta(x_t,t)\)</span> (noise), sometimes <span class="arithmatex">\(x_{0,\theta}\)</span> or <span class="arithmatex">\(v_\theta\)</span></td>
+<td><span class="arithmatex">\(v_\theta(x,t)\)</span> (velocity)</td>
+</tr>
+<tr>
+<td>Training inputs</td>
+<td>sample <span class="arithmatex">\((x_0,t)\)</span>, sample noise <span class="arithmatex">\(\varepsilon\)</span>, construct <span class="arithmatex">\(x_t\sim p_t(\cdot\mid x_0)\)</span> in closed form</td>
+<td>sample <span class="arithmatex">\((x_0,t)\)</span>, sample noise <span class="arithmatex">\(\varepsilon\)</span>, construct <span class="arithmatex">\(x_t=\sqrt{\bar\alpha_t}x_0+\sqrt{1-\bar\alpha_t}\,\varepsilon\)</span></td>
+<td>sample endpoints (noise/data) and time <span class="arithmatex">\(t\)</span>, construct <span class="arithmatex">\(x_t=\gamma_t(x_0,x_1)\)</span></td>
+</tr>
+<tr>
+<td>Supervision target</td>
+<td>closed-form conditional score <span class="arithmatex">\(\nabla_{x_t}\log p(x_t\mid x_0)\)</span> (DSM)</td>
+<td>regression target <span class="arithmatex">\(\varepsilon\)</span> in the forward corruption</td>
+<td>target velocity <span class="arithmatex">\(\dot\gamma_t(x_0,x_1)\)</span></td>
+</tr>
+<tr>
+<td>Sampling randomness</td>
+<td>stochastic (reverse SDE), or deterministic (PF-ODE)</td>
+<td>stochastic reverse chain (Gaussian transitions)</td>
+<td>deterministic ODE (any ODE solver)</td>
+</tr>
+<tr>
+<td>Typical solver</td>
+<td>Euler–Maruyama + Langevin corrector (PC), or ODE solver for PF-ODE</td>
+<td>ancestral time stepping</td>
+<td>Euler / Heun / RK methods (see <a href="mathematics-foundation.html">mathematics-foundation.md</a>)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="c2-training-pseudocode-comparison-side-by-side">C2. Training pseudocode comparison (side-by-side)<a class="headerlink" href="#c2-training-pseudocode-comparison-side-by-side" title="Permanent link">&para;</a></h2>
+<h3 id="c21-score-based-diffusion-denoising-score-matching">C2.1 Score-based diffusion (denoising score matching)<a class="headerlink" href="#c21-score-based-diffusion-denoising-score-matching" title="Permanent link">&para;</a></h3>
+<p>Assume a forward SDE is chosen so that the conditional <span class="arithmatex">\(p(x_t\mid x_0)\)</span> is tractable (often Gaussian). Then the DSM objective regresses the model score to the closed-form conditional score:
+$$
+\mathbb{E}<em>{t,x_0,x_t}\Big[\lambda(t)\,\big|s</em>\theta(x_t,t)-\nabla_{x_t}\log p(x_t\mid x_0)\big|^2\Big].
+$$</p>
+<p>Pseudocode:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>repeat:
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>  sample x0 ~ p_data
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>  sample t  ~ Uniform(0, 1)
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>  sample ε  ~ N(0, I)
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>  construct xt ~ p(xt | x0)   # e.g. VE: x0 + σ(t) ε ; VP: √α̅(t) x0 + √(1-α̅(t)) ε
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>  set target score s*(xt,t) = ∇_{xt} log p(xt | x0)  # closed form
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>  loss = λ(t) · || sθ(xt,t) - s*(xt,t) ||^2
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>  take optimizer step on loss w.r.t. θ
+</code></pre></div>
+<h3 id="c22-ddpm-noise-prediction-loss">C2.2 DDPM (noise-prediction loss)<a class="headerlink" href="#c22-ddpm-noise-prediction-loss" title="Permanent link">&para;</a></h3>
+<p>DDPM training commonly regresses <span class="arithmatex">\(\varepsilon_\theta\)</span> to the injected noise in the forward corruption:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>repeat:
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>  sample x0 ~ p_data
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>  sample t  ~ Uniform({1, …, T})
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>  sample ε  ~ N(0, I)
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>  set xt = √α̅_t · x0 + √(1-α̅_t) · ε
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>  loss = || ε - εθ(xt, t) ||^2
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>  take optimizer step on loss w.r.t. θ
+</code></pre></div>
+<h3 id="c23-flow-matching-velocity-regression-on-a-designed-path">C2.3 Flow matching (velocity regression on a designed path)<a class="headerlink" href="#c23-flow-matching-velocity-regression-on-a-designed-path" title="Permanent link">&para;</a></h3>
+<p>Choose a bridge <span class="arithmatex">\(\gamma_t(x_0,x_1)\)</span> connecting a prior endpoint and a data endpoint, and regress a velocity field to the path derivative <span class="arithmatex">\(\dot\gamma_t\)</span>:
+$$
+\mathbb{E}<em>{t,(x_0,x_1)}\Big[|v</em>\theta(\gamma_t(x_0,x_1),t)-\dot\gamma_t(x_0,x_1)|^2\Big].
+$$</p>
+<p>For the linear bridge with <span class="arithmatex">\(x_0\sim p\)</span>, <span class="arithmatex">\(x_1\sim q\)</span>,
+$$
+\gamma_t(x_0,x_1)=(1-t)x_0+t x_1,\qquad \dot\gamma_t(x_0,x_1)=x_1-x_0.
+$$</p>
+<p>Pseudocode:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>repeat:
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>  sample x1 ~ p_data
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>  sample x0 ~ N(0, I)
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>  sample t ~ Uniform(0, 1)
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>  xt = (1 - t) · x0 + t · x1
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>  target = x1 - x0
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>  loss = || vθ(xt, t) - target ||^2
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>  take optimizer step on loss w.r.t. θ
+</code></pre></div>
+<p><strong>Markov vs continuous path sampling (practical point).</strong> In DDPM, training pairs <span class="arithmatex">\((x_t,t)\)</span> are generated from a discrete Markov chain and indexed by integer <span class="arithmatex">\(t\)</span>. In score-based diffusion and flow matching, <span class="arithmatex">\((x_t,t)\)</span> is sampled from a continuous-time path in one shot (via a tractable conditional perturbation or an explicit interpolation), without a Markov constraint between adjacent times.</p>
+<h2 id="c3-sampling-pseudocode-comparison-side-by-side">C3. Sampling pseudocode comparison (side-by-side)<a class="headerlink" href="#c3-sampling-pseudocode-comparison-side-by-side" title="Permanent link">&para;</a></h2>
+<h3 id="c31-score-based-diffusion-predictorcorrector-reverse-sde-sampler">C3.1 Score-based diffusion: predictor–corrector reverse-SDE sampler<a class="headerlink" href="#c31-score-based-diffusion-predictorcorrector-reverse-sde-sampler" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>initialize x ~ N(0, I)  # terminal noise
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>for t = 1 → ε (descending):
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>  # Predictor: one reverse-SDE step (Euler–Maruyama)
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>  sample z ~ N(0, I)
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>  x ← x + [f(x,t) - g(t)^2 sθ(x,t)] Δt + g(t) √(|Δt|) · z
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>  # Corrector: K steps of Langevin at the same t (optional)
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>  repeat K times:
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>    sample z ~ N(0, I)
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>    x ← x + η_step · sθ(x,t) + √(2 η_step) · z
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>return x
+</code></pre></div>
+<p>The reverse-time formulas and the probability-flow ODE are summarized in <a href="diffusion-models-intro.html">diffusion-models-intro.md</a> (Chapter 5.5) and in <a href="mathematics-foundation.html">mathematics-foundation.md</a> (Chapter 2).</p>
+<h3 id="c32-ddpm-ancestral-reverse-diffusion">C3.2 DDPM: ancestral reverse diffusion<a class="headerlink" href="#c32-ddpm-ancestral-reverse-diffusion" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>initialize x_T ~ N(0, I)
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>for t = T, …, 1:
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>  sample z ~ N(0, I) if t &gt; 1 else 0
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>  mean = 1/√α_t · (x_t - (1-α_t)/√(1-α̅_t) · εθ(x_t, t))
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>  x_{t-1} = mean + σ_t · z
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>return x_0
+</code></pre></div>
+<h3 id="c33-flow-matching-ode-sampling-by-heun-improved-euler">C3.3 Flow matching: ODE sampling by Heun (improved Euler)<a class="headerlink" href="#c33-flow-matching-ode-sampling-by-heun-improved-euler" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>set τ_0 = 0 &lt; τ_1 &lt; … &lt; τ_S = 1
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>initialize x ~ N(0, I) at t = 0
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>for s = 0, …, S-1:
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>  t = τ_s,  t_next = τ_{s+1},  h = t_next - t
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>  k1 = vθ(x, t)
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>  x_pred = x + h · k1
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>  k2 = vθ(x_pred, t_next)
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>  x = x + (h/2) · (k1 + k2)
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>return x ≈ sample from p_data
+</code></pre></div>
+<h2 id="c4-minimal-pytorch-code-snippets-training-sampling">C4. Minimal PyTorch code snippets (training + sampling)<a class="headerlink" href="#c4-minimal-pytorch-code-snippets-training-sampling" title="Permanent link">&para;</a></h2>
+<p>These snippets are intentionally small and meant to make the <strong>variable ↔ formula</strong> correspondence explicit. For generic ODE/SDE solvers, see <a href="mathematics-foundation.html">mathematics-foundation.md</a>.</p>
+<h3 id="c41-score-based-diffusion-vevp-schedules-dsm-loss-pc-sampler">C4.1 Score-based diffusion (VE/VP schedules + DSM loss + PC sampler)<a class="headerlink" href="#c41-score-based-diffusion-vevp-schedules-dsm-loss-pc-sampler" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="k">def</span><span class="w"> </span><span class="nf">ve_marginal_std</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">sigma_min</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">sigma_max</span><span class="o">=</span><span class="mf">50.0</span><span class="p">):</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="sd">    VE schedule: choose a marginal std σ(t) (not the diffusion coefficient g(t)).</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="sd">    t: shape (B,) in [0,1].</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>    <span class="k">return</span> <span class="n">sigma_min</span> <span class="o">*</span> <span class="p">(</span><span class="n">sigma_max</span> <span class="o">/</span> <span class="n">sigma_min</span><span class="p">)</span> <span class="o">**</span> <span class="n">t</span>
+<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>
+<a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>
+<a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a><span class="k">def</span><span class="w"> </span><span class="nf">vp_beta</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">beta_min</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">beta_max</span><span class="o">=</span><span class="mf">20.0</span><span class="p">):</span>
+<a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;VP noise rate β(t), t in [0,1].&quot;&quot;&quot;</span>
+<a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a>    <span class="k">return</span> <span class="n">beta_min</span> <span class="o">+</span> <span class="n">t</span> <span class="o">*</span> <span class="p">(</span><span class="n">beta_max</span> <span class="o">-</span> <span class="n">beta_min</span><span class="p">)</span>
+<a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a>
+<a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a>
+<a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a><span class="k">def</span><span class="w"> </span><span class="nf">vp_alpha_bar</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">beta_min</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">beta_max</span><span class="o">=</span><span class="mf">20.0</span><span class="p">):</span>
+<a id="__codelineno-6-18" name="__codelineno-6-18" href="#__codelineno-6-18"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-6-19" name="__codelineno-6-19" href="#__codelineno-6-19"></a><span class="sd">    α̅(t) = exp(-∫_0^t β(s) ds) for linear β(s).</span>
+<a id="__codelineno-6-20" name="__codelineno-6-20" href="#__codelineno-6-20"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-6-21" name="__codelineno-6-21" href="#__codelineno-6-21"></a>    <span class="n">integral</span> <span class="o">=</span> <span class="n">beta_min</span> <span class="o">*</span> <span class="n">t</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">beta_max</span> <span class="o">-</span> <span class="n">beta_min</span><span class="p">)</span> <span class="o">*</span> <span class="n">t</span> <span class="o">*</span> <span class="n">t</span>
+<a id="__codelineno-6-22" name="__codelineno-6-22" href="#__codelineno-6-22"></a>    <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">integral</span><span class="p">)</span>
+<a id="__codelineno-6-23" name="__codelineno-6-23" href="#__codelineno-6-23"></a>
+<a id="__codelineno-6-24" name="__codelineno-6-24" href="#__codelineno-6-24"></a>
+<a id="__codelineno-6-25" name="__codelineno-6-25" href="#__codelineno-6-25"></a><span class="k">def</span><span class="w"> </span><span class="nf">dsm_loss_ve</span><span class="p">(</span><span class="n">score_model</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">sigma_min</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">sigma_max</span><span class="o">=</span><span class="mf">50.0</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<a id="__codelineno-6-26" name="__codelineno-6-26" href="#__codelineno-6-26"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-6-27" name="__codelineno-6-27" href="#__codelineno-6-27"></a><span class="sd">    VE denoising score matching:</span>
+<a id="__codelineno-6-28" name="__codelineno-6-28" href="#__codelineno-6-28"></a><span class="sd">      x_t = x0 + σ(t) ε</span>
+<a id="__codelineno-6-29" name="__codelineno-6-29" href="#__codelineno-6-29"></a><span class="sd">      ∇_{x_t} log p(x_t|x0) = -(x_t-x0)/σ(t)^2 = -ε/σ(t)</span>
+<a id="__codelineno-6-30" name="__codelineno-6-30" href="#__codelineno-6-30"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-6-31" name="__codelineno-6-31" href="#__codelineno-6-31"></a>    <span class="n">eps</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn_like</span><span class="p">(</span><span class="n">x0</span><span class="p">)</span>
+<a id="__codelineno-6-32" name="__codelineno-6-32" href="#__codelineno-6-32"></a>    <span class="n">sigma</span> <span class="o">=</span> <span class="n">ve_marginal_std</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">sigma_min</span><span class="o">=</span><span class="n">sigma_min</span><span class="p">,</span> <span class="n">sigma_max</span><span class="o">=</span><span class="n">sigma_max</span><span class="p">)</span>
+<a id="__codelineno-6-33" name="__codelineno-6-33" href="#__codelineno-6-33"></a>    <span class="k">while</span> <span class="n">sigma</span><span class="o">.</span><span class="n">ndim</span> <span class="o">&lt;</span> <span class="n">x0</span><span class="o">.</span><span class="n">ndim</span><span class="p">:</span>
+<a id="__codelineno-6-34" name="__codelineno-6-34" href="#__codelineno-6-34"></a>        <span class="n">sigma</span> <span class="o">=</span> <span class="n">sigma</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
+<a id="__codelineno-6-35" name="__codelineno-6-35" href="#__codelineno-6-35"></a>    <span class="n">xt</span> <span class="o">=</span> <span class="n">x0</span> <span class="o">+</span> <span class="n">sigma</span> <span class="o">*</span> <span class="n">eps</span>
+<a id="__codelineno-6-36" name="__codelineno-6-36" href="#__codelineno-6-36"></a>    <span class="n">target</span> <span class="o">=</span> <span class="o">-</span><span class="n">eps</span> <span class="o">/</span> <span class="n">sigma</span>
+<a id="__codelineno-6-37" name="__codelineno-6-37" href="#__codelineno-6-37"></a>    <span class="n">pred</span> <span class="o">=</span> <span class="n">score_model</span><span class="p">(</span><span class="n">xt</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
+<a id="__codelineno-6-38" name="__codelineno-6-38" href="#__codelineno-6-38"></a>    <span class="n">loss</span> <span class="o">=</span> <span class="p">(</span><span class="n">pred</span> <span class="o">-</span> <span class="n">target</span><span class="p">)</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<a id="__codelineno-6-39" name="__codelineno-6-39" href="#__codelineno-6-39"></a>    <span class="k">if</span> <span class="n">weight</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+<a id="__codelineno-6-40" name="__codelineno-6-40" href="#__codelineno-6-40"></a>        <span class="n">w</span> <span class="o">=</span> <span class="n">weight</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+<a id="__codelineno-6-41" name="__codelineno-6-41" href="#__codelineno-6-41"></a>        <span class="k">while</span> <span class="n">w</span><span class="o">.</span><span class="n">ndim</span> <span class="o">&lt;</span> <span class="n">loss</span><span class="o">.</span><span class="n">ndim</span><span class="p">:</span>
+<a id="__codelineno-6-42" name="__codelineno-6-42" href="#__codelineno-6-42"></a>            <span class="n">w</span> <span class="o">=</span> <span class="n">w</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
+<a id="__codelineno-6-43" name="__codelineno-6-43" href="#__codelineno-6-43"></a>        <span class="n">loss</span> <span class="o">=</span> <span class="n">w</span> <span class="o">*</span> <span class="n">loss</span>
+<a id="__codelineno-6-44" name="__codelineno-6-44" href="#__codelineno-6-44"></a>    <span class="k">return</span> <span class="n">loss</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<a id="__codelineno-6-45" name="__codelineno-6-45" href="#__codelineno-6-45"></a>
+<a id="__codelineno-6-46" name="__codelineno-6-46" href="#__codelineno-6-46"></a>
+<a id="__codelineno-6-47" name="__codelineno-6-47" href="#__codelineno-6-47"></a><span class="nd">@torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">()</span>
+<a id="__codelineno-6-48" name="__codelineno-6-48" href="#__codelineno-6-48"></a><span class="k">def</span><span class="w"> </span><span class="nf">langevin_corrector</span><span class="p">(</span><span class="n">score_model</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">snr</span><span class="o">=</span><span class="mf">0.16</span><span class="p">,</span> <span class="n">n_steps</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<a id="__codelineno-6-49" name="__codelineno-6-49" href="#__codelineno-6-49"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-6-50" name="__codelineno-6-50" href="#__codelineno-6-50"></a><span class="sd">    K steps of overdamped Langevin dynamics at fixed t.</span>
+<a id="__codelineno-6-51" name="__codelineno-6-51" href="#__codelineno-6-51"></a><span class="sd">    Heuristic step size chosen to keep a target SNR.</span>
+<a id="__codelineno-6-52" name="__codelineno-6-52" href="#__codelineno-6-52"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-6-53" name="__codelineno-6-53" href="#__codelineno-6-53"></a>    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_steps</span><span class="p">):</span>
+<a id="__codelineno-6-54" name="__codelineno-6-54" href="#__codelineno-6-54"></a>        <span class="n">grad</span> <span class="o">=</span> <span class="n">score_model</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
+<a id="__codelineno-6-55" name="__codelineno-6-55" href="#__codelineno-6-55"></a>        <span class="n">noise</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn_like</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<a id="__codelineno-6-56" name="__codelineno-6-56" href="#__codelineno-6-56"></a>
+<a id="__codelineno-6-57" name="__codelineno-6-57" href="#__codelineno-6-57"></a>        <span class="n">grad_norm</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">grad</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">grad</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<a id="__codelineno-6-58" name="__codelineno-6-58" href="#__codelineno-6-58"></a>        <span class="n">noise_norm</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">noise</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">noise</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<a id="__codelineno-6-59" name="__codelineno-6-59" href="#__codelineno-6-59"></a>        <span class="n">step_size</span> <span class="o">=</span> <span class="p">(</span><span class="n">snr</span> <span class="o">*</span> <span class="n">noise_norm</span> <span class="o">/</span> <span class="p">(</span><span class="n">grad_norm</span> <span class="o">+</span> <span class="mf">1e-12</span><span class="p">))</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">*</span> <span class="mf">2.0</span>
+<a id="__codelineno-6-60" name="__codelineno-6-60" href="#__codelineno-6-60"></a>
+<a id="__codelineno-6-61" name="__codelineno-6-61" href="#__codelineno-6-61"></a>        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">step_size</span> <span class="o">*</span> <span class="n">grad</span> <span class="o">+</span> <span class="n">torch</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">step_size</span><span class="p">)</span> <span class="o">*</span> <span class="n">noise</span>
+<a id="__codelineno-6-62" name="__codelineno-6-62" href="#__codelineno-6-62"></a>    <span class="k">return</span> <span class="n">x</span>
+<a id="__codelineno-6-63" name="__codelineno-6-63" href="#__codelineno-6-63"></a>
+<a id="__codelineno-6-64" name="__codelineno-6-64" href="#__codelineno-6-64"></a>
+<a id="__codelineno-6-65" name="__codelineno-6-65" href="#__codelineno-6-65"></a><span class="nd">@torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">()</span>
+<a id="__codelineno-6-66" name="__codelineno-6-66" href="#__codelineno-6-66"></a><span class="k">def</span><span class="w"> </span><span class="nf">pc_sampler</span><span class="p">(</span><span class="n">score_model</span><span class="p">,</span> <span class="n">shape</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">n_steps</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">sde</span><span class="o">=</span><span class="s2">&quot;ve&quot;</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="s2">&quot;cpu&quot;</span><span class="p">,</span> <span class="n">corrector_steps</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">snr</span><span class="o">=</span><span class="mf">0.16</span><span class="p">):</span>
+<a id="__codelineno-6-67" name="__codelineno-6-67" href="#__codelineno-6-67"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-6-68" name="__codelineno-6-68" href="#__codelineno-6-68"></a><span class="sd">    Predictor–corrector sampling.</span>
+<a id="__codelineno-6-69" name="__codelineno-6-69" href="#__codelineno-6-69"></a><span class="sd">    - VE predictor uses the identity g(t)^2 dt = d(σ(t)^2) for the chosen marginal σ(t).</span>
+<a id="__codelineno-6-70" name="__codelineno-6-70" href="#__codelineno-6-70"></a><span class="sd">    - VP predictor uses Euler–Maruyama with f(x,t)=-0.5β(t)x, g(t)=sqrt(β(t)).</span>
+<a id="__codelineno-6-71" name="__codelineno-6-71" href="#__codelineno-6-71"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-6-72" name="__codelineno-6-72" href="#__codelineno-6-72"></a>    <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>
+<a id="__codelineno-6-73" name="__codelineno-6-73" href="#__codelineno-6-73"></a>    <span class="n">ts</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1e-3</span><span class="p">,</span> <span class="n">n_steps</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>  <span class="c1"># reverse-time grid</span>
+<a id="__codelineno-6-74" name="__codelineno-6-74" href="#__codelineno-6-74"></a>
+<a id="__codelineno-6-75" name="__codelineno-6-75" href="#__codelineno-6-75"></a>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ts</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+<a id="__codelineno-6-76" name="__codelineno-6-76" href="#__codelineno-6-76"></a>        <span class="n">t</span> <span class="o">=</span> <span class="n">ts</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<a id="__codelineno-6-77" name="__codelineno-6-77" href="#__codelineno-6-77"></a>        <span class="n">t_next</span> <span class="o">=</span> <span class="n">ts</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<a id="__codelineno-6-78" name="__codelineno-6-78" href="#__codelineno-6-78"></a>        <span class="n">dt</span> <span class="o">=</span> <span class="n">t_next</span> <span class="o">-</span> <span class="n">t</span>  <span class="c1"># negative</span>
+<a id="__codelineno-6-79" name="__codelineno-6-79" href="#__codelineno-6-79"></a>
+<a id="__codelineno-6-80" name="__codelineno-6-80" href="#__codelineno-6-80"></a>        <span class="n">z</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn_like</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<a id="__codelineno-6-81" name="__codelineno-6-81" href="#__codelineno-6-81"></a>
+<a id="__codelineno-6-82" name="__codelineno-6-82" href="#__codelineno-6-82"></a>        <span class="k">if</span> <span class="n">sde</span> <span class="o">==</span> <span class="s2">&quot;ve&quot;</span><span class="p">:</span>
+<a id="__codelineno-6-83" name="__codelineno-6-83" href="#__codelineno-6-83"></a>            <span class="n">sigma</span> <span class="o">=</span> <span class="n">ve_marginal_std</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+<a id="__codelineno-6-84" name="__codelineno-6-84" href="#__codelineno-6-84"></a>            <span class="n">sigma_next</span> <span class="o">=</span> <span class="n">ve_marginal_std</span><span class="p">(</span><span class="n">t_next</span><span class="p">)</span>
+<a id="__codelineno-6-85" name="__codelineno-6-85" href="#__codelineno-6-85"></a>            <span class="k">while</span> <span class="n">sigma</span><span class="o">.</span><span class="n">ndim</span> <span class="o">&lt;</span> <span class="n">x</span><span class="o">.</span><span class="n">ndim</span><span class="p">:</span>
+<a id="__codelineno-6-86" name="__codelineno-6-86" href="#__codelineno-6-86"></a>                <span class="n">sigma</span> <span class="o">=</span> <span class="n">sigma</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
+<a id="__codelineno-6-87" name="__codelineno-6-87" href="#__codelineno-6-87"></a>                <span class="n">sigma_next</span> <span class="o">=</span> <span class="n">sigma_next</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
+<a id="__codelineno-6-88" name="__codelineno-6-88" href="#__codelineno-6-88"></a>            <span class="n">d_sigma2</span> <span class="o">=</span> <span class="n">sigma_next</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">sigma</span><span class="o">**</span><span class="mi">2</span>  <span class="c1"># negative</span>
+<a id="__codelineno-6-89" name="__codelineno-6-89" href="#__codelineno-6-89"></a>            <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">-</span> <span class="n">d_sigma2</span> <span class="o">*</span> <span class="n">score_model</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span> <span class="o">+</span> <span class="n">torch</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">clamp</span><span class="p">(</span><span class="o">-</span><span class="n">d_sigma2</span><span class="p">,</span> <span class="nb">min</span><span class="o">=</span><span class="mf">0.0</span><span class="p">))</span> <span class="o">*</span> <span class="n">z</span>
+<a id="__codelineno-6-90" name="__codelineno-6-90" href="#__codelineno-6-90"></a>
+<a id="__codelineno-6-91" name="__codelineno-6-91" href="#__codelineno-6-91"></a>        <span class="k">elif</span> <span class="n">sde</span> <span class="o">==</span> <span class="s2">&quot;vp&quot;</span><span class="p">:</span>
+<a id="__codelineno-6-92" name="__codelineno-6-92" href="#__codelineno-6-92"></a>            <span class="n">beta</span> <span class="o">=</span> <span class="n">vp_beta</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+<a id="__codelineno-6-93" name="__codelineno-6-93" href="#__codelineno-6-93"></a>            <span class="k">while</span> <span class="n">beta</span><span class="o">.</span><span class="n">ndim</span> <span class="o">&lt;</span> <span class="n">x</span><span class="o">.</span><span class="n">ndim</span><span class="p">:</span>
+<a id="__codelineno-6-94" name="__codelineno-6-94" href="#__codelineno-6-94"></a>                <span class="n">beta</span> <span class="o">=</span> <span class="n">beta</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
+<a id="__codelineno-6-95" name="__codelineno-6-95" href="#__codelineno-6-95"></a>            <span class="n">f</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">beta</span> <span class="o">*</span> <span class="n">x</span>
+<a id="__codelineno-6-96" name="__codelineno-6-96" href="#__codelineno-6-96"></a>            <span class="n">g</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">beta</span><span class="p">)</span>
+<a id="__codelineno-6-97" name="__codelineno-6-97" href="#__codelineno-6-97"></a>            <span class="n">dt_b</span> <span class="o">=</span> <span class="n">dt</span>
+<a id="__codelineno-6-98" name="__codelineno-6-98" href="#__codelineno-6-98"></a>            <span class="k">while</span> <span class="n">dt_b</span><span class="o">.</span><span class="n">ndim</span> <span class="o">&lt;</span> <span class="n">x</span><span class="o">.</span><span class="n">ndim</span><span class="p">:</span>
+<a id="__codelineno-6-99" name="__codelineno-6-99" href="#__codelineno-6-99"></a>                <span class="n">dt_b</span> <span class="o">=</span> <span class="n">dt_b</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
+<a id="__codelineno-6-100" name="__codelineno-6-100" href="#__codelineno-6-100"></a>            <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="p">(</span><span class="n">f</span> <span class="o">-</span> <span class="p">(</span><span class="n">g</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">score_model</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">t</span><span class="p">))</span> <span class="o">*</span> <span class="n">dt_b</span> <span class="o">+</span> <span class="n">g</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="o">-</span><span class="n">dt_b</span><span class="p">)</span> <span class="o">*</span> <span class="n">z</span>
+<a id="__codelineno-6-101" name="__codelineno-6-101" href="#__codelineno-6-101"></a>
+<a id="__codelineno-6-102" name="__codelineno-6-102" href="#__codelineno-6-102"></a>        <span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-6-103" name="__codelineno-6-103" href="#__codelineno-6-103"></a>            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;sde must be &#39;ve&#39; or &#39;vp&#39;&quot;</span><span class="p">)</span>
+<a id="__codelineno-6-104" name="__codelineno-6-104" href="#__codelineno-6-104"></a>
+<a id="__codelineno-6-105" name="__codelineno-6-105" href="#__codelineno-6-105"></a>        <span class="n">x</span> <span class="o">=</span> <span class="n">langevin_corrector</span><span class="p">(</span><span class="n">score_model</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">t_next</span><span class="p">,</span> <span class="n">snr</span><span class="o">=</span><span class="n">snr</span><span class="p">,</span> <span class="n">n_steps</span><span class="o">=</span><span class="n">corrector_steps</span><span class="p">)</span>
+<a id="__codelineno-6-106" name="__codelineno-6-106" href="#__codelineno-6-106"></a>
+<a id="__codelineno-6-107" name="__codelineno-6-107" href="#__codelineno-6-107"></a>    <span class="k">return</span> <span class="n">x</span>
+</code></pre></div>
+<h3 id="c42-ddpm-noise-prediction-training-ancestral-sampler">C4.2 DDPM (noise-prediction training + ancestral sampler)<a class="headerlink" href="#c42-ddpm-noise-prediction-training-ancestral-sampler" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="k">def</span><span class="w"> </span><span class="nf">ddpm_forward_sample</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">alpha_bar</span><span class="p">):</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="sd">    x_t = sqrt(alpha_bar[t]) x0 + sqrt(1-alpha_bar[t]) eps</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="sd">    alpha_bar: shape (T+1,) with alpha_bar[0]=1.</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="sd">    t: int64 tensor of shape (B,) with values in {1,...,T}.</span>
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>    <span class="n">eps</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn_like</span><span class="p">(</span><span class="n">x0</span><span class="p">)</span>
+<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>    <span class="n">a_bar</span> <span class="o">=</span> <span class="n">alpha_bar</span><span class="p">[</span><span class="n">t</span><span class="p">]</span>
+<a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a>    <span class="k">while</span> <span class="n">a_bar</span><span class="o">.</span><span class="n">ndim</span> <span class="o">&lt;</span> <span class="n">x0</span><span class="o">.</span><span class="n">ndim</span><span class="p">:</span>
+<a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a>        <span class="n">a_bar</span> <span class="o">=</span> <span class="n">a_bar</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
+<a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a>    <span class="n">xt</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">a_bar</span><span class="p">)</span> <span class="o">*</span> <span class="n">x0</span> <span class="o">+</span> <span class="n">torch</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">a_bar</span><span class="p">)</span> <span class="o">*</span> <span class="n">eps</span>
+<a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a>    <span class="k">return</span> <span class="n">xt</span><span class="p">,</span> <span class="n">eps</span>
+<a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a>
+<a id="__codelineno-7-17" name="__codelineno-7-17" href="#__codelineno-7-17"></a>
+<a id="__codelineno-7-18" name="__codelineno-7-18" href="#__codelineno-7-18"></a><span class="k">def</span><span class="w"> </span><span class="nf">ddpm_loss_eps</span><span class="p">(</span><span class="n">eps_model</span><span class="p">,</span> <span class="n">x0</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">alpha_bar</span><span class="p">):</span>
+<a id="__codelineno-7-19" name="__codelineno-7-19" href="#__codelineno-7-19"></a>    <span class="n">xt</span><span class="p">,</span> <span class="n">eps</span> <span class="o">=</span> <span class="n">ddpm_forward_sample</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">alpha_bar</span><span class="p">)</span>
+<a id="__codelineno-7-20" name="__codelineno-7-20" href="#__codelineno-7-20"></a>    <span class="n">pred_eps</span> <span class="o">=</span> <span class="n">eps_model</span><span class="p">(</span><span class="n">xt</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
+<a id="__codelineno-7-21" name="__codelineno-7-21" href="#__codelineno-7-21"></a>    <span class="k">return</span> <span class="p">(</span><span class="n">pred_eps</span> <span class="o">-</span> <span class="n">eps</span><span class="p">)</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<a id="__codelineno-7-22" name="__codelineno-7-22" href="#__codelineno-7-22"></a>
+<a id="__codelineno-7-23" name="__codelineno-7-23" href="#__codelineno-7-23"></a>
+<a id="__codelineno-7-24" name="__codelineno-7-24" href="#__codelineno-7-24"></a><span class="nd">@torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">()</span>
+<a id="__codelineno-7-25" name="__codelineno-7-25" href="#__codelineno-7-25"></a><span class="k">def</span><span class="w"> </span><span class="nf">ddpm_sample</span><span class="p">(</span><span class="n">eps_model</span><span class="p">,</span> <span class="n">shape</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">alpha_bar</span><span class="p">,</span> <span class="n">sigma</span><span class="p">):</span>
+<a id="__codelineno-7-26" name="__codelineno-7-26" href="#__codelineno-7-26"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-7-27" name="__codelineno-7-27" href="#__codelineno-7-27"></a><span class="sd">    Ancestral sampling for a fixed-variance DDPM parameterization.</span>
+<a id="__codelineno-7-28" name="__codelineno-7-28" href="#__codelineno-7-28"></a><span class="sd">    Arrays alpha/alpha_bar/sigma are shape (T+1,) with index 0 unused for sampling.</span>
+<a id="__codelineno-7-29" name="__codelineno-7-29" href="#__codelineno-7-29"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-7-30" name="__codelineno-7-30" href="#__codelineno-7-30"></a>    <span class="n">device</span> <span class="o">=</span> <span class="n">alpha</span><span class="o">.</span><span class="n">device</span>
+<a id="__codelineno-7-31" name="__codelineno-7-31" href="#__codelineno-7-31"></a>    <span class="n">T</span> <span class="o">=</span> <span class="n">alpha</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span>
+<a id="__codelineno-7-32" name="__codelineno-7-32" href="#__codelineno-7-32"></a>    <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>
+<a id="__codelineno-7-33" name="__codelineno-7-33" href="#__codelineno-7-33"></a>
+<a id="__codelineno-7-34" name="__codelineno-7-34" href="#__codelineno-7-34"></a>    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+<a id="__codelineno-7-35" name="__codelineno-7-35" href="#__codelineno-7-35"></a>        <span class="n">t_vec</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">full</span><span class="p">((</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],),</span> <span class="n">t</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">long</span><span class="p">)</span>
+<a id="__codelineno-7-36" name="__codelineno-7-36" href="#__codelineno-7-36"></a>        <span class="n">eps</span> <span class="o">=</span> <span class="n">eps_model</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">t_vec</span><span class="p">)</span>
+<a id="__codelineno-7-37" name="__codelineno-7-37" href="#__codelineno-7-37"></a>
+<a id="__codelineno-7-38" name="__codelineno-7-38" href="#__codelineno-7-38"></a>        <span class="n">mean</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">/</span> <span class="n">torch</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">alpha</span><span class="p">[</span><span class="n">t</span><span class="p">]))</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="p">((</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">alpha</span><span class="p">[</span><span class="n">t</span><span class="p">])</span> <span class="o">/</span> <span class="n">torch</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">alpha_bar</span><span class="p">[</span><span class="n">t</span><span class="p">]))</span> <span class="o">*</span> <span class="n">eps</span><span class="p">)</span>
+<a id="__codelineno-7-39" name="__codelineno-7-39" href="#__codelineno-7-39"></a>
+<a id="__codelineno-7-40" name="__codelineno-7-40" href="#__codelineno-7-40"></a>        <span class="k">if</span> <span class="n">t</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+<a id="__codelineno-7-41" name="__codelineno-7-41" href="#__codelineno-7-41"></a>            <span class="n">x</span> <span class="o">=</span> <span class="n">mean</span> <span class="o">+</span> <span class="n">sigma</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn_like</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<a id="__codelineno-7-42" name="__codelineno-7-42" href="#__codelineno-7-42"></a>        <span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-7-43" name="__codelineno-7-43" href="#__codelineno-7-43"></a>            <span class="n">x</span> <span class="o">=</span> <span class="n">mean</span>
+<a id="__codelineno-7-44" name="__codelineno-7-44" href="#__codelineno-7-44"></a>
+<a id="__codelineno-7-45" name="__codelineno-7-45" href="#__codelineno-7-45"></a>    <span class="k">return</span> <span class="n">x</span>
+</code></pre></div>
+<h3 id="c43-flow-matching-linear-bridge-ode-sampling">C4.3 Flow matching (linear bridge + ODE sampling)<a class="headerlink" href="#c43-flow-matching-linear-bridge-ode-sampling" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="k">def</span><span class="w"> </span><span class="nf">flow_matching_loss</span><span class="p">(</span><span class="n">v_model</span><span class="p">,</span> <span class="n">x1</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="sd">    Linear bridge between x0 ~ N(0,I) and x1 ~ data:</span>
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="sd">      x_t = (1-t) x0 + t x1</span>
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="sd">      target = d/dt x_t = x1 - x0</span>
+<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a>    <span class="n">x0</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn_like</span><span class="p">(</span><span class="n">x1</span><span class="p">)</span>
+<a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a>    <span class="n">t_for_path</span> <span class="o">=</span> <span class="n">t</span>
+<a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a>    <span class="k">while</span> <span class="n">t_for_path</span><span class="o">.</span><span class="n">ndim</span> <span class="o">&lt;</span> <span class="n">x1</span><span class="o">.</span><span class="n">ndim</span><span class="p">:</span>
+<a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a>        <span class="n">t_for_path</span> <span class="o">=</span> <span class="n">t_for_path</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
+<a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a>    <span class="n">xt</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">t_for_path</span><span class="p">)</span> <span class="o">*</span> <span class="n">x0</span> <span class="o">+</span> <span class="n">t_for_path</span> <span class="o">*</span> <span class="n">x1</span>
+<a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a>    <span class="n">target</span> <span class="o">=</span> <span class="n">x1</span> <span class="o">-</span> <span class="n">x0</span>
+<a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a>    <span class="n">pred</span> <span class="o">=</span> <span class="n">v_model</span><span class="p">(</span><span class="n">xt</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>  <span class="c1"># convention: model expects t with shape (B,)</span>
+<a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a>    <span class="k">return</span> <span class="p">(</span><span class="n">pred</span> <span class="o">-</span> <span class="n">target</span><span class="p">)</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<a id="__codelineno-8-18" name="__codelineno-8-18" href="#__codelineno-8-18"></a>
+<a id="__codelineno-8-19" name="__codelineno-8-19" href="#__codelineno-8-19"></a>
+<a id="__codelineno-8-20" name="__codelineno-8-20" href="#__codelineno-8-20"></a><span class="nd">@torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">()</span>
+<a id="__codelineno-8-21" name="__codelineno-8-21" href="#__codelineno-8-21"></a><span class="k">def</span><span class="w"> </span><span class="nf">flow_sample</span><span class="p">(</span><span class="n">v_model</span><span class="p">,</span> <span class="n">shape</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">n_steps</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;heun&quot;</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="s2">&quot;cpu&quot;</span><span class="p">):</span>
+<a id="__codelineno-8-22" name="__codelineno-8-22" href="#__codelineno-8-22"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Sample by integrating dx/dt = v_model(x,t) from t=0 to t=1.&quot;&quot;&quot;</span>
+<a id="__codelineno-8-23" name="__codelineno-8-23" href="#__codelineno-8-23"></a>    <span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>
+<a id="__codelineno-8-24" name="__codelineno-8-24" href="#__codelineno-8-24"></a>    <span class="n">ts</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">n_steps</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>
+<a id="__codelineno-8-25" name="__codelineno-8-25" href="#__codelineno-8-25"></a>
+<a id="__codelineno-8-26" name="__codelineno-8-26" href="#__codelineno-8-26"></a>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_steps</span><span class="p">):</span>
+<a id="__codelineno-8-27" name="__codelineno-8-27" href="#__codelineno-8-27"></a>        <span class="n">t</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">ts</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">())</span>
+<a id="__codelineno-8-28" name="__codelineno-8-28" href="#__codelineno-8-28"></a>        <span class="n">t_next</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">ts</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">())</span>
+<a id="__codelineno-8-29" name="__codelineno-8-29" href="#__codelineno-8-29"></a>        <span class="n">h</span> <span class="o">=</span> <span class="n">t_next</span> <span class="o">-</span> <span class="n">t</span>
+<a id="__codelineno-8-30" name="__codelineno-8-30" href="#__codelineno-8-30"></a>
+<a id="__codelineno-8-31" name="__codelineno-8-31" href="#__codelineno-8-31"></a>        <span class="n">t_vec</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">full</span><span class="p">((</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],),</span> <span class="n">t</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>
+<a id="__codelineno-8-32" name="__codelineno-8-32" href="#__codelineno-8-32"></a>        <span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;euler&quot;</span><span class="p">:</span>
+<a id="__codelineno-8-33" name="__codelineno-8-33" href="#__codelineno-8-33"></a>            <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">h</span> <span class="o">*</span> <span class="n">v_model</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">t_vec</span><span class="p">)</span>
+<a id="__codelineno-8-34" name="__codelineno-8-34" href="#__codelineno-8-34"></a>
+<a id="__codelineno-8-35" name="__codelineno-8-35" href="#__codelineno-8-35"></a>        <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;heun&quot;</span><span class="p">:</span>
+<a id="__codelineno-8-36" name="__codelineno-8-36" href="#__codelineno-8-36"></a>            <span class="n">k1</span> <span class="o">=</span> <span class="n">v_model</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">t_vec</span><span class="p">)</span>
+<a id="__codelineno-8-37" name="__codelineno-8-37" href="#__codelineno-8-37"></a>            <span class="n">x_pred</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">h</span> <span class="o">*</span> <span class="n">k1</span>
+<a id="__codelineno-8-38" name="__codelineno-8-38" href="#__codelineno-8-38"></a>            <span class="n">t_next_vec</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">full</span><span class="p">((</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],),</span> <span class="n">t_next</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>
+<a id="__codelineno-8-39" name="__codelineno-8-39" href="#__codelineno-8-39"></a>            <span class="n">k2</span> <span class="o">=</span> <span class="n">v_model</span><span class="p">(</span><span class="n">x_pred</span><span class="p">,</span> <span class="n">t_next_vec</span><span class="p">)</span>
+<a id="__codelineno-8-40" name="__codelineno-8-40" href="#__codelineno-8-40"></a>            <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">h</span> <span class="o">*</span> <span class="p">(</span><span class="n">k1</span> <span class="o">+</span> <span class="n">k2</span><span class="p">)</span>
+<a id="__codelineno-8-41" name="__codelineno-8-41" href="#__codelineno-8-41"></a>
+<a id="__codelineno-8-42" name="__codelineno-8-42" href="#__codelineno-8-42"></a>        <span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-8-43" name="__codelineno-8-43" href="#__codelineno-8-43"></a>            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;method must be &#39;euler&#39; or &#39;heun&#39;&quot;</span><span class="p">)</span>
+<a id="__codelineno-8-44" name="__codelineno-8-44" href="#__codelineno-8-44"></a>
+<a id="__codelineno-8-45" name="__codelineno-8-45" href="#__codelineno-8-45"></a>    <span class="k">return</span> <span class="n">x</span>
+</code></pre></div>
+<h2 id="c5-elbo-policy-keep-it-light">C5. ELBO policy (keep it light)<a class="headerlink" href="#c5-elbo-policy-keep-it-light" title="Permanent link">&para;</a></h2>
+<p>DDPM was originally introduced via a variational bound (an ELBO over a latent diffusion chain), but most practical training uses a simplified regression loss (e.g., noise prediction MSE) that can be derived as a special case of that ELBO under common parameterizations and fixed variances.</p>
+<p>For details, see <a href="introduction-beta-CFM-and-ELBO.html">introduction-beta-CFM-and-ELBO.md</a> and <a href="diffusion-models-intro.html">diffusion-models-intro.md</a> (Chapter 4).</p>
+<h2 id="c6-section-close-template">C6. Section close template<a class="headerlink" href="#c6-section-close-template" title="Permanent link">&para;</a></h2>
+<ol>
+<li>We model: pick a view (score / noise / velocity).</li>
+<li>We learn: the corresponding network output (<span class="arithmatex">\(s_\theta\)</span> / <span class="arithmatex">\(\varepsilon_\theta\)</span> / <span class="arithmatex">\(v_\theta\)</span>).</li>
+<li>We sample: the matching dynamics + numerical method (reverse SDE / reverse chain / ODE solver).</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.expand", "navigation.sections", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../javascripts/mathjax.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,777 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="mathematics-foundation.html">
+      
+      
+        <link rel="next" href="introduction-beta-CFM-and-ELBO.html">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.2">
+    
+    
+      
+        <title>Diffusion — Interlude α (1757) - AI Notes</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#interlude-alpha-year-1757" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../index.html" title="AI Notes" class="md-header__button md-logo" aria-label="AI Notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            AI Notes
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Diffusion — Interlude α (1757)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../index.html" title="AI Notes" class="md-nav__button md-logo" aria-label="AI Notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    AI Notes
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Posts
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Posts
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="diffusion-models-intro.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diffusion Models Intro
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="introduction-C-compare-and-code.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diffusion — Compare and Code
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="introduction-B-flow-matching.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diffusion — Flow Matching
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="mathematics-foundation.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diffusion — Mathematics Foundation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diffusion — Interlude α (1757)
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="interlude-alpha-year-1757.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diffusion — Interlude α (1757)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#alpha1-a-classical-fluid-mechanics-brief" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        \(\alpha\)1. A classical fluid-mechanics brief
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="introduction-beta-CFM-and-ELBO.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diffusion — CFM and ELBO
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="transformer.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Transformer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="vit-dit.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ViT and DiT
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#alpha1-a-classical-fluid-mechanics-brief" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        \(\alpha\)1. A classical fluid-mechanics brief
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="interlude-alpha-year-1757">Interlude <span class="arithmatex">\(\alpha\)</span> — Year 1757<a class="headerlink" href="#interlude-alpha-year-1757" title="Permanent link">&para;</a></h1>
+<h2 id="alpha1-a-classical-fluid-mechanics-brief"><span class="arithmatex">\(\alpha\)</span>1. A classical fluid-mechanics brief<a class="headerlink" href="#alpha1-a-classical-fluid-mechanics-brief" title="Permanent link">&para;</a></h2>
+<p>Timeline and the world</p>
+<p>1) Calculus (late 1600s)</p>
+<p><img src="../assets/figures/portraits/newton-1689.jpg" height="300"> <img src="../assets/figures/portraits/leibniz-ca1695.jpg" height="300"></p>
+<p>2) Montesquieu and <em>The Spirit of Laws</em> (1748)</p>
+<p>https://en.wikipedia.org/wiki/The_Spirit_of_Laws</p>
+<p><img src="../assets/figures/portraits/montesquieu.jpg" height="300"> <img src="../assets/figures/portraits/spirit-of-laws-1748-title.jpg" height="300"></p>
+<p>3) Diderot, d’Alembert, and the <em>Encyclopédie</em> (1751)</p>
+<p>https://en.wikipedia.org/wiki/Encyclop%C3%A9die</p>
+<p><img src="../assets/figures/portraits/diderot.jpg" height="300"> <img src="../assets/figures/portraits/dalembert-1777.jpg" height="300"></p>
+<p>4) Voltaire and the Lisbon earthquake (1755)
+  - Event: the 1755 Lisbon earthquake.
+  - Links: https://en.wikipedia.org/wiki/Voltaire | https://en.wikipedia.org/wiki/1755_Lisbon_earthquake</p>
+<div style="text-align: left;"><img src="../assets/figures/portraits/voltaire.jpg" height="300"></div>
+
+<p>5) Euler in Berlin (1755–1757)
+  - Why this is “genesis” for fluid dynamics: fluids are treated as continuous fields, not discrete particles.
+  - Academic note: Euler formalizes <span class="arithmatex">\(\rho\)</span> (density) and <span class="arithmatex">\(p\)</span> (pressure) as spatial fields and writes down the inviscid equations we still use today.
+  - Primary source: Euler, L. (1757). “Principes généraux du mouvement des fluides”. <em>Mémoires de l'Académie des Sciences de Berlin</em>.
+  - https://en.wikipedia.org/wiki/Euler_equations_(fluid_dynamics)</p>
+<div style="text-align: left;"><img src="../assets/figures/portraits/euler.jpg" height="300"> <img src="../assets/clips/flow-around-wing.gif" height="300"></div>
+
+<p><img src="../assets/figures/flowmatching-timeline.svg" width="85%"></p>
+<p><img src="../assets/figures/euler-equations.svg" width="85%"></p>
+<p>Close of this brief: the modern “flow matching” story is basically a machine-learning re-telling of classical transport, learn a time-dependent vector field, then integrate its trajectories.
+- Eulerian viewpoint: describe <em>the whole medium</em> by fields over space-time.
+  - State variables live on space-time: <span class="arithmatex">\(\rho(x,t)\)</span> (density), <span class="arithmatex">\(v(x,t)\)</span> (velocity), and often <span class="arithmatex">\(p(x,t)\)</span> (pressure) and/or <span class="arithmatex">\(e(x,t)\)</span> (internal energy).
+  - Think “field snapshot”: at any fixed <span class="arithmatex">\(t\)</span>, you can draw arrows <span class="arithmatex">\(v(\cdot,t)\)</span> and a scalar map <span class="arithmatex">\(\rho(\cdot,t)\)</span>. Motion is encoded by how those fields evolve in <span class="arithmatex">\(t\)</span>.
+  - The bridge to particle motion is the <em>trajectory / characteristic</em> <span class="arithmatex">\(x(t)\)</span> that satisfies <span class="arithmatex">\(\dot x(t)=v(x(t),t)\)</span>. Along that path, the rate of change of any field <span class="arithmatex">\(f(x,t)\)</span> is the <em>material derivative</em> (Eq. (1)).</p>
+<ul>
+<li>
+<p>That single operator <span class="arithmatex">\(D/Dt\)</span> is the conceptual hinge: Eulerian fields + Newtonian time evolution.</p>
+</li>
+<li>
+<p>Newton’s laws as constraints (continuum mechanics viewpoint):</p>
+</li>
+<li>Setup: take any control volume <span class="arithmatex">\(\Omega\)</span> fixed in space with boundary <span class="arithmatex">\(\partial\Omega\)</span> and outward normal <span class="arithmatex">\(n\)</span>. Newton’s laws apply to the <em>mass and momentum in that volume</em>.</li>
+<li>
+<p>Mass conservation (Newton does not create/destroy mass): integral form (Eq. (2)), differential form (Eq. (3)).</p>
+</li>
+<li>
+<p>Momentum conservation (Newton’s 2nd law, <span class="arithmatex">\(F=ma\)</span>):</p>
+<p>Integral form (Eq. (4)).</p>
+<p>Here <span class="arithmatex">\(b(x,t)\)</span> is body force per unit mass (e.g., gravity), and <span class="arithmatex">\(\sigma(x,t)\)</span> is the Cauchy stress tensor encoding surface forces.</p>
+</li>
+<li>
+<p>Newton’s 3rd law (action = reaction) implies <em>local balance of internal forces</em>, which yields a symmetric stress tensor in the classical setting: <span class="arithmatex">\(\sigma=\sigma^\top\)</span>.</p>
+</li>
+<li>
+<p>For an inviscid fluid (no shear stress), stress reduces to isotropic pressure: <span class="arithmatex">\(\sigma = -p I\)</span>. Plugging this into the momentum balance yields the Euler equations:</p>
+<p>Differential form (Eq. (5)).</p>
+<p>The acceleration term <span class="arithmatex">\(\partial_t v + (v\cdot\nabla)v\)</span> is exactly <span class="arithmatex">\(Dv/Dt\)</span>: Newton’s law written in Eulerian coordinates.
+  - Closure: mass + momentum are not enough; you typically need an equation of state <span class="arithmatex">\(p=p(\rho,\ldots)\)</span> and/or an energy equation. (For many ML “flow” analogies we keep only the kinematic core: a vector field that transports density.)</p>
+</li>
+</ul>
+<p>Numbered equations:</p>
+<p>Material derivative</p>
+<div class="arithmatex">\[
+\frac{D f}{D t} = \partial_t f + v\cdot\nabla f.
+\tag{1}
+\]</div>
+<p>Mass conservation (integral form)</p>
+<div class="arithmatex">\[
+\frac{d}{dt}\int_{\Omega}\rho\,dx = -\int_{\partial\Omega}\rho v\cdot n\,dS.
+\tag{2}
+\]</div>
+<p>Continuity equation (differential form)</p>
+<div class="arithmatex">\[
+\partial_t \rho + \nabla\cdot(\rho v)=0.
+\tag{3}
+\]</div>
+<p>Momentum balance (integral form)</p>
+<div class="arithmatex">\[
+\frac{d}{dt}\int_{\Omega}\rho v\,dx = \int_{\Omega}\rho b\,dx + \int_{\partial\Omega}\sigma n\,dS.
+\tag{4}
+\]</div>
+<p>Euler equations (inviscid, differential form)</p>
+<div class="arithmatex">\[
+\rho\big(\partial_t v + (v\cdot\nabla)v\big) = -\nabla p + \rho b.
+\tag{5}
+\]</div>
+<p>How flow models reuse this math (vs. what remains “physics constraints”):</p>
+<ul>
+<li>What a flow model actually <em>uses</em> (kinematics / transport):</li>
+<li>A learned time-dependent vector field <span class="arithmatex">\(v_\theta(x,t)\)</span> defines an ODE <span class="arithmatex">\(\dot x(t)=v_\theta(x(t),t)\)</span> (characteristics).</li>
+<li>Probability mass is transported by that field through the continuity / Liouville equation (Eq. (3)). This is the backbone behind CNFs and flow matching: it tells you how <span class="arithmatex">\(\rho(x,t)\)</span> changes when particles move with velocity <span class="arithmatex">\(v\)</span>.</li>
+<li>A commonly used derived identity along trajectories is the log-density evolution:<ul>
+<li><span class="arithmatex">\(\frac{d}{dt}\log \rho(x(t),t) = -\nabla\cdot v(x(t),t)\)</span>.</li>
+<li>This is just Eq. (3) rewritten on characteristics (and is where the <span class="arithmatex">\(\nabla\cdot v\)</span> term in continuous normalizing flows comes from).</li>
+</ul>
+</li>
+<li>
+<p>Eq. (1) (material derivative) is often used as notation to make these “along a trajectory” statements compact, but it is not an extra assumption.</p>
+</li>
+<li>
+<p>What is mostly <em>not</em> enforced in ML flows (dynamics / constitutive physics):</p>
+</li>
+<li>Eq. (4) and Eq. (5) become relevant only if you want <span class="arithmatex">\(v\)</span> to be <em>physically correct</em> for an actual fluid (pressure, stress, body forces, plus a closure / equation of state).</li>
+<li>In generative modeling, <span class="arithmatex">\(v_\theta\)</span> is typically free to be whatever field best transports <span class="arithmatex">\(p_0\to p_1\)</span>; we do not solve for <span class="arithmatex">\(p\)</span> or <span class="arithmatex">\(\sigma\)</span> and we do not impose Newtonian momentum balance unless we are doing physics-informed modeling.</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.expand", "navigation.sections", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../javascripts/mathjax.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

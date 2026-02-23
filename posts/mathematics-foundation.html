@@ -1,0 +1,2233 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="introduction-B-flow-matching.html">
+      
+      
+        <link rel="next" href="interlude-alpha-year-1757.html">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.2">
+    
+    
+      
+        <title>Diffusion — Mathematics Foundation - AI Notes</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#mathematics-foundation" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../index.html" title="AI Notes" class="md-header__button md-logo" aria-label="AI Notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            AI Notes
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Diffusion — Mathematics Foundation
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../index.html" title="AI Notes" class="md-nav__button md-logo" aria-label="AI Notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    AI Notes
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Posts
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Posts
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="diffusion-models-intro.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diffusion Models Intro
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="introduction-C-compare-and-code.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diffusion — Compare and Code
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="introduction-B-flow-matching.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diffusion — Flow Matching
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diffusion — Mathematics Foundation
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="mathematics-foundation.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diffusion — Mathematics Foundation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#chapter-1-differential-equations-de-first-order-ode-sde" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chapter 1 — Differential Equations (DE): first-order ODE / SDE
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Chapter 1 — Differential Equations (DE): first-order ODE / SDE">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-foundation-of-ordinary-differential-equations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 Foundation of Ordinary Differential Equations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#111-exponential-integration-factors-integration-factor-method" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1.1 Exponential integration factors (integration factor method)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#112-numerical-solvers-for-odes-time-discretization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1.2 Numerical solvers for ODEs (time discretization)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-random-initial-condition-random-ivp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2 Random initial condition (random IVP)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-push-forward-of-measures-and-test-function-identity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3 Push-forward of measures and test-function identity
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14-foundation-of-stochastic-differential-equations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.4 Foundation of Stochastic Differential Equations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#141-from-odes-to-sdes-discretization-intuition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.4.1 From ODEs to SDEs (discretization intuition)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#142-how-to-read-an-ito-sde-integral-form-and-ito-integration-intuition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.4.2 How to read an Itô SDE: integral form and Itô integration intuition
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#chapter-2-density-evolution-from-change-of-variables-to-fokkerplanck" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chapter 2 — Density Evolution: From change of variables to Fokker–Planck
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Chapter 2 — Density Evolution: From change of variables to Fokker–Planck">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-change-of-variable-formula-from-deterministic-maps-to-stochastic-flows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 Change-of-Variable Formula: From Deterministic Maps to Stochastic Flows
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.1 Change-of-Variable Formula: From Deterministic Maps to Stochastic Flows">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#211-single-deterministic-map" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1.1 Single deterministic map
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#212-composing-multiple-bijections-discrete-normalizing-flows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1.2 Composing multiple bijections (discrete normalizing flows)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#213-continuous-time-limit-rightarrow-continuity-equation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1.3 Continuous-time limit \(\Rightarrow\) continuity equation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#214-ode-vs-sde-push-forward-map-vs-stochastic-evolution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1.4 ODE vs SDE: push-forward map vs stochastic evolution
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#215-path-first-density-first-vs-velocity-first-where-diffusion-and-flow-matching-fit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1.5 Path-first (density-first) vs velocity-first: where diffusion and flow matching fit
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-stochastic-dynamics-ito-sde" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 Stochastic dynamics: Itô SDE
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-intuition-of-the-continuity-equation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 Intuition of the Continuity Equation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.3 Intuition of the Continuity Equation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#231-physical-interpretation-control-volume-and-flux" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3.1 Physical interpretation (control volume and flux)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#232-derivation-from-a-global-conservation-law-divergence-theorem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3.2 Derivation from a global conservation law (divergence theorem)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#appendix-a-integrating-factor-derivation-scalar-linear-ode" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Appendix A — Integrating factor derivation (scalar linear ODE)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Appendix A — Integrating factor derivation (scalar linear ODE)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a1-problem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A.1 Problem
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a2-step-1-define-the-integration-factor-and-its-derivative" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A.2 Step 1: define the integration factor and its derivative
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a3-step-2-product-rule-the-key-identity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A.3 Step 2: product rule (the key identity)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a4-step-3-integrate-from-s-to-t" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A.4 Step 3: integrate from \(s\) to \(t\)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a5-step-4-solve-for-xt-the-closed-form-formula" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A.5 Step 4: solve for \(x(t)\) (the closed-form formula)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#appendix-b-derivation-of-the-fokkerplanck-equation-isotropic-diffusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Appendix B — Derivation of the Fokker–Planck equation (isotropic diffusion)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Appendix B — Derivation of the Fokker–Planck equation (isotropic diffusion)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#b0-notation-and-assumptions-what-we-use-implicitly" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        B.0 Notation and assumptions (what we use implicitly)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b1-from-itos-formula-to-the-generator-identity-weak-form" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        B.1 From Itô’s formula to the generator identity (weak form)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b2-convert-the-generator-identity-into-a-pde-for-p_t" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        B.2 Convert the generator identity into a PDE for \(p_t\)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b3-divergence-form-and-the-score" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        B.3 Divergence form and the score
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="interlude-alpha-year-1757.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diffusion — Interlude α (1757)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="introduction-beta-CFM-and-ELBO.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diffusion — CFM and ELBO
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="transformer.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Transformer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="vit-dit.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ViT and DiT
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#chapter-1-differential-equations-de-first-order-ode-sde" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chapter 1 — Differential Equations (DE): first-order ODE / SDE
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Chapter 1 — Differential Equations (DE): first-order ODE / SDE">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-foundation-of-ordinary-differential-equations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 Foundation of Ordinary Differential Equations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#111-exponential-integration-factors-integration-factor-method" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1.1 Exponential integration factors (integration factor method)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#112-numerical-solvers-for-odes-time-discretization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1.2 Numerical solvers for ODEs (time discretization)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-random-initial-condition-random-ivp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2 Random initial condition (random IVP)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-push-forward-of-measures-and-test-function-identity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3 Push-forward of measures and test-function identity
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14-foundation-of-stochastic-differential-equations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.4 Foundation of Stochastic Differential Equations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#141-from-odes-to-sdes-discretization-intuition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.4.1 From ODEs to SDEs (discretization intuition)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#142-how-to-read-an-ito-sde-integral-form-and-ito-integration-intuition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.4.2 How to read an Itô SDE: integral form and Itô integration intuition
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#chapter-2-density-evolution-from-change-of-variables-to-fokkerplanck" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chapter 2 — Density Evolution: From change of variables to Fokker–Planck
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Chapter 2 — Density Evolution: From change of variables to Fokker–Planck">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-change-of-variable-formula-from-deterministic-maps-to-stochastic-flows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 Change-of-Variable Formula: From Deterministic Maps to Stochastic Flows
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.1 Change-of-Variable Formula: From Deterministic Maps to Stochastic Flows">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#211-single-deterministic-map" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1.1 Single deterministic map
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#212-composing-multiple-bijections-discrete-normalizing-flows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1.2 Composing multiple bijections (discrete normalizing flows)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#213-continuous-time-limit-rightarrow-continuity-equation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1.3 Continuous-time limit \(\Rightarrow\) continuity equation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#214-ode-vs-sde-push-forward-map-vs-stochastic-evolution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1.4 ODE vs SDE: push-forward map vs stochastic evolution
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#215-path-first-density-first-vs-velocity-first-where-diffusion-and-flow-matching-fit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1.5 Path-first (density-first) vs velocity-first: where diffusion and flow matching fit
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-stochastic-dynamics-ito-sde" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 Stochastic dynamics: Itô SDE
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-intuition-of-the-continuity-equation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 Intuition of the Continuity Equation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.3 Intuition of the Continuity Equation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#231-physical-interpretation-control-volume-and-flux" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3.1 Physical interpretation (control volume and flux)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#232-derivation-from-a-global-conservation-law-divergence-theorem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3.2 Derivation from a global conservation law (divergence theorem)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#appendix-a-integrating-factor-derivation-scalar-linear-ode" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Appendix A — Integrating factor derivation (scalar linear ODE)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Appendix A — Integrating factor derivation (scalar linear ODE)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a1-problem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A.1 Problem
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a2-step-1-define-the-integration-factor-and-its-derivative" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A.2 Step 1: define the integration factor and its derivative
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a3-step-2-product-rule-the-key-identity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A.3 Step 2: product rule (the key identity)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a4-step-3-integrate-from-s-to-t" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A.4 Step 3: integrate from \(s\) to \(t\)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a5-step-4-solve-for-xt-the-closed-form-formula" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A.5 Step 4: solve for \(x(t)\) (the closed-form formula)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#appendix-b-derivation-of-the-fokkerplanck-equation-isotropic-diffusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Appendix B — Derivation of the Fokker–Planck equation (isotropic diffusion)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Appendix B — Derivation of the Fokker–Planck equation (isotropic diffusion)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#b0-notation-and-assumptions-what-we-use-implicitly" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        B.0 Notation and assumptions (what we use implicitly)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b1-from-itos-formula-to-the-generator-identity-weak-form" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        B.1 From Itô’s formula to the generator identity (weak form)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b2-convert-the-generator-identity-into-a-pde-for-p_t" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        B.2 Convert the generator identity into a PDE for \(p_t\)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b3-divergence-form-and-the-score" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        B.3 Divergence form and the score
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="mathematics-foundation">Mathematics Foundation<a class="headerlink" href="#mathematics-foundation" title="Permanent link">&para;</a></h1>
+<p>All discussions are in the Euclidean setting unless stated otherwise: <span class="arithmatex">\(x\in\mathbb{R}^D\)</span>, <span class="arithmatex">\(t\in[0,1]\)</span>. The goal is to pin down the minimum deterministic/stochastic differential-equation facts needed for flow models and diffusion models.</p>
+<h2 id="chapter-1-differential-equations-de-first-order-ode-sde">Chapter 1 — Differential Equations (DE): first-order ODE / SDE<a class="headerlink" href="#chapter-1-differential-equations-de-first-order-ode-sde" title="Permanent link">&para;</a></h2>
+<h3 id="11-foundation-of-ordinary-differential-equations">1.1 Foundation of Ordinary Differential Equations<a class="headerlink" href="#11-foundation-of-ordinary-differential-equations" title="Permanent link">&para;</a></h3>
+<p>Let <span class="arithmatex">\(u:[0,1]\times\mathbb{R}^D\to\mathbb{R}^D\)</span> be a time-dependent vector field. Consider the initial value problem (IVP)
+$$
+\frac{d}{dt}x(t)=u(t,x(t)),\qquad x(0)=x_0\in\mathbb{R}^D.
+$$</p>
+<p>A standard sufficient condition for (global) existence and uniqueness on <span class="arithmatex">\([0,1]\)</span> is:</p>
+<ul>
+<li>for each <span class="arithmatex">\(t\)</span>, <span class="arithmatex">\(u(t,\cdot)\)</span> is globally Lipschitz on <span class="arithmatex">\(\mathbb{R}^D\)</span>, and</li>
+<li><span class="arithmatex">\(u\)</span> has at most linear growth in <span class="arithmatex">\(x\)</span> (e.g., <span class="arithmatex">\(\|u(t,x)\|\le a(t)+b\|x\|\)</span> with <span class="arithmatex">\(a\in L^1([0,1])\)</span>).</li>
+</ul>
+<p>We write the solution as <span class="arithmatex">\(x(t;x_0)\)</span> and define the flow map
+$$
+\psi_t(x_0):=x(t;x_0),\qquad \psi_0(x_0)=x_0.
+$$</p>
+<p>One immediate consequence of <strong>uniqueness</strong> (hence of the Lipschitz-type assumptions above) is <strong>non-intersection of solution trajectories</strong>: if two solutions <span class="arithmatex">\(x_1(\cdot),x_2(\cdot)\)</span> satisfy <span class="arithmatex">\(x_1(t_\ast)=x_2(t_\ast)\)</span> at some time <span class="arithmatex">\(t_\ast\)</span>, then they must coincide for all <span class="arithmatex">\(t\)</span> in their common interval of existence. (Proof sketch: treat <span class="arithmatex">\((t_\ast,x_1(t_\ast))\)</span> as a new initial condition and apply uniqueness.)</p>
+<h3 id="111-exponential-integration-factors-integration-factor-method">1.1.1 Exponential integration factors (integration factor method)<a class="headerlink" href="#111-exponential-integration-factors-integration-factor-method" title="Permanent link">&para;</a></h3>
+<p>This subsection is mainly about <strong>how to solve first-order ODEs</strong> in the cases where closed forms exist, and how to rewrite them into a form that is more structured (and numerically stable) when they do not.</p>
+<p><strong>Baseline.</strong> For a general nonlinear ODE <span class="arithmatex">\(\dot x=u(t,x)\)</span>, a closed form is usually unavailable; the “solution operator” is the flow map <span class="arithmatex">\(\psi_t\)</span>. In special cases, <span class="arithmatex">\(\psi_t\)</span> can be written explicitly.</p>
+<p><strong>(A) Linear scalar ODE (homogeneous).</strong> Consider
+$$
+\frac{d}{dt}x(t)=L(t)\,x(t),
+$$
+where <span class="arithmatex">\(L:[0,1]\to\mathbb{R}\)</span> is continuous. Then for any <span class="arithmatex">\(0\le s\le t\le 1\)</span>,
+$$
+x(t)=x(s)\,\exp!\Big(\int_s^t L(\tau)\,d\tau\Big).
+$$
+This motivates the exponential (integration) factor
+$$
+E(s\to t):=\exp!\Big(\int_s^t L(\tau)\,d\tau\Big),
+$$
+which accumulates the time-dependent linear effect.</p>
+<p><strong>(B) Linear scalar ODE (inhomogeneous): integrating factor.</strong> For
+$$
+\frac{d}{dt}x(t)=L(t)\,x(t)+r(t),
+$$
+define <span class="arithmatex">\(E(s\to t)\)</span> as above. Then the closed-form solution is
+$$
+x(t)=E(s\to t)\,x(s)+\int_s^t E(\tau\to t)\,r(\tau)\,d\tau.
+$$
+This is the standard integrating-factor method.</p>
+<p><strong>(C) Semilinear ODE: variation of constants / Duhamel formula.</strong> More generally, consider a semilinear ODE
+$$
+\frac{d}{dt}x(t)=L(t)\,x(t)+N(x(t),t),
+$$
+where <span class="arithmatex">\(x(t)\in\mathbb{R}^D\)</span>, <span class="arithmatex">\(L(t)\in\mathbb{R}\)</span> (equivalently <span class="arithmatex">\(L(t)I\)</span> acting on <span class="arithmatex">\(\mathbb{R}^D\)</span>), and <span class="arithmatex">\(N:\mathbb{R}^D\times[0,1]\to\mathbb{R}^D\)</span>. Multiplying by <span class="arithmatex">\(E(s\to t)^{-1}\)</span> and applying the product rule yields
+$$
+\frac{d}{dt}\Big[E(s\to t)^{-1}x(t)\Big]=E(s\to t)^{-1}N(x(t),t).
+$$
+Integrating from <span class="arithmatex">\(s\)</span> to <span class="arithmatex">\(t\)</span> gives the integral form (Duhamel / variation-of-constants formula)
+$$
+x(t)=E(s\to t)\,x(s)\;+\;\int_s^t E(\tau\to t)\,N(x(\tau),\tau)\,d\tau.
+$$
+This separates the evolution into a closed-form linear propagation and a nonlinear residual. <strong>Exponential integrators</strong> discretize only the integral term while handling the linear propagation exactly, often improving stability when the linear part is stiff.</p>
+<p><strong>Remark (matrix-valued linear part).</strong> If the linear part is <span class="arithmatex">\(L(t)\in\mathbb{R}^{D\times D}\)</span>, the same integral formula holds with <span class="arithmatex">\(E(s\to t)\)</span> defined as the fundamental matrix solving <span class="arithmatex">\(\frac{d}{dt}E(s\to t)=L(t)E(s\to t)\)</span>, <span class="arithmatex">\(E(s\to s)=I\)</span>. In general <span class="arithmatex">\(E(s\to t)\neq \exp\!\big(\int_s^t L(\tau)\,d\tau\big)\)</span> unless <span class="arithmatex">\(L(t)\)</span> commutes with itself at different times (or <span class="arithmatex">\(L\)</span> is constant).</p>
+<p><strong>What is “closed form” here (and when do we still need numerics)?</strong> For a generic nonlinear first-order ODE, a closed-form solution is not available. Case (A) is fully explicit. Case (B) is explicit <em>up to quadrature</em>: if the integral <span class="arithmatex">\(\int_s^t E(\tau\to t)r(\tau)\,d\tau\)</span> can be evaluated analytically then we obtain a closed form; otherwise we still compute that integral numerically. Case (C) provides an exact integral representation, but since <span class="arithmatex">\(N\)</span> depends on the unknown trajectory <span class="arithmatex">\(x(\tau)\)</span>, it is generally an implicit integral equation and still requires numerical approximation (e.g., time stepping, Picard iteration, or exponential integrators).</p>
+<p><strong>Diffeomorphism is about regularity/invertibility, not linearity.</strong> In flow models, we often care that the time-<span class="arithmatex">\(t\)</span> map <span class="arithmatex">\(\psi_t\)</span> is a (local) <span class="arithmatex">\(C^1\)</span> diffeomorphism so that the transformation is invertible and change-of-variables identities make sense. This property does <em>not</em> require the dynamics to be linear. Rather, it follows from ODE well-posedness plus smoothness: if <span class="arithmatex">\(u(t,\cdot)\)</span> is (locally) Lipschitz (uniqueness) and <span class="arithmatex">\(C^1\)</span> in <span class="arithmatex">\(x\)</span> on a domain where solutions exist up to time <span class="arithmatex">\(t\)</span>, then <span class="arithmatex">\(\psi_t\)</span> is (locally) invertible and differentiable, with inverse given by running the same ODE backward in time. Nonlinearity is typical and compatible with diffeomorphism; linearity is only a special case where we may also get closed-form expressions.</p>
+<h3 id="112-numerical-solvers-for-odes-time-discretization">1.1.2 Numerical solvers for ODEs (time discretization)<a class="headerlink" href="#112-numerical-solvers-for-odes-time-discretization" title="Permanent link">&para;</a></h3>
+<p>Closed-form solutions are rare for nonlinear, time-dependent ODEs, so we typically approximate trajectories numerically. A useful starting point is the integral form of the ODE
+$$
+\dot x(t)=v(x(t),t),\qquad x(0)=x_0,
+$$
+namely
+$$
+x(t)=x_0+\int_0^t v(x(\tau),\tau)\,d\tau.
+$$
+Numerical solvers discretize time and approximate this integral by evaluating the vector field <span class="arithmatex">\(v\)</span> at selected points.</p>
+<p><strong>Discretization.</strong> Choose grid points <span class="arithmatex">\(0=t_0&lt;t_1&lt;\dots&lt;t_N=T\)</span> with step sizes <span class="arithmatex">\(h_n:=t_{n+1}-t_n\)</span>, and maintain states <span class="arithmatex">\(x_n\approx x(t_n)\)</span>.</p>
+<p><strong>Order of accuracy (one line).</strong> A method is called order-<span class="arithmatex">\(p\)</span> if, for a sufficiently smooth solution and a uniform step size <span class="arithmatex">\(h\)</span>, its global error at <span class="arithmatex">\(T\)</span> scales as <span class="arithmatex">\(O(h^p)\)</span> as <span class="arithmatex">\(h\to 0\)</span> (equivalently, local truncation error <span class="arithmatex">\(O(h^{p+1})\)</span>).</p>
+<p><strong>Euler (explicit).</strong> The simplest one-step method uses the current slope:
+$$
+x_{n+1}=x_n+h_n\,v(x_n,t_n).
+$$
+It is first-order accurate: local truncation error <span class="arithmatex">\(O(h_n^2)\)</span> and global error <span class="arithmatex">\(O(\max_n h_n)\)</span> under standard regularity assumptions.</p>
+<p><strong>Heun (improved Euler / explicit trapezoid).</strong> A second-order predictor–corrector:
+$$
+\tilde x_{n+1}=x_n+h_n\,v(x_n,t_n),\qquad
+x_{n+1}=x_n+\frac{h_n}{2}\Big(v(x_n,t_n)+v(\tilde x_{n+1},t_{n+1})\Big).
+$$
+It has local error <span class="arithmatex">\(O(h_n^3)\)</span> and global error <span class="arithmatex">\(O((\max_n h_n)^2)\)</span>.</p>
+<p><strong>Runge–Kutta (RK4).</strong> A standard fourth-order method based on four slopes:
+$$
+k_1=v(x_n,t_n),\quad
+k_2=v\Big(x_n+\frac{h_n}{2}k_1,t_n+\frac{h_n}{2}\Big),\quad
+k_3=v\Big(x_n+\frac{h_n}{2}k_2,t_n+\frac{h_n}{2}\Big),\quad
+k_4=v(x_n+h_n k_3,t_n+h_n),
+$$
+$$
+x_{n+1}=x_n+\frac{h_n}{6}\big(k_1+2k_2+2k_3+k_4\big).
+$$
+RK4 is a common accuracy–cost tradeoff when vector-field evaluations are not too expensive.</p>
+<p><strong>Semilinear structure and exponential integrators.</strong> If <span class="arithmatex">\(v(x,t)=L(t)x+N(x,t)\)</span> (Section 1.1.1), then
+$$
+x(t)=E(0\to t)x_0+\int_0^t E(\tau\to t)\,N(x(\tau),\tau)\,d\tau,
+$$
+and exponential integrators approximate only the integral term while handling the linear propagation <span class="arithmatex">\(E(\cdot\to\cdot)\)</span> analytically. This can substantially improve stability when the linear part is stiff.</p>
+<p><strong>Reverse-time integration (ODE).</strong> Solving backward from a terminal condition <span class="arithmatex">\(x(T)=x_T\)</span> is straightforward: integrate on a decreasing grid <span class="arithmatex">\(t_0=T&gt;t_1&gt;\dots&gt;t_N=0\)</span>. With Euler and constant step <span class="arithmatex">\(h&gt;0\)</span>,
+$$
+t_{n+1}=t_n-h,\qquad x_{n+1}=x_n-h\,v(x_n,t_n).
+$$
+For ODEs, this is just a reparameterization of time; in diffusion models, reverse-time ODE integration is used for sampling (e.g., probability flow ODEs).</p>
+<p><strong>Remark (stability and stiffness).</strong> For stiff dynamics, explicit methods may require very small step sizes for stability; implicit methods or structure-exploiting solvers (e.g., exponential integrators, diffusion-specific solvers) can be preferable.</p>
+<p><strong>Minimal code (Euler / Heun / RK4).</strong> Below is a tiny reference implementation for the scalar ODE <span class="arithmatex">\( \dot x=v(x,t) \)</span>. The same structure applies to <span class="arithmatex">\(x\in\mathbb{R}^D\)</span> by letting <code>x</code> be a NumPy/PyTorch array/tensor and having <code>v(x,t)</code> return the same shape.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Literal</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">List</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">Method</span> <span class="o">=</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;euler&quot;</span><span class="p">,</span> <span class="s2">&quot;heun&quot;</span><span class="p">,</span> <span class="s2">&quot;rk4&quot;</span><span class="p">]</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="k">def</span><span class="w"> </span><span class="nf">solve_ode</span><span class="p">(</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>    <span class="n">v</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span> <span class="nb">float</span><span class="p">],</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>    <span class="n">x0</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>    <span class="n">t0</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>    <span class="n">t1</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>    <span class="n">n_steps</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>    <span class="n">method</span><span class="p">:</span> <span class="n">Method</span> <span class="o">=</span> <span class="s2">&quot;euler&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]]:</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="sd">    Solve dx/dt = v(x,t) on [t0,t1] with a chosen explicit solver.</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="sd">    - method: &quot;euler&quot; | &quot;heun&quot; | &quot;rk4&quot;</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>    <span class="k">if</span> <span class="n">n_steps</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;n_steps must be positive&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>    <span class="n">h</span> <span class="o">=</span> <span class="p">(</span><span class="n">t1</span> <span class="o">-</span> <span class="n">t0</span><span class="p">)</span> <span class="o">/</span> <span class="n">n_steps</span>
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>    <span class="n">t</span> <span class="o">=</span> <span class="n">t0</span>
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>    <span class="n">x</span> <span class="o">=</span> <span class="n">x0</span>
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>    <span class="n">ts</span> <span class="o">=</span> <span class="p">[</span><span class="n">t</span><span class="p">]</span>
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>    <span class="n">xs</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="p">]</span>
+<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>
+<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_steps</span><span class="p">):</span>
+<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>        <span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;euler&quot;</span><span class="p">:</span>
+<a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a>            <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">h</span> <span class="o">*</span> <span class="n">v</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
+<a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a>
+<a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a>        <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;heun&quot;</span><span class="p">:</span>
+<a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a>            <span class="n">k1</span> <span class="o">=</span> <span class="n">v</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
+<a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a>            <span class="n">x_pred</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">h</span> <span class="o">*</span> <span class="n">k1</span>
+<a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a>            <span class="n">k2</span> <span class="o">=</span> <span class="n">v</span><span class="p">(</span><span class="n">x_pred</span><span class="p">,</span> <span class="n">t</span> <span class="o">+</span> <span class="n">h</span><span class="p">)</span>
+<a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a>            <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="p">(</span><span class="n">h</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">k1</span> <span class="o">+</span> <span class="n">k2</span><span class="p">)</span>
+<a id="__codelineno-0-36" name="__codelineno-0-36" href="#__codelineno-0-36"></a>
+<a id="__codelineno-0-37" name="__codelineno-0-37" href="#__codelineno-0-37"></a>        <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;rk4&quot;</span><span class="p">:</span>
+<a id="__codelineno-0-38" name="__codelineno-0-38" href="#__codelineno-0-38"></a>            <span class="n">k1</span> <span class="o">=</span> <span class="n">v</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
+<a id="__codelineno-0-39" name="__codelineno-0-39" href="#__codelineno-0-39"></a>            <span class="n">k2</span> <span class="o">=</span> <span class="n">v</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">h</span> <span class="o">*</span> <span class="n">k1</span><span class="p">,</span> <span class="n">t</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">h</span><span class="p">)</span>
+<a id="__codelineno-0-40" name="__codelineno-0-40" href="#__codelineno-0-40"></a>            <span class="n">k3</span> <span class="o">=</span> <span class="n">v</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">h</span> <span class="o">*</span> <span class="n">k2</span><span class="p">,</span> <span class="n">t</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">h</span><span class="p">)</span>
+<a id="__codelineno-0-41" name="__codelineno-0-41" href="#__codelineno-0-41"></a>            <span class="n">k4</span> <span class="o">=</span> <span class="n">v</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">h</span> <span class="o">*</span> <span class="n">k3</span><span class="p">,</span> <span class="n">t</span> <span class="o">+</span> <span class="n">h</span><span class="p">)</span>
+<a id="__codelineno-0-42" name="__codelineno-0-42" href="#__codelineno-0-42"></a>            <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="p">(</span><span class="n">h</span> <span class="o">/</span> <span class="mf">6.0</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">k1</span> <span class="o">+</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">k2</span> <span class="o">+</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">k3</span> <span class="o">+</span> <span class="n">k4</span><span class="p">)</span>
+<a id="__codelineno-0-43" name="__codelineno-0-43" href="#__codelineno-0-43"></a>
+<a id="__codelineno-0-44" name="__codelineno-0-44" href="#__codelineno-0-44"></a>        <span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-0-45" name="__codelineno-0-45" href="#__codelineno-0-45"></a>            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;unknown method: </span><span class="si">{</span><span class="n">method</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-46" name="__codelineno-0-46" href="#__codelineno-0-46"></a>
+<a id="__codelineno-0-47" name="__codelineno-0-47" href="#__codelineno-0-47"></a>        <span class="n">t</span> <span class="o">=</span> <span class="n">t</span> <span class="o">+</span> <span class="n">h</span>
+<a id="__codelineno-0-48" name="__codelineno-0-48" href="#__codelineno-0-48"></a>        <span class="n">ts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+<a id="__codelineno-0-49" name="__codelineno-0-49" href="#__codelineno-0-49"></a>        <span class="n">xs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<a id="__codelineno-0-50" name="__codelineno-0-50" href="#__codelineno-0-50"></a>
+<a id="__codelineno-0-51" name="__codelineno-0-51" href="#__codelineno-0-51"></a>    <span class="k">return</span> <span class="n">ts</span><span class="p">,</span> <span class="n">xs</span>
+</code></pre></div>
+<h3 id="12-random-initial-condition-random-ivp">1.2 Random initial condition (random IVP)<a class="headerlink" href="#12-random-initial-condition-random-ivp" title="Permanent link">&para;</a></h3>
+<p>Fix a probability space <span class="arithmatex">\((\Omega,\mathcal{F},\mathbb{P})\)</span>. Let <span class="arithmatex">\(\mathbf{X}_0:\Omega\to\mathbb{R}^D\)</span> be an <span class="arithmatex">\(\mathcal{F}\)</span>-measurable random variable with law <span class="arithmatex">\(\mu_0:=\mathcal{L}(\mathbf{X}_0)\)</span>. Define
+$$
+\mathbf{X}_t:=\psi_t(\mathbf{X}_0),\qquad t\in[0,1],
+$$
+and denote <span class="arithmatex">\(\mu_t:=\mathcal{L}(\mathbf{X}_t)\)</span>. This is still a deterministic ODE; randomness enters only through <span class="arithmatex">\(\mathbf{X}_0\)</span>.</p>
+<h3 id="13-push-forward-of-measures-and-test-function-identity">1.3 Push-forward of measures and test-function identity<a class="headerlink" href="#13-push-forward-of-measures-and-test-function-identity" title="Permanent link">&para;</a></h3>
+<p>For each <span class="arithmatex">\(t\)</span>, the law evolves by push-forward:
+$$
+\mu_t = (\psi_t)<em>#\mu_0.
+$$
+Equivalently, for any bounded measurable <span class="arithmatex">\(\varphi:\mathbb{R}^D\to\mathbb{R}\)</span>,
+$$
+\mathbb{E}\big[\varphi(\mathbf{X}_t)\big]
+=
+\int</em>{\mathbb{R}^D}\varphi(\psi_t(x))\,\mu_0(dx).
+$$</p>
+<h3 id="14-foundation-of-stochastic-differential-equations">1.4 Foundation of Stochastic Differential Equations<a class="headerlink" href="#14-foundation-of-stochastic-differential-equations" title="Permanent link">&para;</a></h3>
+<p>This section provides an intuition-first bridge from ODEs to SDEs. Chapter 2 then states the Itô SDE and the associated density evolution (Fokker–Planck).</p>
+<h3 id="141-from-odes-to-sdes-discretization-intuition">1.4.1 From ODEs to SDEs (discretization intuition)<a class="headerlink" href="#141-from-odes-to-sdes-discretization-intuition" title="Permanent link">&para;</a></h3>
+<p>Start from a deterministic ODE in <span class="arithmatex">\(\mathbb{R}^D\)</span>:
+$$
+\frac{d}{dt}x(t)=f(x(t),t),\qquad x(0)=x_0,\qquad t\in[0,T].
+$$
+Euler time stepping with step size <span class="arithmatex">\(\Delta t\)</span> gives
+$$
+x_{t+\Delta t}\approx x_t+f(x_t,t)\,\Delta t.
+$$</p>
+<p>To model uncertainty or unmodeled interactions, add a random perturbation at each time step:
+$$
+x_{t+\Delta t}\approx x_t+f(x_t,t)\,\Delta t+g(t)\,\sqrt{\Delta t}\,\varepsilon_t,
+\qquad \varepsilon_t\sim\mathcal{N}(0,I_D)\ \text{i.i.d.}
+$$
+The <span class="arithmatex">\(\sqrt{\Delta t}\)</span> scaling is crucial: it is the scaling (up to constants) for which the cumulative randomness remains <span class="arithmatex">\(O(1)\)</span> over <span class="arithmatex">\(O(1)\)</span> time, rather than vanishing (<span class="arithmatex">\(\Delta t\)</span>) or exploding (<span class="arithmatex">\(1\)</span>).</p>
+<p>In the continuous-time limit, this leads to an Itô SDE
+$$
+dX_t=f(X_t,t)\,dt+g(t)\,dW_t,
+$$
+where <span class="arithmatex">\(W_t\in\mathbb{R}^D\)</span> is a standard Brownian motion (Wiener process) characterized by:</p>
+<ul>
+<li><span class="arithmatex">\(W_0=0\)</span> a.s.;</li>
+<li>independent increments: <span class="arithmatex">\(W_t-W_s\)</span> is independent of <span class="arithmatex">\(\sigma(W_u:u\le s)\)</span> for <span class="arithmatex">\(0\le s&lt;t\)</span>;</li>
+<li>Gaussian increments: <span class="arithmatex">\(W_t-W_s\sim \mathcal{N}(0,(t-s)I_D)\)</span>;</li>
+<li>sample paths are a.s. continuous but nowhere classically differentiable.</li>
+</ul>
+<p>The notation <span class="arithmatex">\(dW_t:=W_{t+dt}-W_t\)</span> is a convenient shorthand for these increments and should not be interpreted as a classical differential. Informally, one writes
+$$
+dW_t\sim \mathcal{N}(0,dt\,I_D),
+$$
+meaning that over a short interval of length <span class="arithmatex">\(dt\)</span>, the increment behaves like a zero-mean Gaussian with covariance <span class="arithmatex">\(dt\,I_D\)</span>.</p>
+<h3 id="142-how-to-read-an-ito-sde-integral-form-and-ito-integration-intuition">1.4.2 How to read an Itô SDE: integral form and Itô integration intuition<a class="headerlink" href="#142-how-to-read-an-ito-sde-integral-form-and-ito-integration-intuition" title="Permanent link">&para;</a></h3>
+<p>An SDE should be understood through its <strong>integral formulation</strong>. For example, the Itô SDE
+$$
+dX_t=f(X_t,t)\,dt+g(t)\,dW_t,\qquad X_0=x_0,
+$$
+means that for each <span class="arithmatex">\(t\in[0,T]\)</span>,
+$$
+X_t
+=
+X_0
++\int_0^t f(X_s,s)\,ds
++\int_0^t g(s)\,dW_s,
+$$
+where the first integral is a classical (Lebesgue/Riemann) integral and the second is an <strong>Itô stochastic integral</strong>.</p>
+<p>We do not build the Itô integral rigorously here; instead, keep the following intuition in mind. For a partition <span class="arithmatex">\(0=t_0&lt;t_1&lt;\dots&lt;t_N=t\)</span>, the Itô integral can be viewed (informally) as a limit of left-point Riemann sums:
+$$
+\int_0^t g(s)\,dW_s
+\approx
+\sum_{i=0}^{N-1} g(t_i)\,\big(W_{t_{i+1}}-W_{t_i}\big),
+$$
+with convergence in probability (under suitable conditions). The <strong>left-endpoint evaluation</strong> <span class="arithmatex">\(g(t_i)\)</span> is what distinguishes the Itô convention from other conventions (e.g., Stratonovich often corresponds to midpoint-type evaluations).</p>
+<p>Because Brownian sample paths are a.s. continuous but nowhere classically differentiable, expressions like <span class="arithmatex">\(dW_t/dt\)</span> do not exist in the usual sense, and classical “integrate both sides” reasoning does not apply directly. The differential notation <span class="arithmatex">\(dX_t\)</span>, <span class="arithmatex">\(dt\)</span>, <span class="arithmatex">\(dW_t\)</span> is therefore shorthand for increments and must be interpreted through the integral equation above.</p>
+<p><strong>Comparison with ODEs.</strong> For an ODE <span class="arithmatex">\(\dot x(t)=f(x(t),t)\)</span>, the integral form
+$$
+x(t)=x(0)+\int_0^t f(x(\tau),\tau)\,d\tau
+$$
+is justified by the fundamental theorem of calculus (differentiability recovers the function from its derivative). For SDEs, there is no direct analog because <span class="arithmatex">\(W_t\)</span> is not differentiable and stochastic integrals do not obey the classical chain rule. Instead, the correct replacement is <strong>Itô’s formula (Itô’s lemma)</strong>, which we will use later when connecting SDEs to density evolution and reverse-time constructions in diffusion models.</p>
+<p><strong>Minimal code (Euler–Maruyama / Milstein).</strong> The most common time stepping for Itô SDEs is Euler–Maruyama. Below is a small reference implementation for
+$$
+dX_t=f(X_t,t)\,dt+G(X_t,t)\,dW_t,
+$$
+where <span class="arithmatex">\(W_t\in\mathbb{R}^m\)</span> and <span class="arithmatex">\(G(x,t)\in\mathbb{R}^{D\times m}\)</span>. Milstein is included only for the <strong>scalar</strong> case <span class="arithmatex">\(D=m=1\)</span>.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Literal</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Optional</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="n">SdeMethod</span> <span class="o">=</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;euler_maruyama&quot;</span><span class="p">,</span> <span class="s2">&quot;milstein_scalar&quot;</span><span class="p">]</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="k">def</span><span class="w"> </span><span class="nf">solve_sde</span><span class="p">(</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>    <span class="n">f</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>    <span class="n">G</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>    <span class="n">x0</span><span class="p">,</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>    <span class="n">t0</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>    <span class="n">t1</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>    <span class="n">n_steps</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>    <span class="o">*</span><span class="p">,</span>
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>    <span class="n">method</span><span class="p">:</span> <span class="n">SdeMethod</span> <span class="o">=</span> <span class="s2">&quot;euler_maruyama&quot;</span><span class="p">,</span>
+<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>    <span class="n">rng</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">Generator</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>    <span class="n">dgdx_scalar</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">[[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span> <span class="nb">float</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
+<a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a><span class="sd">    Solve the Itô SDE: dX = f(X,t) dt + G(X,t) dW, with W in R^m.</span>
+<a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a>
+<a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a><span class="sd">    - f(x,t): (D,) -&gt; (D,)</span>
+<a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a><span class="sd">    - G(x,t): (D,) -&gt; (D,m)</span>
+<a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a><span class="sd">    - x0: float or array-like of shape (D,)</span>
+<a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a><span class="sd">    - method:</span>
+<a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a><span class="sd">        - &quot;euler_maruyama&quot;: works for any (D,m)</span>
+<a id="__codelineno-1-28" name="__codelineno-1-28" href="#__codelineno-1-28"></a><span class="sd">        - &quot;milstein_scalar&quot;: only for D=m=1; requires dgdx_scalar(x,t)=d/dx g(x,t)</span>
+<a id="__codelineno-1-29" name="__codelineno-1-29" href="#__codelineno-1-29"></a><span class="sd">          where G(x,t) = [[g(x,t)]].</span>
+<a id="__codelineno-1-30" name="__codelineno-1-30" href="#__codelineno-1-30"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-1-31" name="__codelineno-1-31" href="#__codelineno-1-31"></a>    <span class="k">if</span> <span class="n">n_steps</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+<a id="__codelineno-1-32" name="__codelineno-1-32" href="#__codelineno-1-32"></a>        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;n_steps must be positive&quot;</span><span class="p">)</span>
+<a id="__codelineno-1-33" name="__codelineno-1-33" href="#__codelineno-1-33"></a>    <span class="k">if</span> <span class="n">t1</span> <span class="o">&lt;=</span> <span class="n">t0</span><span class="p">:</span>
+<a id="__codelineno-1-34" name="__codelineno-1-34" href="#__codelineno-1-34"></a>        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;require t1 &gt; t0 for this forward-time solver&quot;</span><span class="p">)</span>
+<a id="__codelineno-1-35" name="__codelineno-1-35" href="#__codelineno-1-35"></a>
+<a id="__codelineno-1-36" name="__codelineno-1-36" href="#__codelineno-1-36"></a>    <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">()</span> <span class="k">if</span> <span class="n">rng</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">rng</span>
+<a id="__codelineno-1-37" name="__codelineno-1-37" href="#__codelineno-1-37"></a>
+<a id="__codelineno-1-38" name="__codelineno-1-38" href="#__codelineno-1-38"></a>    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+<a id="__codelineno-1-39" name="__codelineno-1-39" href="#__codelineno-1-39"></a>    <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+<a id="__codelineno-1-40" name="__codelineno-1-40" href="#__codelineno-1-40"></a>        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">1</span><span class="p">,))</span>
+<a id="__codelineno-1-41" name="__codelineno-1-41" href="#__codelineno-1-41"></a>
+<a id="__codelineno-1-42" name="__codelineno-1-42" href="#__codelineno-1-42"></a>    <span class="n">t</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">t0</span><span class="p">)</span>
+<a id="__codelineno-1-43" name="__codelineno-1-43" href="#__codelineno-1-43"></a>    <span class="n">h</span> <span class="o">=</span> <span class="p">(</span><span class="n">t1</span> <span class="o">-</span> <span class="n">t0</span><span class="p">)</span> <span class="o">/</span> <span class="n">n_steps</span>
+<a id="__codelineno-1-44" name="__codelineno-1-44" href="#__codelineno-1-44"></a>
+<a id="__codelineno-1-45" name="__codelineno-1-45" href="#__codelineno-1-45"></a>    <span class="n">ts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">n_steps</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+<a id="__codelineno-1-46" name="__codelineno-1-46" href="#__codelineno-1-46"></a>    <span class="n">xs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">n_steps</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,)</span> <span class="o">+</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+<a id="__codelineno-1-47" name="__codelineno-1-47" href="#__codelineno-1-47"></a>    <span class="n">ts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">t</span>
+<a id="__codelineno-1-48" name="__codelineno-1-48" href="#__codelineno-1-48"></a>    <span class="n">xs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span>
+<a id="__codelineno-1-49" name="__codelineno-1-49" href="#__codelineno-1-49"></a>
+<a id="__codelineno-1-50" name="__codelineno-1-50" href="#__codelineno-1-50"></a>    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_steps</span><span class="p">):</span>
+<a id="__codelineno-1-51" name="__codelineno-1-51" href="#__codelineno-1-51"></a>        <span class="n">drift</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">t</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<a id="__codelineno-1-52" name="__codelineno-1-52" href="#__codelineno-1-52"></a>        <span class="n">diffusion</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">G</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">t</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+<a id="__codelineno-1-53" name="__codelineno-1-53" href="#__codelineno-1-53"></a>        <span class="k">if</span> <span class="n">diffusion</span><span class="o">.</span><span class="n">ndim</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+<a id="__codelineno-1-54" name="__codelineno-1-54" href="#__codelineno-1-54"></a>            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;G(x,t) must return a 2D array of shape (D,m)&quot;</span><span class="p">)</span>
+<a id="__codelineno-1-55" name="__codelineno-1-55" href="#__codelineno-1-55"></a>        <span class="n">D</span><span class="p">,</span> <span class="n">m</span> <span class="o">=</span> <span class="n">diffusion</span><span class="o">.</span><span class="n">shape</span>
+<a id="__codelineno-1-56" name="__codelineno-1-56" href="#__codelineno-1-56"></a>        <span class="k">if</span> <span class="n">D</span> <span class="o">!=</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+<a id="__codelineno-1-57" name="__codelineno-1-57" href="#__codelineno-1-57"></a>            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;G(x,t) first dimension must match x dimension D&quot;</span><span class="p">)</span>
+<a id="__codelineno-1-58" name="__codelineno-1-58" href="#__codelineno-1-58"></a>
+<a id="__codelineno-1-59" name="__codelineno-1-59" href="#__codelineno-1-59"></a>        <span class="n">dW</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">standard_normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">m</span><span class="p">,))</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>  <span class="c1"># N(0, h I_m)</span>
+<a id="__codelineno-1-60" name="__codelineno-1-60" href="#__codelineno-1-60"></a>
+<a id="__codelineno-1-61" name="__codelineno-1-61" href="#__codelineno-1-61"></a>        <span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;euler_maruyama&quot;</span><span class="p">:</span>
+<a id="__codelineno-1-62" name="__codelineno-1-62" href="#__codelineno-1-62"></a>            <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">h</span> <span class="o">*</span> <span class="n">drift</span> <span class="o">+</span> <span class="n">diffusion</span> <span class="o">@</span> <span class="n">dW</span>
+<a id="__codelineno-1-63" name="__codelineno-1-63" href="#__codelineno-1-63"></a>
+<a id="__codelineno-1-64" name="__codelineno-1-64" href="#__codelineno-1-64"></a>        <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;milstein_scalar&quot;</span><span class="p">:</span>
+<a id="__codelineno-1-65" name="__codelineno-1-65" href="#__codelineno-1-65"></a>            <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">D</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">m</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="mi">1</span><span class="p">,)):</span>
+<a id="__codelineno-1-66" name="__codelineno-1-66" href="#__codelineno-1-66"></a>                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;milstein_scalar requires D=m=1 and scalar state&quot;</span><span class="p">)</span>
+<a id="__codelineno-1-67" name="__codelineno-1-67" href="#__codelineno-1-67"></a>            <span class="k">if</span> <span class="n">dgdx_scalar</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+<a id="__codelineno-1-68" name="__codelineno-1-68" href="#__codelineno-1-68"></a>                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;milstein_scalar requires dgdx_scalar&quot;</span><span class="p">)</span>
+<a id="__codelineno-1-69" name="__codelineno-1-69" href="#__codelineno-1-69"></a>            <span class="n">g</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">diffusion</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<a id="__codelineno-1-70" name="__codelineno-1-70" href="#__codelineno-1-70"></a>            <span class="n">gp</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">dgdx_scalar</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">t</span><span class="p">))</span>
+<a id="__codelineno-1-71" name="__codelineno-1-71" href="#__codelineno-1-71"></a>            <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">h</span> <span class="o">*</span> <span class="n">drift</span> <span class="o">+</span> <span class="n">diffusion</span> <span class="o">@</span> <span class="n">dW</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">g</span> <span class="o">*</span> <span class="n">gp</span> <span class="o">*</span> <span class="p">(</span><span class="n">dW</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">-</span> <span class="n">h</span><span class="p">)</span>
+<a id="__codelineno-1-72" name="__codelineno-1-72" href="#__codelineno-1-72"></a>
+<a id="__codelineno-1-73" name="__codelineno-1-73" href="#__codelineno-1-73"></a>        <span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-1-74" name="__codelineno-1-74" href="#__codelineno-1-74"></a>            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;unknown method: </span><span class="si">{</span><span class="n">method</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<a id="__codelineno-1-75" name="__codelineno-1-75" href="#__codelineno-1-75"></a>
+<a id="__codelineno-1-76" name="__codelineno-1-76" href="#__codelineno-1-76"></a>        <span class="n">t</span> <span class="o">=</span> <span class="n">t</span> <span class="o">+</span> <span class="n">h</span>
+<a id="__codelineno-1-77" name="__codelineno-1-77" href="#__codelineno-1-77"></a>        <span class="n">ts</span><span class="p">[</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">t</span>
+<a id="__codelineno-1-78" name="__codelineno-1-78" href="#__codelineno-1-78"></a>        <span class="n">xs</span><span class="p">[</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span>
+<a id="__codelineno-1-79" name="__codelineno-1-79" href="#__codelineno-1-79"></a>
+<a id="__codelineno-1-80" name="__codelineno-1-80" href="#__codelineno-1-80"></a>    <span class="k">return</span> <span class="n">ts</span><span class="p">,</span> <span class="n">xs</span>
+</code></pre></div>
+<h2 id="chapter-2-density-evolution-from-change-of-variables-to-fokkerplanck">Chapter 2 — Density Evolution: From change of variables to Fokker–Planck<a class="headerlink" href="#chapter-2-density-evolution-from-change-of-variables-to-fokkerplanck" title="Permanent link">&para;</a></h2>
+<p>This chapter summarizes the two canonical density-evolution PDEs:</p>
+<ul>
+<li>deterministic transport (ODE) <span class="arithmatex">\(\Rightarrow\)</span> continuity equation;</li>
+<li>stochastic diffusion (Itô SDE) <span class="arithmatex">\(\Rightarrow\)</span> Fokker–Planck equation.</li>
+</ul>
+<h3 id="21-change-of-variable-formula-from-deterministic-maps-to-stochastic-flows">2.1 Change-of-Variable Formula: From Deterministic Maps to Stochastic Flows<a class="headerlink" href="#21-change-of-variable-formula-from-deterministic-maps-to-stochastic-flows" title="Permanent link">&para;</a></h3>
+<p><img src="../assets/figures/M-fig1-Change-of-Variable.png" width="600" style="display:block;margin-left:0;margin-right:auto;"></p>
+<p>This section starts from a single deterministic update <span class="arithmatex">\(x_1=\Psi(x_0)\)</span> and tracks how densities transform under smooth bijections. Composing many such updates leads to the Jacobian-determinant bookkeeping used in normalizing flows. Taking a continuous-time limit recovers the continuity equation; adding Brownian noise upgrades it to the Fokker–Planck equation (Section 2.2).</p>
+<h4 id="211-single-deterministic-map">2.1.1 Single deterministic map<a class="headerlink" href="#211-single-deterministic-map" title="Permanent link">&para;</a></h4>
+<p>Let <span class="arithmatex">\(\Psi:\mathbb{R}^D\to\mathbb{R}^D\)</span> be a <span class="arithmatex">\(C^1\)</span> bijection with <span class="arithmatex">\(C^1\)</span> inverse (a diffeomorphism). If <span class="arithmatex">\(X_0\sim p_0\)</span> and <span class="arithmatex">\(X_1:=\Psi(X_0)\)</span>, then <span class="arithmatex">\(X_1\sim p_1\)</span> where the density is given by the change-of-variable formula
+$$
+p_1(x_1)=p_0\big(\Psi^{-1}(x_1)\big)\,\left|\det \nabla \Psi^{-1}(x_1)\right|.
+$$
+Equivalently, writing <span class="arithmatex">\(x_1=\Psi(x_0)\)</span>,
+$$
+p_0(x_0)=p_1(\Psi(x_0))\,\left|\det \nabla\Psi(x_0)\right|.
+$$
+Interpretation: <span class="arithmatex">\(\left|\det\nabla\Psi\right|\)</span> is the local volume change, and the density compensates to conserve probability mass.</p>
+<p>At the measure level, this is exactly a push-forward:
+$$
+\mu_1 = \Psi_#\mu_0,
+$$
+meaning <span class="arithmatex">\(\mu_1(A)=\mu_0(\Psi^{-1}(A))\)</span> for any Borel set <span class="arithmatex">\(A\subseteq\mathbb{R}^D\)</span>. The density formula above is the Lebesgue-density version of <span class="arithmatex">\(\mu_1=\Psi_\#\mu_0\)</span>.</p>
+<p>As a special case, if <span class="arithmatex">\(\Psi(x)=Ax\)</span> with <span class="arithmatex">\(A\in\mathbb{R}^{D\times D}\)</span> invertible, then
+$$
+p_1(x_1)=p_0(A^{-1}x_1)\,|\det A^{-1}|.
+$$</p>
+<h4 id="212-composing-multiple-bijections-discrete-normalizing-flows">2.1.2 Composing multiple bijections (discrete normalizing flows)<a class="headerlink" href="#212-composing-multiple-bijections-discrete-normalizing-flows" title="Permanent link">&para;</a></h4>
+<p>Consider a sequence of diffeomorphisms <span class="arithmatex">\(\Psi_1,\dots,\Psi_L\)</span> and states <span class="arithmatex">\(x_k=\Psi_k(x_{k-1})\)</span>. If <span class="arithmatex">\(X_0\sim p_0\)</span>, define <span class="arithmatex">\(X_k:=\Psi_k(X_{k-1})\)</span> and let <span class="arithmatex">\(p_k\)</span> be the density of <span class="arithmatex">\(X_k\)</span>. Mass conservation at each step implies
+$$
+p_k(x_k)=p_{k-1}(x_{k-1})\left|\det \nabla\Psi_k(x_{k-1})\right|^{-1},
+\qquad x_{k-1}=\Psi_k^{-1}(x_k).
+$$
+Recursing yields the overall Jacobian product
+$$
+p_L(x_L)=p_0(x_0)\prod_{k=1}^L \left|\det \nabla\Psi_k(x_{k-1})\right|^{-1},
+$$
+and, in log form,
+$$
+\log p_L(x_L)=\log p_0(x_0)-\sum_{k=1}^L \log\left|\det \nabla\Psi_k(x_{k-1})\right|.
+$$
+This is the core likelihood bookkeeping identity for (discrete) normalizing flows.</p>
+<h4 id="213-continuous-time-limit-rightarrow-continuity-equation">2.1.3 Continuous-time limit <span class="arithmatex">\(\Rightarrow\)</span> continuity equation<a class="headerlink" href="#213-continuous-time-limit-rightarrow-continuity-equation" title="Permanent link">&para;</a></h4>
+<p>Let <span class="arithmatex">\(u(t,x)\)</span> be a time-dependent velocity field and consider the ODE <span class="arithmatex">\(\dot x(t)=u(t,x(t))\)</span>. A standard way to connect maps to flows is to take small steps
+$$
+\Psi_{t\to t+\Delta t}(x)\approx x+u(t,x)\,\Delta t,
+$$
+so the Jacobian factor becomes <span class="arithmatex">\(\det(I+\Delta t\,\nabla_x u(t,x))\)</span>. In the limit <span class="arithmatex">\(\Delta t\to 0\)</span>, the density <span class="arithmatex">\(p_t\)</span> (when it exists and is smooth enough) evolves according to the continuity equation
+$$
+\partial_t p_t(x)+\nabla!\cdot\big(p_t(x)\,u(t,x)\big)=0.\qquad\text{(CE)}
+$$
+Along trajectories <span class="arithmatex">\(X_t\)</span> solving the ODE, an equivalent form is
+$$
+\frac{d}{dt}\log p_t(X_t)=-\nabla!\cdot u(t,X_t).
+$$</p>
+<p><strong>Regularity of <span class="arithmatex">\(u\)</span> <span class="arithmatex">\(\Rightarrow\)</span> an invertible flow map.</strong> Under standard ODE well-posedness assumptions (e.g., <span class="arithmatex">\(u(t,\cdot)\)</span> locally Lipschitz in <span class="arithmatex">\(x\)</span> and sufficiently regular in <span class="arithmatex">\(t\)</span>), for each initial condition <span class="arithmatex">\(x_0\)</span> there is a unique trajectory <span class="arithmatex">\(t\mapsto x(t;x_0)\)</span>. This defines the time-<span class="arithmatex">\(t\)</span> flow map
+$$
+\psi_t(x_0):=x(t;x_0).
+$$
+Uniqueness implies <strong>non-intersection</strong> of trajectories, and in particular makes <span class="arithmatex">\(\psi_t\)</span> (locally) invertible on its domain of existence: the inverse is given by running the same ODE backward in time, i.e., <span class="arithmatex">\(\psi_t^{-1}=\psi_{t\to 0}\)</span> whenever both flows are well-defined. If <span class="arithmatex">\(u\)</span> is <span class="arithmatex">\(C^1\)</span> in <span class="arithmatex">\(x\)</span>, then <span class="arithmatex">\(\psi_t\)</span> is (locally) a <span class="arithmatex">\(C^1\)</span> diffeomorphism.</p>
+<p><strong>Derivation sketch (via change of variables).</strong> View the ODE as the continuous-time limit of small bijective updates (forward Euler):
+$$
+x_{t+\Delta t}=\Psi(x_t):=x_t+\Delta t\,u(t,x_t).
+$$
+Then
+$$
+\nabla_{x_t}\Psi(x_t)=I+\Delta t\,\nabla_x u(t,x_t)+O(\Delta t^2),
+$$
+and hence
+$$
+\det(\nabla_{x_t}\Psi)=1+\Delta t\,\nabla!\cdot u(t,x_t)+O(\Delta t^2),
+$$
+using <span class="arithmatex">\(\det(I+\Delta t A)=1+\Delta t\,\mathrm{tr}(A)+O(\Delta t^2)\)</span> and <span class="arithmatex">\(\nabla\!\cdot u=\mathrm{tr}(\nabla_x u)\)</span>. Applying the change-of-variable formula to the update gives
+$$
+\log p_{t+\Delta t}(x_{t+\Delta t})-\log p_t(x_t)
+=
+-\Delta t\,\nabla!\cdot u(t,x_t)+O(\Delta t^2).
+$$
+On the other hand, a Taylor expansion yields
+$$
+\log p_{t+\Delta t}(x_{t+\Delta t})-\log p_t(x_t)
+=
+\Delta t\,\partial_t\log p_t(x_t)
++\Delta t\,u(t,x_t)^\top\nabla_x\log p_t(x_t)
++O(\Delta t^2).
+$$
+Matching <span class="arithmatex">\(O(\Delta t)\)</span> terms and rewriting via the product rule recovers (CE) (and the trajectory form above).</p>
+<p>At the measure level, the ODE flow map <span class="arithmatex">\(\psi_t\)</span> (when well-defined) pushes the initial law forward:
+$$
+\mu_t = (\psi_t)_#\mu_0.
+$$
+When <span class="arithmatex">\(\mu_t(dx)=p_t(x)\,dx\)</span> exists, the continuity equation (CE) is the density-level expression of <span class="arithmatex">\(\mu_t=(\psi_t)_\#\mu_0\)</span>.</p>
+<h4 id="214-ode-vs-sde-push-forward-map-vs-stochastic-evolution">2.1.4 ODE vs SDE: push-forward map vs stochastic evolution<a class="headerlink" href="#214-ode-vs-sde-push-forward-map-vs-stochastic-evolution" title="Permanent link">&para;</a></h4>
+<p>For an Itô SDE, sample paths satisfy
+$$
+dX_t=b(t,X_t)\,dt+\sigma(t,X_t)\,dW_t,
+$$
+and <span class="arithmatex">\(X_t\)</span> is no longer a deterministic function of <span class="arithmatex">\(X_0\)</span>. Consequently, in general there is no single deterministic map <span class="arithmatex">\(\psi_t\)</span> such that <span class="arithmatex">\(\mu_t=(\psi_t)_\#\mu_0\)</span>.</p>
+<p>Instead, the law evolves via a transition kernel (Markov semigroup) <span class="arithmatex">\(P_t\)</span>. In a notation that mirrors the push-forward <span class="arithmatex">\(\#\)</span>, it is common to view <span class="arithmatex">\(P_t\)</span> as inducing a <strong>push-forward operator on measures</strong> (the adjoint of <span class="arithmatex">\(P_t\)</span> acting on test functions).</p>
+<p><strong>Kernel <span class="arithmatex">\(\Rightarrow\)</span> measure push-forward.</strong> Let <span class="arithmatex">\(P_t(x,\cdot)\)</span> be a probability measure on <span class="arithmatex">\(\mathbb{R}^D\)</span> for each <span class="arithmatex">\(x\)</span>, and write <span class="arithmatex">\(P_t(x,A)\)</span> for its mass on a Borel set <span class="arithmatex">\(A\)</span>. Define the induced operator <span class="arithmatex">\(P_t^\ast\)</span> on measures by
+$$
+(P_t^\ast \mu_0)(A)
+:=
+\int_{\mathbb{R}^D} P_t(x,A)\,\mu_0(dx),
+\qquad A\ \text{Borel}.
+$$
+Then the law evolution is simply
+$$
+\mu_t = P_t^\ast \mu_0.
+$$
+Many notes also write this as <span class="arithmatex">\(\mu_t=\mu_0 P_t\)</span> (right action) or, informally, <span class="arithmatex">\(\mu_t=(P_t)_\#\mu_0\)</span> to emphasize “push-forward by a stochastic mechanism”. The safest (unambiguous) notation is <span class="arithmatex">\(P_t^\ast \mu_0\)</span>.</p>
+<p><strong>Dual (test-function) form.</strong> The same evolution can be written as
+$$
+\int_{\mathbb{R}^D}\varphi(x)\,\mu_t(dx)
+=
+\int_{\mathbb{R}^D} (P_t\varphi)(x)\,\mu_0(dx),
+\qquad
+(P_t\varphi)(x):=\int_{\mathbb{R}^D}\varphi(y)\,P_t(x,dy),
+$$
+for bounded measurable <span class="arithmatex">\(\varphi\)</span>. This is exactly the “kernel vs measure” adjoint relationship: <span class="arithmatex">\(P_t\)</span> acts on functions, <span class="arithmatex">\(P_t^\ast\)</span> acts on measures.</p>
+<p><strong>Deterministic maps as a special case.</strong> If <span class="arithmatex">\(P_t\)</span> comes from a deterministic map <span class="arithmatex">\(\psi_t\)</span>, then
+$$
+P_t(x,dy)=\delta_{\psi_t(x)}(dy)
+\quad\Longrightarrow\quad
+P_t^\ast \mu_0 = (\psi_t)_#\mu_0.
+$$
+So the usual push-forward <span class="arithmatex">\((\psi_t)_\#\)</span> is recovered by taking a Dirac transition kernel.</p>
+<p>When a density <span class="arithmatex">\(p_t\)</span> exists, this kernel-level evolution is described by the Fokker–Planck equation (Section 2.2), which differs from the continuity equation by a second-order diffusion term.</p>
+<p><strong>Velocity-first vs density-first (Eulerian vs Lagrangian).</strong> There is an important asymmetry:</p>
+<ul>
+<li><strong>Velocity-first:</strong> specifying <span class="arithmatex">\(u(t,\cdot)\)</span> (under well-posedness assumptions) determines the flow map <span class="arithmatex">\(\psi_t\)</span>, hence determines the pushed-forward laws <span class="arithmatex">\(\mu_t=(\psi_t)_\#\mu_0\)</span> and (when densities exist) a unique density evolution via (CE).</li>
+<li><strong>Density-first:</strong> specifying only a density path <span class="arithmatex">\(t\mapsto p_t\)</span> generally does <em>not</em> determine a unique velocity field. Indeed, if a vector field <span class="arithmatex">\(w_t(x)\)</span> satisfies
+$$
+\nabla!\cdot\big(p_t(x)\,w_t(x)\big)=0,
+$$
+then both <span class="arithmatex">\(u_t\)</span> and <span class="arithmatex">\(u_t+w_t\)</span> produce the same right-hand side in (CE), hence the same density evolution. A single density path may correspond to many different particle flows.</li>
+</ul>
+<p><strong>Realizability (consistency check).</strong> Not every arbitrary path <span class="arithmatex">\(p_t\)</span> can arise as the marginal law of particles moving under some deterministic velocity field. The continuity equation provides a consistency condition: we say <span class="arithmatex">\(p_t\)</span> is realizable (generated by a flow) if there exists <span class="arithmatex">\(u(t,x)\)</span> such that <span class="arithmatex">\(p_t\)</span> and <span class="arithmatex">\(u\)</span> satisfy (CE) (with suitable boundary/decay conditions).</p>
+<p><strong>(Optional) Conditioning.</strong> If we introduce an auxiliary variable <span class="arithmatex">\(Z\sim\pi\)</span> and define a conditional velocity field <span class="arithmatex">\(u(t,x\mid z)\)</span>, then for each fixed <span class="arithmatex">\(z\)</span> we have a conditional push-forward and continuity equation:
+$$
+p_t(\cdot\mid z)=(\psi_t(\cdot;z))_# p_0,\qquad
+\partial_t p_t(x\mid z)+\nabla!\cdot\big(p_t(x\mid z)\,u(t,x\mid z)\big)=0.
+$$
+The unconditional marginal is the mixture
+$$
+p_t(x)=\int p_t(x\mid z)\,\pi(z)\,dz.
+$$</p>
+<h4 id="215-path-first-density-first-vs-velocity-first-where-diffusion-and-flow-matching-fit">2.1.5 Path-first (density-first) vs velocity-first: where diffusion and flow matching fit<a class="headerlink" href="#215-path-first-density-first-vs-velocity-first-where-diffusion-and-flow-matching-fit" title="Permanent link">&para;</a></h4>
+<p>In modern generative modeling, it is useful to separate two design patterns:</p>
+<ul>
+<li><strong>Path-first / density-first:</strong> first specify (explicitly or implicitly) a probability path <span class="arithmatex">\((\mu_t)_{t\in[0,1]}\)</span> or a forward corruption mechanism that induces <span class="arithmatex">\(\mu_t\)</span>, and then learn dynamics that are consistent with that path.</li>
+<li><strong>Velocity-first:</strong> first specify a parameterized dynamics family (e.g., a flow map or vector field <span class="arithmatex">\(u_\theta\)</span>), and then fit it to data using an objective; the induced path <span class="arithmatex">\(\mu_t\)</span> is whatever that dynamics produces.</li>
+</ul>
+<p><em>Flow-based generative modeling can be understood as a Lagrangian particle system whose Eulerian density evolution satisfies the continuity equation (in a suitable weak sense, and as a pointwise PDE under additional regularity), expressing pure transport and conservation of probability mass.</em> This is a useful intuition for why, in a velocity-first viewpoint, we do not “impose (CE) as a constraint”: once we specify the particle dynamics <span class="arithmatex">\(\dot X_t=u(t,X_t)\)</span> and define <span class="arithmatex">\(\mu_t=(\psi_t)_\#\mu_0\)</span>, (CE) follows as the density-level statement of mass conservation. By contrast, in a path-first/density-first viewpoint, (CE) acts as a compatibility condition between a prescribed <span class="arithmatex">\(p_t\)</span> and a velocity field <span class="arithmatex">\(u\)</span>.</p>
+<p>Here “first” refers to what is treated as the <strong>design input</strong> in modeling/derivation/training (what you specify up front), not what is “known during sampling”. In both paradigms, once dynamics are learned, sampling proceeds by integrating an ODE/SDE.</p>
+<p>“Design input” means something you choose to specify that defines the modeling problem; “known” means something that is already given at a particular stage of an algorithm/derivation (often as an output of a previous stage).</p>
+<p>Diffusion models and flow matching are typically <strong>path-first</strong>:</p>
+<ul>
+<li><strong>Diffusion models:</strong> choose a forward noising SDE (equivalently a noise schedule such as <span class="arithmatex">\(\beta(t)\)</span> or <span class="arithmatex">\(\alpha(t),\sigma(t)\)</span>), which defines a tractable forward path that “thickens” the data distribution. Training then learns a reverse-time object (often the score) that makes sampling possible.</li>
+<li><strong>Flow matching / CFM:</strong> choose a probability path via a coupling + interpolation (e.g., endpoint pairing and <span class="arithmatex">\(\gamma_t(x_0,x_1)\)</span>), then learn a velocity field that generates (or matches) that path.</li>
+</ul>
+<p>In this path-first viewpoint, the continuity equation (CE) plays the role of a <strong>consistency condition</strong>: a velocity field <span class="arithmatex">\(u\)</span> generates a density path <span class="arithmatex">\(p_t\)</span> only if <span class="arithmatex">\(p_t\)</span> and <span class="arithmatex">\(u\)</span> satisfy (CE). In practice we rarely “solve (CE) for <span class="arithmatex">\(u\)</span>” directly because <span class="arithmatex">\(p_t\)</span> is not available in closed form; instead, training objectives are designed as computable surrogates that guarantee (or approximate) the same consistency.</p>
+<p>Finally, note that <strong>sampling is always velocity-first</strong> in execution: once a model provides a drift/velocity (ODE or SDE), we generate samples by numerically integrating the learned dynamics.</p>
+<h3 id="22-stochastic-dynamics-ito-sde">2.2 Stochastic dynamics: Itô SDE<a class="headerlink" href="#22-stochastic-dynamics-ito-sde" title="Permanent link">&para;</a></h3>
+<p>Let <span class="arithmatex">\(\mathbf{W}_t\)</span> be a standard <span class="arithmatex">\(m\)</span>-dimensional Brownian motion. Consider the Itô SDE
+$$
+d\mathbf{X}_t = b(t,\mathbf{X}_t)\,dt + \sigma(t,\mathbf{X}_t)\,d\mathbf{W}_t,
+$$
+where <span class="arithmatex">\(b:[0,1]\times\mathbb{R}^D\to\mathbb{R}^D\)</span> is the drift and <span class="arithmatex">\(\sigma:[0,1]\times\mathbb{R}^D\to\mathbb{R}^{D\times m}\)</span> is the diffusion coefficient. Define the diffusion matrix
+$$
+a(t,x):=\sigma(t,x)\sigma(t,x)^\top\in\mathbb{R}^{D\times D}.
+$$</p>
+<p>Assume <span class="arithmatex">\(\mu_t(dx)=p_t(x)\,dx\)</span> exists and <span class="arithmatex">\(b,\sigma\)</span> are regular enough. Then <span class="arithmatex">\(p_t\)</span> satisfies the <strong>Fokker–Planck (forward Kolmogorov) equation</strong>
+$$
+\partial_t p_t(x)
+=
+-\nabla!\cdot\big(b(t,x)\,p_t(x)\big)
+\;+\;\frac{1}{2}\sum_{i=1}^D\sum_{j=1}^D \partial_{x_i}\partial_{x_j}!\big(a_{ij}(t,x)\,p_t(x)\big).
+$$</p>
+<p>Special cases:</p>
+<ul>
+<li><strong>Pure transport</strong> (<span class="arithmatex">\(\sigma\equiv 0\)</span>): the second-order term vanishes and we recover the continuity equation.</li>
+<li><strong>Isotropic diffusion</strong> (<span class="arithmatex">\(a(t,x)=\beta(t)I\)</span>): the second-order term becomes <span class="arithmatex">\(\frac{1}{2}\beta(t)\Delta p_t\)</span>.</li>
+</ul>
+<p>In the diffusion-model setting, a common special case is
+$$
+dX_t=f(X_t,t)\,dt+g(t)\,dW_t,\qquad W_t\in\mathbb{R}^D,
+$$
+i.e., <span class="arithmatex">\(\sigma(t,x)=g(t)I\)</span>. Then
+$$
+\partial_t p_t(x)
+=
+-\nabla!\cdot\big(f(x,t)\,p_t(x)\big)
+\;+\;\frac{1}{2}g(t)^2\,\Delta p_t(x).
+$$
+Using <span class="arithmatex">\(\nabla p_t=p_t\nabla\log p_t\)</span>, this can be rewritten in a divergence (mass conservation) form:
+$$
+\partial_t p_t(x)
+=
+-\nabla!\cdot\Big(\Big(f(x,t)-\frac{1}{2}g(t)^2\,\nabla_x\log p_t(x)\Big)\,p_t(x)\Big).
+$$
+Here the first term transports probability mass by the drift, while the Laplacian term models spreading (diffusion) due to stochastic noise. A full derivation uses Itô calculus and is omitted here.</p>
+<h3 id="23-intuition-of-the-continuity-equation">2.3 Intuition of the Continuity Equation<a class="headerlink" href="#23-intuition-of-the-continuity-equation" title="Permanent link">&para;</a></h3>
+<p>The continuity equation is a conservation law for a density. In our context, it describes conservation of <strong>probability mass</strong> under deterministic transport.</p>
+<h4 id="231-physical-interpretation-control-volume-and-flux">2.3.1 Physical interpretation (control volume and flux)<a class="headerlink" href="#231-physical-interpretation-control-volume-and-flux" title="Permanent link">&para;</a></h4>
+<p>Think of a small fixed box (control volume) centered at <span class="arithmatex">\(x\in\mathbb{R}^3\)</span> with side lengths <span class="arithmatex">\(\Delta x,\Delta y,\Delta z\)</span>. Let <span class="arithmatex">\(p(x,t)\)</span> be the density of a conserved quantity (mass or probability). The total amount inside the box is approximately
+$$
+p(x,t)\,\Delta x\,\Delta y\,\Delta z.
+$$
+Changes can only happen via <strong>flux</strong> across the boundary. Let <span class="arithmatex">\(j(x,t)\in\mathbb{R}^3\)</span> be the flux vector (amount crossing unit area per unit time). The net outflux in the <span class="arithmatex">\(x\)</span>-direction is approximately
+$$
+\big(j_x(x,y,z,t)-j_x(x+\Delta x,y,z,t)\big)\,\Delta y\,\Delta z,
+$$
+and similarly for the other directions. Summing the three directions, the total net outflux is
+$$
+-\,(\nabla!\cdot j)(x,t)\,\Delta x\,\Delta y\,\Delta z.
+$$
+Conservation says “rate of change inside = minus net outflux”, hence
+$$
+\partial_t p(x,t)\,\Delta x\,\Delta y\,\Delta z
+=
+-\,(\nabla!\cdot j)(x,t)\,\Delta x\,\Delta y\,\Delta z.
+$$
+Canceling the volume factor (valid for any sufficiently small box) yields the local form
+$$
+\partial_t p(x,t)+\nabla!\cdot j(x,t)=0.
+$$</p>
+<p>For deterministic particle transport with velocity field <span class="arithmatex">\(u(x,t)\)</span>, the natural flux is <span class="arithmatex">\(j=p\,u\)</span>. Plugging this into the conservation law gives the continuity equation
+$$
+\partial_t p+\nabla!\cdot(p\,u)=0,
+$$
+which is exactly (CE) in Section 2.1.3.</p>
+<h4 id="232-derivation-from-a-global-conservation-law-divergence-theorem">2.3.2 Derivation from a global conservation law (divergence theorem)<a class="headerlink" href="#232-derivation-from-a-global-conservation-law-divergence-theorem" title="Permanent link">&para;</a></h4>
+<p>Let <span class="arithmatex">\(p(x,t)\)</span> be a density on <span class="arithmatex">\(\mathbb{R}^D\)</span>, <span class="arithmatex">\(u(x,t)\)</span> a velocity field, and <span class="arithmatex">\(V\subset\mathbb{R}^D\)</span> an arbitrary control volume with boundary <span class="arithmatex">\(\partial V\)</span> and outward unit normal <span class="arithmatex">\(n\)</span>. The total mass in <span class="arithmatex">\(V\)</span> is
+$$
+\int_V p(x,t)\,dx,
+$$
+so its time derivative is the accumulation rate <span class="arithmatex">\(\frac{d}{dt}\int_V p\,dx\)</span>. The outward flux through the boundary is
+$$
+\int_{\partial V} p(x,t)\,u(x,t)\cdot n(x)\,dS.
+$$
+Conservation requires
+$$
+\frac{d}{dt}\int_V p\,dx+\int_{\partial V} p\,u\cdot n\,dS=0.
+$$
+Using the divergence theorem,
+$$
+\int_{\partial V} p\,u\cdot n\,dS=\int_V \nabla!\cdot(p\,u)\,dx,
+$$
+so
+$$
+\int_V \big(\partial_t p+\nabla!\cdot(p\,u)\big)\,dx=0.
+$$
+Since <span class="arithmatex">\(V\)</span> is arbitrary, the integrand must vanish (in the weak sense), yielding
+$$
+\partial_t p+\nabla!\cdot(p\,u)=0.
+$$</p>
+<h2 id="appendix-a-integrating-factor-derivation-scalar-linear-ode">Appendix A — Integrating factor derivation (scalar linear ODE)<a class="headerlink" href="#appendix-a-integrating-factor-derivation-scalar-linear-ode" title="Permanent link">&para;</a></h2>
+<p>This appendix spells out the algebra behind the integrating-factor identity used in Section 1.1.1.</p>
+<h3 id="a1-problem">A.1 Problem<a class="headerlink" href="#a1-problem" title="Permanent link">&para;</a></h3>
+<p>Let <span class="arithmatex">\(L:[0,1]\to\mathbb{R}\)</span> and <span class="arithmatex">\(r:[0,1]\to\mathbb{R}\)</span> be continuous. Consider the inhomogeneous linear ODE
+$$
+\dot x(t)=L(t)x(t)+r(t),\qquad t\in[0,1].
+$$
+Fix <span class="arithmatex">\(0\le s\le t\le 1\)</span> and assume <span class="arithmatex">\(x(\cdot)\)</span> is differentiable.</p>
+<h3 id="a2-step-1-define-the-integration-factor-and-its-derivative">A.2 Step 1: define the integration factor and its derivative<a class="headerlink" href="#a2-step-1-define-the-integration-factor-and-its-derivative" title="Permanent link">&para;</a></h3>
+<p>Define
+$$
+E(s\to t):=\exp!\Big(\int_s^t L(\tau)\,d\tau\Big),
+\qquad
+E^{-1}(s\to t):=\exp!\Big(-\int_s^t L(\tau)\,d\tau\Big).
+$$
+By the chain rule and the fundamental theorem of calculus,
+$$
+\frac{d}{dt}E^{-1}(s\to t)
+=
+E^{-1}(s\to t)\cdot\frac{d}{dt}\Big(-\int_s^t L(\tau)\,d\tau\Big)
+=
+-L(t)\,E^{-1}(s\to t).
+$$</p>
+<h3 id="a3-step-2-product-rule-the-key-identity">A.3 Step 2: product rule (the key identity)<a class="headerlink" href="#a3-step-2-product-rule-the-key-identity" title="Permanent link">&para;</a></h3>
+<p>Using the product rule,
+$$
+\frac{d}{dt}\Big(E^{-1}(s\to t)x(t)\Big)
+=
+\Big(\frac{d}{dt}E^{-1}(s\to t)\Big)x(t)+E^{-1}(s\to t)\dot x(t).
+$$
+Substituting <span class="arithmatex">\(\frac{d}{dt}E^{-1}(s\to t)=-L(t)E^{-1}(s\to t)\)</span> gives
+$$
+\frac{d}{dt}\Big(E^{-1}(s\to t)x(t)\Big)
+=
+E^{-1}(s\to t)\big(\dot x(t)-L(t)x(t)\big).
+$$
+If <span class="arithmatex">\(\dot x(t)=L(t)x(t)+r(t)\)</span>, then <span class="arithmatex">\(\dot x(t)-L(t)x(t)=r(t)\)</span>, hence
+$$
+\frac{d}{dt}\Big(E^{-1}(s\to t)x(t)\Big)=E^{-1}(s\to t)\,r(t).
+$$</p>
+<h3 id="a4-step-3-integrate-from-s-to-t">A.4 Step 3: integrate from <span class="arithmatex">\(s\)</span> to <span class="arithmatex">\(t\)</span><a class="headerlink" href="#a4-step-3-integrate-from-s-to-t" title="Permanent link">&para;</a></h3>
+<p>Integrate both sides from <span class="arithmatex">\(s\)</span> to <span class="arithmatex">\(t\)</span> (use <span class="arithmatex">\(\tau\)</span> as the integration variable):
+$$
+\int_s^t \frac{d}{d\tau}\Big(E^{-1}(s\to \tau)x(\tau)\Big)\,d\tau
+=
+\int_s^t E^{-1}(s\to \tau)\,r(\tau)\,d\tau.
+$$
+By the fundamental theorem of calculus, the left-hand side is
+$$
+E^{-1}(s\to t)x(t)-E^{-1}(s\to s)x(s).
+$$
+Since <span class="arithmatex">\(E^{-1}(s\to s)=\exp(0)=1\)</span>, we obtain
+$$
+E^{-1}(s\to t)x(t)
+=
+x(s)+\int_s^t E^{-1}(s\to \tau)\,r(\tau)\,d\tau.
+$$</p>
+<h3 id="a5-step-4-solve-for-xt-the-closed-form-formula">A.5 Step 4: solve for <span class="arithmatex">\(x(t)\)</span> (the closed-form formula)<a class="headerlink" href="#a5-step-4-solve-for-xt-the-closed-form-formula" title="Permanent link">&para;</a></h3>
+<p>Multiply both sides by <span class="arithmatex">\(E(s\to t)\)</span>:
+$$
+x(t)=E(s\to t)x(s)+\int_s^t E(s\to t)\,E^{-1}(s\to \tau)\,r(\tau)\,d\tau.
+$$
+Finally, note that
+$$
+E(s\to t)\,E^{-1}(s\to \tau)
+=
+\exp!\Big(\int_s^t L(\xi)\,d\xi-\int_s^\tau L(\xi)\,d\xi\Big)
+=
+\exp!\Big(\int_\tau^t L(\xi)\,d\xi\Big)
+=
+E(\tau\to t),
+$$
+so the solution can be written as
+$$
+x(t)=E(s\to t)\,x(s)+\int_s^t E(\tau\to t)\,r(\tau)\,d\tau.
+$$</p>
+<h2 id="appendix-b-derivation-of-the-fokkerplanck-equation-isotropic-diffusion">Appendix B — Derivation of the Fokker–Planck equation (isotropic diffusion)<a class="headerlink" href="#appendix-b-derivation-of-the-fokkerplanck-equation-isotropic-diffusion" title="Permanent link">&para;</a></h2>
+<p>This appendix derives the Fokker–Planck equation for the diffusion-model-style SDE
+$$
+dX_t = f(X_t,t)\,dt + g(t)\,dW_t,\qquad X_0\sim p_0,
+$$
+where <span class="arithmatex">\(X_t\in\mathbb{R}^D\)</span>, <span class="arithmatex">\(W_t\)</span> is a standard <span class="arithmatex">\(D\)</span>-dimensional Brownian motion, <span class="arithmatex">\(f:\mathbb{R}^D\times[0,T]\to\mathbb{R}^D\)</span>, and <span class="arithmatex">\(g:[0,T]\to[0,\infty)\)</span>. We assume enough regularity (existence of a smooth density <span class="arithmatex">\(p_t\)</span> and sufficient decay at infinity) to justify exchanging derivatives/integrals and integrating by parts.</p>
+<h3 id="b0-notation-and-assumptions-what-we-use-implicitly">B.0 Notation and assumptions (what we use implicitly)<a class="headerlink" href="#b0-notation-and-assumptions-what-we-use-implicitly" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Write <span class="arithmatex">\(X_t=(X_t^{(1)},\dots,X_t^{(D)})\)</span> and <span class="arithmatex">\(W_t=(W_t^{(1)},\dots,W_t^{(D)})\)</span>.</li>
+<li><span class="arithmatex">\(\nabla\varphi=(\partial_{x_1}\varphi,\dots,\partial_{x_D}\varphi)\)</span>, <span class="arithmatex">\(\Delta\varphi=\sum_{i=1}^D \partial_{x_i x_i}\varphi\)</span>, and <span class="arithmatex">\(\nabla\!\cdot F=\sum_{i=1}^D \partial_{x_i}F_i\)</span>.</li>
+<li>The quadratic covariation of Brownian motion satisfies
+$$
+d\langle W^{(i)},W^{(j)}\rangle_t=\delta_{ij}\,dt.
+$$
+Consequently, since <span class="arithmatex">\(dX_t^{(i)}=\cdots + g(t)\,dW_t^{(i)}\)</span>,
+$$
+d\langle X^{(i)},X^{(j)}\rangle_t=g(t)^2\,\delta_{ij}\,dt.
+$$</li>
+</ul>
+<h3 id="b1-from-itos-formula-to-the-generator-identity-weak-form">B.1 From Itô’s formula to the generator identity (weak form)<a class="headerlink" href="#b1-from-itos-formula-to-the-generator-identity-weak-form" title="Permanent link">&para;</a></h3>
+<p>Let <span class="arithmatex">\(\varphi\in C_c^\infty(\mathbb{R}^D)\)</span> be a smooth test function with compact support. Define the (time-dependent) Itô generator
+$$
+(\mathcal{L}_t\varphi)(x):= f(x,t)\cdot\nabla \varphi(x) + \frac{1}{2}g(t)^2\,\Delta \varphi(x).
+$$</p>
+<p><strong>Step 1 (Itô’s formula, written component-wise).</strong> Since <span class="arithmatex">\(X_t\)</span> solves <span class="arithmatex">\(dX_t=f(X_t,t)\,dt+g(t)\,dW_t\)</span>, Itô’s formula says
+$$
+d\varphi(X_t)
+=
+\sum_{i=1}^D \partial_{x_i}\varphi(X_t)\,dX_t^{(i)}
++\frac12\sum_{i,j=1}^D \partial_{x_ix_j}\varphi(X_t)\,d\langle X^{(i)},X^{(j)}\rangle_t.
+$$
+Substitute <span class="arithmatex">\(dX_t^{(i)}=f_i(X_t,t)\,dt+g(t)\,dW_t^{(i)}\)</span> and <span class="arithmatex">\(d\langle X^{(i)},X^{(j)}\rangle_t=g(t)^2\delta_{ij}\,dt\)</span>:
+$$
+\begin{aligned}
+d\varphi(X_t)
+&amp;=
+\sum_{i=1}^D \partial_{x_i}\varphi(X_t)\,\big(f_i(X_t,t)\,dt+g(t)\,dW_t^{(i)}\big)
++\frac12\sum_{i,j=1}^D \partial_{x_ix_j}\varphi(X_t)\,g(t)^2\delta_{ij}\,dt \
+&amp;=
+\Big(\sum_{i=1}^D f_i(X_t,t)\,\partial_{x_i}\varphi(X_t)\Big)\,dt
++\frac12 g(t)^2\Big(\sum_{i=1}^D \partial_{x_ix_i}\varphi(X_t)\Big)\,dt
+ \;+\; g(t)\sum_{i=1}^D \partial_{x_i}\varphi(X_t)\,dW_t^{(i)}.
+\end{aligned}
+$$
+Recognizing the dot products, this is exactly
+$$
+d\varphi(X_t) = (\mathcal{L}_t\varphi)(X_t)\,dt + g(t)\,\nabla\varphi(X_t)\cdot dW_t.
+$$</p>
+<p><strong>Step 2 (integrate and take expectations).</strong> Integrate from <span class="arithmatex">\(0\)</span> to <span class="arithmatex">\(t\)</span>:
+$$
+\varphi(X_t)-\varphi(X_0)
+=
+\int_0^t (\mathcal{L}_s\varphi)(X_s)\,ds
++\int_0^t g(s)\,\nabla\varphi(X_s)\cdot dW_s.
+$$
+Taking expectations and using that the Itô stochastic integral is a martingale with zero mean (under standard square-integrability conditions),
+$$
+\frac{d}{dt}\mathbb{E}[\varphi(X_t)] = \mathbb{E}\big[(\mathcal{L}_t\varphi)(X_t)\big].
+\tag{B.1}
+$$
+This is the <strong>weak evolution equation</strong>: it characterizes the time derivative of <span class="arithmatex">\(\mathbb{E}[\varphi(X_t)]\)</span> for every test function <span class="arithmatex">\(\varphi\)</span>.</p>
+<h3 id="b2-convert-the-generator-identity-into-a-pde-for-p_t">B.2 Convert the generator identity into a PDE for <span class="arithmatex">\(p_t\)</span><a class="headerlink" href="#b2-convert-the-generator-identity-into-a-pde-for-p_t" title="Permanent link">&para;</a></h3>
+<p>If <span class="arithmatex">\(X_t\)</span> has density <span class="arithmatex">\(p_t\)</span>, then
+$$
+\mathbb{E}[\varphi(X_t)] = \int_{\mathbb{R}^D}\varphi(x)\,p_t(x)\,dx,
+\qquad
+\mathbb{E}\big[(\mathcal{L}<em>t\varphi)(X_t)\big] = \int</em>{\mathbb{R}^D} (\mathcal{L}<em>t\varphi)(x)\,p_t(x)\,dx.
+$$
+Plugging into <span class="arithmatex">\((\text{B.1})\)</span> gives
+$$
+\int</em>{\mathbb{R}^D}\varphi(x)\,\partial_t p_t(x)\,dx
+=
+\int_{\mathbb{R}^D}\Big(f(x,t)\cdot\nabla\varphi(x) + \frac{1}{2}g(t)^2\,\Delta\varphi(x)\Big)p_t(x)\,dx.
+$$</p>
+<p><strong>Step 1 (drift term: one integration by parts).</strong> Write the drift term coordinate-wise:
+$$
+\int_{\mathbb{R}^D} f\cdot\nabla\varphi \; p_t\,dx
+=
+\sum_{i=1}^D \int_{\mathbb{R}^D} f_i(x,t)\,\partial_{x_i}\varphi(x)\;p_t(x)\,dx.
+$$
+Integrate by parts in <span class="arithmatex">\(x_i\)</span> (boundary terms vanish due to compact support/decay):
+$$
+\int_{\mathbb{R}^D} f_i\,(\partial_{x_i}\varphi)\,p_t\,dx
+=
+-\int_{\mathbb{R}^D} \varphi(x)\,\partial_{x_i}\big(f_i(x,t)\,p_t(x)\big)\,dx.
+$$
+Summing over <span class="arithmatex">\(i\)</span> yields
+$$
+\int_{\mathbb{R}^D} f\cdot\nabla\varphi \; p_t\,dx
+=
+-\int_{\mathbb{R}^D} \varphi(x)\,\nabla!\cdot\big(f(x,t)\,p_t(x)\big)\,dx.
+$$
+<strong>Step 2 (diffusion term: two integrations by parts).</strong> Since <span class="arithmatex">\(g(t)\)</span> does not depend on <span class="arithmatex">\(x\)</span>, we can factor it out. Using that the Laplacian is formally self-adjoint under these boundary conditions,
+$$
+\int_{\mathbb{R}^D} (\Delta\varphi)\;p_t\,dx
+=
+\int_{\mathbb{R}^D} \varphi(x)\,\Delta p_t(x)\,dx.
+$$
+One way to see this is coordinate-wise: for each <span class="arithmatex">\(i\)</span>,
+$$
+\int (\partial_{x_i x_i}\varphi)\,p_t\,dx
+=
+-\int (\partial_{x_i}\varphi)\,(\partial_{x_i}p_t)\,dx
+=
+\int \varphi\,(\partial_{x_i x_i}p_t)\,dx,
+$$
+then sum over <span class="arithmatex">\(i=1,\dots,D\)</span>.
+Therefore,
+$$
+\int_{\mathbb{R}^D}\varphi(x)\,\partial_t p_t(x)\,dx
+=
+\int_{\mathbb{R}^D}\varphi(x)\Big(
+-\nabla!\cdot(f(x,t)p_t(x)) + \frac{1}{2}g(t)^2\,\Delta p_t(x)
+\Big)\,dx.
+$$
+Since this holds for all <span class="arithmatex">\(\varphi\in C_c^\infty(\mathbb{R}^D)\)</span>, we conclude the Fokker–Planck equation (in the weak sense, and pointwise under additional regularity):
+$$
+\partial_t p_t(x)
+=
+-\nabla!\cdot\big(f(x,t)\,p_t(x)\big) + \frac{1}{2}g(t)^2\,\Delta p_t(x).
+\tag{FP}
+$$</p>
+<h3 id="b3-divergence-form-and-the-score">B.3 Divergence form and the score<a class="headerlink" href="#b3-divergence-form-and-the-score" title="Permanent link">&para;</a></h3>
+<p>The Fokker–Planck equation can be rewritten so that the right-hand side is a single divergence <span class="arithmatex">\(-\nabla\!\cdot(\text{flux})\)</span>, making the “mass conservation” structure explicit.</p>
+<p><strong>Step 1 (write diffusion as divergence of a flux).</strong> Since <span class="arithmatex">\(g(t)\)</span> is independent of <span class="arithmatex">\(x\)</span>,
+$$
+\frac{1}{2}g(t)^2\,\Delta p_t
+=
+\frac{1}{2}g(t)^2\,\nabla!\cdot(\nabla p_t)
+=
+-\nabla!\cdot\Big(-\frac{1}{2}g(t)^2\,\nabla p_t\Big)
+=
+-\nabla!\cdot\Big(-\frac{1}{2}g(t)^2\,p_t\,\nabla\log p_t\Big).
+$$
+In the last equality we used <span class="arithmatex">\(\nabla p_t=p_t\nabla\log p_t\)</span>, valid wherever <span class="arithmatex">\(p_t&gt;0\)</span> (and in a weak sense under mild conditions).</p>
+<p><strong>Step 2 (combine drift flux and diffusion flux).</strong> Substituting into <span class="arithmatex">\((\text{FP})\)</span> yields the pure-divergence form
+$$
+\partial_t p_t(x)
+=
+-\nabla!\cdot\Big(f(x,t)\,p_t(x) - \frac12 g(t)^2\,\nabla_x p_t(x)\Big)
+=
+-\nabla!\cdot\Big(\Big(f(x,t) - \frac{1}{2}g(t)^2\,\nabla_x\log p_t(x)\Big)\,p_t(x)\Big),
+$$
+which matches the common “drift minus diffusion-times-score” decomposition.</p>
+<p><strong>Remark (general diffusion matrix).</strong> For a general Itô SDE <span class="arithmatex">\(dX_t=b\,dt+\sigma\,dW_t\)</span> with <span class="arithmatex">\(a=\sigma\sigma^\top\)</span>, the diffusion term becomes <span class="arithmatex">\(\frac12\sum_{ij}\partial_{x_i}\partial_{x_j}(a_{ij}p_t)\)</span>. The isotropic case above corresponds to <span class="arithmatex">\(a(t,x)=g(t)^2 I\)</span>.</p>
+<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Chieh-Hsin Lai, Yang Song, Dongjun Kim, Yuki Mitsufuji, Stefano Ermon. <em>The Principles of Diffusion Models</em>. arXiv:2510.21890 (2025). <code>https://arxiv.org/abs/2510.21890</code> (DOI: <code>https://doi.org/10.48550/arXiv.2510.21890</code>). Local copy: <code>topics/diffusion/papers/the_principles_of_diffusion_models.pdf</code>.</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.expand", "navigation.sections", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../javascripts/mathjax.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
