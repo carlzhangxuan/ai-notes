@@ -2608,35 +2608,35 @@ g^\star(x) = \mathbb{E}[Y\mid X=x].
 g^\star(x)=\mathbb{E}\!\left[u_t(\mathbf{X}_t\mid \mathbf{Z})\mid \mathbf{X}_t=x\right] = u_t(x).
 \tag{40}
 \]</div>
-<p><strong>Note (why not <span class="arithmatex">\(\ell_1\)</span>).</strong> In 1D, <span class="arithmatex">\(\ell_1\)</span> regression returns a (conditional) median, not a mean:
-$$
+<p><strong>Note (why not <span class="arithmatex">\(\ell_1\)</span>).</strong> In 1D, <span class="arithmatex">\(\ell_1\)</span> regression returns a (conditional) median, not a mean:</p>
+<div class="arithmatex">\[
 g^\star \in \arg\min_g \mathbb{E}\big[|Y-g(X)|\big]
 \quad\Longrightarrow\quad
 g^\star(x)\in \mathrm{Med}(Y\mid X=x),
 \tag{40a}
-$$
-since the optimality condition is the subgradient balance <span class="arithmatex">\(\mathbb{P}(Y\le g\mid X=x)\ge \tfrac12\)</span> and <span class="arithmatex">\(\mathbb{P}(Y\ge g\mid X=x)\ge \tfrac12\)</span>. For an empirical 1D sample, the minimizer is the usual median (odd <span class="arithmatex">\(n\)</span>: one observed instance; even <span class="arithmatex">\(n\)</span>: any point between the two middle instances).</p>
+\]</div>
+<p>since the optimality condition is the subgradient balance <span class="arithmatex">\(\mathbb{P}(Y\le g\mid X=x)\ge \tfrac12\)</span> and <span class="arithmatex">\(\mathbb{P}(Y\ge g\mid X=x)\ge \tfrac12\)</span>. For an empirical 1D sample, the minimizer is the usual median (odd <span class="arithmatex">\(n\)</span>: one observed instance; even <span class="arithmatex">\(n\)</span>: any point between the two middle instances).</p>
 <p>The marginalization trick above is fundamentally <strong>linear</strong>: mixing conditional solutions mixes their fluxes, which yields the posterior <strong>mean</strong> <span class="arithmatex">\(u_t(x)=\mathbb{E}[u_t(x\mid \mathbf{Z})\mid \mathbf{X}_t=x]\)</span>. The mean is linear; the median is not. So swapping <span class="arithmatex">\(\ell_2\)</span> for <span class="arithmatex">\(\ell_1\)</span> generally selects an order-statistic-type field (a median of conditional velocities) rather than a linear mixture, and need not satisfy the continuity equation for the prescribed <span class="arithmatex">\(p_t\)</span>.</p>
 <p><strong>Note (what is linear in the continuity equation).</strong> The continuity equation
-<span class="arithmatex">\(\partial_t p_t + \nabla\cdot(p_t u_t)=0\)</span> is linear in <span class="arithmatex">\((p_t,j_t)\)</span> when written in <strong>flux form</strong>, where <span class="arithmatex">\(j_t := p_t u_t\)</span>:
-$$
+<span class="arithmatex">\(\partial_t p_t + \nabla\cdot(p_t u_t)=0\)</span> is linear in <span class="arithmatex">\((p_t,j_t)\)</span> when written in <strong>flux form</strong>, where <span class="arithmatex">\(j_t := p_t u_t\)</span>:</p>
+<div class="arithmatex">\[
 \partial_t p_t(x) + \nabla\cdot j_t(x) = 0.
 \tag{40b}
-$$
-It is <em>not</em> linear in <span class="arithmatex">\(u_t\)</span> itself, since <span class="arithmatex">\(u_t=j_t/p_t\)</span> is nonlinear. The marginalization step in Theorem 3 uses exactly this <span class="arithmatex">\((p,j)\)</span>-linearity plus the ability to interchange <span class="arithmatex">\(\partial_t\)</span> and <span class="arithmatex">\(\nabla\cdot\)</span> with the <span class="arithmatex">\(z\)</span>-integral (justified by the regularity / integrability assumptions): define
+\]</div>
+<p>It is <em>not</em> linear in <span class="arithmatex">\(u_t\)</span> itself, since <span class="arithmatex">\(u_t=j_t/p_t\)</span> is nonlinear. The marginalization step in Theorem 3 uses exactly this <span class="arithmatex">\((p,j)\)</span>-linearity plus the ability to interchange <span class="arithmatex">\(\partial_t\)</span> and <span class="arithmatex">\(\nabla\cdot\)</span> with the <span class="arithmatex">\(z\)</span>-integral (justified by the regularity / integrability assumptions): define
 <span class="arithmatex">\(p_t(x)=\int p_{t\mid Z}(x\mid z)\,p_Z(z)\,dz\)</span> and
 <span class="arithmatex">\(j_t(x)=\int j_{t\mid Z}(x\mid z)\,p_Z(z)\,dz\)</span> with <span class="arithmatex">\(j_{t\mid Z}:=p_{t\mid Z}u_t(\cdot\mid z)\)</span>,
 then integrating <span class="arithmatex">\(\partial_t p_{t\mid Z}+\nabla\cdot j_{t\mid Z}=0\)</span> over <span class="arithmatex">\(z\)</span> yields <span class="arithmatex">\(\partial_t p_t+\nabla\cdot j_t=0\)</span>.</p>
-<p>As a related aside: the (forward) Fokker–Planck equation for an SDE is also <strong>linear in <span class="arithmatex">\(p\)</span></strong>, even though it contains a second-order term. In one common notation,
-$$
+<p>As a related aside: the (forward) Fokker–Planck equation for an SDE is also <strong>linear in <span class="arithmatex">\(p\)</span></strong>, even though it contains a second-order term. In one common notation,</p>
+<div class="arithmatex">\[
 \partial_t p
 =
 -\nabla\cdot(f\,p)
 +
-\frac{1}{2}\nabla^2!\big(g^2\,p\big),
+\frac{1}{2}\nabla^2\!\big(g^2\,p\big),
 \tag{40c}
-$$
-so the key issue is not “first-order vs. second-order”, but whether the PDE is linear in the density.</p>
+\]</div>
+<p>so the key issue is not “first-order vs. second-order”, but whether the PDE is linear in the density.</p>
 <p>In this sense, both Flow Matching (deterministic transport; first-order generator) and Diffusion (stochastic dynamics; second-order generator) fit the same <em>generator-based</em> template: the induced density evolution equation is linear in <span class="arithmatex">\(p\)</span>.</p>
 <p><strong>Summary (two theorems glued together, not a coincidence).</strong></p>
 <ol>
@@ -2730,35 +2730,35 @@ u_t(x),
 <ol>
 <li><strong><span class="arithmatex">\(\Omega=\mathbb{R}^d\)</span> with sufficient decay at infinity.</strong> Consider <span class="arithmatex">\(\Omega_R=\{x:\|x\|\le R\}\)</span> and send <span class="arithmatex">\(R\to\infty\)</span>. If <span class="arithmatex">\(j_t(x)\)</span> decays fast enough that <span class="arithmatex">\(\int_{\partial\Omega_R} j_t\cdot n\,dS\to 0\)</span>, the boundary contribution vanishes. Intuition: no probability mass flows in/out “from infinity”.</li>
 <li><strong>Periodic boundary conditions (a torus / periodic box).</strong> Contributions from opposite faces cancel, so the net flux is zero.</li>
-<li><strong>No-flux (reflecting / Neumann-type) boundary conditions.</strong> Impose
-   $$
+<li><strong>No-flux (reflecting / Neumann-type) boundary conditions.</strong> Impose</li>
+</ol>
+<div class="arithmatex">\[
    j_t(x)\cdot n(x) = 0,\qquad x\in\partial\Omega,
    \tag{A6}
-   $$
-   meaning probability mass cannot cross the boundary.</li>
-</ol>
+\]</div>
+<p>meaning probability mass cannot cross the boundary.</p>
 <p>When the boundary term is zero, <span class="arithmatex">\(\tag{A5}\)</span> reduces to <span class="arithmatex">\(\frac{d}{dt}\int_\Omega p_t(x)\,dx=0\)</span>, so the total mass <span class="arithmatex">\(\int_\Omega p_t(x)\,dx\)</span> is conserved in time. In particular, if <span class="arithmatex">\(\int_\Omega p_0(x)\,dx=1\)</span>, then <span class="arithmatex">\(\int_\Omega p_t(x)\,dx=1\)</span> for all <span class="arithmatex">\(t\)</span>.</p>
 <h2 id="b23-flow-matching-loss">B2.3. Flow Matching loss<a class="headerlink" href="#b23-flow-matching-loss" title="Permanent link">&para;</a></h2>
 <p><img src="../assets/figures/B-fig10.png" width="300"></p>
 <p><em>B-fig10. Flow matching loss as a path-matching objective.</em></p>
 <p>The key modeling stance is: <strong>Flow Matching matches a <em>path</em>, not just the final density.</strong> Instead of directly minimizing a discrepancy between <span class="arithmatex">\(p_1\)</span> and some model density <span class="arithmatex">\(q_\theta\)</span>, FM matches the <em>generator</em> (a velocity field) along the prescribed intermediate marginals <span class="arithmatex">\((p_t)\)</span>. If <span class="arithmatex">\(u_{\theta,t}\)</span> matches the true generating field <span class="arithmatex">\(u_t\)</span> for <span class="arithmatex">\(t\in[0,1)\)</span>, then the ODE it defines transports mass along the intended path and reaches the desired endpoint.</p>
-<p>At the loss level, this is written as an expected discrepancy between vectors <span class="arithmatex">\(u_{\theta,t}(x)\)</span> and <span class="arithmatex">\(u_t(x)\)</span>, averaged over <span class="arithmatex">\(t\)</span> and <span class="arithmatex">\(x\sim p_t\)</span>. A central class of losses is <strong>Bregman divergences</strong>: given a strictly convex, differentiable potential <span class="arithmatex">\(\Phi:\mathbb{R}^d\to\mathbb{R}\)</span>, define
-$$
+<p>At the loss level, this is written as an expected discrepancy between vectors <span class="arithmatex">\(u_{\theta,t}(x)\)</span> and <span class="arithmatex">\(u_t(x)\)</span>, averaged over <span class="arithmatex">\(t\)</span> and <span class="arithmatex">\(x\sim p_t\)</span>. A central class of losses is <strong>Bregman divergences</strong>: given a strictly convex, differentiable potential <span class="arithmatex">\(\Phi:\mathbb{R}^d\to\mathbb{R}\)</span>, define</p>
+<div class="arithmatex">\[
 D_\Phi(a,b)
 :=
 \Phi(a)-\Phi(b)-\langle\nabla\Phi(b),a-b\rangle.
 \tag{42a}
-$$
-Then the (population) flow matching loss is
-$$
-\mathcal{L}<em>{\mathrm{FM}}(\theta)
+\]</div>
+<p>Then the (population) flow matching loss is</p>
+<div class="arithmatex">\[
+\mathcal{L}_{\mathrm{FM}}(\theta)
 :=
-\mathbb{E}</em>{t\sim U[0,1],\,\mathbf{X}<em>t\sim p_t}
+\mathbb{E}_{t\sim U[0,1],\,\mathbf{X}_t\sim p_t}
 \Big[
-D</em>\Phi\big(u_t(\mathbf{X}<em>t),\,u</em>{\theta,t}(\mathbf{X}_t)\big)
+D_\Phi\big(u_t(\mathbf{X}_t),\,u_{\theta,t}(\mathbf{X}_t)\big)
 \Big].
 \tag{42}
-$$</p>
+\]</div>
 <p>The squared <span class="arithmatex">\(\ell_2\)</span> loss is the special case <span class="arithmatex">\(\Phi(v)=\frac12\|v\|^2\)</span>, for which <span class="arithmatex">\(D_\Phi(a,b)=\frac12\|a-b\|^2\)</span>.</p>
 <p>The only remaining question is: <strong>where do the labels <span class="arithmatex">\(u_t(\mathbf{X}_t)\)</span> come from?</strong> In general, the marginal target <span class="arithmatex">\(u_t(x)\)</span> is not directly computable because it is defined via a latent-variable marginalization (Theorem 3): it contains a posterior average over <span class="arithmatex">\(\mathbf{Z}\)</span> given <span class="arithmatex">\(\mathbf{X}_t=x\)</span>.</p>
 <h3 id="conditional-flow-matching-cfm-supervised-labels-from-a-latent-variable">Conditional Flow Matching (CFM): supervised labels from a latent variable<a class="headerlink" href="#conditional-flow-matching-cfm-supervised-labels-from-a-latent-variable" title="Permanent link">&para;</a></h3>
@@ -2789,28 +2789,28 @@ $$
 $$</p>
 </blockquote>
 <p><strong>Proof sketch (the “Bregman magic”).</strong> For fixed <span class="arithmatex">\(t\)</span> and <span class="arithmatex">\(x\)</span>, write the marginal target as a conditional expectation
-<span class="arithmatex">\(u_t(x)=\mathbb{E}[u_t(x\mid \mathbf{Z})\mid \mathbf{X}_t=x]\)</span>. The key identity is that the gradient of a Bregman divergence is affine in its first argument:
-$$
+<span class="arithmatex">\(u_t(x)=\mathbb{E}[u_t(x\mid \mathbf{Z})\mid \mathbf{X}_t=x]\)</span>. The key identity is that the gradient of a Bregman divergence is affine in its first argument:</p>
+<div class="arithmatex">\[
 \nabla_b D_\Phi(a,b) \;=\; \nabla^2\Phi(b)\,(b-a),
 \tag{45}
-$$
-so for any <span class="arithmatex">\(\alpha,\beta\in\mathbb{R}\)</span> with <span class="arithmatex">\(\alpha+\beta=1\)</span> and any <span class="arithmatex">\(u_1,u_2,v\in\mathbb{R}^d\)</span>,
-$$
+\]</div>
+<p>so for any <span class="arithmatex">\(\alpha,\beta\in\mathbb{R}\)</span> with <span class="arithmatex">\(\alpha+\beta=1\)</span> and any <span class="arithmatex">\(u_1,u_2,v\in\mathbb{R}^d\)</span>,</p>
+<div class="arithmatex">\[
 \nabla_v D_\Phi(\alpha u_1 + \beta u_2, v)
 \;=\;
 \alpha\,\nabla_v D_\Phi(u_1,v)
 \;+\;
 \beta\,\nabla_v D_\Phi(u_2,v),
 \tag{45a}
-$$
-and, more generally, for any integrable random vector <span class="arithmatex">\(Y\in\mathbb{R}^d\)</span>,
-$$
+\]</div>
+<p>and, more generally, for any integrable random vector <span class="arithmatex">\(Y\in\mathbb{R}^d\)</span>,</p>
+<div class="arithmatex">\[
 \nabla_v D_\Phi\big(\mathbb{E}[Y],v\big)
 \;=\;
 \mathbb{E}\big[\nabla_v D_\Phi(Y,v)\big].
 \tag{45b}
-$$
-so <span class="arithmatex">\(\nabla_b D_\Phi(\mathbb{E}[A],b)=\mathbb{E}[\nabla_b D_\Phi(A,b)]\)</span>. Plug this into the chain rule expression for <span class="arithmatex">\(\nabla_\theta \mathcal{L}_{\mathrm{FM}}\)</span>, and the conditional expectation over <span class="arithmatex">\(\mathbf{Z}\)</span> moves “through the gradient”, turning the marginal label into the conditional label and yielding <span class="arithmatex">\(\nabla_\theta \mathcal{L}_{\mathrm{CFM}}\)</span>.</p>
+\]</div>
+<p>so <span class="arithmatex">\(\nabla_b D_\Phi(\mathbb{E}[A],b)=\mathbb{E}[\nabla_b D_\Phi(A,b)]\)</span>. Plug this into the chain rule expression for <span class="arithmatex">\(\nabla_\theta \mathcal{L}_{\mathrm{FM}}\)</span>, and the conditional expectation over <span class="arithmatex">\(\mathbf{Z}\)</span> moves “through the gradient”, turning the marginal label into the conditional label and yielding <span class="arithmatex">\(\nabla_\theta \mathcal{L}_{\mathrm{CFM}}\)</span>.</p>
 <blockquote>
 <p><strong>Proposition 1 (Bregman regression learns conditional expectations).</strong> Let <span class="arithmatex">\(X\)</span> and <span class="arithmatex">\(Y\)</span> be random variables with <span class="arithmatex">\(X\in\mathbb{R}^d\)</span> and <span class="arithmatex">\(Y\in\mathrm{dom}(\Phi)\)</span>. The population minimizer of
 $$
@@ -2848,13 +2848,13 @@ u_t(x),
 <h3 id="a-flexible-construction-via-conditional-flows">A flexible construction via conditional flows<a class="headerlink" href="#a-flexible-construction-via-conditional-flows" title="Permanent link">&para;</a></h3>
 <p>One general approach is to <em>build a conditional flow map</em> and obtain both <span class="arithmatex">\(p_{t\mid 1}(x\mid x_1)\)</span> and <span class="arithmatex">\(u_t(x\mid x_1)\)</span> from it. Here the conditioning variable is the endpoint <span class="arithmatex">\(\mathbf{X}_1=x_1\)</span>.</p>
 <p>Define a conditional flow
-<span class="arithmatex">\(\psi:[0,1)\times\mathbb{R}^d\times\mathbb{R}^d\to\mathbb{R}^d\)</span>, written <span class="arithmatex">\(\psi_t(x\mid x_1)\)</span>, such that
-$$
+<span class="arithmatex">\(\psi:[0,1)\times\mathbb{R}^d\times\mathbb{R}^d\to\mathbb{R}^d\)</span>, written <span class="arithmatex">\(\psi_t(x\mid x_1)\)</span>, such that</p>
+<div class="arithmatex">\[
 \psi_0(x\mid x_1)=x,
 \qquad
 \lim_{t\uparrow 1}\psi_t(x\mid x_1)=x_1,
 \tag{47}
-$$</p>
+\]</div>
 <p>and assume <span class="arithmatex">\(\psi\)</span> is smooth in <span class="arithmatex">\((t,x)\)</span> and a diffeomorphism in <span class="arithmatex">\(x\)</span> for each <span class="arithmatex">\(t\in[0,1)\)</span> (conditions can be relaxed, but smoothness keeps the discussion simple).</p>
 <p>Now define the conditional flow model</p>
 <div class="arithmatex">\[
@@ -2978,15 +2978,15 @@ X_t=\psi_t^\star(X_0),\ \ X_0\sim p.
 <li><strong>A principled baseline.</strong> Even if we do not solve OT exactly, it provides a clean reference path that is well-motivated by an explicit variational principle.</li>
 <li><strong>Not necessarily best for learning.</strong> The quadratic cost uses the Euclidean metric in <span class="arithmatex">\(\mathbb{R}^d\)</span>, which may not align with semantic similarity (e.g. in pixel space). Different couplings and different paths can yield better training dynamics or sample quality, and in practice FM often uses simpler couplings / interpolants for efficiency.</li>
 </ul>
-<p><strong>Geometric insight (why “minimum kinetic energy” is a straight line in distribution space).</strong> If we equip the space of probability measures with the quadratic Wasserstein distance
-$$
+<p><strong>Geometric insight (why “minimum kinetic energy” is a straight line in distribution space).</strong> If we equip the space of probability measures with the quadratic Wasserstein distance</p>
+<div class="arithmatex">\[
 W_2^2(p,q)
 :=
 \min_{\pi\in\Pi(p,q)}
-\mathbb{E}_{(X_0,X_1)\sim\pi}\big[|X_1-X_0|^2\big],
+\mathbb{E}_{(X_0,X_1)\sim\pi}\big[\|X_1-X_0\|^2\big],
 \tag{56a}
-$$
-then the Benamou–Brenier formulation says that <span class="arithmatex">\(W_2\)</span>-geodesics are exactly the paths that minimize the kinetic energy <span class="arithmatex">\(\int_0^1\!\int \|u_t(x)\|^2 p_t(x)\,dx\,dt\)</span> subject to the continuity equation and endpoint constraints. In words: <strong>minimum kinetic energy corresponds to “straight-line motion” in <span class="arithmatex">\(W_2\)</span> geometry</strong>—this is a geometric statement about the metric structure of distribution space, not a physical claim about images as fluids.</p>
+\]</div>
+<p>then the Benamou–Brenier formulation says that <span class="arithmatex">\(W_2\)</span>-geodesics are exactly the paths that minimize the kinetic energy <span class="arithmatex">\(\int_0^1\!\int \|u_t(x)\|^2 p_t(x)\,dx\,dt\)</span> subject to the continuity equation and endpoint constraints. In words: <strong>minimum kinetic energy corresponds to “straight-line motion” in <span class="arithmatex">\(W_2\)</span> geometry</strong>—this is a geometric statement about the metric structure of distribution space, not a physical claim about images as fluids.</p>
 <p><strong>Why squared speed (<span class="arithmatex">\(\ell_2\)</span> kinetic energy) is a natural regularizer.</strong> Many alternative “effort” functionals are possible (e.g. <span class="arithmatex">\(\ell_1\)</span>-type speed, minimum-time criteria, or adding stochasticity), but the <span class="arithmatex">\(\ell_2\)</span> kinetic energy is special: it is smooth, convex in the flux variables, and in Euclidean space it often yields well-behaved (and sometimes analytic) interpolants. For Flow Matching, OT therefore serves as a canonical, geometry-consistent choice of <span class="arithmatex">\(\psi_t\)</span>: not a universal truth, but a particularly natural regularization principle that produces elegant mathematics and stable numerics.</p>
 <h3 id="from-marginal-kinetic-energy-to-a-conditional-flow-objective-jensen-bound">From marginal kinetic energy to a conditional-flow objective (Jensen bound)<a class="headerlink" href="#from-marginal-kinetic-energy-to-a-conditional-flow-objective-jensen-bound" title="Permanent link">&para;</a></h3>
 <p>In our conditional-flow construction, the marginal velocity can be written (squared-<span class="arithmatex">\(\ell_2\)</span> case) as a conditional expectation, e.g.
@@ -3346,14 +3346,14 @@ Equation <span class="arithmatex">\(\tag{98}\)</span> gives an explicit conversi
 <p>Two widely used diffusion-style choices of schedulers (Song et al., 2021) can be expressed in this affine-path language (up to the time direction / endpoint conventions):</p>
 <ul>
 <li><strong>VP-style</strong> (noise-to-data, heuristic at <span class="arithmatex">\(t=0\)</span>): <span class="arithmatex">\(\alpha_t\equiv 1\)</span>, with <span class="arithmatex">\(\sigma_1=0\)</span> and <span class="arithmatex">\(\sigma_0\gg 1\)</span> so that <span class="arithmatex">\(p_0(x)=\int \mathcal{N}(x\mid x_1,\sigma_0^2 I)\,q(x_1)\,dx_1\)</span> is close to a known Gaussian.</li>
-<li><strong>VE-style</strong>: choose a decreasing <span class="arithmatex">\(\beta_t\)</span> with <span class="arithmatex">\(\beta_0\gg 1\)</span> and <span class="arithmatex">\(\beta_1=0\)</span>, and set
-  $$
+<li><strong>VE-style</strong>: choose a decreasing <span class="arithmatex">\(\beta_t\)</span> with <span class="arithmatex">\(\beta_0\gg 1\)</span> and <span class="arithmatex">\(\beta_1=0\)</span>, and set</li>
+</ul>
+<div class="arithmatex">\[
   \alpha_t = e^{-\beta_t/2},
   \qquad
   \sigma_t = \sqrt{1-e^{-\beta_t}}.
   \tag{101}
-  $$</li>
-</ul>
+\]</div>
 <p><strong>Kinetic optimality of the marginal velocity (Gaussian paths).</strong> For Gaussian affine paths, the marginal velocity can be written directly in terms of the score. Starting from <span class="arithmatex">\(\tag{76}\)</span>,
 <span class="arithmatex">\(u_t(x)=\frac{\dot\alpha_t}{\alpha_t}x+\left(\dot\sigma_t-\sigma_t\frac{\dot\alpha_t}{\alpha_t}\right)x_{0\mid t}(x)\)</span>,
 and using <span class="arithmatex">\(x_{0\mid t}(x)=-\sigma_t\nabla_x\log p_t(x)\)</span> from <span class="arithmatex">\(\tag{98}\)</span>, we obtain</p>

@@ -4,7 +4,12 @@
 window.MathJax = {
   tex: {
     inlineMath: [["\\(", "\\)"]],
-    displayMath: [["$$", "$$"]],
+    // pymdownx.arithmatex (generic=true) commonly emits display math as \[...\].
+    // Accept both \[...\] and $$...$$ to be robust to authoring styles.
+    displayMath: [
+      ["\\[", "\\]"],
+      ["$$", "$$"],
+    ],
     processEscapes: true,
   },
   options: {
@@ -19,4 +24,3 @@ document$.subscribe(() => {
     window.MathJax.typesetPromise();
   }
 });
-

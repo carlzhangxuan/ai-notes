@@ -1371,105 +1371,105 @@
 <p>All discussions are in the Euclidean setting unless stated otherwise: <span class="arithmatex">\(x\in\mathbb{R}^D\)</span>, <span class="arithmatex">\(t\in[0,1]\)</span>. The goal is to pin down the minimum deterministic/stochastic differential-equation facts needed for flow models and diffusion models.</p>
 <h2 id="chapter-1-differential-equations-de-first-order-ode-sde">Chapter 1 — Differential Equations (DE): first-order ODE / SDE<a class="headerlink" href="#chapter-1-differential-equations-de-first-order-ode-sde" title="Permanent link">&para;</a></h2>
 <h3 id="11-foundation-of-ordinary-differential-equations">1.1 Foundation of Ordinary Differential Equations<a class="headerlink" href="#11-foundation-of-ordinary-differential-equations" title="Permanent link">&para;</a></h3>
-<p>Let <span class="arithmatex">\(u:[0,1]\times\mathbb{R}^D\to\mathbb{R}^D\)</span> be a time-dependent vector field. Consider the initial value problem (IVP)
-$$
+<p>Let <span class="arithmatex">\(u:[0,1]\times\mathbb{R}^D\to\mathbb{R}^D\)</span> be a time-dependent vector field. Consider the initial value problem (IVP)</p>
+<div class="arithmatex">\[
 \frac{d}{dt}x(t)=u(t,x(t)),\qquad x(0)=x_0\in\mathbb{R}^D.
-$$</p>
+\]</div>
 <p>A standard sufficient condition for (global) existence and uniqueness on <span class="arithmatex">\([0,1]\)</span> is:</p>
 <ul>
 <li>for each <span class="arithmatex">\(t\)</span>, <span class="arithmatex">\(u(t,\cdot)\)</span> is globally Lipschitz on <span class="arithmatex">\(\mathbb{R}^D\)</span>, and</li>
 <li><span class="arithmatex">\(u\)</span> has at most linear growth in <span class="arithmatex">\(x\)</span> (e.g., <span class="arithmatex">\(\|u(t,x)\|\le a(t)+b\|x\|\)</span> with <span class="arithmatex">\(a\in L^1([0,1])\)</span>).</li>
 </ul>
-<p>We write the solution as <span class="arithmatex">\(x(t;x_0)\)</span> and define the flow map
-$$
+<p>We write the solution as <span class="arithmatex">\(x(t;x_0)\)</span> and define the flow map</p>
+<div class="arithmatex">\[
 \psi_t(x_0):=x(t;x_0),\qquad \psi_0(x_0)=x_0.
-$$</p>
+\]</div>
 <p>One immediate consequence of <strong>uniqueness</strong> (hence of the Lipschitz-type assumptions above) is <strong>non-intersection of solution trajectories</strong>: if two solutions <span class="arithmatex">\(x_1(\cdot),x_2(\cdot)\)</span> satisfy <span class="arithmatex">\(x_1(t_\ast)=x_2(t_\ast)\)</span> at some time <span class="arithmatex">\(t_\ast\)</span>, then they must coincide for all <span class="arithmatex">\(t\)</span> in their common interval of existence. (Proof sketch: treat <span class="arithmatex">\((t_\ast,x_1(t_\ast))\)</span> as a new initial condition and apply uniqueness.)</p>
 <h3 id="111-exponential-integration-factors-integration-factor-method">1.1.1 Exponential integration factors (integration factor method)<a class="headerlink" href="#111-exponential-integration-factors-integration-factor-method" title="Permanent link">&para;</a></h3>
 <p>This subsection is mainly about <strong>how to solve first-order ODEs</strong> in the cases where closed forms exist, and how to rewrite them into a form that is more structured (and numerically stable) when they do not.</p>
 <p><strong>Baseline.</strong> For a general nonlinear ODE <span class="arithmatex">\(\dot x=u(t,x)\)</span>, a closed form is usually unavailable; the “solution operator” is the flow map <span class="arithmatex">\(\psi_t\)</span>. In special cases, <span class="arithmatex">\(\psi_t\)</span> can be written explicitly.</p>
-<p><strong>(A) Linear scalar ODE (homogeneous).</strong> Consider
-$$
+<p><strong>(A) Linear scalar ODE (homogeneous).</strong> Consider</p>
+<div class="arithmatex">\[
 \frac{d}{dt}x(t)=L(t)\,x(t),
-$$
-where <span class="arithmatex">\(L:[0,1]\to\mathbb{R}\)</span> is continuous. Then for any <span class="arithmatex">\(0\le s\le t\le 1\)</span>,
-$$
-x(t)=x(s)\,\exp!\Big(\int_s^t L(\tau)\,d\tau\Big).
-$$
-This motivates the exponential (integration) factor
-$$
-E(s\to t):=\exp!\Big(\int_s^t L(\tau)\,d\tau\Big),
-$$
-which accumulates the time-dependent linear effect.</p>
-<p><strong>(B) Linear scalar ODE (inhomogeneous): integrating factor.</strong> For
-$$
+\]</div>
+<p>where <span class="arithmatex">\(L:[0,1]\to\mathbb{R}\)</span> is continuous. Then for any <span class="arithmatex">\(0\le s\le t\le 1\)</span>,</p>
+<div class="arithmatex">\[
+x(t)=x(s)\,\exp\!\Big(\int_s^t L(\tau)\,d\tau\Big).
+\]</div>
+<p>This motivates the exponential (integration) factor</p>
+<div class="arithmatex">\[
+E(s\to t):=\exp\!\Big(\int_s^t L(\tau)\,d\tau\Big),
+\]</div>
+<p>which accumulates the time-dependent linear effect.</p>
+<p><strong>(B) Linear scalar ODE (inhomogeneous): integrating factor.</strong> For</p>
+<div class="arithmatex">\[
 \frac{d}{dt}x(t)=L(t)\,x(t)+r(t),
-$$
-define <span class="arithmatex">\(E(s\to t)\)</span> as above. Then the closed-form solution is
-$$
+\]</div>
+<p>define <span class="arithmatex">\(E(s\to t)\)</span> as above. Then the closed-form solution is</p>
+<div class="arithmatex">\[
 x(t)=E(s\to t)\,x(s)+\int_s^t E(\tau\to t)\,r(\tau)\,d\tau.
-$$
-This is the standard integrating-factor method.</p>
-<p><strong>(C) Semilinear ODE: variation of constants / Duhamel formula.</strong> More generally, consider a semilinear ODE
-$$
+\]</div>
+<p>This is the standard integrating-factor method.</p>
+<p><strong>(C) Semilinear ODE: variation of constants / Duhamel formula.</strong> More generally, consider a semilinear ODE</p>
+<div class="arithmatex">\[
 \frac{d}{dt}x(t)=L(t)\,x(t)+N(x(t),t),
-$$
-where <span class="arithmatex">\(x(t)\in\mathbb{R}^D\)</span>, <span class="arithmatex">\(L(t)\in\mathbb{R}\)</span> (equivalently <span class="arithmatex">\(L(t)I\)</span> acting on <span class="arithmatex">\(\mathbb{R}^D\)</span>), and <span class="arithmatex">\(N:\mathbb{R}^D\times[0,1]\to\mathbb{R}^D\)</span>. Multiplying by <span class="arithmatex">\(E(s\to t)^{-1}\)</span> and applying the product rule yields
-$$
+\]</div>
+<p>where <span class="arithmatex">\(x(t)\in\mathbb{R}^D\)</span>, <span class="arithmatex">\(L(t)\in\mathbb{R}\)</span> (equivalently <span class="arithmatex">\(L(t)I\)</span> acting on <span class="arithmatex">\(\mathbb{R}^D\)</span>), and <span class="arithmatex">\(N:\mathbb{R}^D\times[0,1]\to\mathbb{R}^D\)</span>. Multiplying by <span class="arithmatex">\(E(s\to t)^{-1}\)</span> and applying the product rule yields</p>
+<div class="arithmatex">\[
 \frac{d}{dt}\Big[E(s\to t)^{-1}x(t)\Big]=E(s\to t)^{-1}N(x(t),t).
-$$
-Integrating from <span class="arithmatex">\(s\)</span> to <span class="arithmatex">\(t\)</span> gives the integral form (Duhamel / variation-of-constants formula)
-$$
+\]</div>
+<p>Integrating from <span class="arithmatex">\(s\)</span> to <span class="arithmatex">\(t\)</span> gives the integral form (Duhamel / variation-of-constants formula)</p>
+<div class="arithmatex">\[
 x(t)=E(s\to t)\,x(s)\;+\;\int_s^t E(\tau\to t)\,N(x(\tau),\tau)\,d\tau.
-$$
-This separates the evolution into a closed-form linear propagation and a nonlinear residual. <strong>Exponential integrators</strong> discretize only the integral term while handling the linear propagation exactly, often improving stability when the linear part is stiff.</p>
+\]</div>
+<p>This separates the evolution into a closed-form linear propagation and a nonlinear residual. <strong>Exponential integrators</strong> discretize only the integral term while handling the linear propagation exactly, often improving stability when the linear part is stiff.</p>
 <p><strong>Remark (matrix-valued linear part).</strong> If the linear part is <span class="arithmatex">\(L(t)\in\mathbb{R}^{D\times D}\)</span>, the same integral formula holds with <span class="arithmatex">\(E(s\to t)\)</span> defined as the fundamental matrix solving <span class="arithmatex">\(\frac{d}{dt}E(s\to t)=L(t)E(s\to t)\)</span>, <span class="arithmatex">\(E(s\to s)=I\)</span>. In general <span class="arithmatex">\(E(s\to t)\neq \exp\!\big(\int_s^t L(\tau)\,d\tau\big)\)</span> unless <span class="arithmatex">\(L(t)\)</span> commutes with itself at different times (or <span class="arithmatex">\(L\)</span> is constant).</p>
 <p><strong>What is “closed form” here (and when do we still need numerics)?</strong> For a generic nonlinear first-order ODE, a closed-form solution is not available. Case (A) is fully explicit. Case (B) is explicit <em>up to quadrature</em>: if the integral <span class="arithmatex">\(\int_s^t E(\tau\to t)r(\tau)\,d\tau\)</span> can be evaluated analytically then we obtain a closed form; otherwise we still compute that integral numerically. Case (C) provides an exact integral representation, but since <span class="arithmatex">\(N\)</span> depends on the unknown trajectory <span class="arithmatex">\(x(\tau)\)</span>, it is generally an implicit integral equation and still requires numerical approximation (e.g., time stepping, Picard iteration, or exponential integrators).</p>
 <p><strong>Diffeomorphism is about regularity/invertibility, not linearity.</strong> In flow models, we often care that the time-<span class="arithmatex">\(t\)</span> map <span class="arithmatex">\(\psi_t\)</span> is a (local) <span class="arithmatex">\(C^1\)</span> diffeomorphism so that the transformation is invertible and change-of-variables identities make sense. This property does <em>not</em> require the dynamics to be linear. Rather, it follows from ODE well-posedness plus smoothness: if <span class="arithmatex">\(u(t,\cdot)\)</span> is (locally) Lipschitz (uniqueness) and <span class="arithmatex">\(C^1\)</span> in <span class="arithmatex">\(x\)</span> on a domain where solutions exist up to time <span class="arithmatex">\(t\)</span>, then <span class="arithmatex">\(\psi_t\)</span> is (locally) invertible and differentiable, with inverse given by running the same ODE backward in time. Nonlinearity is typical and compatible with diffeomorphism; linearity is only a special case where we may also get closed-form expressions.</p>
 <h3 id="112-numerical-solvers-for-odes-time-discretization">1.1.2 Numerical solvers for ODEs (time discretization)<a class="headerlink" href="#112-numerical-solvers-for-odes-time-discretization" title="Permanent link">&para;</a></h3>
-<p>Closed-form solutions are rare for nonlinear, time-dependent ODEs, so we typically approximate trajectories numerically. A useful starting point is the integral form of the ODE
-$$
+<p>Closed-form solutions are rare for nonlinear, time-dependent ODEs, so we typically approximate trajectories numerically. A useful starting point is the integral form of the ODE</p>
+<div class="arithmatex">\[
 \dot x(t)=v(x(t),t),\qquad x(0)=x_0,
-$$
-namely
-$$
+\]</div>
+<p>namely</p>
+<div class="arithmatex">\[
 x(t)=x_0+\int_0^t v(x(\tau),\tau)\,d\tau.
-$$
-Numerical solvers discretize time and approximate this integral by evaluating the vector field <span class="arithmatex">\(v\)</span> at selected points.</p>
+\]</div>
+<p>Numerical solvers discretize time and approximate this integral by evaluating the vector field <span class="arithmatex">\(v\)</span> at selected points.</p>
 <p><strong>Discretization.</strong> Choose grid points <span class="arithmatex">\(0=t_0&lt;t_1&lt;\dots&lt;t_N=T\)</span> with step sizes <span class="arithmatex">\(h_n:=t_{n+1}-t_n\)</span>, and maintain states <span class="arithmatex">\(x_n\approx x(t_n)\)</span>.</p>
 <p><strong>Order of accuracy (one line).</strong> A method is called order-<span class="arithmatex">\(p\)</span> if, for a sufficiently smooth solution and a uniform step size <span class="arithmatex">\(h\)</span>, its global error at <span class="arithmatex">\(T\)</span> scales as <span class="arithmatex">\(O(h^p)\)</span> as <span class="arithmatex">\(h\to 0\)</span> (equivalently, local truncation error <span class="arithmatex">\(O(h^{p+1})\)</span>).</p>
-<p><strong>Euler (explicit).</strong> The simplest one-step method uses the current slope:
-$$
+<p><strong>Euler (explicit).</strong> The simplest one-step method uses the current slope:</p>
+<div class="arithmatex">\[
 x_{n+1}=x_n+h_n\,v(x_n,t_n).
-$$
-It is first-order accurate: local truncation error <span class="arithmatex">\(O(h_n^2)\)</span> and global error <span class="arithmatex">\(O(\max_n h_n)\)</span> under standard regularity assumptions.</p>
-<p><strong>Heun (improved Euler / explicit trapezoid).</strong> A second-order predictor–corrector:
-$$
+\]</div>
+<p>It is first-order accurate: local truncation error <span class="arithmatex">\(O(h_n^2)\)</span> and global error <span class="arithmatex">\(O(\max_n h_n)\)</span> under standard regularity assumptions.</p>
+<p><strong>Heun (improved Euler / explicit trapezoid).</strong> A second-order predictor–corrector:</p>
+<div class="arithmatex">\[
 \tilde x_{n+1}=x_n+h_n\,v(x_n,t_n),\qquad
 x_{n+1}=x_n+\frac{h_n}{2}\Big(v(x_n,t_n)+v(\tilde x_{n+1},t_{n+1})\Big).
-$$
-It has local error <span class="arithmatex">\(O(h_n^3)\)</span> and global error <span class="arithmatex">\(O((\max_n h_n)^2)\)</span>.</p>
-<p><strong>Runge–Kutta (RK4).</strong> A standard fourth-order method based on four slopes:
-$$
+\]</div>
+<p>It has local error <span class="arithmatex">\(O(h_n^3)\)</span> and global error <span class="arithmatex">\(O((\max_n h_n)^2)\)</span>.</p>
+<p><strong>Runge–Kutta (RK4).</strong> A standard fourth-order method based on four slopes:</p>
+<div class="arithmatex">\[
 k_1=v(x_n,t_n),\quad
 k_2=v\Big(x_n+\frac{h_n}{2}k_1,t_n+\frac{h_n}{2}\Big),\quad
 k_3=v\Big(x_n+\frac{h_n}{2}k_2,t_n+\frac{h_n}{2}\Big),\quad
 k_4=v(x_n+h_n k_3,t_n+h_n),
-$$
-$$
+\]</div>
+<div class="arithmatex">\[
 x_{n+1}=x_n+\frac{h_n}{6}\big(k_1+2k_2+2k_3+k_4\big).
-$$
-RK4 is a common accuracy–cost tradeoff when vector-field evaluations are not too expensive.</p>
-<p><strong>Semilinear structure and exponential integrators.</strong> If <span class="arithmatex">\(v(x,t)=L(t)x+N(x,t)\)</span> (Section 1.1.1), then
-$$
+\]</div>
+<p>RK4 is a common accuracy–cost tradeoff when vector-field evaluations are not too expensive.</p>
+<p><strong>Semilinear structure and exponential integrators.</strong> If <span class="arithmatex">\(v(x,t)=L(t)x+N(x,t)\)</span> (Section 1.1.1), then</p>
+<div class="arithmatex">\[
 x(t)=E(0\to t)x_0+\int_0^t E(\tau\to t)\,N(x(\tau),\tau)\,d\tau,
-$$
-and exponential integrators approximate only the integral term while handling the linear propagation <span class="arithmatex">\(E(\cdot\to\cdot)\)</span> analytically. This can substantially improve stability when the linear part is stiff.</p>
-<p><strong>Reverse-time integration (ODE).</strong> Solving backward from a terminal condition <span class="arithmatex">\(x(T)=x_T\)</span> is straightforward: integrate on a decreasing grid <span class="arithmatex">\(t_0=T&gt;t_1&gt;\dots&gt;t_N=0\)</span>. With Euler and constant step <span class="arithmatex">\(h&gt;0\)</span>,
-$$
+\]</div>
+<p>and exponential integrators approximate only the integral term while handling the linear propagation <span class="arithmatex">\(E(\cdot\to\cdot)\)</span> analytically. This can substantially improve stability when the linear part is stiff.</p>
+<p><strong>Reverse-time integration (ODE).</strong> Solving backward from a terminal condition <span class="arithmatex">\(x(T)=x_T\)</span> is straightforward: integrate on a decreasing grid <span class="arithmatex">\(t_0=T&gt;t_1&gt;\dots&gt;t_N=0\)</span>. With Euler and constant step <span class="arithmatex">\(h&gt;0\)</span>,</p>
+<div class="arithmatex">\[
 t_{n+1}=t_n-h,\qquad x_{n+1}=x_n-h\,v(x_n,t_n).
-$$
-For ODEs, this is just a reparameterization of time; in diffusion models, reverse-time ODE integration is used for sampling (e.g., probability flow ODEs).</p>
+\]</div>
+<p>For ODEs, this is just a reparameterization of time; in diffusion models, reverse-time ODE integration is used for sampling (e.g., probability flow ODEs).</p>
 <p><strong>Remark (stability and stiffness).</strong> For stiff dynamics, explicit methods may require very small step sizes for stability; implicit methods or structure-exploiting solvers (e.g., exponential integrators, diffusion-specific solvers) can be preferable.</p>
 <p><strong>Minimal code (Euler / Heun / RK4).</strong> Below is a tiny reference implementation for the scalar ODE <span class="arithmatex">\( \dot x=v(x,t) \)</span>. The same structure applies to <span class="arithmatex">\(x\in\mathbb{R}^D\)</span> by letting <code>x</code> be a NumPy/PyTorch array/tensor and having <code>v(x,t)</code> return the same shape.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Literal</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">List</span>
@@ -1525,87 +1525,87 @@ For ODEs, this is just a reparameterization of time; in diffusion models, revers
 <a id="__codelineno-0-51" name="__codelineno-0-51" href="#__codelineno-0-51"></a>    <span class="k">return</span> <span class="n">ts</span><span class="p">,</span> <span class="n">xs</span>
 </code></pre></div>
 <h3 id="12-random-initial-condition-random-ivp">1.2 Random initial condition (random IVP)<a class="headerlink" href="#12-random-initial-condition-random-ivp" title="Permanent link">&para;</a></h3>
-<p>Fix a probability space <span class="arithmatex">\((\Omega,\mathcal{F},\mathbb{P})\)</span>. Let <span class="arithmatex">\(\mathbf{X}_0:\Omega\to\mathbb{R}^D\)</span> be an <span class="arithmatex">\(\mathcal{F}\)</span>-measurable random variable with law <span class="arithmatex">\(\mu_0:=\mathcal{L}(\mathbf{X}_0)\)</span>. Define
-$$
+<p>Fix a probability space <span class="arithmatex">\((\Omega,\mathcal{F},\mathbb{P})\)</span>. Let <span class="arithmatex">\(\mathbf{X}_0:\Omega\to\mathbb{R}^D\)</span> be an <span class="arithmatex">\(\mathcal{F}\)</span>-measurable random variable with law <span class="arithmatex">\(\mu_0:=\mathcal{L}(\mathbf{X}_0)\)</span>. Define</p>
+<div class="arithmatex">\[
 \mathbf{X}_t:=\psi_t(\mathbf{X}_0),\qquad t\in[0,1],
-$$
-and denote <span class="arithmatex">\(\mu_t:=\mathcal{L}(\mathbf{X}_t)\)</span>. This is still a deterministic ODE; randomness enters only through <span class="arithmatex">\(\mathbf{X}_0\)</span>.</p>
+\]</div>
+<p>and denote <span class="arithmatex">\(\mu_t:=\mathcal{L}(\mathbf{X}_t)\)</span>. This is still a deterministic ODE; randomness enters only through <span class="arithmatex">\(\mathbf{X}_0\)</span>.</p>
 <h3 id="13-push-forward-of-measures-and-test-function-identity">1.3 Push-forward of measures and test-function identity<a class="headerlink" href="#13-push-forward-of-measures-and-test-function-identity" title="Permanent link">&para;</a></h3>
-<p>For each <span class="arithmatex">\(t\)</span>, the law evolves by push-forward:
-$$
-\mu_t = (\psi_t)<em>#\mu_0.
-$$
-Equivalently, for any bounded measurable <span class="arithmatex">\(\varphi:\mathbb{R}^D\to\mathbb{R}\)</span>,
-$$
+<p>For each <span class="arithmatex">\(t\)</span>, the law evolves by push-forward:</p>
+<div class="arithmatex">\[
+\mu_t = (\psi_t)_\#\mu_0.
+\]</div>
+<p>Equivalently, for any bounded measurable <span class="arithmatex">\(\varphi:\mathbb{R}^D\to\mathbb{R}\)</span>,</p>
+<div class="arithmatex">\[
 \mathbb{E}\big[\varphi(\mathbf{X}_t)\big]
 =
-\int</em>{\mathbb{R}^D}\varphi(\psi_t(x))\,\mu_0(dx).
-$$</p>
+\int_{\mathbb{R}^D}\varphi(\psi_t(x))\,\mu_0(dx).
+\]</div>
 <h3 id="14-foundation-of-stochastic-differential-equations">1.4 Foundation of Stochastic Differential Equations<a class="headerlink" href="#14-foundation-of-stochastic-differential-equations" title="Permanent link">&para;</a></h3>
 <p>This section provides an intuition-first bridge from ODEs to SDEs. Chapter 2 then states the Itô SDE and the associated density evolution (Fokker–Planck).</p>
 <h3 id="141-from-odes-to-sdes-discretization-intuition">1.4.1 From ODEs to SDEs (discretization intuition)<a class="headerlink" href="#141-from-odes-to-sdes-discretization-intuition" title="Permanent link">&para;</a></h3>
-<p>Start from a deterministic ODE in <span class="arithmatex">\(\mathbb{R}^D\)</span>:
-$$
+<p>Start from a deterministic ODE in <span class="arithmatex">\(\mathbb{R}^D\)</span>:</p>
+<div class="arithmatex">\[
 \frac{d}{dt}x(t)=f(x(t),t),\qquad x(0)=x_0,\qquad t\in[0,T].
-$$
-Euler time stepping with step size <span class="arithmatex">\(\Delta t\)</span> gives
-$$
+\]</div>
+<p>Euler time stepping with step size <span class="arithmatex">\(\Delta t\)</span> gives</p>
+<div class="arithmatex">\[
 x_{t+\Delta t}\approx x_t+f(x_t,t)\,\Delta t.
-$$</p>
-<p>To model uncertainty or unmodeled interactions, add a random perturbation at each time step:
-$$
+\]</div>
+<p>To model uncertainty or unmodeled interactions, add a random perturbation at each time step:</p>
+<div class="arithmatex">\[
 x_{t+\Delta t}\approx x_t+f(x_t,t)\,\Delta t+g(t)\,\sqrt{\Delta t}\,\varepsilon_t,
 \qquad \varepsilon_t\sim\mathcal{N}(0,I_D)\ \text{i.i.d.}
-$$
-The <span class="arithmatex">\(\sqrt{\Delta t}\)</span> scaling is crucial: it is the scaling (up to constants) for which the cumulative randomness remains <span class="arithmatex">\(O(1)\)</span> over <span class="arithmatex">\(O(1)\)</span> time, rather than vanishing (<span class="arithmatex">\(\Delta t\)</span>) or exploding (<span class="arithmatex">\(1\)</span>).</p>
-<p>In the continuous-time limit, this leads to an Itô SDE
-$$
+\]</div>
+<p>The <span class="arithmatex">\(\sqrt{\Delta t}\)</span> scaling is crucial: it is the scaling (up to constants) for which the cumulative randomness remains <span class="arithmatex">\(O(1)\)</span> over <span class="arithmatex">\(O(1)\)</span> time, rather than vanishing (<span class="arithmatex">\(\Delta t\)</span>) or exploding (<span class="arithmatex">\(1\)</span>).</p>
+<p>In the continuous-time limit, this leads to an Itô SDE</p>
+<div class="arithmatex">\[
 dX_t=f(X_t,t)\,dt+g(t)\,dW_t,
-$$
-where <span class="arithmatex">\(W_t\in\mathbb{R}^D\)</span> is a standard Brownian motion (Wiener process) characterized by:</p>
+\]</div>
+<p>where <span class="arithmatex">\(W_t\in\mathbb{R}^D\)</span> is a standard Brownian motion (Wiener process) characterized by:</p>
 <ul>
 <li><span class="arithmatex">\(W_0=0\)</span> a.s.;</li>
 <li>independent increments: <span class="arithmatex">\(W_t-W_s\)</span> is independent of <span class="arithmatex">\(\sigma(W_u:u\le s)\)</span> for <span class="arithmatex">\(0\le s&lt;t\)</span>;</li>
 <li>Gaussian increments: <span class="arithmatex">\(W_t-W_s\sim \mathcal{N}(0,(t-s)I_D)\)</span>;</li>
 <li>sample paths are a.s. continuous but nowhere classically differentiable.</li>
 </ul>
-<p>The notation <span class="arithmatex">\(dW_t:=W_{t+dt}-W_t\)</span> is a convenient shorthand for these increments and should not be interpreted as a classical differential. Informally, one writes
-$$
+<p>The notation <span class="arithmatex">\(dW_t:=W_{t+dt}-W_t\)</span> is a convenient shorthand for these increments and should not be interpreted as a classical differential. Informally, one writes</p>
+<div class="arithmatex">\[
 dW_t\sim \mathcal{N}(0,dt\,I_D),
-$$
-meaning that over a short interval of length <span class="arithmatex">\(dt\)</span>, the increment behaves like a zero-mean Gaussian with covariance <span class="arithmatex">\(dt\,I_D\)</span>.</p>
+\]</div>
+<p>meaning that over a short interval of length <span class="arithmatex">\(dt\)</span>, the increment behaves like a zero-mean Gaussian with covariance <span class="arithmatex">\(dt\,I_D\)</span>.</p>
 <h3 id="142-how-to-read-an-ito-sde-integral-form-and-ito-integration-intuition">1.4.2 How to read an Itô SDE: integral form and Itô integration intuition<a class="headerlink" href="#142-how-to-read-an-ito-sde-integral-form-and-ito-integration-intuition" title="Permanent link">&para;</a></h3>
-<p>An SDE should be understood through its <strong>integral formulation</strong>. For example, the Itô SDE
-$$
+<p>An SDE should be understood through its <strong>integral formulation</strong>. For example, the Itô SDE</p>
+<div class="arithmatex">\[
 dX_t=f(X_t,t)\,dt+g(t)\,dW_t,\qquad X_0=x_0,
-$$
-means that for each <span class="arithmatex">\(t\in[0,T]\)</span>,
-$$
+\]</div>
+<p>means that for each <span class="arithmatex">\(t\in[0,T]\)</span>,</p>
+<div class="arithmatex">\[
 X_t
 =
 X_0
 +\int_0^t f(X_s,s)\,ds
 +\int_0^t g(s)\,dW_s,
-$$
-where the first integral is a classical (Lebesgue/Riemann) integral and the second is an <strong>Itô stochastic integral</strong>.</p>
-<p>We do not build the Itô integral rigorously here; instead, keep the following intuition in mind. For a partition <span class="arithmatex">\(0=t_0&lt;t_1&lt;\dots&lt;t_N=t\)</span>, the Itô integral can be viewed (informally) as a limit of left-point Riemann sums:
-$$
+\]</div>
+<p>where the first integral is a classical (Lebesgue/Riemann) integral and the second is an <strong>Itô stochastic integral</strong>.</p>
+<p>We do not build the Itô integral rigorously here; instead, keep the following intuition in mind. For a partition <span class="arithmatex">\(0=t_0&lt;t_1&lt;\dots&lt;t_N=t\)</span>, the Itô integral can be viewed (informally) as a limit of left-point Riemann sums:</p>
+<div class="arithmatex">\[
 \int_0^t g(s)\,dW_s
 \approx
 \sum_{i=0}^{N-1} g(t_i)\,\big(W_{t_{i+1}}-W_{t_i}\big),
-$$
-with convergence in probability (under suitable conditions). The <strong>left-endpoint evaluation</strong> <span class="arithmatex">\(g(t_i)\)</span> is what distinguishes the Itô convention from other conventions (e.g., Stratonovich often corresponds to midpoint-type evaluations).</p>
+\]</div>
+<p>with convergence in probability (under suitable conditions). The <strong>left-endpoint evaluation</strong> <span class="arithmatex">\(g(t_i)\)</span> is what distinguishes the Itô convention from other conventions (e.g., Stratonovich often corresponds to midpoint-type evaluations).</p>
 <p>Because Brownian sample paths are a.s. continuous but nowhere classically differentiable, expressions like <span class="arithmatex">\(dW_t/dt\)</span> do not exist in the usual sense, and classical “integrate both sides” reasoning does not apply directly. The differential notation <span class="arithmatex">\(dX_t\)</span>, <span class="arithmatex">\(dt\)</span>, <span class="arithmatex">\(dW_t\)</span> is therefore shorthand for increments and must be interpreted through the integral equation above.</p>
-<p><strong>Comparison with ODEs.</strong> For an ODE <span class="arithmatex">\(\dot x(t)=f(x(t),t)\)</span>, the integral form
-$$
+<p><strong>Comparison with ODEs.</strong> For an ODE <span class="arithmatex">\(\dot x(t)=f(x(t),t)\)</span>, the integral form</p>
+<div class="arithmatex">\[
 x(t)=x(0)+\int_0^t f(x(\tau),\tau)\,d\tau
-$$
-is justified by the fundamental theorem of calculus (differentiability recovers the function from its derivative). For SDEs, there is no direct analog because <span class="arithmatex">\(W_t\)</span> is not differentiable and stochastic integrals do not obey the classical chain rule. Instead, the correct replacement is <strong>Itô’s formula (Itô’s lemma)</strong>, which we will use later when connecting SDEs to density evolution and reverse-time constructions in diffusion models.</p>
-<p><strong>Minimal code (Euler–Maruyama / Milstein).</strong> The most common time stepping for Itô SDEs is Euler–Maruyama. Below is a small reference implementation for
-$$
+\]</div>
+<p>is justified by the fundamental theorem of calculus (differentiability recovers the function from its derivative). For SDEs, there is no direct analog because <span class="arithmatex">\(W_t\)</span> is not differentiable and stochastic integrals do not obey the classical chain rule. Instead, the correct replacement is <strong>Itô’s formula (Itô’s lemma)</strong>, which we will use later when connecting SDEs to density evolution and reverse-time constructions in diffusion models.</p>
+<p><strong>Minimal code (Euler–Maruyama / Milstein).</strong> The most common time stepping for Itô SDEs is Euler–Maruyama. Below is a small reference implementation for</p>
+<div class="arithmatex">\[
 dX_t=f(X_t,t)\,dt+G(X_t,t)\,dW_t,
-$$
-where <span class="arithmatex">\(W_t\in\mathbb{R}^m\)</span> and <span class="arithmatex">\(G(x,t)\in\mathbb{R}^{D\times m}\)</span>. Milstein is included only for the <strong>scalar</strong> case <span class="arithmatex">\(D=m=1\)</span>.</p>
+\]</div>
+<p>where <span class="arithmatex">\(W_t\in\mathbb{R}^m\)</span> and <span class="arithmatex">\(G(x,t)\in\mathbb{R}^{D\times m}\)</span>. Milstein is included only for the <strong>scalar</strong> case <span class="arithmatex">\(D=m=1\)</span>.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Literal</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Optional</span>
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
 <a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
@@ -1697,144 +1697,144 @@ where <span class="arithmatex">\(W_t\in\mathbb{R}^m\)</span> and <span class="ar
 <p><img src="../assets/figures/M-fig1-Change-of-Variable.png" width="600" style="display:block;margin-left:0;margin-right:auto;"></p>
 <p>This section starts from a single deterministic update <span class="arithmatex">\(x_1=\Psi(x_0)\)</span> and tracks how densities transform under smooth bijections. Composing many such updates leads to the Jacobian-determinant bookkeeping used in normalizing flows. Taking a continuous-time limit recovers the continuity equation; adding Brownian noise upgrades it to the Fokker–Planck equation (Section 2.2).</p>
 <h4 id="211-single-deterministic-map">2.1.1 Single deterministic map<a class="headerlink" href="#211-single-deterministic-map" title="Permanent link">&para;</a></h4>
-<p>Let <span class="arithmatex">\(\Psi:\mathbb{R}^D\to\mathbb{R}^D\)</span> be a <span class="arithmatex">\(C^1\)</span> bijection with <span class="arithmatex">\(C^1\)</span> inverse (a diffeomorphism). If <span class="arithmatex">\(X_0\sim p_0\)</span> and <span class="arithmatex">\(X_1:=\Psi(X_0)\)</span>, then <span class="arithmatex">\(X_1\sim p_1\)</span> where the density is given by the change-of-variable formula
-$$
+<p>Let <span class="arithmatex">\(\Psi:\mathbb{R}^D\to\mathbb{R}^D\)</span> be a <span class="arithmatex">\(C^1\)</span> bijection with <span class="arithmatex">\(C^1\)</span> inverse (a diffeomorphism). If <span class="arithmatex">\(X_0\sim p_0\)</span> and <span class="arithmatex">\(X_1:=\Psi(X_0)\)</span>, then <span class="arithmatex">\(X_1\sim p_1\)</span> where the density is given by the change-of-variable formula</p>
+<div class="arithmatex">\[
 p_1(x_1)=p_0\big(\Psi^{-1}(x_1)\big)\,\left|\det \nabla \Psi^{-1}(x_1)\right|.
-$$
-Equivalently, writing <span class="arithmatex">\(x_1=\Psi(x_0)\)</span>,
-$$
+\]</div>
+<p>Equivalently, writing <span class="arithmatex">\(x_1=\Psi(x_0)\)</span>,</p>
+<div class="arithmatex">\[
 p_0(x_0)=p_1(\Psi(x_0))\,\left|\det \nabla\Psi(x_0)\right|.
-$$
-Interpretation: <span class="arithmatex">\(\left|\det\nabla\Psi\right|\)</span> is the local volume change, and the density compensates to conserve probability mass.</p>
-<p>At the measure level, this is exactly a push-forward:
-$$
-\mu_1 = \Psi_#\mu_0,
-$$
-meaning <span class="arithmatex">\(\mu_1(A)=\mu_0(\Psi^{-1}(A))\)</span> for any Borel set <span class="arithmatex">\(A\subseteq\mathbb{R}^D\)</span>. The density formula above is the Lebesgue-density version of <span class="arithmatex">\(\mu_1=\Psi_\#\mu_0\)</span>.</p>
-<p>As a special case, if <span class="arithmatex">\(\Psi(x)=Ax\)</span> with <span class="arithmatex">\(A\in\mathbb{R}^{D\times D}\)</span> invertible, then
-$$
+\]</div>
+<p>Interpretation: <span class="arithmatex">\(\left|\det\nabla\Psi\right|\)</span> is the local volume change, and the density compensates to conserve probability mass.</p>
+<p>At the measure level, this is exactly a push-forward:</p>
+<div class="arithmatex">\[
+\mu_1 = \Psi_\#\mu_0,
+\]</div>
+<p>meaning <span class="arithmatex">\(\mu_1(A)=\mu_0(\Psi^{-1}(A))\)</span> for any Borel set <span class="arithmatex">\(A\subseteq\mathbb{R}^D\)</span>. The density formula above is the Lebesgue-density version of <span class="arithmatex">\(\mu_1=\Psi_\#\mu_0\)</span>.</p>
+<p>As a special case, if <span class="arithmatex">\(\Psi(x)=Ax\)</span> with <span class="arithmatex">\(A\in\mathbb{R}^{D\times D}\)</span> invertible, then</p>
+<div class="arithmatex">\[
 p_1(x_1)=p_0(A^{-1}x_1)\,|\det A^{-1}|.
-$$</p>
+\]</div>
 <h4 id="212-composing-multiple-bijections-discrete-normalizing-flows">2.1.2 Composing multiple bijections (discrete normalizing flows)<a class="headerlink" href="#212-composing-multiple-bijections-discrete-normalizing-flows" title="Permanent link">&para;</a></h4>
-<p>Consider a sequence of diffeomorphisms <span class="arithmatex">\(\Psi_1,\dots,\Psi_L\)</span> and states <span class="arithmatex">\(x_k=\Psi_k(x_{k-1})\)</span>. If <span class="arithmatex">\(X_0\sim p_0\)</span>, define <span class="arithmatex">\(X_k:=\Psi_k(X_{k-1})\)</span> and let <span class="arithmatex">\(p_k\)</span> be the density of <span class="arithmatex">\(X_k\)</span>. Mass conservation at each step implies
-$$
+<p>Consider a sequence of diffeomorphisms <span class="arithmatex">\(\Psi_1,\dots,\Psi_L\)</span> and states <span class="arithmatex">\(x_k=\Psi_k(x_{k-1})\)</span>. If <span class="arithmatex">\(X_0\sim p_0\)</span>, define <span class="arithmatex">\(X_k:=\Psi_k(X_{k-1})\)</span> and let <span class="arithmatex">\(p_k\)</span> be the density of <span class="arithmatex">\(X_k\)</span>. Mass conservation at each step implies</p>
+<div class="arithmatex">\[
 p_k(x_k)=p_{k-1}(x_{k-1})\left|\det \nabla\Psi_k(x_{k-1})\right|^{-1},
 \qquad x_{k-1}=\Psi_k^{-1}(x_k).
-$$
-Recursing yields the overall Jacobian product
-$$
+\]</div>
+<p>Recursing yields the overall Jacobian product</p>
+<div class="arithmatex">\[
 p_L(x_L)=p_0(x_0)\prod_{k=1}^L \left|\det \nabla\Psi_k(x_{k-1})\right|^{-1},
-$$
-and, in log form,
-$$
+\]</div>
+<p>and, in log form,</p>
+<div class="arithmatex">\[
 \log p_L(x_L)=\log p_0(x_0)-\sum_{k=1}^L \log\left|\det \nabla\Psi_k(x_{k-1})\right|.
-$$
-This is the core likelihood bookkeeping identity for (discrete) normalizing flows.</p>
+\]</div>
+<p>This is the core likelihood bookkeeping identity for (discrete) normalizing flows.</p>
 <h4 id="213-continuous-time-limit-rightarrow-continuity-equation">2.1.3 Continuous-time limit <span class="arithmatex">\(\Rightarrow\)</span> continuity equation<a class="headerlink" href="#213-continuous-time-limit-rightarrow-continuity-equation" title="Permanent link">&para;</a></h4>
-<p>Let <span class="arithmatex">\(u(t,x)\)</span> be a time-dependent velocity field and consider the ODE <span class="arithmatex">\(\dot x(t)=u(t,x(t))\)</span>. A standard way to connect maps to flows is to take small steps
-$$
+<p>Let <span class="arithmatex">\(u(t,x)\)</span> be a time-dependent velocity field and consider the ODE <span class="arithmatex">\(\dot x(t)=u(t,x(t))\)</span>. A standard way to connect maps to flows is to take small steps</p>
+<div class="arithmatex">\[
 \Psi_{t\to t+\Delta t}(x)\approx x+u(t,x)\,\Delta t,
-$$
-so the Jacobian factor becomes <span class="arithmatex">\(\det(I+\Delta t\,\nabla_x u(t,x))\)</span>. In the limit <span class="arithmatex">\(\Delta t\to 0\)</span>, the density <span class="arithmatex">\(p_t\)</span> (when it exists and is smooth enough) evolves according to the continuity equation
-$$
-\partial_t p_t(x)+\nabla!\cdot\big(p_t(x)\,u(t,x)\big)=0.\qquad\text{(CE)}
-$$
-Along trajectories <span class="arithmatex">\(X_t\)</span> solving the ODE, an equivalent form is
-$$
-\frac{d}{dt}\log p_t(X_t)=-\nabla!\cdot u(t,X_t).
-$$</p>
-<p><strong>Regularity of <span class="arithmatex">\(u\)</span> <span class="arithmatex">\(\Rightarrow\)</span> an invertible flow map.</strong> Under standard ODE well-posedness assumptions (e.g., <span class="arithmatex">\(u(t,\cdot)\)</span> locally Lipschitz in <span class="arithmatex">\(x\)</span> and sufficiently regular in <span class="arithmatex">\(t\)</span>), for each initial condition <span class="arithmatex">\(x_0\)</span> there is a unique trajectory <span class="arithmatex">\(t\mapsto x(t;x_0)\)</span>. This defines the time-<span class="arithmatex">\(t\)</span> flow map
-$$
+\]</div>
+<p>so the Jacobian factor becomes <span class="arithmatex">\(\det(I+\Delta t\,\nabla_x u(t,x))\)</span>. In the limit <span class="arithmatex">\(\Delta t\to 0\)</span>, the density <span class="arithmatex">\(p_t\)</span> (when it exists and is smooth enough) evolves according to the continuity equation</p>
+<div class="arithmatex">\[
+\partial_t p_t(x)+\nabla\!\cdot\big(p_t(x)\,u(t,x)\big)=0.\qquad\text{(CE)}
+\]</div>
+<p>Along trajectories <span class="arithmatex">\(X_t\)</span> solving the ODE, an equivalent form is</p>
+<div class="arithmatex">\[
+\frac{d}{dt}\log p_t(X_t)=-\nabla\!\cdot u(t,X_t).
+\]</div>
+<p><strong>Regularity of <span class="arithmatex">\(u\)</span> <span class="arithmatex">\(\Rightarrow\)</span> an invertible flow map.</strong> Under standard ODE well-posedness assumptions (e.g., <span class="arithmatex">\(u(t,\cdot)\)</span> locally Lipschitz in <span class="arithmatex">\(x\)</span> and sufficiently regular in <span class="arithmatex">\(t\)</span>), for each initial condition <span class="arithmatex">\(x_0\)</span> there is a unique trajectory <span class="arithmatex">\(t\mapsto x(t;x_0)\)</span>. This defines the time-<span class="arithmatex">\(t\)</span> flow map</p>
+<div class="arithmatex">\[
 \psi_t(x_0):=x(t;x_0).
-$$
-Uniqueness implies <strong>non-intersection</strong> of trajectories, and in particular makes <span class="arithmatex">\(\psi_t\)</span> (locally) invertible on its domain of existence: the inverse is given by running the same ODE backward in time, i.e., <span class="arithmatex">\(\psi_t^{-1}=\psi_{t\to 0}\)</span> whenever both flows are well-defined. If <span class="arithmatex">\(u\)</span> is <span class="arithmatex">\(C^1\)</span> in <span class="arithmatex">\(x\)</span>, then <span class="arithmatex">\(\psi_t\)</span> is (locally) a <span class="arithmatex">\(C^1\)</span> diffeomorphism.</p>
-<p><strong>Derivation sketch (via change of variables).</strong> View the ODE as the continuous-time limit of small bijective updates (forward Euler):
-$$
+\]</div>
+<p>Uniqueness implies <strong>non-intersection</strong> of trajectories, and in particular makes <span class="arithmatex">\(\psi_t\)</span> (locally) invertible on its domain of existence: the inverse is given by running the same ODE backward in time, i.e., <span class="arithmatex">\(\psi_t^{-1}=\psi_{t\to 0}\)</span> whenever both flows are well-defined. If <span class="arithmatex">\(u\)</span> is <span class="arithmatex">\(C^1\)</span> in <span class="arithmatex">\(x\)</span>, then <span class="arithmatex">\(\psi_t\)</span> is (locally) a <span class="arithmatex">\(C^1\)</span> diffeomorphism.</p>
+<p><strong>Derivation sketch (via change of variables).</strong> View the ODE as the continuous-time limit of small bijective updates (forward Euler):</p>
+<div class="arithmatex">\[
 x_{t+\Delta t}=\Psi(x_t):=x_t+\Delta t\,u(t,x_t).
-$$
-Then
-$$
+\]</div>
+<p>Then</p>
+<div class="arithmatex">\[
 \nabla_{x_t}\Psi(x_t)=I+\Delta t\,\nabla_x u(t,x_t)+O(\Delta t^2),
-$$
-and hence
-$$
-\det(\nabla_{x_t}\Psi)=1+\Delta t\,\nabla!\cdot u(t,x_t)+O(\Delta t^2),
-$$
-using <span class="arithmatex">\(\det(I+\Delta t A)=1+\Delta t\,\mathrm{tr}(A)+O(\Delta t^2)\)</span> and <span class="arithmatex">\(\nabla\!\cdot u=\mathrm{tr}(\nabla_x u)\)</span>. Applying the change-of-variable formula to the update gives
-$$
+\]</div>
+<p>and hence</p>
+<div class="arithmatex">\[
+\det(\nabla_{x_t}\Psi)=1+\Delta t\,\nabla\!\cdot u(t,x_t)+O(\Delta t^2),
+\]</div>
+<p>using <span class="arithmatex">\(\det(I+\Delta t A)=1+\Delta t\,\mathrm{tr}(A)+O(\Delta t^2)\)</span> and <span class="arithmatex">\(\nabla\!\cdot u=\mathrm{tr}(\nabla_x u)\)</span>. Applying the change-of-variable formula to the update gives</p>
+<div class="arithmatex">\[
 \log p_{t+\Delta t}(x_{t+\Delta t})-\log p_t(x_t)
 =
--\Delta t\,\nabla!\cdot u(t,x_t)+O(\Delta t^2).
-$$
-On the other hand, a Taylor expansion yields
-$$
+-\Delta t\,\nabla\!\cdot u(t,x_t)+O(\Delta t^2).
+\]</div>
+<p>On the other hand, a Taylor expansion yields</p>
+<div class="arithmatex">\[
 \log p_{t+\Delta t}(x_{t+\Delta t})-\log p_t(x_t)
 =
 \Delta t\,\partial_t\log p_t(x_t)
 +\Delta t\,u(t,x_t)^\top\nabla_x\log p_t(x_t)
 +O(\Delta t^2).
-$$
-Matching <span class="arithmatex">\(O(\Delta t)\)</span> terms and rewriting via the product rule recovers (CE) (and the trajectory form above).</p>
-<p>At the measure level, the ODE flow map <span class="arithmatex">\(\psi_t\)</span> (when well-defined) pushes the initial law forward:
-$$
-\mu_t = (\psi_t)_#\mu_0.
-$$
-When <span class="arithmatex">\(\mu_t(dx)=p_t(x)\,dx\)</span> exists, the continuity equation (CE) is the density-level expression of <span class="arithmatex">\(\mu_t=(\psi_t)_\#\mu_0\)</span>.</p>
+\]</div>
+<p>Matching <span class="arithmatex">\(O(\Delta t)\)</span> terms and rewriting via the product rule recovers (CE) (and the trajectory form above).</p>
+<p>At the measure level, the ODE flow map <span class="arithmatex">\(\psi_t\)</span> (when well-defined) pushes the initial law forward:</p>
+<div class="arithmatex">\[
+\mu_t = (\psi_t)_\#\mu_0.
+\]</div>
+<p>When <span class="arithmatex">\(\mu_t(dx)=p_t(x)\,dx\)</span> exists, the continuity equation (CE) is the density-level expression of <span class="arithmatex">\(\mu_t=(\psi_t)_\#\mu_0\)</span>.</p>
 <h4 id="214-ode-vs-sde-push-forward-map-vs-stochastic-evolution">2.1.4 ODE vs SDE: push-forward map vs stochastic evolution<a class="headerlink" href="#214-ode-vs-sde-push-forward-map-vs-stochastic-evolution" title="Permanent link">&para;</a></h4>
-<p>For an Itô SDE, sample paths satisfy
-$$
+<p>For an Itô SDE, sample paths satisfy</p>
+<div class="arithmatex">\[
 dX_t=b(t,X_t)\,dt+\sigma(t,X_t)\,dW_t,
-$$
-and <span class="arithmatex">\(X_t\)</span> is no longer a deterministic function of <span class="arithmatex">\(X_0\)</span>. Consequently, in general there is no single deterministic map <span class="arithmatex">\(\psi_t\)</span> such that <span class="arithmatex">\(\mu_t=(\psi_t)_\#\mu_0\)</span>.</p>
+\]</div>
+<p>and <span class="arithmatex">\(X_t\)</span> is no longer a deterministic function of <span class="arithmatex">\(X_0\)</span>. Consequently, in general there is no single deterministic map <span class="arithmatex">\(\psi_t\)</span> such that <span class="arithmatex">\(\mu_t=(\psi_t)_\#\mu_0\)</span>.</p>
 <p>Instead, the law evolves via a transition kernel (Markov semigroup) <span class="arithmatex">\(P_t\)</span>. In a notation that mirrors the push-forward <span class="arithmatex">\(\#\)</span>, it is common to view <span class="arithmatex">\(P_t\)</span> as inducing a <strong>push-forward operator on measures</strong> (the adjoint of <span class="arithmatex">\(P_t\)</span> acting on test functions).</p>
-<p><strong>Kernel <span class="arithmatex">\(\Rightarrow\)</span> measure push-forward.</strong> Let <span class="arithmatex">\(P_t(x,\cdot)\)</span> be a probability measure on <span class="arithmatex">\(\mathbb{R}^D\)</span> for each <span class="arithmatex">\(x\)</span>, and write <span class="arithmatex">\(P_t(x,A)\)</span> for its mass on a Borel set <span class="arithmatex">\(A\)</span>. Define the induced operator <span class="arithmatex">\(P_t^\ast\)</span> on measures by
-$$
+<p><strong>Kernel <span class="arithmatex">\(\Rightarrow\)</span> measure push-forward.</strong> Let <span class="arithmatex">\(P_t(x,\cdot)\)</span> be a probability measure on <span class="arithmatex">\(\mathbb{R}^D\)</span> for each <span class="arithmatex">\(x\)</span>, and write <span class="arithmatex">\(P_t(x,A)\)</span> for its mass on a Borel set <span class="arithmatex">\(A\)</span>. Define the induced operator <span class="arithmatex">\(P_t^\ast\)</span> on measures by</p>
+<div class="arithmatex">\[
 (P_t^\ast \mu_0)(A)
 :=
 \int_{\mathbb{R}^D} P_t(x,A)\,\mu_0(dx),
 \qquad A\ \text{Borel}.
-$$
-Then the law evolution is simply
-$$
+\]</div>
+<p>Then the law evolution is simply</p>
+<div class="arithmatex">\[
 \mu_t = P_t^\ast \mu_0.
-$$
-Many notes also write this as <span class="arithmatex">\(\mu_t=\mu_0 P_t\)</span> (right action) or, informally, <span class="arithmatex">\(\mu_t=(P_t)_\#\mu_0\)</span> to emphasize “push-forward by a stochastic mechanism”. The safest (unambiguous) notation is <span class="arithmatex">\(P_t^\ast \mu_0\)</span>.</p>
-<p><strong>Dual (test-function) form.</strong> The same evolution can be written as
-$$
+\]</div>
+<p>Many notes also write this as <span class="arithmatex">\(\mu_t=\mu_0 P_t\)</span> (right action) or, informally, <span class="arithmatex">\(\mu_t=(P_t)_\#\mu_0\)</span> to emphasize “push-forward by a stochastic mechanism”. The safest (unambiguous) notation is <span class="arithmatex">\(P_t^\ast \mu_0\)</span>.</p>
+<p><strong>Dual (test-function) form.</strong> The same evolution can be written as</p>
+<div class="arithmatex">\[
 \int_{\mathbb{R}^D}\varphi(x)\,\mu_t(dx)
 =
 \int_{\mathbb{R}^D} (P_t\varphi)(x)\,\mu_0(dx),
 \qquad
 (P_t\varphi)(x):=\int_{\mathbb{R}^D}\varphi(y)\,P_t(x,dy),
-$$
-for bounded measurable <span class="arithmatex">\(\varphi\)</span>. This is exactly the “kernel vs measure” adjoint relationship: <span class="arithmatex">\(P_t\)</span> acts on functions, <span class="arithmatex">\(P_t^\ast\)</span> acts on measures.</p>
-<p><strong>Deterministic maps as a special case.</strong> If <span class="arithmatex">\(P_t\)</span> comes from a deterministic map <span class="arithmatex">\(\psi_t\)</span>, then
-$$
+\]</div>
+<p>for bounded measurable <span class="arithmatex">\(\varphi\)</span>. This is exactly the “kernel vs measure” adjoint relationship: <span class="arithmatex">\(P_t\)</span> acts on functions, <span class="arithmatex">\(P_t^\ast\)</span> acts on measures.</p>
+<p><strong>Deterministic maps as a special case.</strong> If <span class="arithmatex">\(P_t\)</span> comes from a deterministic map <span class="arithmatex">\(\psi_t\)</span>, then</p>
+<div class="arithmatex">\[
 P_t(x,dy)=\delta_{\psi_t(x)}(dy)
 \quad\Longrightarrow\quad
-P_t^\ast \mu_0 = (\psi_t)_#\mu_0.
-$$
-So the usual push-forward <span class="arithmatex">\((\psi_t)_\#\)</span> is recovered by taking a Dirac transition kernel.</p>
+P_t^\ast \mu_0 = (\psi_t)_\#\mu_0.
+\]</div>
+<p>So the usual push-forward <span class="arithmatex">\((\psi_t)_\#\)</span> is recovered by taking a Dirac transition kernel.</p>
 <p>When a density <span class="arithmatex">\(p_t\)</span> exists, this kernel-level evolution is described by the Fokker–Planck equation (Section 2.2), which differs from the continuity equation by a second-order diffusion term.</p>
 <p><strong>Velocity-first vs density-first (Eulerian vs Lagrangian).</strong> There is an important asymmetry:</p>
 <ul>
 <li><strong>Velocity-first:</strong> specifying <span class="arithmatex">\(u(t,\cdot)\)</span> (under well-posedness assumptions) determines the flow map <span class="arithmatex">\(\psi_t\)</span>, hence determines the pushed-forward laws <span class="arithmatex">\(\mu_t=(\psi_t)_\#\mu_0\)</span> and (when densities exist) a unique density evolution via (CE).</li>
-<li><strong>Density-first:</strong> specifying only a density path <span class="arithmatex">\(t\mapsto p_t\)</span> generally does <em>not</em> determine a unique velocity field. Indeed, if a vector field <span class="arithmatex">\(w_t(x)\)</span> satisfies
-$$
-\nabla!\cdot\big(p_t(x)\,w_t(x)\big)=0,
-$$
-then both <span class="arithmatex">\(u_t\)</span> and <span class="arithmatex">\(u_t+w_t\)</span> produce the same right-hand side in (CE), hence the same density evolution. A single density path may correspond to many different particle flows.</li>
+<li><strong>Density-first:</strong> specifying only a density path <span class="arithmatex">\(t\mapsto p_t\)</span> generally does <em>not</em> determine a unique velocity field. Indeed, if a vector field <span class="arithmatex">\(w_t(x)\)</span> satisfies</li>
 </ul>
+<div class="arithmatex">\[
+\nabla\!\cdot\big(p_t(x)\,w_t(x)\big)=0,
+\]</div>
+<p>then both <span class="arithmatex">\(u_t\)</span> and <span class="arithmatex">\(u_t+w_t\)</span> produce the same right-hand side in (CE), hence the same density evolution. A single density path may correspond to many different particle flows.</p>
 <p><strong>Realizability (consistency check).</strong> Not every arbitrary path <span class="arithmatex">\(p_t\)</span> can arise as the marginal law of particles moving under some deterministic velocity field. The continuity equation provides a consistency condition: we say <span class="arithmatex">\(p_t\)</span> is realizable (generated by a flow) if there exists <span class="arithmatex">\(u(t,x)\)</span> such that <span class="arithmatex">\(p_t\)</span> and <span class="arithmatex">\(u\)</span> satisfy (CE) (with suitable boundary/decay conditions).</p>
-<p><strong>(Optional) Conditioning.</strong> If we introduce an auxiliary variable <span class="arithmatex">\(Z\sim\pi\)</span> and define a conditional velocity field <span class="arithmatex">\(u(t,x\mid z)\)</span>, then for each fixed <span class="arithmatex">\(z\)</span> we have a conditional push-forward and continuity equation:
-$$
-p_t(\cdot\mid z)=(\psi_t(\cdot;z))_# p_0,\qquad
-\partial_t p_t(x\mid z)+\nabla!\cdot\big(p_t(x\mid z)\,u(t,x\mid z)\big)=0.
-$$
-The unconditional marginal is the mixture
-$$
+<p><strong>(Optional) Conditioning.</strong> If we introduce an auxiliary variable <span class="arithmatex">\(Z\sim\pi\)</span> and define a conditional velocity field <span class="arithmatex">\(u(t,x\mid z)\)</span>, then for each fixed <span class="arithmatex">\(z\)</span> we have a conditional push-forward and continuity equation:</p>
+<div class="arithmatex">\[
+p_t(\cdot\mid z)=(\psi_t(\cdot;z))_\# p_0,\qquad
+\partial_t p_t(x\mid z)+\nabla\!\cdot\big(p_t(x\mid z)\,u(t,x\mid z)\big)=0.
+\]</div>
+<p>The unconditional marginal is the mixture</p>
+<div class="arithmatex">\[
 p_t(x)=\int p_t(x\mid z)\,\pi(z)\,dz.
-$$</p>
+\]</div>
 <h4 id="215-path-first-density-first-vs-velocity-first-where-diffusion-and-flow-matching-fit">2.1.5 Path-first (density-first) vs velocity-first: where diffusion and flow matching fit<a class="headerlink" href="#215-path-first-density-first-vs-velocity-first-where-diffusion-and-flow-matching-fit" title="Permanent link">&para;</a></h4>
 <p>In modern generative modeling, it is useful to separate two design patterns:</p>
 <ul>
@@ -1852,319 +1852,319 @@ $$</p>
 <p>In this path-first viewpoint, the continuity equation (CE) plays the role of a <strong>consistency condition</strong>: a velocity field <span class="arithmatex">\(u\)</span> generates a density path <span class="arithmatex">\(p_t\)</span> only if <span class="arithmatex">\(p_t\)</span> and <span class="arithmatex">\(u\)</span> satisfy (CE). In practice we rarely “solve (CE) for <span class="arithmatex">\(u\)</span>” directly because <span class="arithmatex">\(p_t\)</span> is not available in closed form; instead, training objectives are designed as computable surrogates that guarantee (or approximate) the same consistency.</p>
 <p>Finally, note that <strong>sampling is always velocity-first</strong> in execution: once a model provides a drift/velocity (ODE or SDE), we generate samples by numerically integrating the learned dynamics.</p>
 <h3 id="22-stochastic-dynamics-ito-sde">2.2 Stochastic dynamics: Itô SDE<a class="headerlink" href="#22-stochastic-dynamics-ito-sde" title="Permanent link">&para;</a></h3>
-<p>Let <span class="arithmatex">\(\mathbf{W}_t\)</span> be a standard <span class="arithmatex">\(m\)</span>-dimensional Brownian motion. Consider the Itô SDE
-$$
+<p>Let <span class="arithmatex">\(\mathbf{W}_t\)</span> be a standard <span class="arithmatex">\(m\)</span>-dimensional Brownian motion. Consider the Itô SDE</p>
+<div class="arithmatex">\[
 d\mathbf{X}_t = b(t,\mathbf{X}_t)\,dt + \sigma(t,\mathbf{X}_t)\,d\mathbf{W}_t,
-$$
-where <span class="arithmatex">\(b:[0,1]\times\mathbb{R}^D\to\mathbb{R}^D\)</span> is the drift and <span class="arithmatex">\(\sigma:[0,1]\times\mathbb{R}^D\to\mathbb{R}^{D\times m}\)</span> is the diffusion coefficient. Define the diffusion matrix
-$$
+\]</div>
+<p>where <span class="arithmatex">\(b:[0,1]\times\mathbb{R}^D\to\mathbb{R}^D\)</span> is the drift and <span class="arithmatex">\(\sigma:[0,1]\times\mathbb{R}^D\to\mathbb{R}^{D\times m}\)</span> is the diffusion coefficient. Define the diffusion matrix</p>
+<div class="arithmatex">\[
 a(t,x):=\sigma(t,x)\sigma(t,x)^\top\in\mathbb{R}^{D\times D}.
-$$</p>
-<p>Assume <span class="arithmatex">\(\mu_t(dx)=p_t(x)\,dx\)</span> exists and <span class="arithmatex">\(b,\sigma\)</span> are regular enough. Then <span class="arithmatex">\(p_t\)</span> satisfies the <strong>Fokker–Planck (forward Kolmogorov) equation</strong>
-$$
+\]</div>
+<p>Assume <span class="arithmatex">\(\mu_t(dx)=p_t(x)\,dx\)</span> exists and <span class="arithmatex">\(b,\sigma\)</span> are regular enough. Then <span class="arithmatex">\(p_t\)</span> satisfies the <strong>Fokker–Planck (forward Kolmogorov) equation</strong></p>
+<div class="arithmatex">\[
 \partial_t p_t(x)
 =
--\nabla!\cdot\big(b(t,x)\,p_t(x)\big)
-\;+\;\frac{1}{2}\sum_{i=1}^D\sum_{j=1}^D \partial_{x_i}\partial_{x_j}!\big(a_{ij}(t,x)\,p_t(x)\big).
-$$</p>
+-\nabla\!\cdot\big(b(t,x)\,p_t(x)\big)
+\;+\;\frac{1}{2}\sum_{i=1}^D\sum_{j=1}^D \partial_{x_i}\partial_{x_j}\!\big(a_{ij}(t,x)\,p_t(x)\big).
+\]</div>
 <p>Special cases:</p>
 <ul>
 <li><strong>Pure transport</strong> (<span class="arithmatex">\(\sigma\equiv 0\)</span>): the second-order term vanishes and we recover the continuity equation.</li>
 <li><strong>Isotropic diffusion</strong> (<span class="arithmatex">\(a(t,x)=\beta(t)I\)</span>): the second-order term becomes <span class="arithmatex">\(\frac{1}{2}\beta(t)\Delta p_t\)</span>.</li>
 </ul>
-<p>In the diffusion-model setting, a common special case is
-$$
+<p>In the diffusion-model setting, a common special case is</p>
+<div class="arithmatex">\[
 dX_t=f(X_t,t)\,dt+g(t)\,dW_t,\qquad W_t\in\mathbb{R}^D,
-$$
-i.e., <span class="arithmatex">\(\sigma(t,x)=g(t)I\)</span>. Then
-$$
+\]</div>
+<p>i.e., <span class="arithmatex">\(\sigma(t,x)=g(t)I\)</span>. Then</p>
+<div class="arithmatex">\[
 \partial_t p_t(x)
 =
--\nabla!\cdot\big(f(x,t)\,p_t(x)\big)
+-\nabla\!\cdot\big(f(x,t)\,p_t(x)\big)
 \;+\;\frac{1}{2}g(t)^2\,\Delta p_t(x).
-$$
-Using <span class="arithmatex">\(\nabla p_t=p_t\nabla\log p_t\)</span>, this can be rewritten in a divergence (mass conservation) form:
-$$
+\]</div>
+<p>Using <span class="arithmatex">\(\nabla p_t=p_t\nabla\log p_t\)</span>, this can be rewritten in a divergence (mass conservation) form:</p>
+<div class="arithmatex">\[
 \partial_t p_t(x)
 =
--\nabla!\cdot\Big(\Big(f(x,t)-\frac{1}{2}g(t)^2\,\nabla_x\log p_t(x)\Big)\,p_t(x)\Big).
-$$
-Here the first term transports probability mass by the drift, while the Laplacian term models spreading (diffusion) due to stochastic noise. A full derivation uses Itô calculus and is omitted here.</p>
+-\nabla\!\cdot\Big(\Big(f(x,t)-\frac{1}{2}g(t)^2\,\nabla_x\log p_t(x)\Big)\,p_t(x)\Big).
+\]</div>
+<p>Here the first term transports probability mass by the drift, while the Laplacian term models spreading (diffusion) due to stochastic noise. A full derivation uses Itô calculus and is omitted here.</p>
 <h3 id="23-intuition-of-the-continuity-equation">2.3 Intuition of the Continuity Equation<a class="headerlink" href="#23-intuition-of-the-continuity-equation" title="Permanent link">&para;</a></h3>
 <p>The continuity equation is a conservation law for a density. In our context, it describes conservation of <strong>probability mass</strong> under deterministic transport.</p>
 <h4 id="231-physical-interpretation-control-volume-and-flux">2.3.1 Physical interpretation (control volume and flux)<a class="headerlink" href="#231-physical-interpretation-control-volume-and-flux" title="Permanent link">&para;</a></h4>
-<p>Think of a small fixed box (control volume) centered at <span class="arithmatex">\(x\in\mathbb{R}^3\)</span> with side lengths <span class="arithmatex">\(\Delta x,\Delta y,\Delta z\)</span>. Let <span class="arithmatex">\(p(x,t)\)</span> be the density of a conserved quantity (mass or probability). The total amount inside the box is approximately
-$$
+<p>Think of a small fixed box (control volume) centered at <span class="arithmatex">\(x\in\mathbb{R}^3\)</span> with side lengths <span class="arithmatex">\(\Delta x,\Delta y,\Delta z\)</span>. Let <span class="arithmatex">\(p(x,t)\)</span> be the density of a conserved quantity (mass or probability). The total amount inside the box is approximately</p>
+<div class="arithmatex">\[
 p(x,t)\,\Delta x\,\Delta y\,\Delta z.
-$$
-Changes can only happen via <strong>flux</strong> across the boundary. Let <span class="arithmatex">\(j(x,t)\in\mathbb{R}^3\)</span> be the flux vector (amount crossing unit area per unit time). The net outflux in the <span class="arithmatex">\(x\)</span>-direction is approximately
-$$
+\]</div>
+<p>Changes can only happen via <strong>flux</strong> across the boundary. Let <span class="arithmatex">\(j(x,t)\in\mathbb{R}^3\)</span> be the flux vector (amount crossing unit area per unit time). The net outflux in the <span class="arithmatex">\(x\)</span>-direction is approximately</p>
+<div class="arithmatex">\[
 \big(j_x(x,y,z,t)-j_x(x+\Delta x,y,z,t)\big)\,\Delta y\,\Delta z,
-$$
-and similarly for the other directions. Summing the three directions, the total net outflux is
-$$
--\,(\nabla!\cdot j)(x,t)\,\Delta x\,\Delta y\,\Delta z.
-$$
-Conservation says “rate of change inside = minus net outflux”, hence
-$$
+\]</div>
+<p>and similarly for the other directions. Summing the three directions, the total net outflux is</p>
+<div class="arithmatex">\[
+-\,(\nabla\!\cdot j)(x,t)\,\Delta x\,\Delta y\,\Delta z.
+\]</div>
+<p>Conservation says “rate of change inside = minus net outflux”, hence</p>
+<div class="arithmatex">\[
 \partial_t p(x,t)\,\Delta x\,\Delta y\,\Delta z
 =
--\,(\nabla!\cdot j)(x,t)\,\Delta x\,\Delta y\,\Delta z.
-$$
-Canceling the volume factor (valid for any sufficiently small box) yields the local form
-$$
-\partial_t p(x,t)+\nabla!\cdot j(x,t)=0.
-$$</p>
-<p>For deterministic particle transport with velocity field <span class="arithmatex">\(u(x,t)\)</span>, the natural flux is <span class="arithmatex">\(j=p\,u\)</span>. Plugging this into the conservation law gives the continuity equation
-$$
-\partial_t p+\nabla!\cdot(p\,u)=0,
-$$
-which is exactly (CE) in Section 2.1.3.</p>
+-\,(\nabla\!\cdot j)(x,t)\,\Delta x\,\Delta y\,\Delta z.
+\]</div>
+<p>Canceling the volume factor (valid for any sufficiently small box) yields the local form</p>
+<div class="arithmatex">\[
+\partial_t p(x,t)+\nabla\!\cdot j(x,t)=0.
+\]</div>
+<p>For deterministic particle transport with velocity field <span class="arithmatex">\(u(x,t)\)</span>, the natural flux is <span class="arithmatex">\(j=p\,u\)</span>. Plugging this into the conservation law gives the continuity equation</p>
+<div class="arithmatex">\[
+\partial_t p+\nabla\!\cdot(p\,u)=0,
+\]</div>
+<p>which is exactly (CE) in Section 2.1.3.</p>
 <h4 id="232-derivation-from-a-global-conservation-law-divergence-theorem">2.3.2 Derivation from a global conservation law (divergence theorem)<a class="headerlink" href="#232-derivation-from-a-global-conservation-law-divergence-theorem" title="Permanent link">&para;</a></h4>
-<p>Let <span class="arithmatex">\(p(x,t)\)</span> be a density on <span class="arithmatex">\(\mathbb{R}^D\)</span>, <span class="arithmatex">\(u(x,t)\)</span> a velocity field, and <span class="arithmatex">\(V\subset\mathbb{R}^D\)</span> an arbitrary control volume with boundary <span class="arithmatex">\(\partial V\)</span> and outward unit normal <span class="arithmatex">\(n\)</span>. The total mass in <span class="arithmatex">\(V\)</span> is
-$$
+<p>Let <span class="arithmatex">\(p(x,t)\)</span> be a density on <span class="arithmatex">\(\mathbb{R}^D\)</span>, <span class="arithmatex">\(u(x,t)\)</span> a velocity field, and <span class="arithmatex">\(V\subset\mathbb{R}^D\)</span> an arbitrary control volume with boundary <span class="arithmatex">\(\partial V\)</span> and outward unit normal <span class="arithmatex">\(n\)</span>. The total mass in <span class="arithmatex">\(V\)</span> is</p>
+<div class="arithmatex">\[
 \int_V p(x,t)\,dx,
-$$
-so its time derivative is the accumulation rate <span class="arithmatex">\(\frac{d}{dt}\int_V p\,dx\)</span>. The outward flux through the boundary is
-$$
+\]</div>
+<p>so its time derivative is the accumulation rate <span class="arithmatex">\(\frac{d}{dt}\int_V p\,dx\)</span>. The outward flux through the boundary is</p>
+<div class="arithmatex">\[
 \int_{\partial V} p(x,t)\,u(x,t)\cdot n(x)\,dS.
-$$
-Conservation requires
-$$
+\]</div>
+<p>Conservation requires</p>
+<div class="arithmatex">\[
 \frac{d}{dt}\int_V p\,dx+\int_{\partial V} p\,u\cdot n\,dS=0.
-$$
-Using the divergence theorem,
-$$
-\int_{\partial V} p\,u\cdot n\,dS=\int_V \nabla!\cdot(p\,u)\,dx,
-$$
-so
-$$
-\int_V \big(\partial_t p+\nabla!\cdot(p\,u)\big)\,dx=0.
-$$
-Since <span class="arithmatex">\(V\)</span> is arbitrary, the integrand must vanish (in the weak sense), yielding
-$$
-\partial_t p+\nabla!\cdot(p\,u)=0.
-$$</p>
+\]</div>
+<p>Using the divergence theorem,</p>
+<div class="arithmatex">\[
+\int_{\partial V} p\,u\cdot n\,dS=\int_V \nabla\!\cdot(p\,u)\,dx,
+\]</div>
+<p>so</p>
+<div class="arithmatex">\[
+\int_V \big(\partial_t p+\nabla\!\cdot(p\,u)\big)\,dx=0.
+\]</div>
+<p>Since <span class="arithmatex">\(V\)</span> is arbitrary, the integrand must vanish (in the weak sense), yielding</p>
+<div class="arithmatex">\[
+\partial_t p+\nabla\!\cdot(p\,u)=0.
+\]</div>
 <h2 id="appendix-a-integrating-factor-derivation-scalar-linear-ode">Appendix A — Integrating factor derivation (scalar linear ODE)<a class="headerlink" href="#appendix-a-integrating-factor-derivation-scalar-linear-ode" title="Permanent link">&para;</a></h2>
 <p>This appendix spells out the algebra behind the integrating-factor identity used in Section 1.1.1.</p>
 <h3 id="a1-problem">A.1 Problem<a class="headerlink" href="#a1-problem" title="Permanent link">&para;</a></h3>
-<p>Let <span class="arithmatex">\(L:[0,1]\to\mathbb{R}\)</span> and <span class="arithmatex">\(r:[0,1]\to\mathbb{R}\)</span> be continuous. Consider the inhomogeneous linear ODE
-$$
+<p>Let <span class="arithmatex">\(L:[0,1]\to\mathbb{R}\)</span> and <span class="arithmatex">\(r:[0,1]\to\mathbb{R}\)</span> be continuous. Consider the inhomogeneous linear ODE</p>
+<div class="arithmatex">\[
 \dot x(t)=L(t)x(t)+r(t),\qquad t\in[0,1].
-$$
-Fix <span class="arithmatex">\(0\le s\le t\le 1\)</span> and assume <span class="arithmatex">\(x(\cdot)\)</span> is differentiable.</p>
+\]</div>
+<p>Fix <span class="arithmatex">\(0\le s\le t\le 1\)</span> and assume <span class="arithmatex">\(x(\cdot)\)</span> is differentiable.</p>
 <h3 id="a2-step-1-define-the-integration-factor-and-its-derivative">A.2 Step 1: define the integration factor and its derivative<a class="headerlink" href="#a2-step-1-define-the-integration-factor-and-its-derivative" title="Permanent link">&para;</a></h3>
-<p>Define
-$$
-E(s\to t):=\exp!\Big(\int_s^t L(\tau)\,d\tau\Big),
+<p>Define</p>
+<div class="arithmatex">\[
+E(s\to t):=\exp\!\Big(\int_s^t L(\tau)\,d\tau\Big),
 \qquad
-E^{-1}(s\to t):=\exp!\Big(-\int_s^t L(\tau)\,d\tau\Big).
-$$
-By the chain rule and the fundamental theorem of calculus,
-$$
+E^{-1}(s\to t):=\exp\!\Big(-\int_s^t L(\tau)\,d\tau\Big).
+\]</div>
+<p>By the chain rule and the fundamental theorem of calculus,</p>
+<div class="arithmatex">\[
 \frac{d}{dt}E^{-1}(s\to t)
 =
 E^{-1}(s\to t)\cdot\frac{d}{dt}\Big(-\int_s^t L(\tau)\,d\tau\Big)
 =
 -L(t)\,E^{-1}(s\to t).
-$$</p>
+\]</div>
 <h3 id="a3-step-2-product-rule-the-key-identity">A.3 Step 2: product rule (the key identity)<a class="headerlink" href="#a3-step-2-product-rule-the-key-identity" title="Permanent link">&para;</a></h3>
-<p>Using the product rule,
-$$
+<p>Using the product rule,</p>
+<div class="arithmatex">\[
 \frac{d}{dt}\Big(E^{-1}(s\to t)x(t)\Big)
 =
 \Big(\frac{d}{dt}E^{-1}(s\to t)\Big)x(t)+E^{-1}(s\to t)\dot x(t).
-$$
-Substituting <span class="arithmatex">\(\frac{d}{dt}E^{-1}(s\to t)=-L(t)E^{-1}(s\to t)\)</span> gives
-$$
+\]</div>
+<p>Substituting <span class="arithmatex">\(\frac{d}{dt}E^{-1}(s\to t)=-L(t)E^{-1}(s\to t)\)</span> gives</p>
+<div class="arithmatex">\[
 \frac{d}{dt}\Big(E^{-1}(s\to t)x(t)\Big)
 =
 E^{-1}(s\to t)\big(\dot x(t)-L(t)x(t)\big).
-$$
-If <span class="arithmatex">\(\dot x(t)=L(t)x(t)+r(t)\)</span>, then <span class="arithmatex">\(\dot x(t)-L(t)x(t)=r(t)\)</span>, hence
-$$
+\]</div>
+<p>If <span class="arithmatex">\(\dot x(t)=L(t)x(t)+r(t)\)</span>, then <span class="arithmatex">\(\dot x(t)-L(t)x(t)=r(t)\)</span>, hence</p>
+<div class="arithmatex">\[
 \frac{d}{dt}\Big(E^{-1}(s\to t)x(t)\Big)=E^{-1}(s\to t)\,r(t).
-$$</p>
+\]</div>
 <h3 id="a4-step-3-integrate-from-s-to-t">A.4 Step 3: integrate from <span class="arithmatex">\(s\)</span> to <span class="arithmatex">\(t\)</span><a class="headerlink" href="#a4-step-3-integrate-from-s-to-t" title="Permanent link">&para;</a></h3>
-<p>Integrate both sides from <span class="arithmatex">\(s\)</span> to <span class="arithmatex">\(t\)</span> (use <span class="arithmatex">\(\tau\)</span> as the integration variable):
-$$
+<p>Integrate both sides from <span class="arithmatex">\(s\)</span> to <span class="arithmatex">\(t\)</span> (use <span class="arithmatex">\(\tau\)</span> as the integration variable):</p>
+<div class="arithmatex">\[
 \int_s^t \frac{d}{d\tau}\Big(E^{-1}(s\to \tau)x(\tau)\Big)\,d\tau
 =
 \int_s^t E^{-1}(s\to \tau)\,r(\tau)\,d\tau.
-$$
-By the fundamental theorem of calculus, the left-hand side is
-$$
+\]</div>
+<p>By the fundamental theorem of calculus, the left-hand side is</p>
+<div class="arithmatex">\[
 E^{-1}(s\to t)x(t)-E^{-1}(s\to s)x(s).
-$$
-Since <span class="arithmatex">\(E^{-1}(s\to s)=\exp(0)=1\)</span>, we obtain
-$$
+\]</div>
+<p>Since <span class="arithmatex">\(E^{-1}(s\to s)=\exp(0)=1\)</span>, we obtain</p>
+<div class="arithmatex">\[
 E^{-1}(s\to t)x(t)
 =
 x(s)+\int_s^t E^{-1}(s\to \tau)\,r(\tau)\,d\tau.
-$$</p>
+\]</div>
 <h3 id="a5-step-4-solve-for-xt-the-closed-form-formula">A.5 Step 4: solve for <span class="arithmatex">\(x(t)\)</span> (the closed-form formula)<a class="headerlink" href="#a5-step-4-solve-for-xt-the-closed-form-formula" title="Permanent link">&para;</a></h3>
-<p>Multiply both sides by <span class="arithmatex">\(E(s\to t)\)</span>:
-$$
+<p>Multiply both sides by <span class="arithmatex">\(E(s\to t)\)</span>:</p>
+<div class="arithmatex">\[
 x(t)=E(s\to t)x(s)+\int_s^t E(s\to t)\,E^{-1}(s\to \tau)\,r(\tau)\,d\tau.
-$$
-Finally, note that
-$$
+\]</div>
+<p>Finally, note that</p>
+<div class="arithmatex">\[
 E(s\to t)\,E^{-1}(s\to \tau)
 =
-\exp!\Big(\int_s^t L(\xi)\,d\xi-\int_s^\tau L(\xi)\,d\xi\Big)
+\exp\!\Big(\int_s^t L(\xi)\,d\xi-\int_s^\tau L(\xi)\,d\xi\Big)
 =
-\exp!\Big(\int_\tau^t L(\xi)\,d\xi\Big)
+\exp\!\Big(\int_\tau^t L(\xi)\,d\xi\Big)
 =
 E(\tau\to t),
-$$
-so the solution can be written as
-$$
+\]</div>
+<p>so the solution can be written as</p>
+<div class="arithmatex">\[
 x(t)=E(s\to t)\,x(s)+\int_s^t E(\tau\to t)\,r(\tau)\,d\tau.
-$$</p>
+\]</div>
 <h2 id="appendix-b-derivation-of-the-fokkerplanck-equation-isotropic-diffusion">Appendix B — Derivation of the Fokker–Planck equation (isotropic diffusion)<a class="headerlink" href="#appendix-b-derivation-of-the-fokkerplanck-equation-isotropic-diffusion" title="Permanent link">&para;</a></h2>
-<p>This appendix derives the Fokker–Planck equation for the diffusion-model-style SDE
-$$
+<p>This appendix derives the Fokker–Planck equation for the diffusion-model-style SDE</p>
+<div class="arithmatex">\[
 dX_t = f(X_t,t)\,dt + g(t)\,dW_t,\qquad X_0\sim p_0,
-$$
-where <span class="arithmatex">\(X_t\in\mathbb{R}^D\)</span>, <span class="arithmatex">\(W_t\)</span> is a standard <span class="arithmatex">\(D\)</span>-dimensional Brownian motion, <span class="arithmatex">\(f:\mathbb{R}^D\times[0,T]\to\mathbb{R}^D\)</span>, and <span class="arithmatex">\(g:[0,T]\to[0,\infty)\)</span>. We assume enough regularity (existence of a smooth density <span class="arithmatex">\(p_t\)</span> and sufficient decay at infinity) to justify exchanging derivatives/integrals and integrating by parts.</p>
+\]</div>
+<p>where <span class="arithmatex">\(X_t\in\mathbb{R}^D\)</span>, <span class="arithmatex">\(W_t\)</span> is a standard <span class="arithmatex">\(D\)</span>-dimensional Brownian motion, <span class="arithmatex">\(f:\mathbb{R}^D\times[0,T]\to\mathbb{R}^D\)</span>, and <span class="arithmatex">\(g:[0,T]\to[0,\infty)\)</span>. We assume enough regularity (existence of a smooth density <span class="arithmatex">\(p_t\)</span> and sufficient decay at infinity) to justify exchanging derivatives/integrals and integrating by parts.</p>
 <h3 id="b0-notation-and-assumptions-what-we-use-implicitly">B.0 Notation and assumptions (what we use implicitly)<a class="headerlink" href="#b0-notation-and-assumptions-what-we-use-implicitly" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Write <span class="arithmatex">\(X_t=(X_t^{(1)},\dots,X_t^{(D)})\)</span> and <span class="arithmatex">\(W_t=(W_t^{(1)},\dots,W_t^{(D)})\)</span>.</li>
 <li><span class="arithmatex">\(\nabla\varphi=(\partial_{x_1}\varphi,\dots,\partial_{x_D}\varphi)\)</span>, <span class="arithmatex">\(\Delta\varphi=\sum_{i=1}^D \partial_{x_i x_i}\varphi\)</span>, and <span class="arithmatex">\(\nabla\!\cdot F=\sum_{i=1}^D \partial_{x_i}F_i\)</span>.</li>
-<li>The quadratic covariation of Brownian motion satisfies
-$$
-d\langle W^{(i)},W^{(j)}\rangle_t=\delta_{ij}\,dt.
-$$
-Consequently, since <span class="arithmatex">\(dX_t^{(i)}=\cdots + g(t)\,dW_t^{(i)}\)</span>,
-$$
-d\langle X^{(i)},X^{(j)}\rangle_t=g(t)^2\,\delta_{ij}\,dt.
-$$</li>
+<li>The quadratic covariation of Brownian motion satisfies</li>
 </ul>
+<div class="arithmatex">\[
+d\langle W^{(i)},W^{(j)}\rangle_t=\delta_{ij}\,dt.
+\]</div>
+<p>Consequently, since <span class="arithmatex">\(dX_t^{(i)}=\cdots + g(t)\,dW_t^{(i)}\)</span>,</p>
+<div class="arithmatex">\[
+d\langle X^{(i)},X^{(j)}\rangle_t=g(t)^2\,\delta_{ij}\,dt.
+\]</div>
 <h3 id="b1-from-itos-formula-to-the-generator-identity-weak-form">B.1 From Itô’s formula to the generator identity (weak form)<a class="headerlink" href="#b1-from-itos-formula-to-the-generator-identity-weak-form" title="Permanent link">&para;</a></h3>
-<p>Let <span class="arithmatex">\(\varphi\in C_c^\infty(\mathbb{R}^D)\)</span> be a smooth test function with compact support. Define the (time-dependent) Itô generator
-$$
+<p>Let <span class="arithmatex">\(\varphi\in C_c^\infty(\mathbb{R}^D)\)</span> be a smooth test function with compact support. Define the (time-dependent) Itô generator</p>
+<div class="arithmatex">\[
 (\mathcal{L}_t\varphi)(x):= f(x,t)\cdot\nabla \varphi(x) + \frac{1}{2}g(t)^2\,\Delta \varphi(x).
-$$</p>
-<p><strong>Step 1 (Itô’s formula, written component-wise).</strong> Since <span class="arithmatex">\(X_t\)</span> solves <span class="arithmatex">\(dX_t=f(X_t,t)\,dt+g(t)\,dW_t\)</span>, Itô’s formula says
-$$
+\]</div>
+<p><strong>Step 1 (Itô’s formula, written component-wise).</strong> Since <span class="arithmatex">\(X_t\)</span> solves <span class="arithmatex">\(dX_t=f(X_t,t)\,dt+g(t)\,dW_t\)</span>, Itô’s formula says</p>
+<div class="arithmatex">\[
 d\varphi(X_t)
 =
 \sum_{i=1}^D \partial_{x_i}\varphi(X_t)\,dX_t^{(i)}
 +\frac12\sum_{i,j=1}^D \partial_{x_ix_j}\varphi(X_t)\,d\langle X^{(i)},X^{(j)}\rangle_t.
-$$
-Substitute <span class="arithmatex">\(dX_t^{(i)}=f_i(X_t,t)\,dt+g(t)\,dW_t^{(i)}\)</span> and <span class="arithmatex">\(d\langle X^{(i)},X^{(j)}\rangle_t=g(t)^2\delta_{ij}\,dt\)</span>:
-$$
+\]</div>
+<p>Substitute <span class="arithmatex">\(dX_t^{(i)}=f_i(X_t,t)\,dt+g(t)\,dW_t^{(i)}\)</span> and <span class="arithmatex">\(d\langle X^{(i)},X^{(j)}\rangle_t=g(t)^2\delta_{ij}\,dt\)</span>:</p>
+<div class="arithmatex">\[
 \begin{aligned}
 d\varphi(X_t)
 &amp;=
 \sum_{i=1}^D \partial_{x_i}\varphi(X_t)\,\big(f_i(X_t,t)\,dt+g(t)\,dW_t^{(i)}\big)
-+\frac12\sum_{i,j=1}^D \partial_{x_ix_j}\varphi(X_t)\,g(t)^2\delta_{ij}\,dt \
++\frac12\sum_{i,j=1}^D \partial_{x_ix_j}\varphi(X_t)\,g(t)^2\delta_{ij}\,dt \\
 &amp;=
 \Big(\sum_{i=1}^D f_i(X_t,t)\,\partial_{x_i}\varphi(X_t)\Big)\,dt
 +\frac12 g(t)^2\Big(\sum_{i=1}^D \partial_{x_ix_i}\varphi(X_t)\Big)\,dt
  \;+\; g(t)\sum_{i=1}^D \partial_{x_i}\varphi(X_t)\,dW_t^{(i)}.
 \end{aligned}
-$$
-Recognizing the dot products, this is exactly
-$$
+\]</div>
+<p>Recognizing the dot products, this is exactly</p>
+<div class="arithmatex">\[
 d\varphi(X_t) = (\mathcal{L}_t\varphi)(X_t)\,dt + g(t)\,\nabla\varphi(X_t)\cdot dW_t.
-$$</p>
-<p><strong>Step 2 (integrate and take expectations).</strong> Integrate from <span class="arithmatex">\(0\)</span> to <span class="arithmatex">\(t\)</span>:
-$$
+\]</div>
+<p><strong>Step 2 (integrate and take expectations).</strong> Integrate from <span class="arithmatex">\(0\)</span> to <span class="arithmatex">\(t\)</span>:</p>
+<div class="arithmatex">\[
 \varphi(X_t)-\varphi(X_0)
 =
 \int_0^t (\mathcal{L}_s\varphi)(X_s)\,ds
 +\int_0^t g(s)\,\nabla\varphi(X_s)\cdot dW_s.
-$$
-Taking expectations and using that the Itô stochastic integral is a martingale with zero mean (under standard square-integrability conditions),
-$$
+\]</div>
+<p>Taking expectations and using that the Itô stochastic integral is a martingale with zero mean (under standard square-integrability conditions),</p>
+<div class="arithmatex">\[
 \frac{d}{dt}\mathbb{E}[\varphi(X_t)] = \mathbb{E}\big[(\mathcal{L}_t\varphi)(X_t)\big].
 \tag{B.1}
-$$
-This is the <strong>weak evolution equation</strong>: it characterizes the time derivative of <span class="arithmatex">\(\mathbb{E}[\varphi(X_t)]\)</span> for every test function <span class="arithmatex">\(\varphi\)</span>.</p>
+\]</div>
+<p>This is the <strong>weak evolution equation</strong>: it characterizes the time derivative of <span class="arithmatex">\(\mathbb{E}[\varphi(X_t)]\)</span> for every test function <span class="arithmatex">\(\varphi\)</span>.</p>
 <h3 id="b2-convert-the-generator-identity-into-a-pde-for-p_t">B.2 Convert the generator identity into a PDE for <span class="arithmatex">\(p_t\)</span><a class="headerlink" href="#b2-convert-the-generator-identity-into-a-pde-for-p_t" title="Permanent link">&para;</a></h3>
-<p>If <span class="arithmatex">\(X_t\)</span> has density <span class="arithmatex">\(p_t\)</span>, then
-$$
+<p>If <span class="arithmatex">\(X_t\)</span> has density <span class="arithmatex">\(p_t\)</span>, then</p>
+<div class="arithmatex">\[
 \mathbb{E}[\varphi(X_t)] = \int_{\mathbb{R}^D}\varphi(x)\,p_t(x)\,dx,
 \qquad
-\mathbb{E}\big[(\mathcal{L}<em>t\varphi)(X_t)\big] = \int</em>{\mathbb{R}^D} (\mathcal{L}<em>t\varphi)(x)\,p_t(x)\,dx.
-$$
-Plugging into <span class="arithmatex">\((\text{B.1})\)</span> gives
-$$
-\int</em>{\mathbb{R}^D}\varphi(x)\,\partial_t p_t(x)\,dx
+\mathbb{E}\big[(\mathcal{L}_t\varphi)(X_t)\big] = \int_{\mathbb{R}^D} (\mathcal{L}_t\varphi)(x)\,p_t(x)\,dx.
+\]</div>
+<p>Plugging into <span class="arithmatex">\((\text{B.1})\)</span> gives</p>
+<div class="arithmatex">\[
+\int_{\mathbb{R}^D}\varphi(x)\,\partial_t p_t(x)\,dx
 =
 \int_{\mathbb{R}^D}\Big(f(x,t)\cdot\nabla\varphi(x) + \frac{1}{2}g(t)^2\,\Delta\varphi(x)\Big)p_t(x)\,dx.
-$$</p>
-<p><strong>Step 1 (drift term: one integration by parts).</strong> Write the drift term coordinate-wise:
-$$
+\]</div>
+<p><strong>Step 1 (drift term: one integration by parts).</strong> Write the drift term coordinate-wise:</p>
+<div class="arithmatex">\[
 \int_{\mathbb{R}^D} f\cdot\nabla\varphi \; p_t\,dx
 =
 \sum_{i=1}^D \int_{\mathbb{R}^D} f_i(x,t)\,\partial_{x_i}\varphi(x)\;p_t(x)\,dx.
-$$
-Integrate by parts in <span class="arithmatex">\(x_i\)</span> (boundary terms vanish due to compact support/decay):
-$$
+\]</div>
+<p>Integrate by parts in <span class="arithmatex">\(x_i\)</span> (boundary terms vanish due to compact support/decay):</p>
+<div class="arithmatex">\[
 \int_{\mathbb{R}^D} f_i\,(\partial_{x_i}\varphi)\,p_t\,dx
 =
 -\int_{\mathbb{R}^D} \varphi(x)\,\partial_{x_i}\big(f_i(x,t)\,p_t(x)\big)\,dx.
-$$
-Summing over <span class="arithmatex">\(i\)</span> yields
-$$
+\]</div>
+<p>Summing over <span class="arithmatex">\(i\)</span> yields</p>
+<div class="arithmatex">\[
 \int_{\mathbb{R}^D} f\cdot\nabla\varphi \; p_t\,dx
 =
--\int_{\mathbb{R}^D} \varphi(x)\,\nabla!\cdot\big(f(x,t)\,p_t(x)\big)\,dx.
-$$
-<strong>Step 2 (diffusion term: two integrations by parts).</strong> Since <span class="arithmatex">\(g(t)\)</span> does not depend on <span class="arithmatex">\(x\)</span>, we can factor it out. Using that the Laplacian is formally self-adjoint under these boundary conditions,
-$$
+-\int_{\mathbb{R}^D} \varphi(x)\,\nabla\!\cdot\big(f(x,t)\,p_t(x)\big)\,dx.
+\]</div>
+<p><strong>Step 2 (diffusion term: two integrations by parts).</strong> Since <span class="arithmatex">\(g(t)\)</span> does not depend on <span class="arithmatex">\(x\)</span>, we can factor it out. Using that the Laplacian is formally self-adjoint under these boundary conditions,</p>
+<div class="arithmatex">\[
 \int_{\mathbb{R}^D} (\Delta\varphi)\;p_t\,dx
 =
 \int_{\mathbb{R}^D} \varphi(x)\,\Delta p_t(x)\,dx.
-$$
-One way to see this is coordinate-wise: for each <span class="arithmatex">\(i\)</span>,
-$$
+\]</div>
+<p>One way to see this is coordinate-wise: for each <span class="arithmatex">\(i\)</span>,</p>
+<div class="arithmatex">\[
 \int (\partial_{x_i x_i}\varphi)\,p_t\,dx
 =
 -\int (\partial_{x_i}\varphi)\,(\partial_{x_i}p_t)\,dx
 =
 \int \varphi\,(\partial_{x_i x_i}p_t)\,dx,
-$$
-then sum over <span class="arithmatex">\(i=1,\dots,D\)</span>.
-Therefore,
-$$
+\]</div>
+<p>then sum over <span class="arithmatex">\(i=1,\dots,D\)</span>.
+Therefore,</p>
+<div class="arithmatex">\[
 \int_{\mathbb{R}^D}\varphi(x)\,\partial_t p_t(x)\,dx
 =
 \int_{\mathbb{R}^D}\varphi(x)\Big(
--\nabla!\cdot(f(x,t)p_t(x)) + \frac{1}{2}g(t)^2\,\Delta p_t(x)
+-\nabla\!\cdot(f(x,t)p_t(x)) + \frac{1}{2}g(t)^2\,\Delta p_t(x)
 \Big)\,dx.
-$$
-Since this holds for all <span class="arithmatex">\(\varphi\in C_c^\infty(\mathbb{R}^D)\)</span>, we conclude the Fokker–Planck equation (in the weak sense, and pointwise under additional regularity):
-$$
+\]</div>
+<p>Since this holds for all <span class="arithmatex">\(\varphi\in C_c^\infty(\mathbb{R}^D)\)</span>, we conclude the Fokker–Planck equation (in the weak sense, and pointwise under additional regularity):</p>
+<div class="arithmatex">\[
 \partial_t p_t(x)
 =
--\nabla!\cdot\big(f(x,t)\,p_t(x)\big) + \frac{1}{2}g(t)^2\,\Delta p_t(x).
+-\nabla\!\cdot\big(f(x,t)\,p_t(x)\big) + \frac{1}{2}g(t)^2\,\Delta p_t(x).
 \tag{FP}
-$$</p>
+\]</div>
 <h3 id="b3-divergence-form-and-the-score">B.3 Divergence form and the score<a class="headerlink" href="#b3-divergence-form-and-the-score" title="Permanent link">&para;</a></h3>
 <p>The Fokker–Planck equation can be rewritten so that the right-hand side is a single divergence <span class="arithmatex">\(-\nabla\!\cdot(\text{flux})\)</span>, making the “mass conservation” structure explicit.</p>
-<p><strong>Step 1 (write diffusion as divergence of a flux).</strong> Since <span class="arithmatex">\(g(t)\)</span> is independent of <span class="arithmatex">\(x\)</span>,
-$$
+<p><strong>Step 1 (write diffusion as divergence of a flux).</strong> Since <span class="arithmatex">\(g(t)\)</span> is independent of <span class="arithmatex">\(x\)</span>,</p>
+<div class="arithmatex">\[
 \frac{1}{2}g(t)^2\,\Delta p_t
 =
-\frac{1}{2}g(t)^2\,\nabla!\cdot(\nabla p_t)
+\frac{1}{2}g(t)^2\,\nabla\!\cdot(\nabla p_t)
 =
--\nabla!\cdot\Big(-\frac{1}{2}g(t)^2\,\nabla p_t\Big)
+-\nabla\!\cdot\Big(-\frac{1}{2}g(t)^2\,\nabla p_t\Big)
 =
--\nabla!\cdot\Big(-\frac{1}{2}g(t)^2\,p_t\,\nabla\log p_t\Big).
-$$
-In the last equality we used <span class="arithmatex">\(\nabla p_t=p_t\nabla\log p_t\)</span>, valid wherever <span class="arithmatex">\(p_t&gt;0\)</span> (and in a weak sense under mild conditions).</p>
-<p><strong>Step 2 (combine drift flux and diffusion flux).</strong> Substituting into <span class="arithmatex">\((\text{FP})\)</span> yields the pure-divergence form
-$$
+-\nabla\!\cdot\Big(-\frac{1}{2}g(t)^2\,p_t\,\nabla\log p_t\Big).
+\]</div>
+<p>In the last equality we used <span class="arithmatex">\(\nabla p_t=p_t\nabla\log p_t\)</span>, valid wherever <span class="arithmatex">\(p_t&gt;0\)</span> (and in a weak sense under mild conditions).</p>
+<p><strong>Step 2 (combine drift flux and diffusion flux).</strong> Substituting into <span class="arithmatex">\((\text{FP})\)</span> yields the pure-divergence form</p>
+<div class="arithmatex">\[
 \partial_t p_t(x)
 =
--\nabla!\cdot\Big(f(x,t)\,p_t(x) - \frac12 g(t)^2\,\nabla_x p_t(x)\Big)
+-\nabla\!\cdot\Big(f(x,t)\,p_t(x) - \frac12 g(t)^2\,\nabla_x p_t(x)\Big)
 =
--\nabla!\cdot\Big(\Big(f(x,t) - \frac{1}{2}g(t)^2\,\nabla_x\log p_t(x)\Big)\,p_t(x)\Big),
-$$
-which matches the common “drift minus diffusion-times-score” decomposition.</p>
+-\nabla\!\cdot\Big(\Big(f(x,t) - \frac{1}{2}g(t)^2\,\nabla_x\log p_t(x)\Big)\,p_t(x)\Big),
+\]</div>
+<p>which matches the common “drift minus diffusion-times-score” decomposition.</p>
 <p><strong>Remark (general diffusion matrix).</strong> For a general Itô SDE <span class="arithmatex">\(dX_t=b\,dt+\sigma\,dW_t\)</span> with <span class="arithmatex">\(a=\sigma\sigma^\top\)</span>, the diffusion term becomes <span class="arithmatex">\(\frac12\sum_{ij}\partial_{x_i}\partial_{x_j}(a_{ij}p_t)\)</span>. The isotropic case above corresponds to <span class="arithmatex">\(a(t,x)=g(t)^2 I\)</span>.</p>
 <h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
 <ol>

@@ -1061,10 +1061,10 @@
 </table>
 <h2 id="c2-training-pseudocode-comparison-side-by-side">C2. Training pseudocode comparison (side-by-side)<a class="headerlink" href="#c2-training-pseudocode-comparison-side-by-side" title="Permanent link">&para;</a></h2>
 <h3 id="c21-score-based-diffusion-denoising-score-matching">C2.1 Score-based diffusion (denoising score matching)<a class="headerlink" href="#c21-score-based-diffusion-denoising-score-matching" title="Permanent link">&para;</a></h3>
-<p>Assume a forward SDE is chosen so that the conditional <span class="arithmatex">\(p(x_t\mid x_0)\)</span> is tractable (often Gaussian). Then the DSM objective regresses the model score to the closed-form conditional score:
-$$
-\mathbb{E}<em>{t,x_0,x_t}\Big[\lambda(t)\,\big|s</em>\theta(x_t,t)-\nabla_{x_t}\log p(x_t\mid x_0)\big|^2\Big].
-$$</p>
+<p>Assume a forward SDE is chosen so that the conditional <span class="arithmatex">\(p(x_t\mid x_0)\)</span> is tractable (often Gaussian). Then the DSM objective regresses the model score to the closed-form conditional score:</p>
+<div class="arithmatex">\[
+\mathbb{E}_{t,x_0,x_t}\Big[\lambda(t)\,\big\|s_\theta(x_t,t)-\nabla_{x_t}\log p(x_t\mid x_0)\big\|^2\Big].
+\]</div>
 <p>Pseudocode:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>repeat:
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>  sample x0 ~ p_data
@@ -1086,14 +1086,14 @@ $$</p>
 <a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>  take optimizer step on loss w.r.t. θ
 </code></pre></div>
 <h3 id="c23-flow-matching-velocity-regression-on-a-designed-path">C2.3 Flow matching (velocity regression on a designed path)<a class="headerlink" href="#c23-flow-matching-velocity-regression-on-a-designed-path" title="Permanent link">&para;</a></h3>
-<p>Choose a bridge <span class="arithmatex">\(\gamma_t(x_0,x_1)\)</span> connecting a prior endpoint and a data endpoint, and regress a velocity field to the path derivative <span class="arithmatex">\(\dot\gamma_t\)</span>:
-$$
-\mathbb{E}<em>{t,(x_0,x_1)}\Big[|v</em>\theta(\gamma_t(x_0,x_1),t)-\dot\gamma_t(x_0,x_1)|^2\Big].
-$$</p>
-<p>For the linear bridge with <span class="arithmatex">\(x_0\sim p\)</span>, <span class="arithmatex">\(x_1\sim q\)</span>,
-$$
+<p>Choose a bridge <span class="arithmatex">\(\gamma_t(x_0,x_1)\)</span> connecting a prior endpoint and a data endpoint, and regress a velocity field to the path derivative <span class="arithmatex">\(\dot\gamma_t\)</span>:</p>
+<div class="arithmatex">\[
+\mathbb{E}_{t,(x_0,x_1)}\Big[\|v_\theta(\gamma_t(x_0,x_1),t)-\dot\gamma_t(x_0,x_1)\|^2\Big].
+\]</div>
+<p>For the linear bridge with <span class="arithmatex">\(x_0\sim p\)</span>, <span class="arithmatex">\(x_1\sim q\)</span>,</p>
+<div class="arithmatex">\[
 \gamma_t(x_0,x_1)=(1-t)x_0+t x_1,\qquad \dot\gamma_t(x_0,x_1)=x_1-x_0.
-$$</p>
+\]</div>
 <p>Pseudocode:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>repeat:
 <a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>  sample x1 ~ p_data

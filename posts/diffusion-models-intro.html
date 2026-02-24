@@ -1506,90 +1506,90 @@
 <p>This chapter stays in the Euclidean setting: states are vectors <span class="arithmatex">\(x\in\mathbb{R}^D\)</span> and time is <span class="arithmatex">\(t\in[0,1]\)</span>. We use “fluid” terminology only as the mathematics of transport: trajectories (ODEs), distribution evolution, and conservation laws.</p>
 <h3 id="11-continuous-normalizing-flows-cnfs">1.1 Continuous Normalizing Flows (CNFs)<a class="headerlink" href="#11-continuous-normalizing-flows-cnfs" title="Permanent link">&para;</a></h3>
 <p>We begin from the <strong>Lagrangian (particle) view</strong>: model a velocity field and move samples by an ODE. The corresponding <strong>Eulerian (density) view</strong> will appear in Section 1.2.</p>
-<p>Let
-$$
+<p>Let</p>
+<div class="arithmatex">\[
 v:[0,1]\times\mathbb{R}^D\to\mathbb{R}^D,\qquad (t,x)\mapsto v(t,x)
-$$
-be a time-dependent vector field (velocity). We will work in the Euclidean data space <span class="arithmatex">\(\mathbb{R}^D\)</span>, with data points <span class="arithmatex">\(x=(x_1,\dots,x_D)\in\mathbb{R}^D\)</span>.</p>
+\]</div>
+<p>be a time-dependent vector field (velocity). We will work in the Euclidean data space <span class="arithmatex">\(\mathbb{R}^D\)</span>, with data points <span class="arithmatex">\(x=(x_1,\dots,x_D)\in\mathbb{R}^D\)</span>.</p>
 <p>Two fundamental objects in flow-based generative modeling are:</p>
 <ul>
 <li>a <strong>probability density path</strong> <span class="arithmatex">\(p:[0,1]\times\mathbb{R}^D\to\mathbb{R}_{\ge 0}\)</span>, written as <span class="arithmatex">\(p_t(x):=p(t,x)\)</span>, such that <span class="arithmatex">\(\int_{\mathbb{R}^D} p_t(x)\,dx=1\)</span> for every <span class="arithmatex">\(t\in[0,1]\)</span>;</li>
 <li>a <strong>time-dependent vector field</strong> <span class="arithmatex">\(v_t(\cdot):=v(t,\cdot)\)</span> that transports particles (and hence pushes densities forward).</li>
 </ul>
-<p>Given <span class="arithmatex">\(v_t\)</span>, define its <strong>flow map</strong> <span class="arithmatex">\(\phi_t:\mathbb{R}^D\to\mathbb{R}^D\)</span> as the solution of the ODE
-$$
+<p>Given <span class="arithmatex">\(v_t\)</span>, define its <strong>flow map</strong> <span class="arithmatex">\(\phi_t:\mathbb{R}^D\to\mathbb{R}^D\)</span> as the solution of the ODE</p>
+<div class="arithmatex">\[
 \frac{d}{dt}\phi_t(x)=v_t(\phi_t(x)),\tag{1}
-$$
-with initial condition
-$$
+\]</div>
+<p>with initial condition</p>
+<div class="arithmatex">\[
 \phi_0(x)=x.\tag{2}
-$$
-Under standard regularity assumptions (e.g., <span class="arithmatex">\(v_t\)</span> Lipschitz in <span class="arithmatex">\(x\)</span> with suitable growth), <span class="arithmatex">\(\phi_t\)</span> is well-defined, and for each fixed <span class="arithmatex">\(t\)</span> it is invertible (indeed a homeomorphism). If we further assume enough differentiability of <span class="arithmatex">\(v\)</span> in <span class="arithmatex">\(x\)</span> (e.g., <span class="arithmatex">\(C^1\)</span> in <span class="arithmatex">\(x\)</span>), then <span class="arithmatex">\(\phi_t\)</span> is (locally) a diffeomorphism. This is the continuous-time analog of composing many small invertible maps (normalizing flows).</p>
+\]</div>
+<p>Under standard regularity assumptions (e.g., <span class="arithmatex">\(v_t\)</span> Lipschitz in <span class="arithmatex">\(x\)</span> with suitable growth), <span class="arithmatex">\(\phi_t\)</span> is well-defined, and for each fixed <span class="arithmatex">\(t\)</span> it is invertible (indeed a homeomorphism). If we further assume enough differentiability of <span class="arithmatex">\(v\)</span> in <span class="arithmatex">\(x\)</span> (e.g., <span class="arithmatex">\(C^1\)</span> in <span class="arithmatex">\(x\)</span>), then <span class="arithmatex">\(\phi_t\)</span> is (locally) a diffeomorphism. This is the continuous-time analog of composing many small invertible maps (normalizing flows).</p>
 <p>The defining modeling choice of a <strong>Continuous Normalizing Flow (CNF)</strong> (Chen et al., 2018) is to parameterize the vector field by a neural network <span class="arithmatex">\(v_t(x;\theta)\)</span>. This induces a learnable family of flow maps <span class="arithmatex">\(\phi_t(\cdot;\theta)\)</span> via (1)–(2).</p>
 <h4 id="push-forward-how-a-cnf-transports-densities">Push-forward: how a CNF transports densities<a class="headerlink" href="#push-forward-how-a-cnf-transports-densities" title="Permanent link">&para;</a></h4>
-<p>Let <span class="arithmatex">\(p_0\)</span> be a simple base density (e.g., <span class="arithmatex">\(\mathcal{N}(0,I)\)</span>) and define <span class="arithmatex">\(X_t:=\phi_t(X_0)\)</span> with <span class="arithmatex">\(X_0\sim p_0\)</span>. The time-<span class="arithmatex">\(t\)</span> density is the <strong>push-forward</strong> of <span class="arithmatex">\(p_0\)</span> by <span class="arithmatex">\(\phi_t\)</span>:
-$$
-p_t = (\phi_t)<em># p_0.\tag{3}
-$$
-When <span class="arithmatex">\(\phi_t\)</span> is a diffeomorphism, the push-forward has the familiar change-of-variables form:
-$$
-(\phi_t)</em># p_0(x)
+<p>Let <span class="arithmatex">\(p_0\)</span> be a simple base density (e.g., <span class="arithmatex">\(\mathcal{N}(0,I)\)</span>) and define <span class="arithmatex">\(X_t:=\phi_t(X_0)\)</span> with <span class="arithmatex">\(X_0\sim p_0\)</span>. The time-<span class="arithmatex">\(t\)</span> density is the <strong>push-forward</strong> of <span class="arithmatex">\(p_0\)</span> by <span class="arithmatex">\(\phi_t\)</span>:</p>
+<div class="arithmatex">\[
+p_t = (\phi_t)_\# p_0.\tag{3}
+\]</div>
+<p>When <span class="arithmatex">\(\phi_t\)</span> is a diffeomorphism, the push-forward has the familiar change-of-variables form:</p>
+<div class="arithmatex">\[
+(\phi_t)_\# p_0(x)
 =
 p_0(\phi_t^{-1}(x))\;
 \Big|\det\frac{\partial \phi_t^{-1}}{\partial x}(x)\Big|.\tag{4}
-$$
-Equivalently, <span class="arithmatex">\(p_0(x)=p_t(\phi_t(x))\big|\det(\partial_x\phi_t(x))\big|\)</span>.</p>
+\]</div>
+<p>Equivalently, <span class="arithmatex">\(p_0(x)=p_t(\phi_t(x))\big|\det(\partial_x\phi_t(x))\big|\)</span>.</p>
 <p>We say that a vector field <span class="arithmatex">\(v_t\)</span> <strong>generates</strong> a density path <span class="arithmatex">\((p_t)\)</span> if its flow <span class="arithmatex">\(\phi_t\)</span> satisfies (3). One practical way to check whether a candidate <span class="arithmatex">\((p_t,v_t)\)</span> is consistent is the continuity equation, which we introduce next.</p>
 <p>For the full classical fluid-mechanics PDE system (beyond this kinematic ODE viewpoint), see <a href="interlude-alpha-year-1757.html">Interlude <span class="arithmatex">\(\alpha\)</span> — Year 1757</a>.</p>
 <p>For a more detailed treatment of <strong>first-order ODEs</strong> and the viewpoint of an ODE with a <strong>random initial condition</strong> (random initial value problem) <span class="arithmatex">\(\mathbf{X}_t=\phi_t(\mathbf{X}_0)\)</span>, see <a href="mathematics-foundation.html">Mathematics Foundation</a>.</p>
 <h3 id="12-density-conservation-eulerian-view-the-continuity-equation">1.2 Density conservation (Eulerian view): the continuity equation<a class="headerlink" href="#12-density-conservation-eulerian-view-the-continuity-equation" title="Permanent link">&para;</a></h3>
 <p>Switch from particles to distributions. Let <span class="arithmatex">\(\mu_t\)</span> be the law of a random variable <span class="arithmatex">\(\mathbf{x}_t\in\mathbb{R}^D\)</span>. If <span class="arithmatex">\(\mu_t\)</span> admits a density <span class="arithmatex">\(p_t\)</span> with respect to Lebesgue measure, we write <span class="arithmatex">\(\mu_t(dx)=p_t(x)\,dx\)</span>.</p>
-<p>The conservation-of-mass statement for transport by the vector field <span class="arithmatex">\(v_t\)</span> is the <strong>continuity equation</strong>
-$$
-\partial_t p_t(x) + \nabla!\cdot\big(p_t(x)\,v(t,x)\big)=0,
+<p>The conservation-of-mass statement for transport by the vector field <span class="arithmatex">\(v_t\)</span> is the <strong>continuity equation</strong></p>
+<div class="arithmatex">\[
+\partial_t p_t(x) + \nabla\!\cdot\big(p_t(x)\,v(t,x)\big)=0,
 \qquad x\in\mathbb{R}^D,\; t\in[0,1].
-$$
-Interpretation: probability mass is neither created nor destroyed; it is only moved by the vector field <span class="arithmatex">\(v\)</span>.</p>
+\]</div>
+<p>Interpretation: probability mass is neither created nor destroyed; it is only moved by the vector field <span class="arithmatex">\(v\)</span>.</p>
 <p>Two equivalent “bookkeeping” forms (assuming enough smoothness) are useful:</p>
-<p>1) <strong>Along trajectories (material derivative).</strong> If <span class="arithmatex">\(x(t)\)</span> solves <span class="arithmatex">\(\dot x(t)=v(t,x(t))\)</span>, then
-$$
+<p>1) <strong>Along trajectories (material derivative).</strong> If <span class="arithmatex">\(x(t)\)</span> solves <span class="arithmatex">\(\dot x(t)=v(t,x(t))\)</span>, then</p>
+<div class="arithmatex">\[
 \frac{d}{dt}p_t(x(t))
 \;=\;
 \partial_t p_t(x(t)) + \nabla p_t(x(t))\cdot v(t,x(t))
 \;=\;
--\,p_t(x(t))\,\nabla!\cdot v(t,x(t)).
-$$
-So regions with positive divergence expand and lower density; negative divergence compress and raise density.</p>
-<p>2) <strong>Jacobian form (volume-element conservation).</strong> If the flow map <span class="arithmatex">\(\phi_{s\to t}\)</span> is differentiable in <span class="arithmatex">\(a\)</span> and <span class="arithmatex">\(J_{s\to t}(a):=\det(\nabla_a\phi_{s\to t}(a))\)</span>, then
-$$
+-\,p_t(x(t))\,\nabla\!\cdot v(t,x(t)).
+\]</div>
+<p>So regions with positive divergence expand and lower density; negative divergence compress and raise density.</p>
+<p>2) <strong>Jacobian form (volume-element conservation).</strong> If the flow map <span class="arithmatex">\(\phi_{s\to t}\)</span> is differentiable in <span class="arithmatex">\(a\)</span> and <span class="arithmatex">\(J_{s\to t}(a):=\det(\nabla_a\phi_{s\to t}(a))\)</span>, then</p>
+<div class="arithmatex">\[
 p_t(\phi_{s\to t}(a))\,J_{s\to t}(a)=p_s(a).
-$$
-This is the precise version of “mass in a moving infinitesimal volume element is conserved”.</p>
+\]</div>
+<p>This is the precise version of “mass in a moving infinitesimal volume element is conserved”.</p>
 <p>Here <span class="arithmatex">\(\phi_{s\to t}\)</span> denotes the flow map generated by <span class="arithmatex">\(v\)</span> from time <span class="arithmatex">\(s\)</span> to time <span class="arithmatex">\(t\)</span>.</p>
 <p>Remark: in measure-theoretic terms, transport by the flow map means <span class="arithmatex">\(\mu_t=(\phi_{s\to t})_\#\mu_s\)</span>. The PDE above is the density-level expression of this push-forward relation.</p>
 <h3 id="13-the-manifold-hypothesis-a-precise-formulation">1.3 The manifold hypothesis (a precise formulation)<a class="headerlink" href="#13-the-manifold-hypothesis-a-precise-formulation" title="Permanent link">&para;</a></h3>
 <p>Let <span class="arithmatex">\(\mu_\text{data}\)</span> be the data distribution on <span class="arithmatex">\(\mathbb{R}^D\)</span> (a probability measure; it may or may not have a density).</p>
 <p>An idealized, mathematically clean version of the <strong>manifold hypothesis</strong> is:</p>
 <ul>
-<li>There exists a <span class="arithmatex">\(d\)</span>-dimensional embedded <span class="arithmatex">\(C^1\)</span> submanifold <span class="arithmatex">\(\mathcal{M}\subset\mathbb{R}^D\)</span> with <span class="arithmatex">\(d\ll D\)</span> such that
-$$
-\mathrm{supp}(\mu_\text{data}) \subseteq \mathcal{M}.
-$$</li>
+<li>There exists a <span class="arithmatex">\(d\)</span>-dimensional embedded <span class="arithmatex">\(C^1\)</span> submanifold <span class="arithmatex">\(\mathcal{M}\subset\mathbb{R}^D\)</span> with <span class="arithmatex">\(d\ll D\)</span> such that</li>
 </ul>
+<div class="arithmatex">\[
+\mathrm{supp}(\mu_\text{data}) \subseteq \mathcal{M}.
+\]</div>
 <p>A more realistic (noise-thickened) version is:</p>
 <ul>
-<li>There exists <span class="arithmatex">\(\sigma&gt;0\)</span> such that most mass lies in a tubular neighborhood of <span class="arithmatex">\(\mathcal{M}\)</span>:
-$$
-\mu_\text{data}\big({x\in\mathbb{R}^D:\mathrm{dist}(x,\mathcal{M})\le \sigma}\big)\ge 1-\varepsilon,
-$$
-for a small <span class="arithmatex">\(\varepsilon\in[0,1)\)</span>.</li>
+<li>There exists <span class="arithmatex">\(\sigma&gt;0\)</span> such that most mass lies in a tubular neighborhood of <span class="arithmatex">\(\mathcal{M}\)</span>:</li>
 </ul>
+<div class="arithmatex">\[
+\mu_\text{data}\big(\{x\in\mathbb{R}^D:\mathrm{dist}(x,\mathcal{M})\le \sigma\}\big)\ge 1-\varepsilon,
+\]</div>
+<p>for a small <span class="arithmatex">\(\varepsilon\in[0,1)\)</span>.</p>
 <p>Important technical point: if <span class="arithmatex">\(\mathrm{supp}(\mu_\text{data})\subseteq\mathcal{M}\)</span> with <span class="arithmatex">\(d&lt;D\)</span>, then <span class="arithmatex">\(\mu_\text{data}\)</span> is typically <strong>singular</strong> with respect to Lebesgue measure on <span class="arithmatex">\(\mathbb{R}^D\)</span>; in particular, an ambient-space density <span class="arithmatex">\(p_\text{data}(x)\)</span> may not exist.</p>
 <h3 id="14-how-flow-models-relate-to-but-do-not-equal-manifold-learning">1.4 How flow models relate to (but do not equal) manifold learning<a class="headerlink" href="#14-how-flow-models-relate-to-but-do-not-equal-manifold-learning" title="Permanent link">&para;</a></h3>
-<p>A (continuous-time) flow model in <span class="arithmatex">\(\mathbb{R}^D\)</span> typically chooses a base distribution <span class="arithmatex">\(\mu_1\)</span> (often <span class="arithmatex">\(\mathcal{N}(0,I)\)</span>) and a diffeomorphic map <span class="arithmatex">\(\psi_{1\to 0}\)</span> (generated by an ODE), then defines the model distribution by push-forward:
-$$
-\mu_\theta := (\psi_{1\to 0})_# \mu_1.
-$$</p>
+<p>A (continuous-time) flow model in <span class="arithmatex">\(\mathbb{R}^D\)</span> typically chooses a base distribution <span class="arithmatex">\(\mu_1\)</span> (often <span class="arithmatex">\(\mathcal{N}(0,I)\)</span>) and a diffeomorphic map <span class="arithmatex">\(\psi_{1\to 0}\)</span> (generated by an ODE), then defines the model distribution by push-forward:</p>
+<div class="arithmatex">\[
+\mu_\theta := (\psi_{1\to 0})_\# \mu_1.
+\]</div>
 <p>This connects to the manifold hypothesis in a specific way:</p>
 <ul>
 <li>A diffeomorphism <span class="arithmatex">\(\psi_{1\to 0}:\mathbb{R}^D\to\mathbb{R}^D\)</span> maps absolutely continuous measures to absolutely continuous measures. Therefore, starting from <span class="arithmatex">\(\mu_1\)</span> with a smooth, full-dimensional density (e.g., Gaussian), an invertible flow model cannot represent an exactly low-dimensional, manifold-supported <span class="arithmatex">\(\mu_\text{data}\)</span> in the idealized sense above.</li>
@@ -1606,14 +1606,14 @@ $$</p>
 <li><strong>GANs / implicit generative models:</strong> a generator <span class="arithmatex">\(x=g_\theta(z)\)</span> with <span class="arithmatex">\(z\in\mathbb{R}^d\)</span> defines (in the idealized deterministic case) a distribution supported on a <span class="arithmatex">\(d\)</span>-dimensional set <span class="arithmatex">\(\mathrm{Im}(g_\theta)\)</span>. This is geometrically close to learning a manifold-like image set, even if the learned set is only approximate and the notion of “manifold” may fail globally.</li>
 <li><strong>Latent generative models (e.g., latent diffusion):</strong> learn a low-dimensional representation via an autoencoder, then run diffusion (or another density model) in latent space. This is often a practical middle ground: “manifold-like” structure is delegated to the autoencoder, while diffusion handles distribution modeling in the latent.</li>
 </ul>
-<p>In particular, a <strong>VAE</strong> makes the low-dimensional structure explicit via a latent variable <span class="arithmatex">\(z\in\mathbb{R}^d\)</span> (with <span class="arithmatex">\(d\ll D\)</span>) and a decoder distribution <span class="arithmatex">\(p_\theta(x\mid z)\)</span> on <span class="arithmatex">\(x\in\mathbb{R}^D\)</span>. With a prior <span class="arithmatex">\(p(z)\)</span> (often <span class="arithmatex">\(\mathcal{N}(0,I_d)\)</span>) and an encoder <span class="arithmatex">\(q_\phi(z\mid x)\)</span>, it is trained by maximizing the ELBO:
-$$
+<p>In particular, a <strong>VAE</strong> makes the low-dimensional structure explicit via a latent variable <span class="arithmatex">\(z\in\mathbb{R}^d\)</span> (with <span class="arithmatex">\(d\ll D\)</span>) and a decoder distribution <span class="arithmatex">\(p_\theta(x\mid z)\)</span> on <span class="arithmatex">\(x\in\mathbb{R}^D\)</span>. With a prior <span class="arithmatex">\(p(z)\)</span> (often <span class="arithmatex">\(\mathcal{N}(0,I_d)\)</span>) and an encoder <span class="arithmatex">\(q_\phi(z\mid x)\)</span>, it is trained by maximizing the ELBO:</p>
+<div class="arithmatex">\[
 \log p_\theta(x)
 \;\ge\;
-\mathbb{E}<em>{z\sim q</em>\phi(z\mid x)}\big[\log p_\theta(x\mid z)\big]
--\mathrm{KL}\big(q_\phi(z\mid x)\,|\,p(z)\big).
-$$
-Geometrically, the mean decoder map <span class="arithmatex">\(g_\theta(z):=\mathbb{E}[x\mid z]\)</span> can be viewed as a learned low-dimensional “surface”, while the decoder noise determines how thick the model distribution is around that surface; this is why VAEs feel “manifold-flavored” but are not necessarily learning a strict manifold-supported distribution in <span class="arithmatex">\(\mathbb{R}^D\)</span>.</p>
+\mathbb{E}_{z\sim q_\phi(z\mid x)}\big[\log p_\theta(x\mid z)\big]
+-\mathrm{KL}\big(q_\phi(z\mid x)\,\|\,p(z)\big).
+\]</div>
+<p>Geometrically, the mean decoder map <span class="arithmatex">\(g_\theta(z):=\mathbb{E}[x\mid z]\)</span> can be viewed as a learned low-dimensional “surface”, while the decoder noise determines how thick the model distribution is around that surface; this is why VAEs feel “manifold-flavored” but are not necessarily learning a strict manifold-supported distribution in <span class="arithmatex">\(\mathbb{R}^D\)</span>.</p>
 <p>These approaches make the low-dimensional structure explicit via <span class="arithmatex">\(z\mapsto x\)</span>. By contrast, standard diffusion/score/flow-matching methods (as used in image generation) are usually framed as learning dynamics in the ambient Euclidean space <span class="arithmatex">\(\mathbb{R}^D\)</span> (or in a learned latent space), rather than directly estimating the manifold <span class="arithmatex">\(\mathcal{M}\)</span> itself.</p>
 <h3 id="15-bridge-to-the-rest-of-the-intro">1.5 Bridge to the rest of the intro<a class="headerlink" href="#15-bridge-to-the-rest-of-the-intro" title="Permanent link">&para;</a></h3>
 <p>We will reuse the same transport backbone:</p>
@@ -1624,24 +1624,24 @@ Geometrically, the mean decoder map <span class="arithmatex">\(g_\theta(z):=\mat
 </ul>
 <h2 id="chapter-2-flow-matching">Chapter 2 — Flow Matching<a class="headerlink" href="#chapter-2-flow-matching" title="Permanent link">&para;</a></h2>
 <p>Before introducing flow matching, it is helpful to recall what a CNF gives us “in closed form” (as an operator), and what remains expensive in practice.</p>
-<p>Consider a CNF defined by the ODE
-$$
+<p>Consider a CNF defined by the ODE</p>
+<div class="arithmatex">\[
 \frac{d}{dt}X_t = v(t,X_t;\theta),\qquad t\in[0,1],\qquad X_0\sim p_0.
-$$
-Even when the solution is not available analytically, it always admits the integral form
-$$
+\]</div>
+<p>Even when the solution is not available analytically, it always admits the integral form</p>
+<div class="arithmatex">\[
 X_t = X_0 + \int_0^t v(s,X_s;\theta)\,ds,
-$$
-which is what numerical ODE solvers approximate.</p>
-<p>If the flow map <span class="arithmatex">\(\phi_t\)</span> is a diffeomorphism and the density <span class="arithmatex">\(p_t\)</span> exists, then along trajectories <span class="arithmatex">\(t\mapsto X_t\)</span> the log-density obeys the instantaneous change-of-variables formula
-$$
-\frac{d}{dt}\log p_t(X_t) = -\,\nabla!\cdot v(t,X_t;\theta),
-$$
-hence
-$$
-\log p_1(X_1)=\log p_0(X_0)-\int_0^1 \nabla!\cdot v(t,X_t;\theta)\,dt.
-$$
-This provides a principled likelihood bookkeeping rule for CNFs, but it is often computationally heavy in high dimension because it couples an ODE solve with repeated divergence (trace) evaluations.</p>
+\]</div>
+<p>which is what numerical ODE solvers approximate.</p>
+<p>If the flow map <span class="arithmatex">\(\phi_t\)</span> is a diffeomorphism and the density <span class="arithmatex">\(p_t\)</span> exists, then along trajectories <span class="arithmatex">\(t\mapsto X_t\)</span> the log-density obeys the instantaneous change-of-variables formula</p>
+<div class="arithmatex">\[
+\frac{d}{dt}\log p_t(X_t) = -\,\nabla\!\cdot v(t,X_t;\theta),
+\]</div>
+<p>hence</p>
+<div class="arithmatex">\[
+\log p_1(X_1)=\log p_0(X_0)-\int_0^1 \nabla\!\cdot v(t,X_t;\theta)\,dt.
+\]</div>
+<p>This provides a principled likelihood bookkeeping rule for CNFs, but it is often computationally heavy in high dimension because it couples an ODE solve with repeated divergence (trace) evaluations.</p>
 <p>Flow matching takes the complementary <strong>Eulerian density-evolution</strong> viewpoint from Section 1.2: rather than training the model primarily through likelihood computation, we specify (or construct) a target probability path <span class="arithmatex">\((p_t)\)</span> and train a vector field <span class="arithmatex">\(v(t,x;\theta)\)</span> so that its induced density evolution matches that path (via the continuity equation).</p>
 <h3 id="21-constructing-p_tu_t-from-conditional-probability-paths-and-vector-fields">2.1 CONSTRUCTING <span class="arithmatex">\(p_t,u_t\)</span> FROM CONDITIONAL PROBABILITY PATHS AND VECTOR FIELDS<a class="headerlink" href="#21-constructing-p_tu_t-from-conditional-probability-paths-and-vector-fields" title="Permanent link">&para;</a></h3>
 <p>Let <span class="arithmatex">\(X_1\sim q(x_1)\)</span> denote the (unknown) data distribution; we only have sample access to <span class="arithmatex">\(q\)</span>. We would like a probability path <span class="arithmatex">\((p_t)_{t\in[0,1]}\)</span> such that <span class="arithmatex">\(p_0=p\)</span> is simple (e.g., <span class="arithmatex">\(\mathcal{N}(0,I)\)</span>) and <span class="arithmatex">\(p_1\approx q\)</span>, together with a vector field <span class="arithmatex">\(u_t\)</span> that generates this path (so that <span class="arithmatex">\((p_t,u_t)\)</span> satisfy the continuity equation).</p>
@@ -1652,19 +1652,19 @@ This provides a principled likelihood bookkeeping rule for CNFs, but it is often
 <li><span class="arithmatex">\(p_0(x\mid x_1)=p(x)\)</span> for all <span class="arithmatex">\(x_1\)</span>, and</li>
 <li><span class="arithmatex">\(p_1(x\mid x_1)\)</span> is concentrated around <span class="arithmatex">\(x_1\)</span> (e.g., <span class="arithmatex">\(p_1(x\mid x_1)=\mathcal{N}(x\mid x_1,\sigma^2 I)\)</span> for a small <span class="arithmatex">\(\sigma&gt;0\)</span>).</li>
 </ul>
-<p>Define the marginal (mixture) path
-$$
+<p>Define the marginal (mixture) path</p>
+<div class="arithmatex">\[
 p_t(x)=\int_{\mathbb{R}^D} p_t(x\mid x_1)\,q(x_1)\,dx_1.\tag{6}
-$$
-In particular,
-$$
+\]</div>
+<p>In particular,</p>
+<div class="arithmatex">\[
 p_1(x)=\int_{\mathbb{R}^D} p_1(x\mid x_1)\,q(x_1)\,dx_1 \approx q(x).\tag{7}
-$$
-Assume <span class="arithmatex">\(p_t(x)&gt;0\)</span> for all <span class="arithmatex">\(t\in[0,1]\)</span> and <span class="arithmatex">\(x\in\mathbb{R}^D\)</span>. Let <span class="arithmatex">\(u_t(x\mid x_1)\)</span> be conditional vector fields that generate the conditional paths <span class="arithmatex">\(p_t(\cdot\mid x_1)\)</span>. Define the marginal vector field
-$$
+\]</div>
+<p>Assume <span class="arithmatex">\(p_t(x)&gt;0\)</span> for all <span class="arithmatex">\(t\in[0,1]\)</span> and <span class="arithmatex">\(x\in\mathbb{R}^D\)</span>. Let <span class="arithmatex">\(u_t(x\mid x_1)\)</span> be conditional vector fields that generate the conditional paths <span class="arithmatex">\(p_t(\cdot\mid x_1)\)</span>. Define the marginal vector field</p>
+<div class="arithmatex">\[
 u_t(x)=\int_{\mathbb{R}^D} u_t(x\mid x_1)\,\frac{p_t(x\mid x_1)\,q(x_1)}{p_t(x)}\,dx_1.\tag{8}
-$$
-Then the pair <span class="arithmatex">\((p_t,u_t)\)</span> satisfies the continuity equation. (As the paper emphasizes: “the marginal vector field ... generates the marginal probability path”.)</p>
+\]</div>
+<p>Then the pair <span class="arithmatex">\((p_t,u_t)\)</span> satisfies the continuity equation. (As the paper emphasizes: “the marginal vector field ... generates the marginal probability path”.)</p>
 <p><strong>Explanation (what this buys us).</strong> Theorem 1 gives a mathematically clean bridge between:</p>
 <ul>
 <li>a per-sample design <span class="arithmatex">\(\big(p_t(\cdot\mid x_1),u_t(\cdot\mid x_1)\big)\)</span>, where <span class="arithmatex">\(x_1\sim q\)</span> is available from the dataset, and</li>
@@ -1675,28 +1675,28 @@ Then the pair <span class="arithmatex">\((p_t,u_t)\)</span> satisfies the contin
 <p>The proof of Theorem 1 can be found in the appendix of <em>Flow Matching for Generative Modeling</em> (see References). For an additional exposition, see <a href="introduction-B-flow-matching.html">introduction-B-flow-matching</a>.</p>
 <h3 id="22-conditional-flow-matching">2.2 CONDITIONAL FLOW MATCHING<a class="headerlink" href="#22-conditional-flow-matching" title="Permanent link">&para;</a></h3>
 <p>Operationally, CFM makes training possible by working with per-sample training pairs: sample <span class="arithmatex">\(x_1\sim q\)</span>, sample <span class="arithmatex">\(x\sim p_t(\cdot\mid x_1)\)</span>, compute the conditional target <span class="arithmatex">\(u_t(x\mid x_1)\)</span>, and regress <span class="arithmatex">\(v(t,x;\theta)\)</span> toward it.</p>
-<p>The mixture constructions (6)–(8) show that a marginal path <span class="arithmatex">\(p_t\)</span> and a marginal vector field <span class="arithmatex">\(u_t\)</span> exist and satisfy the continuity equation. However, because <span class="arithmatex">\(q\)</span> is only accessible through samples, the integrals in (6)–(8) are typically intractable. In particular, we cannot naïvely compute <span class="arithmatex">\(u_t(x)\)</span>, so we cannot directly build an unbiased estimator of the marginal flow-matching regression loss
-$$
-\mathcal{L}<em>{\mathrm{FM}}(\theta)
+<p>The mixture constructions (6)–(8) show that a marginal path <span class="arithmatex">\(p_t\)</span> and a marginal vector field <span class="arithmatex">\(u_t\)</span> exist and satisfy the continuity equation. However, because <span class="arithmatex">\(q\)</span> is only accessible through samples, the integrals in (6)–(8) are typically intractable. In particular, we cannot naïvely compute <span class="arithmatex">\(u_t(x)\)</span>, so we cannot directly build an unbiased estimator of the marginal flow-matching regression loss</p>
+<div class="arithmatex">\[
+\mathcal{L}_{\mathrm{FM}}(\theta)
 :=
-\mathbb{E}</em>{t\sim U[0,1],\,x\sim p_t}\Big[|v(t,x;\theta)-u_t(x)|^2\Big].\tag{5}
-$$</p>
-<p>Instead, conditional flow matching replaces the marginal target <span class="arithmatex">\(u_t(x)\)</span> by the per-sample conditional target <span class="arithmatex">\(u_t(x\mid x_1)\)</span>, yielding the CFM objective
-$$
-\mathcal{L}<em>{\mathrm{CFM}}(\theta)
+\mathbb{E}_{t\sim U[0,1],\,x\sim p_t}\Big[\|v(t,x;\theta)-u_t(x)\|^2\Big].\tag{5}
+\]</div>
+<p>Instead, conditional flow matching replaces the marginal target <span class="arithmatex">\(u_t(x)\)</span> by the per-sample conditional target <span class="arithmatex">\(u_t(x\mid x_1)\)</span>, yielding the CFM objective</p>
+<div class="arithmatex">\[
+\mathcal{L}_{\mathrm{CFM}}(\theta)
 :=
-\mathbb{E}</em>{t\sim U[0,1],\,x_1\sim q,\,x\sim p_t(\cdot\mid x_1)}
-\Big[|v(t,x;\theta)-u_t(x\mid x_1)|^2\Big].\tag{9}
-$$
-This objective is tractable as long as we can (i) sample <span class="arithmatex">\(x\sim p_t(\cdot\mid x_1)\)</span> and (ii) evaluate <span class="arithmatex">\(u_t(x\mid x_1)\)</span>, both of which can be arranged by design since they are defined on a per-sample basis.</p>
-<p><strong>Theorem 2 (FM and CFM are equivalent up to a constant).</strong> Assume <span class="arithmatex">\(p_t(x)&gt;0\)</span> for all <span class="arithmatex">\(x\in\mathbb{R}^D\)</span> and <span class="arithmatex">\(t\in[0,1]\)</span>, and that the constructions in (6)–(8) are well-defined. Then
-$$
-\mathcal{L}<em>{\mathrm{CFM}}(\theta)=\mathcal{L}</em>{\mathrm{FM}}(\theta)+C,
-$$
-where <span class="arithmatex">\(C\)</span> does not depend on <span class="arithmatex">\(\theta\)</span>. In particular,
-$$
-\nabla_\theta \mathcal{L}<em>{\mathrm{FM}}(\theta)=\nabla</em>\theta \mathcal{L}_{\mathrm{CFM}}(\theta).
-$$</p>
+\mathbb{E}_{t\sim U[0,1],\,x_1\sim q,\,x\sim p_t(\cdot\mid x_1)}
+\Big[\|v(t,x;\theta)-u_t(x\mid x_1)\|^2\Big].\tag{9}
+\]</div>
+<p>This objective is tractable as long as we can (i) sample <span class="arithmatex">\(x\sim p_t(\cdot\mid x_1)\)</span> and (ii) evaluate <span class="arithmatex">\(u_t(x\mid x_1)\)</span>, both of which can be arranged by design since they are defined on a per-sample basis.</p>
+<p><strong>Theorem 2 (FM and CFM are equivalent up to a constant).</strong> Assume <span class="arithmatex">\(p_t(x)&gt;0\)</span> for all <span class="arithmatex">\(x\in\mathbb{R}^D\)</span> and <span class="arithmatex">\(t\in[0,1]\)</span>, and that the constructions in (6)–(8) are well-defined. Then</p>
+<div class="arithmatex">\[
+\mathcal{L}_{\mathrm{CFM}}(\theta)=\mathcal{L}_{\mathrm{FM}}(\theta)+C,
+\]</div>
+<p>where <span class="arithmatex">\(C\)</span> does not depend on <span class="arithmatex">\(\theta\)</span>. In particular,</p>
+<div class="arithmatex">\[
+\nabla_\theta \mathcal{L}_{\mathrm{FM}}(\theta)=\nabla_\theta \mathcal{L}_{\mathrm{CFM}}(\theta).
+\]</div>
 <p><strong>Explanation (why the gradients match).</strong> Intuitively, (8) says that the marginal target is a posterior average:
 <span class="arithmatex">\(u_t(x)=\mathbb{E}[u_t(x\mid X_1)\mid X_t=x]\)</span>.
 Expanding the square and applying the law of total expectation shows that the only difference between (5) and (9) is a conditional-variance term
@@ -1706,48 +1706,48 @@ which is independent of <span class="arithmatex">\(\theta\)</span>. Therefore, o
 <h3 id="23-conditional-probability-paths-and-vector-fields">2.3 CONDITIONAL PROBABILITY PATHS AND VECTOR FIELDS<a class="headerlink" href="#23-conditional-probability-paths-and-vector-fields" title="Permanent link">&para;</a></h3>
 <p>The CFM objective is general: it works with any choice of conditional probability paths <span class="arithmatex">\(p_t(\cdot\mid x_1)\)</span> and conditional vector fields <span class="arithmatex">\(u_t(\cdot\mid x_1)\)</span> (as long as they are sampleable/evaluable). A particularly convenient family is given by Gaussian conditional paths, because both sampling and closed-form conditional targets can be obtained.</p>
 <h4 id="gaussian-conditional-paths">Gaussian conditional paths<a class="headerlink" href="#gaussian-conditional-paths" title="Permanent link">&para;</a></h4>
-<p>Fix <span class="arithmatex">\(x_1\in\mathbb{R}^D\)</span>. Consider a conditional probability path of the form
-$$
-p_t(x\mid x_1)=\mathcal{N}!\big(x\mid \mu_t(x_1),\sigma_t(x_1)^2 I\big),\qquad t\in[0,1],\tag{10}
-$$
-where <span class="arithmatex">\(\mu:[0,1]\times\mathbb{R}^D\to\mathbb{R}^D\)</span> is a time-dependent mean and <span class="arithmatex">\(\sigma:[0,1]\times\mathbb{R}^D\to\mathbb{R}_{&gt;0}\)</span> is a time-dependent scalar standard deviation. We typically set
-$$
+<p>Fix <span class="arithmatex">\(x_1\in\mathbb{R}^D\)</span>. Consider a conditional probability path of the form</p>
+<div class="arithmatex">\[
+p_t(x\mid x_1)=\mathcal{N}\!\big(x\mid \mu_t(x_1),\sigma_t(x_1)^2 I\big),\qquad t\in[0,1],\tag{10}
+\]</div>
+<p>where <span class="arithmatex">\(\mu:[0,1]\times\mathbb{R}^D\to\mathbb{R}^D\)</span> is a time-dependent mean and <span class="arithmatex">\(\sigma:[0,1]\times\mathbb{R}^D\to\mathbb{R}_{&gt;0}\)</span> is a time-dependent scalar standard deviation. We typically set</p>
+<div class="arithmatex">\[
 \mu_0(x_1)=0,\qquad \sigma_0(x_1)=1,
-$$
-so that <span class="arithmatex">\(p_0(x\mid x_1)=\mathcal{N}(0,I)=:p(x)\)</span> for all <span class="arithmatex">\(x_1\)</span>, and
-$$
+\]</div>
+<p>so that <span class="arithmatex">\(p_0(x\mid x_1)=\mathcal{N}(0,I)=:p(x)\)</span> for all <span class="arithmatex">\(x_1\)</span>, and</p>
+<div class="arithmatex">\[
 \mu_1(x_1)=x_1,\qquad \sigma_1(x_1)=\sigma_{\min},
-$$
-so that <span class="arithmatex">\(p_1(\cdot\mid x_1)\)</span> is concentrated near <span class="arithmatex">\(x_1\)</span> when <span class="arithmatex">\(\sigma_{\min}\)</span> is small.</p>
+\]</div>
+<p>so that <span class="arithmatex">\(p_1(\cdot\mid x_1)\)</span> is concentrated near <span class="arithmatex">\(x_1\)</span> when <span class="arithmatex">\(\sigma_{\min}\)</span> is small.</p>
 <h4 id="a-canonical-conditional-flow-affine-map">A canonical conditional flow (affine map)<a class="headerlink" href="#a-canonical-conditional-flow-affine-map" title="Permanent link">&para;</a></h4>
 <p>Many vector fields can generate the same density path (e.g., one can add a component <span class="arithmatex">\(w_t\)</span> such that <span class="arithmatex">\(\nabla\!\cdot(p_t w_t)=0\)</span>), but for Gaussian paths it is natural to choose the simplest canonical transport: an affine map that turns standard Gaussian noise into the desired Gaussian.</p>
-<p>Define the conditional (affine) flow map
-$$
+<p>Define the conditional (affine) flow map</p>
+<div class="arithmatex">\[
 \psi_t(x_0;x_1):=\sigma_t(x_1)\,x_0+\mu_t(x_1).\tag{11}
-$$
-If <span class="arithmatex">\(x_0\sim \mathcal{N}(0,I)\)</span>, then <span class="arithmatex">\(\psi_t(x_0;x_1)\sim \mathcal{N}(\mu_t(x_1),\sigma_t(x_1)^2 I)\)</span>. In push-forward notation,
-$$
-(\psi_t(\cdot;x_1))_#\,p(\cdot)=p_t(\cdot\mid x_1).\tag{12}
-$$</p>
-<p>This flow induces a conditional vector field <span class="arithmatex">\(u_t(\cdot\mid x_1)\)</span> defined implicitly by
-$$
+\]</div>
+<p>If <span class="arithmatex">\(x_0\sim \mathcal{N}(0,I)\)</span>, then <span class="arithmatex">\(\psi_t(x_0;x_1)\sim \mathcal{N}(\mu_t(x_1),\sigma_t(x_1)^2 I)\)</span>. In push-forward notation,</p>
+<div class="arithmatex">\[
+(\psi_t(\cdot;x_1))_\#\,p(\cdot)=p_t(\cdot\mid x_1).\tag{12}
+\]</div>
+<p>This flow induces a conditional vector field <span class="arithmatex">\(u_t(\cdot\mid x_1)\)</span> defined implicitly by</p>
+<div class="arithmatex">\[
 \frac{d}{dt}\psi_t(x_0;x_1)=u_t(\psi_t(x_0;x_1)\mid x_1).\tag{13}
-$$</p>
-<p>Reparameterizing <span class="arithmatex">\(x\sim p_t(\cdot\mid x_1)\)</span> via <span class="arithmatex">\(x=\psi_t(x_0;x_1)\)</span> with <span class="arithmatex">\(x_0\sim p(x_0)=\mathcal{N}(0,I)\)</span>, the CFM objective (9) can be written as
-$$
-\mathcal{L}<em>{\mathrm{CFM}}(\theta)
+\]</div>
+<p>Reparameterizing <span class="arithmatex">\(x\sim p_t(\cdot\mid x_1)\)</span> via <span class="arithmatex">\(x=\psi_t(x_0;x_1)\)</span> with <span class="arithmatex">\(x_0\sim p(x_0)=\mathcal{N}(0,I)\)</span>, the CFM objective (9) can be written as</p>
+<div class="arithmatex">\[
+\mathcal{L}_{\mathrm{CFM}}(\theta)
 =
-\mathbb{E}</em>{t\sim U[0,1],\,x_1\sim q,\,x_0\sim p}
-\Big[\big|v(t,\psi_t(x_0;x_1);\theta)-\tfrac{d}{dt}\psi_t(x_0;x_1)\big|^2\Big].\tag{14}
-$$</p>
-<p><strong>Theorem 3 (closed-form conditional vector field for Gaussian paths).</strong> Let <span class="arithmatex">\(p_t(x\mid x_1)\)</span> be the Gaussian conditional path in (10) and <span class="arithmatex">\(\psi_t(\cdot;x_1)\)</span> be the affine flow map in (11). Then the (unique) vector field that realizes (13) is
-$$
+\mathbb{E}_{t\sim U[0,1],\,x_1\sim q,\,x_0\sim p}
+\Big[\big\|v(t,\psi_t(x_0;x_1);\theta)-\tfrac{d}{dt}\psi_t(x_0;x_1)\big\|^2\Big].\tag{14}
+\]</div>
+<p><strong>Theorem 3 (closed-form conditional vector field for Gaussian paths).</strong> Let <span class="arithmatex">\(p_t(x\mid x_1)\)</span> be the Gaussian conditional path in (10) and <span class="arithmatex">\(\psi_t(\cdot;x_1)\)</span> be the affine flow map in (11). Then the (unique) vector field that realizes (13) is</p>
+<div class="arithmatex">\[
 u_t(x\mid x_1)
 =
 \frac{\partial_t \sigma_t(x_1)}{\sigma_t(x_1)}\big(x-\mu_t(x_1)\big)
 \;+\;\partial_t\mu_t(x_1).\tag{15}
-$$
-Consequently, <span class="arithmatex">\(u_t(\cdot\mid x_1)\)</span> generates the Gaussian path <span class="arithmatex">\(p_t(\cdot\mid x_1)\)</span> (equivalently, <span class="arithmatex">\((p_t(\cdot\mid x_1),u_t(\cdot\mid x_1))\)</span> satisfy the conditional continuity equation).</p>
+\]</div>
+<p>Consequently, <span class="arithmatex">\(u_t(\cdot\mid x_1)\)</span> generates the Gaussian path <span class="arithmatex">\(p_t(\cdot\mid x_1)\)</span> (equivalently, <span class="arithmatex">\((p_t(\cdot\mid x_1),u_t(\cdot\mid x_1))\)</span> satisfy the conditional continuity equation).</p>
 <p><strong>Derivation (one line).</strong> Differentiate (11) in time:
 <span class="arithmatex">\(\frac{d}{dt}\psi_t(x_0;x_1)=\partial_t\sigma_t(x_1)\,x_0+\partial_t\mu_t(x_1)\)</span>.
 Since <span class="arithmatex">\(x=\psi_t(x_0;x_1)=\sigma_t(x_1)x_0+\mu_t(x_1)\)</span>, we have <span class="arithmatex">\(x_0=(x-\mu_t(x_1))/\sigma_t(x_1)\)</span>, which substituted back yields (15).</p>
@@ -1756,51 +1756,51 @@ Since <span class="arithmatex">\(x=\psi_t(x_0;x_1)=\sigma_t(x_1)x_0+\mu_t(x_1)\)
 <p>The Gaussian construction above is fully general: we may choose any differentiable <span class="arithmatex">\(\mu_t(x_1)\)</span> and <span class="arithmatex">\(\sigma_t(x_1)\)</span> satisfying desired boundary conditions and obtain a closed-form conditional target <span class="arithmatex">\(u_t(x\mid x_1)\)</span> via Theorem 3. Below are two illustrative design choices.</p>
 <h4 id="example-i-diffusion-inspired-conditional-paths-ve-vp">Example I: diffusion-inspired conditional paths (VE / VP)<a class="headerlink" href="#example-i-diffusion-inspired-conditional-paths-ve-vp" title="Permanent link">&para;</a></h4>
 <p>Many diffusion models induce Gaussian conditionals <span class="arithmatex">\(p_t(x\mid x_1)\)</span> at arbitrary times <span class="arithmatex">\(t\)</span>, with specific <span class="arithmatex">\(\mu_t(x_1)\)</span> and <span class="arithmatex">\(\sigma_t(x_1)\)</span>. In the flow-matching setting, we can simply take these conditionals as a <em>probability-path design choice</em> and obtain a deterministic conditional vector field by plugging them into (15).</p>
-<p><strong>(a) Reversed VE (noise <span class="arithmatex">\(\to\)</span> data).</strong> A variance-exploding (VE) conditional path can be written as
-$$
-p_t(x\mid x_1)=\mathcal{N}!\big(x\mid x_1,\sigma_{1-t}^2 I\big),\tag{16}
-$$
-where <span class="arithmatex">\(\sigma_s\)</span> is increasing with <span class="arithmatex">\(\sigma_0=0\)</span> and <span class="arithmatex">\(\sigma_1\)</span> large. Here <span class="arithmatex">\(t=1\)</span> corresponds to a distribution concentrated at <span class="arithmatex">\(x_1\)</span>, while <span class="arithmatex">\(t=0\)</span> is a very wide Gaussian (an approximation to “noise” in practice). In this case <span class="arithmatex">\(\mu_t(x_1)=x_1\)</span> and <span class="arithmatex">\(\sigma_t(x_1)=\sigma_{1-t}\)</span>, so (15) gives
-$$
-u_t(x\mid x_1)= -\frac{\sigma'<em>{1-t}}{\sigma</em>{1-t}}\,(x-x_1),\tag{17}
-$$
-where <span class="arithmatex">\(\sigma'_s=\frac{d}{ds}\sigma_s\)</span>.</p>
-<p><strong>(b) Reversed VP (noise <span class="arithmatex">\(\to\)</span> data).</strong> A variance-preserving (VP) conditional path can be written as
-$$
-p_t(x\mid x_1)=\mathcal{N}!\big(x\mid \alpha_{1-t}x_1,\,(1-\alpha_{1-t}^2)I\big),\tag{18}
-$$
-where
-$$
-\alpha_t := \exp!\Big(-\frac12 T(t)\Big),\qquad T(t):=\int_0^t \beta(s)\,ds,
-$$
-and <span class="arithmatex">\(\beta\)</span> is a nonnegative noise-rate schedule. When <span class="arithmatex">\(T(1)\)</span> is large, <span class="arithmatex">\(p_0(\cdot\mid x_1)\approx \mathcal{N}(0,I)\)</span> and <span class="arithmatex">\(p_1(\cdot\mid x_1)\)</span> concentrates at <span class="arithmatex">\(x_1\)</span>.
-Here <span class="arithmatex">\(\mu_t(x_1)=\alpha_{1-t}x_1\)</span> and <span class="arithmatex">\(\sigma_t(x_1)=\sqrt{1-\alpha_{1-t}^2}\)</span>, and (15) yields
-$$
-u_t(x\mid x_1)=\frac{\alpha'<em>{1-t}}{1-\alpha</em>{1-t}^2}\big(\alpha_{1-t}x-x_1\big),\tag{19}
-$$
-where <span class="arithmatex">\(\alpha'_s=\frac{d}{ds}\alpha_s\)</span>. (Since <span class="arithmatex">\(\alpha\)</span> is decreasing when <span class="arithmatex">\(\beta&gt;0\)</span>, <span class="arithmatex">\(\alpha'_s&lt;0\)</span>, so the drift indeed points toward <span class="arithmatex">\(x_1\)</span> as <span class="arithmatex">\(t\to 1\)</span>.)</p>
+<p><strong>(a) Reversed VE (noise <span class="arithmatex">\(\to\)</span> data).</strong> A variance-exploding (VE) conditional path can be written as</p>
+<div class="arithmatex">\[
+p_t(x\mid x_1)=\mathcal{N}\!\big(x\mid x_1,\sigma_{1-t}^2 I\big),\tag{16}
+\]</div>
+<p>where <span class="arithmatex">\(\sigma_s\)</span> is increasing with <span class="arithmatex">\(\sigma_0=0\)</span> and <span class="arithmatex">\(\sigma_1\)</span> large. Here <span class="arithmatex">\(t=1\)</span> corresponds to a distribution concentrated at <span class="arithmatex">\(x_1\)</span>, while <span class="arithmatex">\(t=0\)</span> is a very wide Gaussian (an approximation to “noise” in practice). In this case <span class="arithmatex">\(\mu_t(x_1)=x_1\)</span> and <span class="arithmatex">\(\sigma_t(x_1)=\sigma_{1-t}\)</span>, so (15) gives</p>
+<div class="arithmatex">\[
+u_t(x\mid x_1)= -\frac{\sigma'_{1-t}}{\sigma_{1-t}}\,(x-x_1),\tag{17}
+\]</div>
+<p>where <span class="arithmatex">\(\sigma'_s=\frac{d}{ds}\sigma_s\)</span>.</p>
+<p><strong>(b) Reversed VP (noise <span class="arithmatex">\(\to\)</span> data).</strong> A variance-preserving (VP) conditional path can be written as</p>
+<div class="arithmatex">\[
+p_t(x\mid x_1)=\mathcal{N}\!\big(x\mid \alpha_{1-t}x_1,\,(1-\alpha_{1-t}^2)I\big),\tag{18}
+\]</div>
+<p>where</p>
+<div class="arithmatex">\[
+\alpha_t := \exp\!\Big(-\frac12 T(t)\Big),\qquad T(t):=\int_0^t \beta(s)\,ds,
+\]</div>
+<p>and <span class="arithmatex">\(\beta\)</span> is a nonnegative noise-rate schedule. When <span class="arithmatex">\(T(1)\)</span> is large, <span class="arithmatex">\(p_0(\cdot\mid x_1)\approx \mathcal{N}(0,I)\)</span> and <span class="arithmatex">\(p_1(\cdot\mid x_1)\)</span> concentrates at <span class="arithmatex">\(x_1\)</span>.
+Here <span class="arithmatex">\(\mu_t(x_1)=\alpha_{1-t}x_1\)</span> and <span class="arithmatex">\(\sigma_t(x_1)=\sqrt{1-\alpha_{1-t}^2}\)</span>, and (15) yields</p>
+<div class="arithmatex">\[
+u_t(x\mid x_1)=\frac{\alpha'_{1-t}}{1-\alpha_{1-t}^2}\big(\alpha_{1-t}x-x_1\big),\tag{19}
+\]</div>
+<p>where <span class="arithmatex">\(\alpha'_s=\frac{d}{ds}\alpha_s\)</span>. (Since <span class="arithmatex">\(\alpha\)</span> is decreasing when <span class="arithmatex">\(\beta&gt;0\)</span>, <span class="arithmatex">\(\alpha'_s&lt;0\)</span>, so the drift indeed points toward <span class="arithmatex">\(x_1\)</span> as <span class="arithmatex">\(t\to 1\)</span>.)</p>
 <p>Remark: these diffusion-inspired paths are typically derived from stochastic diffusion processes and may only approach an idealized “pure noise” distribution asymptotically; in practice one works with a finite terminal time and an approximate Gaussian endpoint.</p>
 <h4 id="example-ii-optimal-transport-inspired-conditional-paths-linear-meanstd">Example II: optimal-transport-inspired conditional paths (linear mean/std)<a class="headerlink" href="#example-ii-optimal-transport-inspired-conditional-paths-linear-meanstd" title="Permanent link">&para;</a></h4>
-<p>An arguably simpler design is to let the mean and standard deviation evolve linearly in time:
-$$
+<p>An arguably simpler design is to let the mean and standard deviation evolve linearly in time:</p>
+<div class="arithmatex">\[
 \mu_t(x_1)=t\,x_1,\qquad \sigma_t(x_1)=1-(1-\sigma_{\min})t.\tag{20}
-$$
-Plugging (20) into (15) gives the conditional vector field
-$$
+\]</div>
+<p>Plugging (20) into (15) gives the conditional vector field</p>
+<div class="arithmatex">\[
 u_t(x\mid x_1)=\frac{x_1-(1-\sigma_{\min})x}{1-(1-\sigma_{\min})t}.\tag{21}
-$$
-The corresponding affine flow is
-$$
+\]</div>
+<p>The corresponding affine flow is</p>
+<div class="arithmatex">\[
 \psi_t(x_0;x_1)=(1-(1-\sigma_{\min})t)x_0+t x_1.\tag{22}
-$$
-In this case the CFM loss (14) becomes
-$$
-\mathcal{L}<em>{\mathrm{CFM}}(\theta)
+\]</div>
+<p>In this case the CFM loss (14) becomes</p>
+<div class="arithmatex">\[
+\mathcal{L}_{\mathrm{CFM}}(\theta)
 =
-\mathbb{E}</em>{t\sim U[0,1],\,x_1\sim q,\,x_0\sim p}
-\Big[\big|v(t,\psi_t(x_0;x_1);\theta)-\big(x_1-(1-\sigma_{\min})x_0\big)\big|^2\Big].\tag{23}
-$$
-Compared with diffusion-inspired choices, the OT-style conditional vector field often has a simpler structure (e.g., its direction can be constant in time up to a scalar factor), which can make the regression task easier.</p>
+\mathbb{E}_{t\sim U[0,1],\,x_1\sim q,\,x_0\sim p}
+\Big[\big\|v(t,\psi_t(x_0;x_1);\theta)-\big(x_1-(1-\sigma_{\min})x_0\big)\big\|^2\Big].\tag{23}
+\]</div>
+<p>Compared with diffusion-inspired choices, the OT-style conditional vector field often has a simpler structure (e.g., its direction can be constant in time up to a scalar factor), which can make the regression task easier.</p>
 <p>For practical experimental-design details (e.g., path/schedule choices, loss weighting, and numerical solvers), see <a href="introduction-B-flow-matching.html">introduction-B-flow-matching</a>.</p>
 <h3 id="25-practical-notes-implementation-gotchas">2.5 Practical notes (implementation “gotchas”)<a class="headerlink" href="#25-practical-notes-implementation-gotchas" title="Permanent link">&para;</a></h3>
 <p>This chapter intentionally focuses on the modeling algebra. In practice, a few design choices matter disproportionately:</p>
@@ -1818,167 +1818,163 @@ Compared with diffusion-inspired choices, the OT-style conditional vector field 
 <p>We present both the discrete-time (DDPM-style) and continuous-time (SDE-style) viewpoints. Detailed derivations about SDEs and the Fokker–Planck equation are collected separately in <a href="mathematics-foundation.html">Mathematics Foundation</a>.</p>
 <h3 id="31-eulerian-view-density-evolution-by-fokkerplanck">3.1 Eulerian view: density evolution by Fokker–Planck<a class="headerlink" href="#31-eulerian-view-density-evolution-by-fokkerplanck" title="Permanent link">&para;</a></h3>
 <p>To mirror the Eulerian viewpoint of Section 1.2, we start from <strong>density evolution</strong> rather than from a discrete Markov chain.</p>
-<p>Let <span class="arithmatex">\(t\in[0,1]\)</span>. Consider a forward Itô SDE
-$$
+<p>Let <span class="arithmatex">\(t\in[0,1]\)</span>. Consider a forward Itô SDE</p>
+<div class="arithmatex">\[
 dX_t = f(X_t,t)\,dt + g(t)\,dW_t,\qquad X_0\sim \mu_\text{data},
-$$
-where <span class="arithmatex">\(W_t\)</span> is Brownian motion. If the time-<span class="arithmatex">\(t\)</span> law <span class="arithmatex">\(\mu_t=\mathcal{L}(X_t)\)</span> admits a density <span class="arithmatex">\(\mu_t(dx)=p_t(x)\,dx\)</span>, then <span class="arithmatex">\(p_t\)</span> satisfies the Fokker–Planck equation
-$$
+\]</div>
+<p>where <span class="arithmatex">\(W_t\)</span> is Brownian motion. If the time-<span class="arithmatex">\(t\)</span> law <span class="arithmatex">\(\mu_t=\mathcal{L}(X_t)\)</span> admits a density <span class="arithmatex">\(\mu_t(dx)=p_t(x)\,dx\)</span>, then <span class="arithmatex">\(p_t\)</span> satisfies the Fokker–Planck equation</p>
+<div class="arithmatex">\[
 \partial_t p_t(x)
 =
--\nabla!\cdot\big(f(x,t)p_t(x)\big)+\frac12 g(t)^2\,\Delta p_t(x).
-$$
-This is the stochastic analog of the continuity equation: the drift <span class="arithmatex">\(f\)</span> transports mass (a CE-like term), while the Brownian noise adds a second-order diffusion term.</p>
+-\nabla\!\cdot\big(f(x,t)p_t(x)\big)+\frac12 g(t)^2\,\Delta p_t(x).
+\]</div>
+<p>This is the stochastic analog of the continuity equation: the drift <span class="arithmatex">\(f\)</span> transports mass (a CE-like term), while the Brownian noise adds a second-order diffusion term.</p>
 <p>The “schedule” viewpoint appears here as the choice of coefficients <span class="arithmatex">\((f,g)\)</span>, which determines the entire marginal path <span class="arithmatex">\((p_t)\)</span>. In diffusion modeling we choose <span class="arithmatex">\((f,g)\)</span> so that <span class="arithmatex">\(p_1\)</span> is simple (approximately <span class="arithmatex">\(\mathcal{N}(0,I)\)</span>) and <span class="arithmatex">\(p_0\)</span> matches the data distribution.</p>
 <h3 id="32-reverse-time-generation-score-enters-the-dynamics">3.2 Reverse-time generation: score enters the dynamics<a class="headerlink" href="#32-reverse-time-generation-score-enters-the-dynamics" title="Permanent link">&para;</a></h3>
-<p>The key generative fact is that the reverse-time dynamics involve the <strong>score</strong> <span class="arithmatex">\(\nabla_x\log p_t(x)\)</span>. Informally, if we run time backward from <span class="arithmatex">\(t=1\)</span> to <span class="arithmatex">\(t=0\)</span>, the reverse-time SDE has the form (here written for the common case where <span class="arithmatex">\(g(t)\)</span> is a scalar diffusion coefficient, i.e., isotropic noise depending only on time)
-$$
+<p>The key generative fact is that the reverse-time dynamics involve the <strong>score</strong> <span class="arithmatex">\(\nabla_x\log p_t(x)\)</span>. Informally, if we run time backward from <span class="arithmatex">\(t=1\)</span> to <span class="arithmatex">\(t=0\)</span>, the reverse-time SDE has the form (here written for the common case where <span class="arithmatex">\(g(t)\)</span> is a scalar diffusion coefficient, i.e., isotropic noise depending only on time)</p>
+<div class="arithmatex">\[
 dX_t
 =
 \Big(f(X_t,t)-g(t)^2\,\nabla_x\log p_t(X_t)\Big)\,dt
 + g(t)\,d\bar W_t,
 \qquad t:1\to 0,
-$$
-where <span class="arithmatex">\(\bar W_t\)</span> is a Brownian motion in reverse time.</p>
+\]</div>
+<p>where <span class="arithmatex">\(\bar W_t\)</span> is a Brownian motion in reverse time.</p>
 <p>For background on SDEs, Itô interpretation, and the Fokker–Planck equation (including derivations), see <a href="mathematics-foundation.html">Mathematics Foundation</a>.</p>
-<p>There is also an associated <strong>probability flow ODE</strong> (deterministic dynamics with the same marginals <span class="arithmatex">\((p_t)\)</span>):
-$$
+<p>There is also an associated <strong>probability flow ODE</strong> (deterministic dynamics with the same marginals <span class="arithmatex">\((p_t)\)</span>):</p>
+<div class="arithmatex">\[
 \frac{d}{dt}X_t
 =
 f(X_t,t)-\frac12 g(t)^2\,\nabla_x\log p_t(X_t).
-$$
-Once we can approximate the score, we can sample either by integrating the reverse SDE (stochastic sampler) or the probability flow ODE (deterministic sampler).</p>
+\]</div>
+<p>Once we can approximate the score, we can sample either by integrating the reverse SDE (stochastic sampler) or the probability flow ODE (deterministic sampler).</p>
 <h3 id="33-learning-the-score-why-training-is-tractable">3.3 Learning the score (why training is tractable)<a class="headerlink" href="#33-learning-the-score-why-training-is-tractable" title="Permanent link">&para;</a></h3>
 <p>Even though the marginal density <span class="arithmatex">\(p_t(x)\)</span> is unknown (and is generally difficult to model in closed form, regardless of whether it is introduced marginally or via conditional constructions), the forward diffusion/noising mechanism is known and sampleable by design. Concretely, we can draw <span class="arithmatex">\(x_0\sim q\)</span> from the dataset, sample noise <span class="arithmatex">\(\varepsilon\)</span>, and generate <span class="arithmatex">\(x_t\sim p_t\)</span> by running the forward corruption process.</p>
 <p>This avoids the main intractability encountered in marginal flow matching: we do not need to evaluate a marginal vector field <span class="arithmatex">\(u_t(x)\)</span> that involves posterior normalization by <span class="arithmatex">\(p_t(x)\)</span>. Instead, we obtain unbiased training pairs <span class="arithmatex">\((t,x_t)\)</span> directly, and then fit a neural network <span class="arithmatex">\(s_\theta(x,t)\approx \nabla_x\log p_t(x)\)</span> via denoising score matching objectives.</p>
 <h3 id="34-discrete-time-ddpm-as-a-practical-discretization">3.4 Discrete-time DDPM as a practical discretization<a class="headerlink" href="#34-discrete-time-ddpm-as-a-practical-discretization" title="Permanent link">&para;</a></h3>
 <p>After fixing the continuous-time (Eulerian) picture, we can introduce DDPM as a convenient discrete-time construction of the same “design a noising path, learn a reverse process” idea.</p>
-<p>Fix an integer <span class="arithmatex">\(T\)</span>. The forward process is a Markov chain
-$$
+<p>Fix an integer <span class="arithmatex">\(T\)</span>. The forward process is a Markov chain</p>
+<div class="arithmatex">\[
 q(x_{0:T}) = q(x_0)\prod_{k=1}^T q(x_k\mid x_{k-1}),
-$$
-where <span class="arithmatex">\(q(x_0)=\mu_\text{data}\)</span> and
-$$
-q(x_k\mid x_{k-1})=\mathcal{N}!\big(\sqrt{1-\beta_k}\,x_{k-1},\;\beta_k I\big),
+\]</div>
+<p>where <span class="arithmatex">\(q(x_0)=\mu_\text{data}\)</span> and</p>
+<div class="arithmatex">\[
+q(x_k\mid x_{k-1})=\mathcal{N}\!\big(\sqrt{1-\beta_k}\,x_{k-1},\;\beta_k I\big),
 \qquad k=1,\dots,T,
-$$
-with noise schedule <span class="arithmatex">\((\beta_k)\)</span>. Define <span class="arithmatex">\(\alpha_k:=1-\beta_k\)</span> and <span class="arithmatex">\(\bar\alpha_k:=\prod_{s=1}^k \alpha_s\)</span>. Then
-$$
-q(x_k\mid x_0)=\mathcal{N}!\big(\sqrt{\bar\alpha_k}\,x_0,\;(1-\bar\alpha_k)I\big),
-$$
-equivalently
-$$
+\]</div>
+<p>with noise schedule <span class="arithmatex">\((\beta_k)\)</span>. Define <span class="arithmatex">\(\alpha_k:=1-\beta_k\)</span> and <span class="arithmatex">\(\bar\alpha_k:=\prod_{s=1}^k \alpha_s\)</span>. Then</p>
+<div class="arithmatex">\[
+q(x_k\mid x_0)=\mathcal{N}\!\big(\sqrt{\bar\alpha_k}\,x_0,\;(1-\bar\alpha_k)I\big),
+\]</div>
+<p>equivalently</p>
+<div class="arithmatex">\[
 x_k=\sqrt{\bar\alpha_k}\,x_0+\sqrt{1-\bar\alpha_k}\,\varepsilon,\qquad \varepsilon\sim\mathcal{N}(0,I).
-$$</p>
+\]</div>
 <p>Generation runs the chain backward, sampling <span class="arithmatex">\(p_\theta(x_{k-1}\mid x_k)\)</span>. A common parameterization predicts <span class="arithmatex">\(\varepsilon_\theta(x_k,k)\)</span>, which can be converted to an estimate <span class="arithmatex">\(\hat x_0(x_k,k)\)</span> and hence to a reverse mean. The ELBO view and its reduction to a denoising regression loss are given in Chapter 4.</p>
 <h2 id="chapter-4-a-flow-first-physical-view-of-diffusion-with-ddpm-elbo-as-a-special-case">Chapter 4 — A flow-first (physical) view of diffusion, with DDPM-ELBO as a special case<a class="headerlink" href="#chapter-4-a-flow-first-physical-view-of-diffusion-with-ddpm-elbo-as-a-special-case" title="Permanent link">&para;</a></h2>
 <p>The “physical” intuition is: diffusion models are <strong>stochastic flows of particles</strong>. We track particles by an SDE (Lagrangian view), and we track their law by a PDE (Eulerian view). The PDE is not an extra constraint we impose; it is the density-level consequence of the particle dynamics.</p>
 <h3 id="41-stochastic-flows-lagrangian-rightarrow-fokkerplanck-eulerian">4.1 Stochastic flows (Lagrangian) <span class="arithmatex">\(\Rightarrow\)</span> Fokker–Planck (Eulerian)<a class="headerlink" href="#41-stochastic-flows-lagrangian-rightarrow-fokkerplanck-eulerian" title="Permanent link">&para;</a></h3>
-<p>Consider the forward SDE on <span class="arithmatex">\(\mathbb{R}^D\)</span>
-$$
+<p>Consider the forward SDE on <span class="arithmatex">\(\mathbb{R}^D\)</span></p>
+<div class="arithmatex">\[
 dX_t=f(X_t,t)\,dt+g(t)\,dW_t,\qquad t\in[0,1],\qquad X_0\sim \mu_\text{data}.
-$$
-If the marginal law <span class="arithmatex">\(\mu_t=\mathcal{L}(X_t)\)</span> admits a density <span class="arithmatex">\(p_t\)</span> and regularity is sufficient, then <span class="arithmatex">\(p_t\)</span> evolves by the Fokker–Planck equation
-$$
-\partial_t p_t(x) = -\nabla!\cdot\big(f(x,t)p_t(x)\big) + \frac12 g(t)^2\,\Delta p_t(x).
-$$
-In other words, the SDE defines a <strong>stochastic flow of measures</strong> <span class="arithmatex">\((\mu_t)\)</span>, and Fokker–Planck is its Eulerian “mass conservation + diffusion” statement. (A step-by-step derivation is in <a href="mathematics-foundation.html">Mathematics Foundation</a>, Appendix B.)</p>
+\]</div>
+<p>If the marginal law <span class="arithmatex">\(\mu_t=\mathcal{L}(X_t)\)</span> admits a density <span class="arithmatex">\(p_t\)</span> and regularity is sufficient, then <span class="arithmatex">\(p_t\)</span> evolves by the Fokker–Planck equation</p>
+<div class="arithmatex">\[
+\partial_t p_t(x) = -\nabla\!\cdot\big(f(x,t)p_t(x)\big) + \frac12 g(t)^2\,\Delta p_t(x).
+\]</div>
+<p>In other words, the SDE defines a <strong>stochastic flow of measures</strong> <span class="arithmatex">\((\mu_t)\)</span>, and Fokker–Planck is its Eulerian “mass conservation + diffusion” statement. (A step-by-step derivation is in <a href="mathematics-foundation.html">Mathematics Foundation</a>, Appendix B.)</p>
 <p>Reverse-time generation is another stochastic flow. To move probability mass from a simple <span class="arithmatex">\(\mu_1\)</span> back to <span class="arithmatex">\(\mu_0\)</span>, we run a reverse-time dynamics whose drift depends on the score <span class="arithmatex">\(\nabla_x\log p_t\)</span>. This is the origin of “learn the score/velocity field, then integrate backward”.</p>
 <h3 id="42-the-vp-diffusion-as-a-canonical-forward-sde-a-continuous-scheduler">4.2 The VP diffusion as a canonical forward SDE (a continuous scheduler)<a class="headerlink" href="#42-the-vp-diffusion-as-a-canonical-forward-sde-a-continuous-scheduler" title="Permanent link">&para;</a></h3>
-<p>A widely used forward process is the <strong>variance-preserving (VP) SDE</strong>, parameterized by a scalar noise-rate schedule <span class="arithmatex">\(\beta(t)\ge 0\)</span>:
-$$
+<p>A widely used forward process is the <strong>variance-preserving (VP) SDE</strong>, parameterized by a scalar noise-rate schedule <span class="arithmatex">\(\beta(t)\ge 0\)</span>:</p>
+<div class="arithmatex">\[
 dX_t = -\frac12\beta(t)\,X_t\,dt + \sqrt{\beta(t)}\,dW_t.
-$$
-It is a linear SDE, and (conditionally on <span class="arithmatex">\(X_0=x_0\)</span>) its marginal is Gaussian:
-$$
+\]</div>
+<p>It is a linear SDE, and (conditionally on <span class="arithmatex">\(X_0=x_0\)</span>) its marginal is Gaussian:</p>
+<div class="arithmatex">\[
 X_t = \alpha(t)\,x_0 + \sigma(t)\,\varepsilon,\qquad \varepsilon\sim\mathcal{N}(0,I),
-$$
-for explicit <span class="arithmatex">\(\alpha(t)\in(0,1]\)</span> and <span class="arithmatex">\(\sigma(t)\ge 0\)</span> determined by <span class="arithmatex">\(\beta(t)\)</span>. One common convention is
-$$
-\alpha(t)=\exp!\Big(-\frac12\int_0^t \beta(s)\,ds\Big),
+\]</div>
+<p>for explicit <span class="arithmatex">\(\alpha(t)\in(0,1]\)</span> and <span class="arithmatex">\(\sigma(t)\ge 0\)</span> determined by <span class="arithmatex">\(\beta(t)\)</span>. One common convention is</p>
+<div class="arithmatex">\[
+\alpha(t)=\exp\!\Big(-\frac12\int_0^t \beta(s)\,ds\Big),
 \qquad
 \sigma(t)^2 = 1-\alpha(t)^2,
-$$
-so that <span class="arithmatex">\(X_t\mid X_0=x_0\sim \mathcal{N}(\alpha(t)x_0,\sigma(t)^2 I)\)</span>. This is the continuous-time analog of the discrete identity
+\]</div>
+<p>so that <span class="arithmatex">\(X_t\mid X_0=x_0\sim \mathcal{N}(\alpha(t)x_0,\sigma(t)^2 I)\)</span>. This is the continuous-time analog of the discrete identity
 <span class="arithmatex">\(x_t=\sqrt{\bar\alpha_t}x_0+\sqrt{1-\bar\alpha_t}\varepsilon\)</span> from Chapter 3.</p>
 <h3 id="43-ddpm-as-a-time-discretization-of-a-stochastic-flow">4.3 DDPM as a time discretization of a stochastic flow<a class="headerlink" href="#43-ddpm-as-a-time-discretization-of-a-stochastic-flow" title="Permanent link">&para;</a></h3>
-<p>DDPM’s forward Markov chain
-$$
-q(x_t\mid x_{t-1})=\mathcal{N}!\big(\sqrt{1-\beta_t}\,x_{t-1},\;\beta_t I\big)
-$$
-can be viewed as a time discretization of a VP-type SDE (with a suitable mapping between <span class="arithmatex">\(\{\beta_t\}\)</span> and <span class="arithmatex">\(\beta(t)\)</span>). From the flow viewpoint:</p>
+<p>DDPM’s forward Markov chain</p>
+<div class="arithmatex">\[
+q(x_t\mid x_{t-1})=\mathcal{N}\!\big(\sqrt{1-\beta_t}\,x_{t-1},\;\beta_t I\big)
+\]</div>
+<p>can be viewed as a time discretization of a VP-type SDE (with a suitable mapping between <span class="arithmatex">\(\{\beta_t\}\)</span> and <span class="arithmatex">\(\beta(t)\)</span>). From the flow viewpoint:</p>
 <ul>
 <li><strong>the schedule</strong> <span class="arithmatex">\(\{\beta_t\}\)</span> (or <span class="arithmatex">\(\beta(t)\)</span>) specifies how the stochastic flow gradually destroys information,</li>
 <li><strong>the model</strong> learns a reverse-time flow that restores structure from noise.</li>
 </ul>
 <h3 id="44-elbo-for-ddpm-likelihood-as-stepwise-flow-matching-across-time">4.4 ELBO for DDPM: likelihood as stepwise flow-matching across time<a class="headerlink" href="#44-elbo-for-ddpm-likelihood-as-stepwise-flow-matching-across-time" title="Permanent link">&para;</a></h3>
-<p>Let the learned reverse process be
-$$
+<p>Let the learned reverse process be</p>
+<div class="arithmatex">\[
 p_\theta(x_{0:T}) = p(x_T)\prod_{t=1}^T p_\theta(x_{t-1}\mid x_t),
 \qquad p(x_T)=\mathcal{N}(0,I).
-$$
-Using the forward chain <span class="arithmatex">\(q(x_{0:T})=q(x_0)\prod_{t=1}^T q(x_t\mid x_{t-1})\)</span> as a variational distribution over latents <span class="arithmatex">\(x_{1:T}\)</span>, we get a variational lower bound:
-$$
+\]</div>
+<p>Using the forward chain <span class="arithmatex">\(q(x_{0:T})=q(x_0)\prod_{t=1}^T q(x_t\mid x_{t-1})\)</span> as a variational distribution over latents <span class="arithmatex">\(x_{1:T}\)</span>, we get a variational lower bound:</p>
+<div class="arithmatex">\[
 \log p_\theta(x_0)
 \ge
-\mathbb{E}<em>{q(x</em>{1:T}\mid x_0)}\big[\log p_\theta(x_{0:T})-\log q(x_{1:T}\mid x_0)\big].
-$$
-After algebra, this ELBO decomposes into KL terms at each step:
-$$
+\mathbb{E}_{q(x_{1:T}\mid x_0)}\big[\log p_\theta(x_{0:T})-\log q(x_{1:T}\mid x_0)\big].
+\]</div>
+<p>After algebra, this ELBO decomposes into KL terms at each step:</p>
+<div class="arithmatex">\[
 \begin{aligned}
 \log p_\theta(x_0)\;\ge\;&amp;
-\mathbb{E}<em>q\big[\log p</em>\theta(x_0\mid x_1)\big]
--\mathrm{KL}\big(q(x_T\mid x_0)\,|\,p(x_T)\big) \
+\mathbb{E}_q\big[\log p_\theta(x_0\mid x_1)\big]
+-\mathrm{KL}\big(q(x_T\mid x_0)\,\|\,p(x_T)\big) \\
 &amp;-\sum_{t=2}^T
-\mathbb{E}<em>q\Big[
-\mathrm{KL}\big(q(x</em>{t-1}\mid x_t,x_0)\,|\,p_\theta(x_{t-1}\mid x_t)\big)
+\mathbb{E}_q\Big[
+\mathrm{KL}\big(q(x_{t-1}\mid x_t,x_0)\,\|\,p_\theta(x_{t-1}\mid x_t)\big)
 \Big].
 \end{aligned}
-$$
-Here <span class="arithmatex">\(q(x_{t-1}\mid x_t,x_0)\)</span> is the true reverse posterior induced by the forward Gaussian chain; it has a closed-form Gaussian expression, so these KL terms are tractable once <span class="arithmatex">\(p_\theta(x_{t-1}\mid x_t)\)</span> is Gaussian.</p>
+\]</div>
+<p>Here <span class="arithmatex">\(q(x_{t-1}\mid x_t,x_0)\)</span> is the true reverse posterior induced by the forward Gaussian chain; it has a closed-form Gaussian expression, so these KL terms are tractable once <span class="arithmatex">\(p_\theta(x_{t-1}\mid x_t)\)</span> is Gaussian.</p>
 <h3 id="45-the-usual-noise-prediction-loss-as-a-special-case-of-the-elbo">4.5 The usual noise-prediction loss as a special case of the ELBO<a class="headerlink" href="#45-the-usual-noise-prediction-loss-as-a-special-case-of-the-elbo" title="Permanent link">&para;</a></h3>
-<p>In the common DDPM parameterization, one chooses <span class="arithmatex">\(p_\theta(x_{t-1}\mid x_t)\)</span> to be Gaussian with a variance schedule fixed in advance, and a mean that is expressed via a network <span class="arithmatex">\(\varepsilon_\theta(x_t,t)\)</span> (or equivalently <span class="arithmatex">\(x_{0,\theta}(x_t,t)\)</span>). Under this choice, each KL term above reduces (up to an additive constant and a time-dependent weight) to an <span class="arithmatex">\(\ell_2\)</span> regression loss:
-$$
-\mathbb{E}<em>{t,x_0,\varepsilon}\big[w(t)\,|\varepsilon-\varepsilon</em>\theta(x_t,t)|^2\big].
-$$
-So, on the flow axis, the “denoising MSE” objective is one particular way of fitting a reverse-time stochastic flow so that it matches the forward flow’s stepwise posteriors.</p>
+<p>In the common DDPM parameterization, one chooses <span class="arithmatex">\(p_\theta(x_{t-1}\mid x_t)\)</span> to be Gaussian with a variance schedule fixed in advance, and a mean that is expressed via a network <span class="arithmatex">\(\varepsilon_\theta(x_t,t)\)</span> (or equivalently <span class="arithmatex">\(x_{0,\theta}(x_t,t)\)</span>). Under this choice, each KL term above reduces (up to an additive constant and a time-dependent weight) to an <span class="arithmatex">\(\ell_2\)</span> regression loss:</p>
+<div class="arithmatex">\[
+\mathbb{E}_{t,x_0,\varepsilon}\big[w(t)\,\|\varepsilon-\varepsilon_\theta(x_t,t)\|^2\big].
+\]</div>
+<p>So, on the flow axis, the “denoising MSE” objective is one particular way of fitting a reverse-time stochastic flow so that it matches the forward flow’s stepwise posteriors.</p>
 <p>Remark: the exact weight <span class="arithmatex">\(w(t)\)</span> depends on the schedule <span class="arithmatex">\(\beta_t\)</span> and the variance parameterization in <span class="arithmatex">\(p_\theta(x_{t-1}\mid x_t)\)</span>; different “predict <span class="arithmatex">\(\varepsilon\)</span>” vs “predict <span class="arithmatex">\(x_0\)</span>” parameterizations correspond to the same ELBO written in different coordinates.</p>
 <h2 id="chapter-5-flow-vs-diffusion-what-is-fundamentally-different">Chapter 5 — Flow vs diffusion: what is fundamentally different?<a class="headerlink" href="#chapter-5-flow-vs-diffusion-what-is-fundamentally-different" title="Permanent link">&para;</a></h2>
 <p>Both flow models and diffusion models are “dynamics-based” generative models: they define a time-indexed family of random variables <span class="arithmatex">\((X_t)\)</span> and use a learned field to transform a simple distribution into a complicated one. The crucial differences are in the <strong>type of dynamics</strong>, the <strong>mathematical object that evolves</strong>, and the <strong>training signal that is tractable</strong>.</p>
 <h3 id="51-deterministic-ode-flows-vs-stochastic-sde-flows">5.1 Deterministic ODE flows vs stochastic SDE flows<a class="headerlink" href="#51-deterministic-ode-flows-vs-stochastic-sde-flows" title="Permanent link">&para;</a></h3>
 <ul>
-<li>
-<p><strong>Flow / CNF (ODE).</strong> A continuous normalizing flow evolves particles deterministically:
-$$
-\frac{d}{dt}X_t=v(t,X_t;\theta).
-$$
-Under standard regularity (e.g., Lipschitz in <span class="arithmatex">\(x\)</span>), the solution is unique and defines a (locally) invertible flow map <span class="arithmatex">\(\phi_{s\to t}\)</span>. Distribution evolution is push-forward: <span class="arithmatex">\(\mu_t=(\phi_{0\to t})_\#\mu_0\)</span>.</p>
-</li>
-<li>
-<p><strong>Diffusion (SDE).</strong> A diffusion model starts from a stochastic forward process:
-$$
-dX_t=f(X_t,t)\,dt+g(t)\,dW_t.
-$$
-Even with <span class="arithmatex">\(X_0\)</span> fixed, <span class="arithmatex">\(X_t\)</span> remains random because of Brownian noise. The evolution is therefore not a bijection <span class="arithmatex">\(x_0\mapsto x_t\)</span>, but a Markov transition kernel <span class="arithmatex">\(P_{s\to t}(x,\cdot)\)</span> acting on measures.</p>
-</li>
+<li><strong>Flow / CNF (ODE).</strong> A continuous normalizing flow evolves particles deterministically:</li>
 </ul>
+<div class="arithmatex">\[
+\frac{d}{dt}X_t=v(t,X_t;\theta).
+\]</div>
+<p>Under standard regularity (e.g., Lipschitz in <span class="arithmatex">\(x\)</span>), the solution is unique and defines a (locally) invertible flow map <span class="arithmatex">\(\phi_{s\to t}\)</span>. Distribution evolution is push-forward: <span class="arithmatex">\(\mu_t=(\phi_{0\to t})_\#\mu_0\)</span>.</p>
+<ul>
+<li><strong>Diffusion (SDE).</strong> A diffusion model starts from a stochastic forward process:</li>
+</ul>
+<div class="arithmatex">\[
+dX_t=f(X_t,t)\,dt+g(t)\,dW_t.
+\]</div>
+<p>Even with <span class="arithmatex">\(X_0\)</span> fixed, <span class="arithmatex">\(X_t\)</span> remains random because of Brownian noise. The evolution is therefore not a bijection <span class="arithmatex">\(x_0\mapsto x_t\)</span>, but a Markov transition kernel <span class="arithmatex">\(P_{s\to t}(x,\cdot)\)</span> acting on measures.</p>
 <h3 id="52-eulerian-density-evolution-continuity-equation-vs-fokkerplanck">5.2 Eulerian density evolution: continuity equation vs Fokker–Planck<a class="headerlink" href="#52-eulerian-density-evolution-continuity-equation-vs-fokkerplanck" title="Permanent link">&para;</a></h3>
 <ul>
-<li>
-<p><strong>ODE <span class="arithmatex">\(\Rightarrow\)</span> continuity equation (CE).</strong> If <span class="arithmatex">\(X_t\)</span> follows an ODE and admits a density <span class="arithmatex">\(p_t\)</span>, then
-$$
-\partial_t p_t(x)+\nabla!\cdot\big(p_t(x)\,v(t,x)\big)=0.
-$$
-This is pure transport: probability mass is conserved and advected by <span class="arithmatex">\(v\)</span>.</p>
-</li>
-<li>
-<p><strong>SDE <span class="arithmatex">\(\Rightarrow\)</span> Fokker–Planck.</strong> If <span class="arithmatex">\(X_t\)</span> follows an Itô SDE and admits a density, then
-$$
-\partial_t p_t(x)=-\nabla!\cdot\big(f(x,t)p_t(x)\big)+\frac12 g(t)^2\,\Delta p_t(x),
-$$
-which adds a second-order diffusion term. This difference is not cosmetic: the diffusion term reflects the fact that noise spreads mass and destroys invertibility.</p>
-</li>
+<li><strong>ODE <span class="arithmatex">\(\Rightarrow\)</span> continuity equation (CE).</strong> If <span class="arithmatex">\(X_t\)</span> follows an ODE and admits a density <span class="arithmatex">\(p_t\)</span>, then</li>
 </ul>
+<div class="arithmatex">\[
+\partial_t p_t(x)+\nabla\!\cdot\big(p_t(x)\,v(t,x)\big)=0.
+\]</div>
+<p>This is pure transport: probability mass is conserved and advected by <span class="arithmatex">\(v\)</span>.</p>
+<ul>
+<li><strong>SDE <span class="arithmatex">\(\Rightarrow\)</span> Fokker–Planck.</strong> If <span class="arithmatex">\(X_t\)</span> follows an Itô SDE and admits a density, then</li>
+</ul>
+<div class="arithmatex">\[
+\partial_t p_t(x)=-\nabla\!\cdot\big(f(x,t)p_t(x)\big)+\frac12 g(t)^2\,\Delta p_t(x),
+\]</div>
+<p>which adds a second-order diffusion term. This difference is not cosmetic: the diffusion term reflects the fact that noise spreads mass and destroys invertibility.</p>
 <h3 id="53-what-is-designed-and-what-is-learned">5.3 What is “designed” and what is “learned”<a class="headerlink" href="#53-what-is-designed-and-what-is-learned" title="Permanent link">&para;</a></h3>
 <ul>
 <li>
@@ -2003,11 +1999,11 @@ but it can be computationally heavy in high dimension.</p>
 </li>
 </ul>
 <h3 id="55-relation-not-a-contradiction-probability-flow-ode">5.5 Relation (not a contradiction): probability flow ODE<a class="headerlink" href="#55-relation-not-a-contradiction-probability-flow-ode" title="Permanent link">&para;</a></h3>
-<p>Although diffusion is fundamentally stochastic, the same marginal path <span class="arithmatex">\((p_t)\)</span> can often be realized by a deterministic ODE (the probability flow ODE)
-$$
+<p>Although diffusion is fundamentally stochastic, the same marginal path <span class="arithmatex">\((p_t)\)</span> can often be realized by a deterministic ODE (the probability flow ODE)</p>
+<div class="arithmatex">\[
 \frac{d}{dt}X_t=f(X_t,t)-\frac12 g(t)^2\,\nabla_x\log p_t(X_t),
-$$
-which shares the same one-time marginals as the SDE when the score is exact. This provides a conceptual bridge: diffusion models can be sampled either stochastically (reverse SDE) or deterministically (PF-ODE), once <span class="arithmatex">\(\nabla_x\log p_t\)</span> is learned.</p>
+\]</div>
+<p>which shares the same one-time marginals as the SDE when the score is exact. This provides a conceptual bridge: diffusion models can be sampled either stochastically (reverse SDE) or deterministically (PF-ODE), once <span class="arithmatex">\(\nabla_x\log p_t\)</span> is learned.</p>
 <h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
 <ol>
 <li>Ricky T. Q. Chen, Yulia Rubanova, Jesse Bettencourt, David Duvenaud. <em>Neural Ordinary Differential Equations</em>. NeurIPS (2018). arXiv:1806.07366 (DOI: <code>https://doi.org/10.48550/arXiv.1806.07366</code>). <code>https://arxiv.org/abs/1806.07366</code></li>
