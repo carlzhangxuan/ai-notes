@@ -12,10 +12,6 @@ window.MathJax = {
     ],
     processEscapes: true,
   },
-  options: {
-    ignoreHtmlClass: ".*|",
-    processHtmlClass: "arithmatex",
-  },
 };
 
 // Re-render math on every page change (Material's instant navigation)
