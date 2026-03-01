@@ -1,3 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>index.html</loc></url>
+  <url><loc>posts/diffusion-models-intro.html</loc></url>
+  <url><loc>posts/flow-bedrock.html</loc></url>
+  <url><loc>posts/interlude-alpha-year-1757.html</loc></url>
+  <url><loc>posts/introduction-B-flow-matching.html</loc></url>
+  <url><loc>posts/introduction-C-compare-and-code.html</loc></url>
+  <url><loc>posts/introduction-beta-CFM-and-ELBO.html</loc></url>
+  <url><loc>posts/mathematics-foundation.html</loc></url>
+  <url><loc>posts/transformer.html</loc></url>
+  <url><loc>posts/vit-dit.html</loc></url>
 </urlset>
