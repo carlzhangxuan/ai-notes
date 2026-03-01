@@ -941,7 +941,7 @@ R x = (-y, x).
 \]</div>
 <h4 id="two-moons-two_moons">Two Moons (<code>two_moons</code>)<a class="headerlink" href="#two-moons-two_moons" title="Permanent link">&para;</a></h4>
 <p>This field projects each point to the nearer of two fixed semicircular arcs (“moons”), pulls it toward that arc, and adds a mild swirl to encourage motion along the arc.</p>
-<video controls src="../assets/vidoes/HC_2moons.mov"></video>
+<video controls src="../assets/vidoes/HC_2moons.mp4"></video>
 
 <p>Mathematically, it is well-approximated by</p>
 <div class="arithmatex">\[
@@ -972,7 +972,7 @@ v(x,t) \;=\; \alpha\bigl(P_{\mathrm{moon}}(x)-x\bigr) + \beta(t)\,R x,
 - <code>swirl</code> is tangential-ish motion that prevents purely radial collapse and helps spread mass along the arcs.</p>
 <h4 id="ring-ring">Ring (<code>ring</code>)<a class="headerlink" href="#ring-ring" title="Permanent link">&para;</a></h4>
 <p>This field stabilizes the radius around a (slightly time-varying) target radius and adds a strong tangential rotation.</p>
-<video controls src="../assets/vidoes/HC_Circle.mov"></video>
+<video controls src="../assets/vidoes/HC_Circle.mp4"></video>
 
 <p>Let <span class="arithmatex">\(r=\|x\|\)</span> and <span class="arithmatex">\(r_0(t)=1.7+0.2\sin(2\pi t)\)</span>. The vector field is</p>
 <div class="arithmatex">\[
@@ -990,7 +990,7 @@ v(x,t) \;=\; 0.8\,(r_0(t)-r)\,\frac{x}{r} \;+\; 1.5\,R x.
 - the second term is (approximately) tangential rotation, which preserves radius and circulates mass along the ring.</p>
 <h4 id="s-curve-s_curve">S-Curve (<code>s_curve</code>)<a class="headerlink" href="#s-curve-s_curve" title="Permanent link">&para;</a></h4>
 <p>This field contracts points vertically onto a target graph <span class="arithmatex">\(y^\*(x)=\tanh(2.2x)\)</span>, adds constant drift in <span class="arithmatex">\(x\)</span>, and adds a small vertical bending term.</p>
-<video controls src="../assets/vidoes/HC_Curve.mov"></video>
+<video controls src="../assets/vidoes/HC_Curve.mp4"></video>
 
 <p>Writing <span class="arithmatex">\(x=(x,y)\)</span>, the field is</p>
 <div class="arithmatex">\[
@@ -1050,7 +1050,7 @@ v_\theta(x,t)=\mathrm{MLP}_\theta([x,y,t]).
 \dot x(t) = v_\theta(x(t), t)
 \]</div>
 <p>with the chosen solver (Euler/RK4).</p>
-<video controls src="../assets/vidoes/Le_PS5c.mov"></video>
+<video controls src="../assets/vidoes/Le_PS5c.mp4"></video>
 
 
 
