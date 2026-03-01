@@ -899,11 +899,11 @@
 
 <h1 id="flow-bedrock">Flow Bedrock<a class="headerlink" href="#flow-bedrock" title="Permanent link">&para;</a></h1>
 <p>This note documents a small ODE-based simulator I built to develop intuition for <em>flow models</em> (continuous normalizing flows / flow matching) and their relationship to <em>diffusion models</em> (typically defined via SDEs).</p>
-<p>The simulator evolves many particles <span class="arithmatex">\(x(t)\in\mathbb{R}^2\)</span> under a time-dependent velocity field <span class="arithmatex">\(v(x,t)\)</span> by numerically integrating the ODE
-$$
+<p>The simulator evolves many particles <span class="arithmatex">\(x(t)\in\mathbb{R}^2\)</span> under a time-dependent velocity field <span class="arithmatex">\(v(x,t)\)</span> by numerically integrating the ODE</p>
+<div class="arithmatex">\[
 \frac{d x(t)}{d t} = v(x(t), t), \qquad t\in[0,1].
-$$
-It is primarily a visualization tool: trajectories and densities make the abstract objects in the math (vector fields, marginals <span class="arithmatex">\(p_t\)</span>, couplings between <span class="arithmatex">\(p_0\)</span> and <span class="arithmatex">\(p_1\)</span>) easier to reason about.</p>
+\]</div>
+<p>It is primarily a visualization tool: trajectories and densities make the abstract objects in the math (vector fields, marginals <span class="arithmatex">\(p_t\)</span>, couplings between <span class="arithmatex">\(p_0\)</span> and <span class="arithmatex">\(p_1\)</span>) easier to reason about.</p>
 <p>GitHub: https://github.com/GDP-lab/flow_bedrock</p>
 <ul>
 <li><strong>Particles as images.</strong> In the simulator, each particle is one sample <span class="arithmatex">\(x\)</span> (think: one image in pixel/latent space). The animation is the evolution of a <em>population</em> of such samples under an ODE; nothing in the dynamics refers to human-interpretable “parts” of an image.</li>
@@ -914,11 +914,11 @@ It is primarily a visualization tool: trajectories and densities make the abstra
 <h2 id="1-flow-matching">1. Flow Matching<a class="headerlink" href="#1-flow-matching" title="Permanent link">&para;</a></h2>
 <h3 id="11-hand-crafted-velocity-fields">1.1 Hand-Crafted Velocity Fields<a class="headerlink" href="#11-hand-crafted-velocity-fields" title="Permanent link">&para;</a></h3>
 <p>This section collects three <strong>hand-crafted</strong> velocity fields <span class="arithmatex">\(v(x,t)\)</span> used in the simulator: <code>two_moons</code>, <code>ring</code>, and <code>s_curve</code>. In my implementation, all three live in the same file <code>handcrafted.py</code>.</p>
-<p>The system evolution is always the ODE
-$$
+<p>The system evolution is always the ODE</p>
+<div class="arithmatex">\[
 \dot x(t) = v(x(t), t), \qquad x(t)\in\mathbb{R}^2,\ t\in[0,1],
-$$
-integrated numerically (e.g. RK4). The “manifold-like” shapes in the particle cloud come from the structure of <span class="arithmatex">\(v\)</span>:</p>
+\]</div>
+<p>integrated numerically (e.g. RK4). The “manifold-like” shapes in the particle cloud come from the structure of <span class="arithmatex">\(v\)</span>:</p>
 <ul>
 <li>a <strong>contracting (normal) component</strong> that pulls points toward some geometric set (a curve or a ring), and</li>
 <li>a <strong>tangential / drift component</strong> that moves points <em>along</em> that set (plus small time-varying or bending terms).</li>
@@ -933,24 +933,24 @@ integrated numerically (e.g. RK4). The “manifold-like” shapes in the particl
 <a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>        <span class="k">return</span> <span class="n">_s_curve</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
 <a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>    <span class="k">return</span> <span class="n">_two_moons</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
 </code></pre></div></p>
-<p>Below, I write <span class="arithmatex">\(x=(x,y)\in\mathbb{R}^2\)</span> and use the 90° rotation matrix
-$$
-R = \begin{pmatrix}0 &amp; -1\ 1 &amp; 0\end{pmatrix},
+<p>Below, I write <span class="arithmatex">\(x=(x,y)\in\mathbb{R}^2\)</span> and use the 90° rotation matrix</p>
+<div class="arithmatex">\[
+R = \begin{pmatrix}0 &amp; -1\\ 1 &amp; 0\end{pmatrix},
 \qquad
 R x = (-y, x).
-$$</p>
+\]</div>
 <h4 id="two-moons-two_moons">Two Moons (<code>two_moons</code>)<a class="headerlink" href="#two-moons-two_moons" title="Permanent link">&para;</a></h4>
 <p>This field projects each point to the nearer of two fixed semicircular arcs (“moons”), pulls it toward that arc, and adds a mild swirl to encourage motion along the arc.</p>
 <video controls src="../assets/vidoes/HC_2moons.mov"></video>
 
-<p>Mathematically, it is well-approximated by
-$$
+<p>Mathematically, it is well-approximated by</p>
+<div class="arithmatex">\[
 v(x,t) \;=\; \alpha\bigl(P_{\mathrm{moon}}(x)-x\bigr) + \beta(t)\,R x,
-$$
-where <span class="arithmatex">\(P_{\mathrm{moon}}(x)\)</span> is “project to the nearer moon arc” (the code’s <code>target</code>), <span class="arithmatex">\(\alpha=2.1\)</span>, and
-$$
+\]</div>
+<p>where <span class="arithmatex">\(P_{\mathrm{moon}}(x)\)</span> is “project to the nearer moon arc” (the code’s <code>target</code>), <span class="arithmatex">\(\alpha=2.1\)</span>, and</p>
+<div class="arithmatex">\[
 \beta(t) = 0.18 + 0.05\sin(2\pi t).
-$$</p>
+\]</div>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">_two_moons</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">t</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>    <span class="c1"># Project points to canonical two-moons arcs and pull toward them.</span>
 <a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>    <span class="n">theta1</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">atan2</span><span class="p">(</span><span class="n">x</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mf">1.0</span><span class="p">)</span><span class="o">.</span><span class="n">clamp</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
@@ -974,10 +974,10 @@ $$</p>
 <p>This field stabilizes the radius around a (slightly time-varying) target radius and adds a strong tangential rotation.</p>
 <video controls src="../assets/vidoes/HC_Circle.mov"></video>
 
-<p>Let <span class="arithmatex">\(r=\|x\|\)</span> and <span class="arithmatex">\(r_0(t)=1.7+0.2\sin(2\pi t)\)</span>. The vector field is
-$$
+<p>Let <span class="arithmatex">\(r=\|x\|\)</span> and <span class="arithmatex">\(r_0(t)=1.7+0.2\sin(2\pi t)\)</span>. The vector field is</p>
+<div class="arithmatex">\[
 v(x,t) \;=\; 0.8\,(r_0(t)-r)\,\frac{x}{r} \;+\; 1.5\,R x.
-$$</p>
+\]</div>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">_ring</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">t</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
 <a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>    <span class="n">r</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdim</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">clamp_min</span><span class="p">(</span><span class="mf">1e-4</span><span class="p">)</span>
 <a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>    <span class="n">ring_r</span> <span class="o">=</span> <span class="mf">1.7</span> <span class="o">+</span> <span class="mf">0.2</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">t</span><span class="p">)</span>
@@ -992,10 +992,10 @@ $$</p>
 <p>This field contracts points vertically onto a target graph <span class="arithmatex">\(y^\*(x)=\tanh(2.2x)\)</span>, adds constant drift in <span class="arithmatex">\(x\)</span>, and adds a small vertical bending term.</p>
 <video controls src="../assets/vidoes/HC_Curve.mov"></video>
 
-<p>Writing <span class="arithmatex">\(x=(x,y)\)</span>, the field is
-$$
+<p>Writing <span class="arithmatex">\(x=(x,y)\)</span>, the field is</p>
+<div class="arithmatex">\[
 v(x,y) = \Bigl(0.35,\ 1.25\bigl(\tanh(2.2x)-y\bigr) + 0.4\sin(2.5x)\Bigr).
-$$</p>
+\]</div>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">_s_curve</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">_t</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
 <a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>    <span class="n">target_y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tanh</span><span class="p">(</span><span class="mf">2.2</span> <span class="o">*</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">])</span>
 <a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>    <span class="n">to_curve</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">((</span><span class="n">torch</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">target_y</span><span class="p">),</span> <span class="n">target_y</span> <span class="o">-</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]),</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="mf">1.25</span>
@@ -1019,13 +1019,13 @@ $$</p>
 <li><strong>ODE integrators (Euler/RK4):</strong> <code>ode.py</code></li>
 </ul>
 <h4 id="1-what-is-the-model">1) What is the model?<a class="headerlink" href="#1-what-is-the-model" title="Permanent link">&para;</a></h4>
-<p>In <code>learned.py</code>, the model <code>VelocityMLP</code> implements a map
-$$
+<p>In <code>learned.py</code>, the model <code>VelocityMLP</code> implements a map</p>
+<div class="arithmatex">\[
 v_\theta:\ \mathbb{R}^2\times[0,1)\to\mathbb{R}^2,
 \qquad
 v_\theta(x,t)=\mathrm{MLP}_\theta([x,y,t]).
-$$
-At inference time, the scalar <span class="arithmatex">\(t\)</span> is broadcast to shape <span class="arithmatex">\([N,1]\)</span> to match a batch of <span class="arithmatex">\(N\)</span> particles, and wrapped with <span class="arithmatex">\(t\mapsto t\bmod 1\)</span> to keep it in <span class="arithmatex">\([0,1)\)</span>.</p>
+\]</div>
+<p>At inference time, the scalar <span class="arithmatex">\(t\)</span> is broadcast to shape <span class="arithmatex">\([N,1]\)</span> to match a batch of <span class="arithmatex">\(N\)</span> particles, and wrapped with <span class="arithmatex">\(t\mapsto t\bmod 1\)</span> to keep it in <span class="arithmatex">\([0,1)\)</span>.</p>
 <h4 id="2-how-is-it-trained">2) How is it trained?<a class="headerlink" href="#2-how-is-it-trained" title="Permanent link">&para;</a></h4>
 <p>The training in <code>rf_two_moons.py</code> is “RF-style” straight-line supervision:</p>
 <ul>
@@ -1037,19 +1037,19 @@ At inference time, the scalar <span class="arithmatex">\(t\)</span> is broadcast
 </ul>
 <p><img src="../assets/figures/FB-fiq1.png" alt="Target samples p_data" width="450" /></p>
 <p>The figure above shows what the target samples <span class="arithmatex">\(x_1\sim p_{\mathrm{data}}\)</span> look like in practice (i.e. the distribution that the model is trained to transport to).</p>
-<p>Then <span class="arithmatex">\(\theta\)</span> is fit by mean-squared error
-$$
-\min_\theta\ \mathbb{E}\bigl[\ |v_\theta(x_t,t) - (x_1-x_0)|^2\ \bigr],
-$$
-where the expectation is over the sampling procedure above.</p>
+<p>Then <span class="arithmatex">\(\theta\)</span> is fit by mean-squared error</p>
+<div class="arithmatex">\[
+\min_\theta\ \mathbb{E}\bigl[\ \|v_\theta(x_t,t) - (x_1-x_0)\|^2\ \bigr],
+\]</div>
+<p>where the expectation is over the sampling procedure above.</p>
 <h4 id="3-how-is-the-checkpoint-loaded">3) How is the checkpoint loaded?<a class="headerlink" href="#3-how-is-the-checkpoint-loaded" title="Permanent link">&para;</a></h4>
 <p>The backend route <code>POST /model/load</code> in <code>app.py</code> dispatches into <code>state.py</code>, which calls the <code>LearnedField.load(...)</code> wrapper in <code>learned.py</code> to construct the MLP (with the saved hyperparameters such as width/depth), load the <code>state_dict</code>, and set <code>eval()</code> mode.</p>
 <h4 id="4-how-is-learned-used-in-the-simulator-loop">4) How is <code>learned</code> used in the simulator loop?<a class="headerlink" href="#4-how-is-learned-used-in-the-simulator-loop" title="Permanent link">&para;</a></h4>
-<p>Each simulation tick in <code>state.py</code> selects a velocity function based on the current <code>mode</code>. If <code>mode=learned</code> and a checkpoint has been loaded, it uses the learned field <span class="arithmatex">\(v_\theta(x,t)\)</span>; otherwise it falls back to <code>handcrafted.py</code>. Either way, the state is advanced by the shared ODE integrators in <code>ode.py</code> by stepping
-$$
+<p>Each simulation tick in <code>state.py</code> selects a velocity function based on the current <code>mode</code>. If <code>mode=learned</code> and a checkpoint has been loaded, it uses the learned field <span class="arithmatex">\(v_\theta(x,t)\)</span>; otherwise it falls back to <code>handcrafted.py</code>. Either way, the state is advanced by the shared ODE integrators in <code>ode.py</code> by stepping</p>
+<div class="arithmatex">\[
 \dot x(t) = v_\theta(x(t), t)
-$$
-with the chosen solver (Euler/RK4).</p>
+\]</div>
+<p>with the chosen solver (Euler/RK4).</p>
 <video controls src="../assets/vidoes/Le_PS5c.mov"></video>
 
 
