@@ -3,7 +3,10 @@
 
 window.MathJax = {
   tex: {
-    inlineMath: [["\\(", "\\)"]],
+    inlineMath: [
+      ["\\(", "\\)"],
+      ["$", "$"],
+    ],
     // pymdownx.arithmatex (generic=true) commonly emits display math as \[...\].
     // Accept both \[...\] and $$...$$ to be robust to authoring styles.
     displayMath: [
