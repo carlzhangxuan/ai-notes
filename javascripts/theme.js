@@ -80,7 +80,7 @@
   }
 
   function resolveTheme() {
-    return getStoredTheme() || getSystemTheme();
+    return getStoredTheme() || THEME_DARK;
   }
 
   function mountStyle() {
@@ -141,6 +141,9 @@
   }
 
   function bootstrapTheme() {
+    if (!hasStoredPreference()) {
+      setStoredTheme(THEME_DARK);
+    }
     mountStyle();
     ensureToggleButton();
     applyTheme(resolveTheme());
