@@ -43,6 +43,7 @@
   }
 
   function getSystemTheme() {
+    if (!window.matchMedia) return THEME_LIGHT;
     return window.matchMedia(DARK_QUERY).matches ? THEME_DARK : THEME_LIGHT;
   }
 
@@ -145,11 +146,30 @@
     applyTheme(resolveTheme());
   }
 
+  function onPageChange(callback) {
+    if (typeof window.document$ !== "undefined" && typeof window.document$.subscribe === "function") {
+      window.document$.subscribe(callback);
+      return;
+    }
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", callback, { once: true });
+      return;
+    }
+    callback();
+  }
+
   // Follow system theme only when the user hasn't explicitly chosen one.
-  const media = window.matchMedia(DARK_QUERY);
-  media.addEventListener("change", function () {
-    if (!hasStoredPreference()) applyTheme(getSystemTheme());
-  });
+  if (window.matchMedia) {
+    const media = window.matchMedia(DARK_QUERY);
+    const onMediaChange = function () {
+      if (!hasStoredPreference()) applyTheme(getSystemTheme());
+    };
+    if (typeof media.addEventListener === "function") {
+      media.addEventListener("change", onMediaChange);
+    } else if (typeof media.addListener === "function") {
+      media.addListener(onMediaChange);
+    }
+  }
 
   // Optional reset hook in devtools: window.__aiResetTheme()
   window.__aiResetTheme = function () {
@@ -157,7 +177,7 @@
     applyTheme(getSystemTheme());
   };
 
-  document$.subscribe(() => {
+  onPageChange(() => {
     bootstrapTheme();
   });
 })();
