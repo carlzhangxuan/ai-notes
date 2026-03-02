@@ -560,6 +560,28 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#5-training-vs-ode-sampling-what-is-different" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5) Training vs. ODE sampling: what is different?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-why-use-two-points-in-training-can-one-point-be-enough" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6) Why use two points in training? Can one point be enough?
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -903,6 +925,28 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#5-training-vs-ode-sampling-what-is-different" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5) Training vs. ODE sampling: what is different?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-why-use-two-points-in-training-can-one-point-be-enough" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6) Why use two points in training? Can one point be enough?
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1109,6 +1153,20 @@ v_\theta(x,t)=\mathrm{MLP}_\theta([x,y,t]).
 <p>with the chosen solver (Euler/RK4).</p>
 <video controls src="../assets/vidoes/Le_PS5c.mov"></video>
 
+<h4 id="5-training-vs-ode-sampling-what-is-different">5) Training vs. ODE sampling: what is different?<a class="headerlink" href="#5-training-vs-ode-sampling-what-is-different" title="Permanent link">&para;</a></h4>
+<p>They use the same neural field <span class="arithmatex">\(v_\theta(x,t)\)</span>, but the objectives and data flow are different:</p>
+<ul>
+<li><strong>Training (supervised fitting):</strong> sample mini-batches of <span class="arithmatex">\((x_0,x_1,t)\)</span>, build <span class="arithmatex">\(x_t=(1-t)x_0+t x_1\)</span>, then update <span class="arithmatex">\(\theta\)</span> by minimizing MSE between <span class="arithmatex">\(v_\theta(x_t,t)\)</span> and the target <span class="arithmatex">\(x_1-x_0\)</span>.</li>
+<li><strong>Sampling / simulation (ODE solve):</strong> freeze <span class="arithmatex">\(\theta\)</span>, choose initial particles <span class="arithmatex">\(x(0)\)</span>, and numerically integrate <span class="arithmatex">\(\dot x(t)=v_\theta(x(t),t)\)</span> from <span class="arithmatex">\(t=0\)</span> to <span class="arithmatex">\(t=1\)</span> (Euler/RK4). No gradient update happens here.</li>
+</ul>
+<p>So training learns the vector field parameters; ODE sampling only applies the learned field to transport particles.</p>
+<h4 id="6-why-use-two-points-in-training-can-one-point-be-enough">6) Why use two points in training? Can one point be enough?<a class="headerlink" href="#6-why-use-two-points-in-training-can-one-point-be-enough" title="Permanent link">&para;</a></h4>
+<p>In this RF-style objective, two endpoints are essential:</p>
+<ul>
+<li>We need a <strong>source point</strong> <span class="arithmatex">\(x_0\sim p_0\)</span> and a <strong>target point</strong> <span class="arithmatex">\(x_1\sim p_{\mathrm{data}}\)</span> to define the bridge state <span class="arithmatex">\(x_t=(1-t)x_0+t x_1\)</span>.</li>
+<li>The supervision target is <span class="arithmatex">\(v_{\mathrm{target}}=x_1-x_0\)</span>, which explicitly depends on both endpoints.</li>
+</ul>
+<p>If we only had one point (for example only <span class="arithmatex">\(x_t\)</span> or only <span class="arithmatex">\(x_1\)</span>), the training target is not identifiable in this formulation: many different velocities can pass through the same single point at time <span class="arithmatex">\(t\)</span>. The pair <span class="arithmatex">\((x_0,x_1)\)</span> provides the directional transport signal needed to learn a consistent field.</p>
 <h2 id="2-diffusion-models">2. Diffusion Models<a class="headerlink" href="#2-diffusion-models" title="Permanent link">&para;</a></h2>
 <p>Diffusion models define a stochastic forward process that gradually perturbs data and a learned reverse process that transports noise back to data.</p>
 <p>In a common variance-preserving formulation, the forward SDE is</p>
