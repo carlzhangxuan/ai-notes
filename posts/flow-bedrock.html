@@ -28,7 +28,6 @@
     
     
       <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
-      <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
       
       
 
@@ -507,6 +506,17 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#0-why-load-two-models-and-what-is-the-difference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0) Why load two models, and what is the difference?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#1-what-is-the-model" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -557,6 +567,17 @@
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-diffusion-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Diffusion Models
+      
+    </span>
+  </a>
   
 </li>
       
@@ -828,6 +849,17 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#0-why-load-two-models-and-what-is-the-difference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0) Why load two models, and what is the difference?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#1-what-is-the-model" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -878,6 +910,17 @@
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-diffusion-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Diffusion Models
+      
+    </span>
+  </a>
   
 </li>
       
@@ -942,7 +985,7 @@ R x = (-y, x).
 \]</div>
 <h4 id="two-moons-two_moons">Two Moons (<code>two_moons</code>)<a class="headerlink" href="#two-moons-two_moons" title="Permanent link">&para;</a></h4>
 <p>This field projects each point to the nearer of two fixed semicircular arcs (“moons”), pulls it toward that arc, and adds a mild swirl to encourage motion along the arc.</p>
-<video controls src="../assets/vidoes/HC_2moons.mp4"></video>
+<video controls src="../assets/vidoes/HC_2moons.mov"></video>
 
 <p>Mathematically, it is well-approximated by</p>
 <div class="arithmatex">\[
@@ -973,7 +1016,7 @@ v(x,t) \;=\; \alpha\bigl(P_{\mathrm{moon}}(x)-x\bigr) + \beta(t)\,R x,
 - <code>swirl</code> is tangential-ish motion that prevents purely radial collapse and helps spread mass along the arcs.</p>
 <h4 id="ring-ring">Ring (<code>ring</code>)<a class="headerlink" href="#ring-ring" title="Permanent link">&para;</a></h4>
 <p>This field stabilizes the radius around a (slightly time-varying) target radius and adds a strong tangential rotation.</p>
-<video controls src="../assets/vidoes/HC_Circle.mp4"></video>
+<video controls src="../assets/vidoes/HC_Circle.mov"></video>
 
 <p>Let <span class="arithmatex">\(r=\|x\|\)</span> and <span class="arithmatex">\(r_0(t)=1.7+0.2\sin(2\pi t)\)</span>. The vector field is</p>
 <div class="arithmatex">\[
@@ -991,7 +1034,7 @@ v(x,t) \;=\; 0.8\,(r_0(t)-r)\,\frac{x}{r} \;+\; 1.5\,R x.
 - the second term is (approximately) tangential rotation, which preserves radius and circulates mass along the ring.</p>
 <h4 id="s-curve-s_curve">S-Curve (<code>s_curve</code>)<a class="headerlink" href="#s-curve-s_curve" title="Permanent link">&para;</a></h4>
 <p>This field contracts points vertically onto a target graph <span class="arithmatex">\(y^\*(x)=\tanh(2.2x)\)</span>, adds constant drift in <span class="arithmatex">\(x\)</span>, and adds a small vertical bending term.</p>
-<video controls src="../assets/vidoes/HC_Curve.mp4"></video>
+<video controls src="../assets/vidoes/HC_Curve.mov"></video>
 
 <p>Writing <span class="arithmatex">\(x=(x,y)\)</span>, the field is</p>
 <div class="arithmatex">\[
@@ -1019,6 +1062,19 @@ v(x,y) = \Bigl(0.35,\ 1.25\bigl(\tanh(2.2x)-y\bigr) + 0.4\sin(2.5x)\Bigr).
 <li><strong>Simulator mode switch + ODE calls:</strong> <code>state.py</code></li>
 <li><strong>ODE integrators (Euler/RK4):</strong> <code>ode.py</code></li>
 </ul>
+<h4 id="0-why-load-two-models-and-what-is-the-difference">0) Why load two models, and what is the difference?<a class="headerlink" href="#0-why-load-two-models-and-what-is-the-difference" title="Permanent link">&para;</a></h4>
+<p>In practice, the simulator supports two model families with different roles:</p>
+<ul>
+<li><strong>Hand-crafted model (<code>mode=handcrafted</code>)</strong>: no checkpoint is needed. The velocity field is explicitly written in <code>handcrafted.py</code> (two_moons/ring/s_curve), mainly for interpretability and controlled geometry.</li>
+<li><strong>Learned model (<code>mode=learned</code>)</strong>: a checkpoint must be loaded first. The velocity comes from <code>VelocityMLP</code> in <code>learned.py</code>, trained from sampled pairs <span class="arithmatex">\((x_0,x_1)\)</span>, and is used when we want data-driven transport rather than manually designed fields.</li>
+</ul>
+<p>So “load model” is specifically for the learned branch. Typical workflow is:</p>
+<ol>
+<li>Train one or more learned checkpoints (often one per target distribution).</li>
+<li><code>POST /model/load</code> to load a selected checkpoint into runtime.</li>
+<li>Switch <code>mode=learned</code> and run Euler/RK4 integration.</li>
+<li>Switch back to <code>mode=handcrafted</code> to compare against analytic vector fields under the same solver settings.</li>
+</ol>
 <h4 id="1-what-is-the-model">1) What is the model?<a class="headerlink" href="#1-what-is-the-model" title="Permanent link">&para;</a></h4>
 <p>In <code>learned.py</code>, the model <code>VelocityMLP</code> implements a map</p>
 <div class="arithmatex">\[
@@ -1051,7 +1107,29 @@ v_\theta(x,t)=\mathrm{MLP}_\theta([x,y,t]).
 \dot x(t) = v_\theta(x(t), t)
 \]</div>
 <p>with the chosen solver (Euler/RK4).</p>
-<video controls src="../assets/vidoes/Le_PS5c.mp4"></video>
+<video controls src="../assets/vidoes/Le_PS5c.mov"></video>
+
+<h2 id="2-diffusion-models">2. Diffusion Models<a class="headerlink" href="#2-diffusion-models" title="Permanent link">&para;</a></h2>
+<p>Diffusion models define a stochastic forward process that gradually perturbs data and a learned reverse process that transports noise back to data.</p>
+<p>In a common variance-preserving formulation, the forward SDE is</p>
+<div class="arithmatex">\[
+d x_t = f(x_t,t)\,dt + g(t)\,dW_t,\qquad t\in[0,1],\ x_t\in\mathbb{R}^d,
+\]</div>
+<p>with <span class="arithmatex">\(W_t\)</span> a standard Wiener process. The marginal density <span class="arithmatex">\(p_t\)</span> evolves by the Fokker-Planck equation</p>
+<div class="arithmatex">\[
+\partial_t p_t(x) = -\nabla\!\cdot\!\bigl(f(x,t)p_t(x)\bigr) + \frac{1}{2}\nabla\!\cdot\!\nabla\!\cdot\!\bigl((g(t)g(t)^\top)p_t(x)\bigr).
+\]</div>
+<p>Sampling uses a reverse-time dynamics parameterized by a score model <span class="arithmatex">\(s_\theta(x,t)\approx \nabla_x \log p_t(x)\)</span>. A widely used reverse SDE form is</p>
+<div class="arithmatex">\[
+d x_t = \Bigl(f(x_t,t)-g(t)^2 s_\theta(x_t,t)\Bigr)dt + g(t)\,d\bar W_t,
+\]</div>
+<p>where <span class="arithmatex">\(\bar W_t\)</span> denotes Brownian motion in reverse-time simulation coordinates.</p>
+<p>There is also a deterministic probability-flow ODE with the same marginals <span class="arithmatex">\(p_t\)</span>:</p>
+<div class="arithmatex">\[
+\dot x_t = f(x_t,t) - \frac{1}{2}g(t)^2 \nabla_x \log p_t(x_t).
+\]</div>
+<p>This connection is the key bridge to this project: our simulator is ODE-based, so it most directly visualizes flow fields and probability-flow-style transport, while the full diffusion model also includes stochastic sample-path effects from the SDE term.</p>
+<video controls src="../assets/vidoes/Le_SDE_PS5c.mov"></video>
 
 
 
@@ -1105,7 +1183,6 @@ v_\theta(x,t)=\mathrm{MLP}_\theta([x,y,t]).
     
     
       <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
-      <script src="../javascripts/theme.js"></script>
       
         <script src="../javascripts/mathjax.js"></script>
       
