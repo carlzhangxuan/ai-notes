@@ -1,0 +1,1809 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="flow-bedrock.html">
+      
+      
+        <link rel="next" href="mathematics-foundation.html">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Flow Bedrock V2 - AI Notes</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#flow-bedrock" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../index.html" title="AI Notes" class="md-header__button md-logo" aria-label="AI Notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            AI Notes
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Flow Bedrock V2
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../index.html" title="AI Notes" class="md-nav__button md-logo" aria-label="AI Notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    AI Notes
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Posts
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Posts
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="diffusion-models-intro.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diffusion Models Intro
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="introduction-C-compare-and-code.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diffusion — Compare and Code
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="introduction-B-flow-matching.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diffusion — Flow Matching
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="flow-bedrock.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Flow Bedrock
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Flow Bedrock V2
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="flow-bedrock-v2.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Flow Bedrock V2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-on-the-screen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What is on the screen?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-flow-matching" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Flow Matching
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Flow Matching">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-hand-crafted-velocity-field-ring" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 Hand-Crafted Velocity Field: Ring
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-learned-velocity-field-a-ps5-like-outline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2 Learned Velocity Field: A PS5-Like Outline
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.2 Learned Velocity Field: A PS5-Like Outline">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#training-construct-a-path-and-regress-its-velocity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Training: Construct a Path and Regress Its Velocity
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generation-integrate-the-frozen-field" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Generation: Integrate the Frozen Field
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-stochastic-paths-with-the-same-time-marginals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3 Stochastic Paths with the Same Time Marginals
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.3 Stochastic Paths with the Same Time Marginals">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#add-noise-and-compensate-for-its-effect" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Add Noise and Compensate for Its Effect
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#learn-the-score-of-the-entire-path" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Learn the Score of the Entire Path
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-recorded-stochastic-demo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Recorded Stochastic Demo
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-golden-ring-conditional-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Golden Ring: Conditional Control
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Golden Ring: Conditional Control">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-from-a-coloured-image-to-a-target-distribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 From a Coloured Image to a Target Distribution
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-four-target-laws-in-one-coordinate-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 Four Target Laws in One Coordinate System
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-learn-a-conditional-velocity-field" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 Learn a Conditional Velocity Field
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24-the-label-changes-the-entire-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4 The Label Changes the Entire Flow
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25-what-the-cfg-scale-means" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5 What the CFG Scale Means
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-probability-transport-in-3d" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Probability Transport in 3D
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Probability Transport in 3D">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-the-same-objective-in-three-coordinates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 The Same Objective in Three Coordinates
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-trefoil-a-tube-around-a-knotted-curve" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 Trefoil: A Tube Around a Knotted Curve
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-swiss-roll-a-thickened-surface" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 Swiss Roll: A Thickened Surface
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34-double-helix-two-thick-strands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.4 Double Helix: Two Thick Strands
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#35-what-the-recordings-demonstrate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.5 What the Recordings Demonstrate
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="mathematics-foundation.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diffusion — Mathematics Foundation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="interlude-alpha-year-1757.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diffusion — Interlude α (1757)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="introduction-beta-CFM-and-ELBO.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diffusion — CFM and ELBO
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="transformer.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Transformer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="vit-dit.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ViT and DiT
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-on-the-screen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What is on the screen?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-flow-matching" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Flow Matching
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Flow Matching">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-hand-crafted-velocity-field-ring" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 Hand-Crafted Velocity Field: Ring
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-learned-velocity-field-a-ps5-like-outline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2 Learned Velocity Field: A PS5-Like Outline
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.2 Learned Velocity Field: A PS5-Like Outline">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#training-construct-a-path-and-regress-its-velocity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Training: Construct a Path and Regress Its Velocity
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generation-integrate-the-frozen-field" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Generation: Integrate the Frozen Field
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-stochastic-paths-with-the-same-time-marginals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3 Stochastic Paths with the Same Time Marginals
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.3 Stochastic Paths with the Same Time Marginals">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#add-noise-and-compensate-for-its-effect" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Add Noise and Compensate for Its Effect
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#learn-the-score-of-the-entire-path" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Learn the Score of the Entire Path
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-recorded-stochastic-demo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Recorded Stochastic Demo
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-golden-ring-conditional-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Golden Ring: Conditional Control
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Golden Ring: Conditional Control">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-from-a-coloured-image-to-a-target-distribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 From a Coloured Image to a Target Distribution
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-four-target-laws-in-one-coordinate-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 Four Target Laws in One Coordinate System
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-learn-a-conditional-velocity-field" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 Learn a Conditional Velocity Field
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24-the-label-changes-the-entire-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4 The Label Changes the Entire Flow
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25-what-the-cfg-scale-means" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5 What the CFG Scale Means
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-probability-transport-in-3d" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Probability Transport in 3D
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Probability Transport in 3D">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-the-same-objective-in-three-coordinates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 The Same Objective in Three Coordinates
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-trefoil-a-tube-around-a-knotted-curve" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 Trefoil: A Tube Around a Knotted Curve
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-swiss-roll-a-thickened-surface" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 Swiss Roll: A Thickened Surface
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34-double-helix-two-thick-strands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.4 Double Helix: Two Thick Strands
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#35-what-the-recordings-demonstrate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.5 What the Recordings Demonstrate
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="flow-bedrock">Flow Bedrock<a class="headerlink" href="#flow-bedrock" title="Permanent link">&para;</a></h1>
+<p>This note documents a small ODE-based simulator I built to develop intuition for <em>flow models</em> (continuous normalizing flows / flow matching) and their relationship to <em>diffusion models</em> (typically defined via SDEs), with this update adding conditional control and 3D probability transport.</p>
+<p>In deterministic mode, the simulator evolves particles under a time-dependent velocity field by numerically integrating an ODE. Each particle has a position <span class="arithmatex">\(X_t\in\mathbb{R}^d\)</span>, where <span class="arithmatex">\(d=2\)</span> for the 2D demos and <span class="arithmatex">\(d=3\)</span> for the 3D demos. Learned sampling runs from noise at <span class="arithmatex">\(t=0\)</span> to the target at <span class="arithmatex">\(t=1\)</span>:</p>
+<div class="arithmatex">\[
+\frac{\mathrm{d}X_t}{\mathrm{d}t}=v(X_t,t),
+\qquad t\in[0,1],
+\qquad X_0\sim\mathcal{N}(0,I_d).
+\tag{1}
+\]</div>
+<p>The velocity field can be specified by hand or learned from data. In the conditional demo, the learned field also takes a control label <span class="arithmatex">\(c\)</span> as input, so the velocity becomes <span class="arithmatex">\(v_\theta(X_t,t,c)\)</span>. The label is held fixed throughout each sampling run.</p>
+<p>The analytic ring can continue beyond <span class="arithmatex">\(t=1\)</span>. The stochastic mode adds Brownian motion and a score correction to the learned flow, as described in Section 1.3.</p>
+<p>It is primarily a visualization tool: trajectories and particle clouds make the abstract objects in the math (vector fields, marginal distributions, and couplings between source and target distributions) easier to reason about.</p>
+<ul>
+<li><strong>Particles as data samples.</strong> In the simulator, each particle is one sample <span class="arithmatex">\(x\in\mathbb{R}^d\)</span>. In a larger generative model, a sample may represent an image, an audio segment, a motion sequence, or another object encoded as numerical data or a latent representation. Diffusion and flow models are not limited to images. The animation shows the evolution of a population of samples; a visible particle is not a pixel or a semantic part of a generated object.</li>
+<li><strong>Toy shapes as structured distributions.</strong> The 2D examples are an analytic ring, a learned PS5-like outline, and a learned Golden Ring pattern. Their point clouds concentrate around geometric structures with nonzero width. The Golden Ring pattern includes overlapping rings and image-derived texture, giving it more structure than a single smooth one-dimensional manifold. In 3D, the sampled targets likewise have nonzero thickness around spatial structures. In the learned examples, the model fits a probability distribution, including how mass is distributed around these shapes.</li>
+<li><strong>Analogy to real data.</strong> High-dimensional data can exhibit structure and correlations that concentrate probability mass near lower-dimensional subsets. This is a useful modeling perspective, not an assumption required by flow matching. Training learns a velocity field (or, in diffusion, a score or denoiser) from the data distribution. A finite-time ODE flow with a smooth flow map and smooth inverse preserves absolute continuity and cannot map a full-dimensional source density exactly onto a strictly lower-dimensional set; finite-thickness targets avoid implying such an exact collapse.</li>
+<li><strong>Conditional generation as control.</strong> Conditional models learn a distribution <span class="arithmatex">\(p_{\mathrm{data}}(x\mid c)\)</span>. In this demo, a ring label specifies a target conditional distribution and enters the learned velocity field during integration; it is not a filter applied to the completed particle cloud. Text-conditioned models use a representation of a prompt as the condition, while other applications may use class labels or other information. The shared mechanism is that the condition changes the generation dynamics. The demo's discrete ring labels illustrate this mechanism without implementing language understanding, and extending the state from 2D to 3D leaves the ODE formulation unchanged.</li>
+</ul>
+<h2 id="what-is-on-the-screen">What is on the screen?<a class="headerlink" href="#what-is-on-the-screen" title="Permanent link">&para;</a></h2>
+<p>Each visible point is one sample <span class="arithmatex">\(X_t\in\mathbb{R}^d\)</span>, with <span class="arithmatex">\(d=2\)</span> or <span class="arithmatex">\(d=3\)</span>. The complete particle
+cloud is a finite empirical approximation to a probability distribution at time
+<span class="arithmatex">\(t\)</span>.</p>
+<p>The recorded 2D demos use:</p>
+<table>
+<thead>
+<tr>
+<th>Control</th>
+<th style="text-align: right;">Value</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>n_sim</code></td>
+<td style="text-align: right;">100,000</td>
+<td>particles advanced by the backend</td>
+</tr>
+<tr>
+<td><code>n_vis</code></td>
+<td style="text-align: right;">10,000</td>
+<td>particles sampled and sent to the browser</td>
+</tr>
+<tr>
+<td><code>dt</code></td>
+<td style="text-align: right;">0.01</td>
+<td>simulated time advanced per backend update</td>
+</tr>
+<tr>
+<td><code>steps</code></td>
+<td style="text-align: right;">2</td>
+<td>numerical substeps per update</td>
+</tr>
+<tr>
+<td><code>h</code></td>
+<td style="text-align: right;">0.005</td>
+<td>substep size, <span class="arithmatex">\(h=\texttt{dt}/\texttt{steps}\)</span></td>
+</tr>
+<tr>
+<td><code>hz</code></td>
+<td style="text-align: right;">15</td>
+<td>requested backend update rate</td>
+</tr>
+</tbody>
+</table>
+<p>The backend evolves all 100,000 particles on an NVIDIA RTX 5090. Only 10,000
+particles are streamed to the browser. The <code>stream</code> number in the HUD is the
+measured backend broadcast rate; it is not the browser's rendering FPS.</p>
+<p>The optional density layer is computed from the displayed subsample. It is a
+binned, log-scaled visualization, not an exact normalized density.</p>
+<h2 id="1-flow-matching">1. Flow Matching<a class="headerlink" href="#1-flow-matching" title="Permanent link">&para;</a></h2>
+<h3 id="11-hand-crafted-velocity-field-ring">1.1 Hand-Crafted Velocity Field: Ring<a class="headerlink" href="#11-hand-crafted-velocity-field-ring" title="Permanent link">&para;</a></h3>
+<p>The first stage uses an analytic vector field. No neural network or checkpoint is
+involved.</p>
+<p>For <span class="arithmatex">\(x=(x_1,x_2)\in\mathbb{R}^2\)</span>, define</p>
+<div class="arithmatex">\[
+r=\lVert x\rVert_2,
+\qquad
+\rho=\max(r,10^{-4}),
+\qquad
+r_\star(t)=1.7+0.2\sin(2\pi t).
+\tag{2}
+\]</div>
+<p>The implemented ring field is</p>
+<div class="arithmatex">\[
+u_t(x)
+=0.8\bigl(r_\star(t)-\rho\bigr)
+\frac{x}{\rho}
++1.5
+\begin{bmatrix}
+-x_2\\
+x_1
+\end{bmatrix}.
+\tag{3}
+\]</div>
+<p>The first term is radial negative feedback. For nonzero points inside the target radius, it pushes
+particles outward; outside that radius, it pulls them inward. The origin remains fixed. The second term
+is tangent to circles centered at the origin, so it rotates particles.</p>
+<p>The simulator solves the ordinary differential equation</p>
+<div class="arithmatex">\[
+\frac{\mathrm{d}X_t}{\mathrm{d}t}=u_t(X_t).
+\tag{4}
+\]</div>
+<p>For a fixed time <span class="arithmatex">\(t\)</span>, the ideal circle</p>
+<div class="arithmatex">\[
+\mathcal{M}_t=\{x\in\mathbb{R}^2:\lVert x\rVert_2=r_\star(t)\}
+\tag{5}
+\]</div>
+<p>is a smooth one-dimensional manifold embedded in <span class="arithmatex">\(\mathbb{R}^2\)</span>. This makes the ring a useful geometric baseline: its ideal shape is simpler than a textured outline or a pattern of intersecting rings.</p>
+<p>Along a particle trajectory, write <span class="arithmatex">\(r_t=\lVert X_t\rVert_2\)</span>. Whenever <span class="arithmatex">\(r_t\ge10^{-4}\)</span>, the ODE implies</p>
+<div class="arithmatex">\[
+\frac{\mathrm{d}r_t}{\mathrm{d}t}=0.8\bigl(r_\star(t)-r_t\bigr).
+\tag{6}
+\]</div>
+<p>The field attracts particles toward the target radius, but does not bring the entire cloud exactly onto it in a finite run. Since the target radius changes with time, particles also show a tracking lag: at <span class="arithmatex">\(r_t=r_\star(t)\)</span>, their instantaneous radial velocity is zero even while the target circle may be expanding or shrinking. The animation shows a distribution with radial spread around the ideal circle. A smooth, invertible ODE flow cannot collapse a full-dimensional Gaussian distribution exactly onto a one-dimensional circle in finite time.</p>
+<video controls src="../assets/vidoes/flow-bedrock-v2-analytic-ring.mp4"></video>
+
+<p>The video uses RK4 to integrate this hand-designed field, showing radial attraction together with tangential rotation.</p>
+<h3 id="12-learned-velocity-field-a-ps5-like-outline">1.2 Learned Velocity Field: A PS5-Like Outline<a class="headerlink" href="#12-learned-velocity-field-a-ps5-like-outline" title="Permanent link">&para;</a></h3>
+<p>The ring example writes geometric rules directly into a velocity field. For the PS5-like controller outline, we instead learn a field <span class="arithmatex">\(v_\theta:\mathbb{R}^2\times[0,1]\to\mathbb{R}^2\)</span> from target samples.</p>
+<p>The target is a distribution of two-dimensional coordinates representing a controller outline. The PS5 checkpoint uses a preprocessed point set derived from the outline; the sampler centers and scales these coordinates, then draws target points with Gaussian jitter. The image below shows the reference shape:</p>
+<p><img alt="PS5-like controller outline used as the reference target geometry" src="../assets/figures/FB-fiq1.png" /></p>
+<p>This reference outline illustrates the target geometry. Preprocessing produces a point set, and sampling defines the probability distribution around it. The picture alone does not specify how probability mass is assigned to the coordinates.</p>
+<p>The velocity network receives only a point and a time, and predicts a two-dimensional velocity. The PS5 checkpoint uses an MLP with four hidden layers of width 256 and SiLU activations, taking three scalars <span class="arithmatex">\((x_1,x_2,t)\)</span> as input and returning two velocity components. The mask and its preprocessing settings are not network inputs.</p>
+<p>The visible point cloud forms a recognizable outline, but each point remains one sample in <span class="arithmatex">\(\mathbb{R}^2\)</span>. With positive Gaussian jitter, the target has a two-dimensional density concentrated near the sampled outline. With zero jitter and a finite set of base coordinates, the sampler instead defines a discrete target law. This example learns coordinate statistics, rather than generating pixels or identifying the controller's semantic parts.</p>
+<h4 id="training-construct-a-path-and-regress-its-velocity">Training: Construct a Path and Regress Its Velocity<a class="headerlink" href="#training-construct-a-path-and-regress-its-velocity" title="Permanent link">&para;</a></h4>
+<p>Sample the source endpoint, target endpoint, and time independently:</p>
+<div class="arithmatex">\[
+X_0\sim\mathcal{N}(0,I_2),
+\qquad X_1\sim p_{\mathrm{data}},
+\qquad T\sim\operatorname{Uniform}[0,1].
+\tag{7}
+\]</div>
+<p>For a sampled endpoint pair, define the training path</p>
+<div class="arithmatex">\[
+Y_t=(1-t)X_0+tX_1,
+\qquad
+\frac{\mathrm{d}Y_t}{\mathrm{d}t}=X_1-X_0,
+\qquad t\in[0,1].
+\tag{8}
+\]</div>
+<p>The endpoints make the supervision easy to compute: the velocity along this particular straight path is simply their displacement. Training minimizes</p>
+<div class="arithmatex">\[
+\mathcal{L}_{\mathrm{RF}}(\theta)
+=\mathbb{E}\!\left[
+\left\lVert v_\theta(Y_T,T)-(X_1-X_0)\right\rVert_2^2
+\right].
+\tag{9}
+\]</div>
+<p>The expectation is over all three independent draws. Assuming finite second moments, the population-optimal predictor is</p>
+<div class="arithmatex">\[
+v^\star(x,t)
+=\mathbb{E}[X_1-X_0\mid Y_t=x],
+\tag{10}
+\]</div>
+<p>for each fixed <span class="arithmatex">\(t\)</span>, up to sets of zero probability under the law of <span class="arithmatex">\(Y_t\)</span>. Squared-error regression returns this conditional mean because its error decomposes into the predictor's squared distance from the conditional mean and a residual variance independent of the predictor.</p>
+<p>The endpoint pair is used to construct a training example; it is not supplied to the network. Many pairs can produce intermediate states near the same location and time, so the learned field averages their displacement information. Consequently, the straight training paths do not force generated trajectories to be straight.</p>
+<p>The following snippet shows one training step. <code>base_points</code> is a tensor of shape <code>[M, 2]</code> with <span class="arithmatex">\(M\ge1\)</span>, already centered and scaled; <code>jitter_std</code> is the positive standard deviation used by the target sampler. The model, tensors, and optimizer state use the same device:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># Draw independent source and target samples.</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="n">x0</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">idx</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="n">base_points</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">(</span><span class="n">batch_size</span><span class="p">,),</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="n">x1</span> <span class="o">=</span> <span class="n">base_points</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="n">x1</span> <span class="o">=</span> <span class="n">x1</span> <span class="o">+</span> <span class="n">jitter_std</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn_like</span><span class="p">(</span><span class="n">x1</span><span class="p">)</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="c1"># Build one intermediate state and its target velocity per pair.</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="n">t</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="n">yt</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">t</span><span class="p">)</span> <span class="o">*</span> <span class="n">x0</span> <span class="o">+</span> <span class="n">t</span> <span class="o">*</span> <span class="n">x1</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="n">target_velocity</span> <span class="o">=</span> <span class="n">x1</span> <span class="o">-</span> <span class="n">x0</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="n">predicted_velocity</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">yt</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="n">loss</span> <span class="o">=</span> <span class="p">(</span><span class="n">predicted_velocity</span> <span class="o">-</span> <span class="n">target_velocity</span><span class="p">)</span><span class="o">.</span><span class="n">square</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">(</span><span class="n">set_to_none</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+</code></pre></div>
+<p>The loss above matches the squared Euclidean norm in the formula. The implementation uses <code>nn.MSELoss()</code>, which averages over both samples and the two output coordinates, giving half this value. This constant factor leaves the population minimizer unchanged.</p>
+<h4 id="generation-integrate-the-frozen-field">Generation: Integrate the Frozen Field<a class="headerlink" href="#generation-integrate-the-frozen-field" title="Permanent link">&para;</a></h4>
+<p>After training, freeze the network and draw fresh Gaussian samples. Generation solves</p>
+<div class="arithmatex">\[
+\frac{\mathrm{d}\widehat{X}_t}{\mathrm{d}t}
+=v_\theta(\widehat{X}_t,t),
+\qquad
+\widehat{X}_0\sim\mathcal{N}(0,I_2),
+\qquad t\in[0,1].
+\tag{11}
+\]</div>
+<p>Here <span class="arithmatex">\(Y_t\)</span> denotes the constructed training interpolant, while <span class="arithmatex">\(\widehat{X}_t\)</span> denotes a trajectory obtained by integrating the learned field. No target endpoint is assigned to a generated particle, and no parameter update takes place during sampling. Unlike the continuously running analytic ring, this learned demo uses the checkpoint's time interval and stops at <span class="arithmatex">\(t=1\)</span>.</p>
+<p>Loading the checkpoint reconstructs the network and restores its weights. Sampling then runs with the model in evaluation mode and gradients disabled. At each RK4 substep, the solver queries the frozen network at several intermediate positions and times; it does not interpolate each particle toward a stored target point. Time advances through <span class="arithmatex">\([0,1]\)</span> and stops at the endpoint.</p>
+<p>The PS5 recording uses deterministic ODE sampling with RK4 and zero diffusion amplitude. With the initial seed and numerical settings fixed, replay compares the same initial samples under the same learned field. The final cloud approximates the training distribution; finite model capacity, optimization error, numerical integration, and finite sample size all limit agreement. A recognizable silhouette alone does not establish that the probability mass within the silhouette is correct.</p>
+<video controls src="../assets/vidoes/flow-bedrock-v2-ps5-ode.mp4"></video>
+
+<p>This video records the live particle canvas at 30 fps using the browser's <code>captureStream</code> and <code>MediaRecorder</code> APIs. It includes a parameter label drawn for the recording; the control panel and hardware HUD are separate page elements and are not captured. The particle positions come from the running backend simulation. The clip shows the Gaussian start, the learned transport, and a pause at the final outline.</p>
+<h3 id="13-stochastic-paths-with-the-same-time-marginals">1.3 Stochastic Paths with the Same Time Marginals<a class="headerlink" href="#13-stochastic-paths-with-the-same-time-marginals" title="Permanent link">&para;</a></h3>
+<p>The previous PS5 example transports Gaussian samples with a deterministic ODE. We now add random motion while aiming to retain the same evolving distributions. The cloud still develops into the controller outline, but individual samples follow noisy paths. This lets us compare deterministic and stochastic probability transport using the same target geometry.</p>
+<h4 id="add-noise-and-compensate-for-its-effect">Add Noise and Compensate for Its Effect<a class="headerlink" href="#add-noise-and-compensate-for-its-effect" title="Permanent link">&para;</a></h4>
+<p>Let <span class="arithmatex">\(p_t(x)\)</span> be the density of the training interpolant <span class="arithmatex">\(Y_t=(1-t)X_0+tX_1\)</span>, with <span class="arithmatex">\(x\in\mathbb{R}^2\)</span> and <span class="arithmatex">\(t\in[0,1]\)</span>. The velocity network approximates a field transporting this path; a second network estimates the score of the same path,</p>
+<div class="arithmatex">\[
+s_\phi(x,t)\approx s_t(x)=\nabla_x\log p_t(x).
+\tag{12}
+\]</div>
+<p>For a deterministic scalar diffusion schedule <span class="arithmatex">\(g(t)\)</span> that depends only on time, the demo integrates the Itô SDE</p>
+<div class="arithmatex">\[
+\mathrm{d}Z_t
+=\left[v_\theta(Z_t,t)+\frac{1}{2}g(t)^2s_\phi(Z_t,t)\right]\mathrm{d}t
++g(t)\,\mathrm{d}W_t,
+\qquad Z_0\sim\mathcal{N}(0,I_2),
+\tag{13}
+\]</div>
+<p>Here <span class="arithmatex">\(Z_t\in\mathbb{R}^2\)</span> denotes the stochastic sample, and <span class="arithmatex">\(W_t\)</span> is standard Brownian motion in <span class="arithmatex">\(\mathbb{R}^2\)</span>, independent of <span class="arithmatex">\(Z_0\)</span>. Adding noise alone would change the density evolution. The positive score correction is chosen to compensate for that diffusion at the level of one-time distributions.</p>
+<p>To see the cancellation, replace the learned fields by exact <span class="arithmatex">\(v_t\)</span> and <span class="arithmatex">\(s_t=\nabla_x\log p_t\)</span>, where <span class="arithmatex">\(v_t\)</span> satisfies the continuity equation for <span class="arithmatex">\(p_t\)</span>. With sufficiently smooth positive densities, suitable decay at infinity, and well-posed dynamics, the Fokker–Planck equation gives</p>
+<div class="arithmatex">\[
+\begin{aligned}
+\partial_t p_t
+&amp;=-\nabla\!\cdot\!\left[
+\left(v_t+\frac{1}{2}g^2\nabla\log p_t\right)p_t\right]
++\frac{1}{2}g^2\Delta p_t\\
+&amp;=-\nabla\!\cdot(v_t p_t).
+\end{aligned}
+\tag{14}
+\]</div>
+<p>The extra terms cancel because <span class="arithmatex">\((\nabla\log p_t)p_t=\nabla p_t\)</span> and <span class="arithmatex">\(g\)</span> is independent of position. Starting from the same source law, the exact ODE and this SDE therefore share the same density at every time. Their individual trajectories and path-space laws remain different. The endpoint distribution is the final member of this family of time marginals.</p>
+<h4 id="learn-the-score-of-the-entire-path">Learn the Score of the Entire Path<a class="headerlink" href="#learn-the-score-of-the-entire-path" title="Permanent link">&para;</a></h4>
+<p>The required score belongs to the evolving path, rather than only its endpoint. Because <span class="arithmatex">\(X_0\)</span> is standard Gaussian and independent of <span class="arithmatex">\(X_1\)</span>,</p>
+<div class="arithmatex">\[
+\begin{aligned}
+Y_t\mid X_1&amp;\sim\mathcal{N}\!\left(tX_1,(1-t)^2I_2\right),\\
+\left.\nabla_y\log p_t(y\mid X_1)\right|_{y=Y_t}
+&amp;=-\frac{X_0}{1-t},\qquad 0\le t&lt;1.
+\end{aligned}
+\tag{15}
+\]</div>
+<p>Averaging the conditional score given <span class="arithmatex">\(Y_t=y\)</span> yields the marginal score <span class="arithmatex">\(s_t(y)\)</span>. The path-score network uses the weighted regression objective</p>
+<div class="arithmatex">\[
+\mathcal{L}_{\mathrm{score}}(\phi)
+=\mathbb{E}\!\left[
+\left\lVert(1-T)s_\phi(Y_T,T)+X_0\right\rVert_2^2
+\right],
+\qquad T\sim\operatorname{Uniform}[0,0.99],
+\tag{16}
+\]</div>
+<p>with <span class="arithmatex">\(T\)</span> independent of both endpoints. The interval excludes the singular conditional-score limit at <span class="arithmatex">\(t=1\)</span>.</p>
+<h4 id="the-recorded-stochastic-demo">The Recorded Stochastic Demo<a class="headerlink" href="#the-recorded-stochastic-demo" title="Permanent link">&para;</a></h4>
+<p>The comparison video uses the same PS5 velocity checkpoint, seed 42, initial samples, and visible sample indices in both runs. Each run advances 100,000 samples and displays 10,000 of them. Three samples are highlighted in matching colours, with polylines joining their actual streamed positions. Their paths make the difference visible even when the overall clouds look similar.</p>
+<p>The left panel uses the deterministic ODE with Euler integration. The right panel adds the path-score correction and random increments, using Euler–Maruyama and the diffusion amplitude</p>
+<div class="arithmatex">\[
+g(t)=
+\begin{cases}
+0.6\left(1-\dfrac{t}{0.99}\right),&amp;0\le t&lt;0.99,\\
+0,&amp;0.99\le t\le1.
+\end{cases}
+\tag{17}
+\]</div>
+<p>The larger noise amplitude makes the path differences easier to inspect and decreases to zero as sampling progresses. Both panels use the same internal step size <span class="arithmatex">\(h=0.005\)</span>. Euler also handles the right panel's final deterministic interval. This comparison keeps the drift discretization consistent; the earlier standalone ODE video in Section 1.2 uses RK4. During the stochastic interval, let <span class="arithmatex">\(Z_k\)</span> be the numerical state at time <span class="arithmatex">\(t_k\)</span>. For a step of length <span class="arithmatex">\(h&gt;0\)</span>, Euler–Maruyama uses</p>
+<div class="arithmatex">\[
+Z_{k+1}=Z_k+
+\left[v_\theta(Z_k,t_k)+\frac{1}{2}g(t_k)^2s_\phi(Z_k,t_k)\right]h
++g(t_k)\sqrt{h}\,\varepsilon_k,
+\qquad \varepsilon_k\sim\mathcal{N}(0,I_2),
+\tag{18}
+\]</div>
+<p>where the Gaussian increments are independent across steps and particles. The <span class="arithmatex">\(\sqrt{h}\)</span> factor is essential: Brownian increments have covariance <span class="arithmatex">\(hI_2\)</span>.</p>
+<video controls src="../assets/vidoes/flow-bedrock-v2-ps5-ode-sde-comparison.mp4"></video>
+
+<p>Watch the coloured paths: the ODE paths vary smoothly, while the SDE paths show irregular turns and backtracking. Both clouds still approach the controller outline. The video combines two live canvas recordings; the labels report each run's numerical settings and simulation time. The coloured trails are a visualization of sampled trajectories, rather than additional forces or noise added during editing.</p>
+<p>Both the learned fields and the numerical integration are approximate. Increasing <span class="arithmatex">\(g_{\mathrm{peak}}\)</span> also amplifies the contribution of score error through the factor <span class="arithmatex">\(g^2/2\)</span>. The checkpoint metadata contains inconsistent jitter values, so this recording is a qualitative demonstration rather than a verification of exact marginal equality or an exactly matched training distribution.</p>
+<h2 id="2-golden-ring-conditional-control">2. Golden Ring: Conditional Control<a class="headerlink" href="#2-golden-ring-conditional-control" title="Permanent link">&para;</a></h2>
+<p>The PS5 example learns one target distribution. Golden Ring adds a new question: can one velocity network generate different parts of a structured target when we change a control label?</p>
+<p>The complete target contains three overlapping rings, a vertical structure, and fine image-derived texture. We first sample coordinates from the full image, then define three additional target distributions using ring-shaped selection masks. One network learns all four branches: the full target, the central ring, the left-tilted ring, and the right-tilted ring.</p>
+<h3 id="21-from-a-coloured-image-to-a-target-distribution">2.1 From a Coloured Image to a Target Distribution<a class="headerlink" href="#21-from-a-coloured-image-to-a-target-distribution" title="Permanent link">&para;</a></h3>
+<p><img alt="Golden Ring source image used to construct the target coordinate distribution" src="../assets/figures/golden-ring-source.png" /></p>
+<p>The image supplies sampling weights rather than network inputs. For pixel <span class="arithmatex">\(i\)</span> in the finite image index set <span class="arithmatex">\(\mathcal{I}\)</span>, let <span class="arithmatex">\(b_i\in[0,1]^3\)</span> be its RGB vector and define the intensity heuristic</p>
+<div class="arithmatex">\[
+\ell_i=0.2126b_{i,1}+0.7152b_{i,2}+0.0722b_{i,3}.
+\tag{19}
+\]</div>
+<p>The implementation weights pixels by intensity and similarity to a chosen gold colour:</p>
+<div class="arithmatex">\[
+w_i=\mathbf 1_{\{\ell_i\ge\tau\}}\,\ell_i^{\gamma_\ell}
+\exp\!\left(-\frac{\lVert b_i-b_\star\rVert_2^2}{2\sigma_{\mathrm{col}}^2}\right),
+\tag{20}
+\]</div>
+<p>where <span class="arithmatex">\(b_\star=(214,164,95)/255\)</span>, corresponding to <code>#d6a45f</code>. The checkpoint uses <span class="arithmatex">\(\tau=0.02\)</span>, <span class="arithmatex">\(\gamma_\ell=1\)</span>, and <span class="arithmatex">\(\sigma_{\mathrm{col}}=0.35\)</span>. Bright pixels near this colour receive larger sampling weights. These operations use the stored RGB values as a sampling heuristic, rather than estimating physical radiance.</p>
+<p>Let <span class="arithmatex">\(a_i\in\mathbb{R}^2\)</span> be the resulting pixel coordinates after an isotropic spatial scaling, a shared centering step, and the final target normalization. The isotropic scaling preserves the image's aspect ratio. A target sample is a selected coordinate plus isotropic Gaussian jitter with standard deviation <span class="arithmatex">\(\delta=0.01\)</span>. The network learns the resulting coordinate distribution; it sees neither the source image nor its RGB values.</p>
+<video controls src="../assets/vidoes/flow-bedrock-v2-golden-ring.mp4"></video>
+
+<p>This first clip uses the full-target branch and shows Gaussian samples developing into the complete pattern. The target has thickness, intersections, and texture. Its geometry is more complex than a single smooth one-dimensional manifold.</p>
+<h3 id="22-four-target-laws-in-one-coordinate-system">2.2 Four Target Laws in One Coordinate System<a class="headerlink" href="#22-four-target-laws-in-one-coordinate-system" title="Permanent link">&para;</a></h3>
+<p>Write the control token as <span class="arithmatex">\(C\in\{0,1,2,3\}\)</span>:</p>
+<table>
+<thead>
+<tr>
+<th>Token</th>
+<th>Demo label</th>
+<th>Target used for training</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="arithmatex">\(0\)</span></td>
+<td>Full distribution</td>
+<td>all pixels with positive full-image sampling weight</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(1\)</span></td>
+<td>R1: central ring</td>
+<td>full-image weights restricted by the central-ring mask</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(2\)</span></td>
+<td>R2: left-tilted ring</td>
+<td>full-image weights restricted by the left-ring mask</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(3\)</span></td>
+<td>R3: right-tilted ring</td>
+<td>full-image weights restricted by the right-ring mask</td>
+</tr>
+</tbody>
+</table>
+<p>Let <span class="arithmatex">\(m_{i,c}\in\{0,1\}\)</span> indicate whether pixel <span class="arithmatex">\(i\)</span> belongs to the selection mask for token <span class="arithmatex">\(c\)</span>, with <span class="arithmatex">\(m_{i,0}=1\)</span>. The normalized pixel probabilities are</p>
+<div class="arithmatex">\[
+\pi_i^{(c)}=\frac{w_i m_{i,c}}{\sum_{j\in\mathcal{I}}w_jm_{j,c}},
+\qquad c\in\{0,1,2,3\},
+\tag{21}
+\]</div>
+<p>assuming each denominator is positive. With <span class="arithmatex">\(J\mid C=c\sim\operatorname{Categorical}(\pi^{(c)})\)</span> and independent <span class="arithmatex">\(\varepsilon\sim\mathcal{N}(0,I_2)\)</span>, the sampled target is</p>
+<div class="arithmatex">\[
+\begin{aligned}
+X_1&amp;=a_J+\delta\varepsilon,\\
+p_{\mathrm{data}}(x\mid c)
+&amp;=\sum_{i\in\mathcal{I}}\pi_i^{(c)}\,
+\mathcal{N}(x;a_i,\delta^2I_2),\qquad x\in\mathbb{R}^2.
+\end{aligned}
+\tag{22}
+\]</div>
+<p>Here <span class="arithmatex">\(\mathcal{N}(x;a_i,\delta^2I_2)\)</span> denotes a Gaussian density evaluated at <span class="arithmatex">\(x\)</span>. Positive jitter gives each branch a two-dimensional density concentrated near its selected structure, with Gaussian tails extending beyond the mask.</p>
+<p>The masks can overlap. They select weighted coordinates before jitter is added, and all branches share the full image's coordinate center and scale. This keeps each ring in its original spatial location. The full target also contains structure outside these masks, so its distribution is separately sampled; it is not assumed to equal a mixture of the three ring distributions.</p>
+<h3 id="23-learn-a-conditional-velocity-field">2.3 Learn a Conditional Velocity Field<a class="headerlink" href="#23-learn-a-conditional-velocity-field" title="Permanent link">&para;</a></h3>
+<p>Training retains the straight interpolant from Section 1.2. Draw <span class="arithmatex">\(X_0\sim\mathcal{N}(0,I_2)\)</span> independently of <span class="arithmatex">\((C,X_1)\)</span>, draw <span class="arithmatex">\(X_1\)</span> from the selected target law, and draw <span class="arithmatex">\(T\sim\operatorname{Uniform}[0,1]\)</span> independently of all other variables. Define</p>
+<div class="arithmatex">\[
+Y_t=(1-t)X_0+tX_1,
+\qquad t\in[0,1],
+\tag{23}
+\]</div>
+<p>and minimize</p>
+<div class="arithmatex">\[
+\mathcal{L}_{\mathrm{cond}}(\theta)
+=\mathbb{E}\!\left[
+\left\lVert v_\theta(Y_T,T,C)-(X_1-X_0)\right\rVert_2^2
+\right].
+\tag{24}
+\]</div>
+<p>With finite second moments, the population-optimal predictor for each token is</p>
+<div class="arithmatex">\[
+v^\star(x,t,c)=\mathbb{E}[X_1-X_0\mid Y_t=x,C=c],
+\tag{25}
+\]</div>
+<p>up to sets of zero probability under the corresponding path law. The endpoint pair supplies the regression target. The control label selects the target law and remains an input during generation.</p>
+<p>The V5 trainer allocates half of each batch to token <span class="arithmatex">\(0\)</span>, sampling the full target directly. For the remaining half, it chooses uniformly among the three ring labels. Thus the full-target branch is explicitly trained alongside the conditional branches. The implementation calls token <span class="arithmatex">\(0\)</span> the unconditional token; here that means the full-image target, rather than a marginal formed by combining the three ring labels.</p>
+<p>The network uses six hidden layers of width 768 with SiLU activations, four Fourier frequencies per spatial coordinate, and a learned 16-dimensional token embedding. Its input combines position, time, spatial Fourier features, and the token embedding; its output remains a two-dimensional velocity.</p>
+<p>The following code shows the regression step for one chosen token. <code>base_points</code> has shape <code>[M, 2]</code> and contains the shared centered and scaled coordinates; <code>weights</code> has shape <code>[M]</code>, and <code>masks</code> has shape <code>[3, M]</code>. Each masked weight sum is positive. All tensors and the model use the same device, and <code>c</code> is an integer in <code>0..3</code>. The full trainer mixes these groups within each batch:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># Define the target law for this token, then sample coordinates.</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="n">q</span> <span class="o">=</span> <span class="n">weights</span> <span class="k">if</span> <span class="n">c</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">weights</span> <span class="o">*</span> <span class="n">masks</span><span class="p">[</span><span class="n">c</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="n">q</span> <span class="o">=</span> <span class="n">q</span> <span class="o">/</span> <span class="n">q</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="n">idx</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">multinomial</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">replacement</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="n">x1</span> <span class="o">=</span> <span class="n">base_points</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">+</span> <span class="mf">0.01</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="c1"># Source samples and time are independent of the target draw.</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="n">x0</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn_like</span><span class="p">(</span><span class="n">x1</span><span class="p">)</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="n">t</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="n">yt</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">t</span><span class="p">)</span> <span class="o">*</span> <span class="n">x0</span> <span class="o">+</span> <span class="n">t</span> <span class="o">*</span> <span class="n">x1</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="n">control</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">full</span><span class="p">((</span><span class="n">batch_size</span><span class="p">,),</span> <span class="n">c</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">long</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="n">predicted_velocity</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">yt</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">control</span><span class="p">)</span>
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="n">loss</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">functional</span><span class="o">.</span><span class="n">mse_loss</span><span class="p">(</span><span class="n">predicted_velocity</span><span class="p">,</span> <span class="n">x1</span> <span class="o">-</span> <span class="n">x0</span><span class="p">)</span>
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">(</span><span class="n">set_to_none</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+</code></pre></div>
+<p>As in Section 1.2, <code>mse_loss</code> gives half the squared-norm batch average because it also averages over the two output coordinates.</p>
+<h3 id="24-the-label-changes-the-entire-flow">2.4 The Label Changes the Entire Flow<a class="headerlink" href="#24-the-label-changes-the-entire-flow" title="Permanent link">&para;</a></h3>
+<p>To generate samples for a fixed token <span class="arithmatex">\(c\)</span>, freeze the network and solve</p>
+<div class="arithmatex">\[
+\frac{\mathrm{d}\widehat{X}_t^{(c)}}{\mathrm{d}t}
+=v_\theta(\widehat{X}_t^{(c)},t,c),
+\qquad \widehat{X}_0^{(c)}\sim\mathcal{N}(0,I_2),
+\qquad t\in[0,1].
+\tag{26}
+\]</div>
+<p>The mask has already served its purpose in preparing training samples. At inference, the ring label enters every velocity evaluation, including RK4's intermediate stages. Every sample is transported under the selected field; particles are not deleted or filtered after generating the full pattern.</p>
+<p>The comparison clip reuses the same seed, initial Gaussian cloud, visible sample indices, camera, and integration settings. It runs R1, R2, and R3 from <span class="arithmatex">\(t=0\)</span> in turn. The changing trajectories and endpoint shapes therefore reflect the label-dependent field, rather than a different initialization or a separately loaded model.</p>
+<video controls src="../assets/vidoes/flow-bedrock-v2-golden-ring-control.mp4"></video>
+
+<p>Both clips use deterministic ODE sampling, RK4 with internal step size <span class="arithmatex">\(h=0.005\)</span>, 100,000 simulated samples, 10,000 displayed samples, and seed 42. Each run reaches <span class="arithmatex">\(t=1\)</span> before its final frame is held for inspection. The recordings capture the live canvas with an added label showing which branch is active. Agreement with the target distribution remains approximate because the field is learned and sampling is numerical.</p>
+<h3 id="25-what-the-cfg-scale-means">2.5 What the CFG Scale Means<a class="headerlink" href="#25-what-the-cfg-scale-means" title="Permanent link">&para;</a></h3>
+<p>The full-target branch also supplies the baseline for classifier-free guidance. To keep it distinct from the score notation in Section 1.3, write the guidance scale as <span class="arithmatex">\(\lambda\ge0\)</span>. For <span class="arithmatex">\(c\in\{1,2,3\}\)</span>, the implemented field is</p>
+<div class="arithmatex">\[
+v_{\mathrm{CFG}}(x,t,c;\lambda)
+=v_\theta(x,t,0)
++\lambda\left[v_\theta(x,t,c)-v_\theta(x,t,0)\right].
+\tag{27}
+\]</div>
+<p>At <span class="arithmatex">\(\lambda=0\)</span> this is the full-target field; at <span class="arithmatex">\(\lambda=1\)</span> it is the learned conditional field. Values above one extrapolate in the direction of the conditional-minus-full velocity. They can strengthen the visual condition, but do not guarantee a more accurate target distribution. The recorded comparisons fix <span class="arithmatex">\(\lambda=1\)</span> throughout.</p>
+<p>These labels are discrete geometric conditions. They demonstrate how a shared network changes its transport field when given a condition. A richer conditioning system could supply a learned representation of text or other information, while retaining the same conditional ODE structure.</p>
+<h2 id="3-probability-transport-in-3d">3. Probability Transport in 3D<a class="headerlink" href="#3-probability-transport-in-3d" title="Permanent link">&para;</a></h2>
+<p>The 3D demos keep the same flow-matching construction and change the ambient space from <span class="arithmatex">\(\mathbb{R}^2\)</span> to <span class="arithmatex">\(\mathbb{R}^3\)</span>. Each sample now has three coordinates, and the network predicts three velocity components. A rendered frame is a perspective projection of those samples; rotating the camera reveals the depth that a single projection can hide.</p>
+<h3 id="31-the-same-objective-in-three-coordinates">3.1 The Same Objective in Three Coordinates<a class="headerlink" href="#31-the-same-objective-in-three-coordinates" title="Permanent link">&para;</a></h3>
+<p>For each target, independently sample <span class="arithmatex">\(X_0\sim\mathcal{N}(0,I_3)\)</span> and <span class="arithmatex">\(X_1\sim p_{\mathrm{data}}\)</span>, with <span class="arithmatex">\(T\sim\operatorname{Uniform}[0,1]\)</span> independent of both. Define <span class="arithmatex">\(Y_t=(1-t)X_0+tX_1\)</span> for <span class="arithmatex">\(t\in[0,1]\)</span>. The training objective is</p>
+<div class="arithmatex">\[
+\mathcal{L}_{\mathrm{3D}}(\theta)
+=\mathbb{E}\left[
+\left\lVert v_\theta(Y_T,T)-(X_1-X_0)\right\rVert_2^2
+\right],
+\qquad
+v_\theta:\mathbb{R}^3\times[0,1]\longrightarrow\mathbb{R}^3.
+\tag{28}
+\]</div>
+<p>As in Section 1.2, squared-error regression has the population optimum <span class="arithmatex">\(v^*(x,t)=\mathbb{E}[X_1-X_0\mid Y_t=x]\)</span>, defined almost everywhere under the interpolant distribution. The training segment <span class="arithmatex">\(Y_t\)</span> supplies a velocity target; generated trajectories follow the learned field instead:</p>
+<div class="arithmatex">\[
+\frac{\mathrm{d}\widehat{X}_t}{\mathrm{d}t}
+=v_\theta(\widehat{X}_t,t),
+\qquad
+\widehat{X}_0\sim\mathcal{N}(0,I_3),
+\qquad t\in[0,1].
+\tag{29}
+\]</div>
+<p>These demos use three separately trained networks, one for each target. Unlike Golden Ring's conditional branches, switching the 3D target loads a different checkpoint. Each network is an MLP with five hidden layers of width 512 and SiLU activations. Its input is <span class="arithmatex">\((x_1,x_2,x_3,t)\)</span> and its output is a vector in <span class="arithmatex">\(\mathbb{R}^3\)</span>. Trefoil was trained for 15,000 steps; Swiss Roll and Double Helix for 10,000 each, all with batch size 32,768, learning rate <span class="arithmatex">\(2\times10^{-4}\)</span>, and training seed 42.</p>
+<p>The training step has the same structure as the 2D example:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># One 3D target sampler and one velocity network per experiment.</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="n">source</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="n">target</span> <span class="o">=</span> <span class="n">sample_target</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>  <span class="c1"># shape: (B, 3)</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="n">time</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="n">interpolant</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">time</span><span class="p">)</span> <span class="o">*</span> <span class="n">source</span> <span class="o">+</span> <span class="n">time</span> <span class="o">*</span> <span class="n">target</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="n">prediction</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">interpolant</span><span class="p">,</span> <span class="n">time</span><span class="p">)</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="n">loss</span> <span class="o">=</span> <span class="p">(</span><span class="n">prediction</span> <span class="o">-</span> <span class="p">(</span><span class="n">target</span> <span class="o">-</span> <span class="n">source</span><span class="p">))</span><span class="o">.</span><span class="n">square</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">(</span><span class="n">set_to_none</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+</code></pre></div>
+<p>This snippet implements the squared vector norm exactly. The trainer uses elementwise mean squared error, which is <span class="arithmatex">\(\mathcal{L}_{\mathrm{3D}}/3\)</span> in three dimensions and has the same population minimizer.</p>
+<h3 id="32-trefoil-a-tube-around-a-knotted-curve">3.2 Trefoil: A Tube Around a Knotted Curve<a class="headerlink" href="#32-trefoil-a-tube-around-a-knotted-curve" title="Permanent link">&para;</a></h3>
+<p>The Trefoil centerline is the closed curve</p>
+<div class="arithmatex">\[
+\gamma_{\mathrm{tr}}(\phi)
+=\sqrt{\frac35}
+\begin{pmatrix}
+(2+\cos 3\phi)\cos 2\phi\\
+(2+\cos 3\phi)\sin 2\phi\\
+\sin 3\phi
+\end{pmatrix},
+\qquad \phi\in[0,2\pi).
+\tag{30}
+\]</div>
+<p>The sampler distributes centerline positions approximately uniformly in arc length. In the continuum, this corresponds to a parameter density proportional to <span class="arithmatex">\(\lVert\gamma'_{\mathrm{tr}}(\phi)\rVert_2\)</span>. The implementation inverts a cumulative chord-length table with 16,384 intervals.</p>
+<p>At each sampled position, let <span class="arithmatex">\(n_1(\phi),n_2(\phi)\)</span> be an orthonormal basis perpendicular to the unit tangent. With <span class="arithmatex">\(Q\sim\operatorname{Uniform}[0,1]\)</span> and <span class="arithmatex">\(A\sim\operatorname{Uniform}[0,2\pi)\)</span> independent of each other and of <span class="arithmatex">\(\Phi\)</span>, the target sample is</p>
+<div class="arithmatex">\[
+X_1=\gamma_{\mathrm{tr}}(\Phi)
++0.14\sqrt{Q}\left[\cos A\,n_1(\Phi)+\sin A\,n_2(\Phi)\right].
+\tag{31}
+\]</div>
+<p>The square root makes each cross-section uniform in disk area: the radial cumulative distribution is <span class="arithmatex">\(\Pr(R\le r)=(r/0.14)^2\)</span> for <span class="arithmatex">\(0\le r\le0.14\)</span>. The target is a solid tube around a one-dimensional centerline. Arc-length sampling and uniform disks define its probability law; curvature means this construction is not exactly uniform in ambient tube volume.</p>
+<video controls src="../assets/vidoes/flow-bedrock-v2-3d-trefoil.mp4"></video>
+
+<p>The rotating endpoint view exposes the over-and-under arrangement of the knot. An apparent crossing in one image is a crossing of projected points, rather than an intersection of the centerline in three dimensions.</p>
+<h3 id="33-swiss-roll-a-thickened-surface">3.3 Swiss Roll: A Thickened Surface<a class="headerlink" href="#33-swiss-roll-a-thickened-surface" title="Permanent link">&para;</a></h3>
+<p>The Swiss Roll mid-surface is</p>
+<div class="arithmatex">\[
+F(u,y)=
+\begin{pmatrix}
+a u\cos u\\ y\\ a u\sin u
+\end{pmatrix},
+\qquad
+u\in\left[\frac{3\pi}{2},\frac{9\pi}{2}\right],
+\quad y\in[-1.35,1.35],
+\quad a=0.14.
+\tag{32}
+\]</div>
+<p>Its area element is <span class="arithmatex">\(a\sqrt{1+u^2}\,\mathrm{d}u\,\mathrm{d}y\)</span>. Accordingly, the sampler draws <span class="arithmatex">\(U\)</span> with density proportional to <span class="arithmatex">\(\sqrt{1+u^2}\)</span> on the stated interval and draws <span class="arithmatex">\(H\sim\operatorname{Uniform}[-1.35,1.35]\)</span> independently. The cumulative distribution of <span class="arithmatex">\(U\)</span> is numerically inverted using the primitive</p>
+<div class="arithmatex">\[
+\int\sqrt{1+u^2}\,\mathrm{d}u
+=\frac{1}{2}\left[u\sqrt{1+u^2}+\operatorname{arsinh}(u)\right]+\text{constant}.
+\tag{33}
+\]</div>
+<p>Writing <span class="arithmatex">\(x(u)=au\cos u\)</span> and <span class="arithmatex">\(z(u)=au\sin u\)</span>, choose the unit normal</p>
+<div class="arithmatex">\[
+n(u)=\frac{(-z'(u),0,x'(u))^{\mathsf T}}{a\sqrt{1+u^2}}.
+\tag{34}
+\]</div>
+<p>An independent signed offset <span class="arithmatex">\(B\sim\operatorname{Uniform}[-0.07,0.07]\)</span> gives <span class="arithmatex">\(X_1=F(U,H)+B\,n(U)\)</span>. The mid-surface is two-dimensional and has boundary; the sampled target is a three-dimensional slab of total normal thickness <span class="arithmatex">\(0.14\)</span>. The mid-surface sampling is area-balanced, while the normal-offset construction specifies the slab density without claiming uniform ambient volume.</p>
+<video controls src="../assets/vidoes/flow-bedrock-v2-3d-swiss-roll.mp4"></video>
+
+<p>The camera rotation makes the separate turns and their gaps visible. Points on different turns can overlap in a projection while remaining separated in space.</p>
+<h3 id="34-double-helix-two-thick-strands">3.4 Double Helix: Two Thick Strands<a class="headerlink" href="#34-double-helix-two-thick-strands" title="Permanent link">&para;</a></h3>
+<p>For an arm index <span class="arithmatex">\(j\in\{0,1\}\)</span>, define</p>
+<div class="arithmatex">\[
+\gamma_{\mathrm{hel},j}(\phi)=
+\begin{pmatrix}
+1.25\cos(\phi+j\pi)\\
+1.25\sin(\phi+j\pi)\\
+\dfrac{3.6}{4\pi}\phi-1.8
+\end{pmatrix},
+\qquad \phi\in[0,4\pi].
+\tag{35}
+\]</div>
+<p>The sampler chooses each arm with probability <span class="arithmatex">\(1/2\)</span> and draws <span class="arithmatex">\(\Phi\sim\operatorname{Uniform}[0,4\pi]\)</span> independently. Each arm makes two turns and has constant centerline speed, so uniform <span class="arithmatex">\(\Phi\)</span> also gives uniform centerline arc length. The endpoints lie at heights <span class="arithmatex">\(-1.8\)</span> and <span class="arithmatex">\(1.8\)</span>.</p>
+<p>The same normal-disk construction adds a cross-section of radius <span class="arithmatex">\(0.13\)</span>, followed by independent isotropic Gaussian noise with standard deviation <span class="arithmatex">\(0.015\)</span>:</p>
+<div class="arithmatex">\[
+X_1=\gamma_{\mathrm{hel},J}(\Phi)
++0.13\sqrt{Q}\left[\cos A\,n_{J,1}(\Phi)+\sin A\,n_{J,2}(\Phi)\right]
++0.015\,\varepsilon,
+\qquad \varepsilon\sim\mathcal{N}(0,I_3).
+\tag{36}
+\]</div>
+<p>Here the normal vectors are orthonormal and perpendicular to the corresponding arm's tangent; <span class="arithmatex">\(Q,A,\varepsilon\)</span> are independent of each other and of <span class="arithmatex">\((J,\Phi)\)</span>. The Gaussian term gives the target density nonzero tails outside the two compact tubes. This example models a geometric point distribution; it carries no molecular dynamics or interaction law.</p>
+<video controls src="../assets/vidoes/flow-bedrock-v2-3d-double-helix.mp4"></video>
+
+<h3 id="35-what-the-recordings-demonstrate">3.5 What the Recordings Demonstrate<a class="headerlink" href="#35-what-the-recordings-demonstrate" title="Permanent link">&para;</a></h3>
+<p>All three clips start from the same seeded Gaussian samples and visible indices, use deterministic RK4 sampling with <span class="arithmatex">\(h=0.005\)</span>, and evolve 100,000 samples while displaying 10,000. The camera is fixed during transport from <span class="arithmatex">\(t=0\)</span> to <span class="arithmatex">\(t=1\)</span>. Once transport finishes, the sample coordinates remain fixed and the camera rotates for six seconds. The caption identifies this change, so viewing motion is distinguishable from probability transport.</p>
+<p>The ideal centerlines and mid-surface have lower intrinsic dimension, while the training targets have finite thickness in <span class="arithmatex">\(\mathbb{R}^3\)</span>. This distinction matters for the ODE interpretation. A sufficiently regular velocity field with a globally defined invertible flow transports an absolutely continuous source to another absolutely continuous distribution; it cannot collapse that source exactly onto a curve or surface in finite time. Moreover, such a flow preserves full support, so the compact Trefoil and Swiss Roll targets can only be approximated by these regular learned flows at the endpoint. Their visible shapes show concentration near the intended geometry, with finite model and integration error.</p>
+<p>The 3D extension therefore changes the sample space and target geometry while preserving the flow-matching objective. Camera rotation helps inspect spatial structure; quantitative distributional accuracy would require separate evaluation beyond these visual demonstrations.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.expand", "navigation.sections", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../javascripts/mathjax.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,18 +1,10 @@
-// MathJax v3 configuration for MkDocs Material + pymdownx.arithmatex (generic mode)
-// See: https://squidfunk.github.io/mkdocs-material/reference/mathjax/
-
+// Proposed configuration for the current static MkDocs build.
+// MathJax performs its initial typesetting once on startup.
+// The site currently does not enable navigation.instant.
 window.MathJax = {
   tex: {
-    inlineMath: [
-      ["\\(", "\\)"],
-      ["$", "$"],
-    ],
-    // pymdownx.arithmatex (generic=true) commonly emits display math as \[...\].
-    // Accept both \[...\] and $$...$$ to be robust to authoring styles.
-    displayMath: [
-      ["\\[", "\\]"],
-      ["$$", "$$"],
-    ],
+    inlineMath: [["\\(", "\\)"], ["$", "$"]],
+    displayMath: [["\\[", "\\]"], ["$$", "$$"]],
     processEscapes: true,
   },
   options: {
@@ -20,10 +12,3 @@ window.MathJax = {
     processHtmlClass: "arithmatex",
   },
 };
-
-// Re-render math on every page change (Material's instant navigation)
-document$.subscribe(() => {
-  if (window.MathJax && window.MathJax.typesetPromise) {
-    window.MathJax.typesetPromise();
-  }
-});
