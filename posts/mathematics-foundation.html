@@ -1441,9 +1441,11 @@
 \]</div>
 <p>A standard sufficient condition for (global) existence and uniqueness on <span class="arithmatex">\([0,1]\)</span> is:</p>
 <ul>
-<li>for each <span class="arithmatex">\(t\)</span>, <span class="arithmatex">\(u(t,\cdot)\)</span> is globally Lipschitz on <span class="arithmatex">\(\mathbb{R}^D\)</span>, and</li>
-<li><span class="arithmatex">\(u\)</span> has at most linear growth in <span class="arithmatex">\(x\)</span> (e.g., <span class="arithmatex">\(\|u(t,x)\|\le a(t)+b\|x\|\)</span> with <span class="arithmatex">\(a\in L^1([0,1])\)</span>).</li>
+<li><span class="arithmatex">\(u(t,x)\)</span> is measurable in <span class="arithmatex">\(t\)</span> and continuous in <span class="arithmatex">\(x\)</span>;</li>
+<li>there is a nonnegative <span class="arithmatex">\(L\in L^1([0,1])\)</span> such that <span class="arithmatex">\(\lVert u(t,x)-u(t,y)\rVert\le L(t)\lVert x-y\rVert\)</span> for all <span class="arithmatex">\(x,y\in\mathbb{R}^D\)</span> and almost every <span class="arithmatex">\(t\)</span>; and</li>
+<li><span class="arithmatex">\(\lVert u(t,0)\rVert\le a(t)\)</span> for a nonnegative <span class="arithmatex">\(a\in L^1([0,1])\)</span>, which gives the integrable growth bound <span class="arithmatex">\(\lVert u(t,x)\rVert\le a(t)+L(t)\lVert x\rVert\)</span>.</li>
 </ul>
+<p>Under these Carathéodory conditions, solutions are absolutely continuous and satisfy the ODE almost everywhere. Joint continuity of <span class="arithmatex">\(u\)</span> in <span class="arithmatex">\((t,x)\)</span> gives the usual classical solution. The earlier statement omitted the time-measurability and integrable Lipschitz-bound requirements.</p>
 <p>We write the solution as <span class="arithmatex">\(x(t;x_0)\)</span> and define the flow map</p>
 <div class="arithmatex">\[
 \psi_t(x_0):=x(t;x_0),\qquad \psi_0(x_0)=x_0.
@@ -1850,7 +1852,7 @@ x_{t+\Delta t}=\Psi(x_t):=x_t+\Delta t\,u(t,x_t).
 dX_t=b(t,X_t)\,dt+\sigma(t,X_t)\,dW_t,
 \]</div>
 <p>and <span class="arithmatex">\(X_t\)</span> is no longer a deterministic function of <span class="arithmatex">\(X_0\)</span>. Consequently, in general there is no single deterministic map <span class="arithmatex">\(\psi_t\)</span> such that <span class="arithmatex">\(\mu_t=(\psi_t)_\#\mu_0\)</span>.</p>
-<p>Instead, the law evolves via a transition kernel (Markov semigroup) <span class="arithmatex">\(P_t\)</span>. In a notation that mirrors the push-forward <span class="arithmatex">\(\#\)</span>, it is common to view <span class="arithmatex">\(P_t\)</span> as inducing a <strong>push-forward operator on measures</strong> (the adjoint of <span class="arithmatex">\(P_t\)</span> acting on test functions).</p>
+<p>Instead, the law evolves via a two-time Markov transition kernel <span class="arithmatex">\(P_{s,t}\)</span>, with <span class="arithmatex">\(0\le s\le t\le1\)</span>. Below write <span class="arithmatex">\(P_t:=P_{0,t}\)</span> for evolution from the fixed initial time. For time-dependent coefficients this is a transition family, not generally a one-parameter semigroup; semigroup notation applies in the time-homogeneous case. In a notation that mirrors the push-forward <span class="arithmatex">\(\#\)</span>, it is common to view <span class="arithmatex">\(P_t\)</span> as inducing a <strong>push-forward operator on measures</strong> (the adjoint of <span class="arithmatex">\(P_t\)</span> acting on test functions).</p>
 <p><strong>Kernel <span class="arithmatex">\(\Rightarrow\)</span> measure push-forward.</strong> Let <span class="arithmatex">\(P_t(x,\cdot)\)</span> be a probability measure on <span class="arithmatex">\(\mathbb{R}^D\)</span> for each <span class="arithmatex">\(x\)</span>, and write <span class="arithmatex">\(P_t(x,A)\)</span> for its mass on a Borel set <span class="arithmatex">\(A\)</span>. Define the induced operator <span class="arithmatex">\(P_t^\ast\)</span> on measures by</p>
 <div class="arithmatex">\[
 (P_t^\ast \mu_0)(A)
@@ -1957,33 +1959,34 @@ dX_t=f(X_t,t)\,dt+g(t)\,dW_t,\qquad W_t\in\mathbb{R}^D,
 <h3 id="23-intuition-of-the-continuity-equation">2.3 Intuition of the Continuity Equation<a class="headerlink" href="#23-intuition-of-the-continuity-equation" title="Permanent link">&para;</a></h3>
 <p>The continuity equation is a conservation law for a density. In our context, it describes conservation of <strong>probability mass</strong> under deterministic transport.</p>
 <h4 id="231-physical-interpretation-control-volume-and-flux">2.3.1 Physical interpretation (control volume and flux)<a class="headerlink" href="#231-physical-interpretation-control-volume-and-flux" title="Permanent link">&para;</a></h4>
-<p>Think of a small fixed box (control volume) centered at <span class="arithmatex">\(x\in\mathbb{R}^3\)</span> with side lengths <span class="arithmatex">\(\Delta x,\Delta y,\Delta z\)</span>. Let <span class="arithmatex">\(p(x,t)\)</span> be the density of a conserved quantity (mass or probability). The total amount inside the box is approximately</p>
+<p>Think of a small fixed box (control volume) whose lower corner is <span class="arithmatex">\(\xi=(x,y,z)\in\mathbb{R}^3\)</span>, with side lengths <span class="arithmatex">\(\Delta x,\Delta y,\Delta z\)</span>. Let <span class="arithmatex">\(p(\xi,t)\)</span> be the density of a conserved quantity (mass or probability). The total amount inside the box is approximately</p>
 <div class="arithmatex">\[
-p(x,t)\,\Delta x\,\Delta y\,\Delta z.
+p(\xi,t)\,\Delta x\,\Delta y\,\Delta z.
 \]</div>
-<p>Changes can only happen via <strong>flux</strong> across the boundary. Let <span class="arithmatex">\(j(x,t)\in\mathbb{R}^3\)</span> be the flux vector (amount crossing unit area per unit time). The net outflux in the <span class="arithmatex">\(x\)</span>-direction is approximately</p>
+<p>Changes can only happen via <strong>flux</strong> across the boundary. Let <span class="arithmatex">\(j(\xi,t)\in\mathbb{R}^3\)</span> be the flux vector (amount crossing unit area per unit time). The net outflux in the <span class="arithmatex">\(x\)</span>-direction is approximately</p>
 <div class="arithmatex">\[
-\big(j_x(x,y,z,t)-j_x(x+\Delta x,y,z,t)\big)\,\Delta y\,\Delta z,
+\big(j_x(x+\Delta x,y,z,t)-j_x(x,y,z,t)\big)\,\Delta y\,\Delta z,
 \]</div>
 <p>and similarly for the other directions. Summing the three directions, the total net outflux is</p>
 <div class="arithmatex">\[
--\,(\nabla\!\cdot j)(x,t)\,\Delta x\,\Delta y\,\Delta z.
++\,(\nabla\!\cdot j)(\xi,t)\,\Delta x\,\Delta y\,\Delta z.
 \]</div>
 <p>Conservation says “rate of change inside = minus net outflux”, hence</p>
 <div class="arithmatex">\[
-\partial_t p(x,t)\,\Delta x\,\Delta y\,\Delta z
+\partial_t p(\xi,t)\,\Delta x\,\Delta y\,\Delta z
 =
--\,(\nabla\!\cdot j)(x,t)\,\Delta x\,\Delta y\,\Delta z.
+-\,(\nabla\!\cdot j)(\xi,t)\,\Delta x\,\Delta y\,\Delta z.
 \]</div>
 <p>Canceling the volume factor (valid for any sufficiently small box) yields the local form</p>
 <div class="arithmatex">\[
-\partial_t p(x,t)+\nabla\!\cdot j(x,t)=0.
+\partial_t p(\xi,t)+\nabla\!\cdot j(\xi,t)=0.
 \]</div>
 <p>For deterministic particle transport with velocity field <span class="arithmatex">\(u(x,t)\)</span>, the natural flux is <span class="arithmatex">\(j=p\,u\)</span>. Plugging this into the conservation law gives the continuity equation</p>
 <div class="arithmatex">\[
 \partial_t p+\nabla\!\cdot(p\,u)=0,
 \]</div>
 <p>which is exactly (CE) in Section 2.1.3.</p>
+<p><strong>Correction (2026-10-14).</strong> The earlier face-difference and total-outflux expressions had the sign of net influx, while the final continuity equation had the correct sign. Outflux is the right-face contribution minus the left-face contribution; accumulation is its negative. For example, positive divergence gives net outward flow and decreases the amount in a fixed box.</p>
 <h4 id="232-derivation-from-a-global-conservation-law-divergence-theorem">2.3.2 Derivation from a global conservation law (divergence theorem)<a class="headerlink" href="#232-derivation-from-a-global-conservation-law-divergence-theorem" title="Permanent link">&para;</a></h4>
 <p>Let <span class="arithmatex">\(p(x,t)\)</span> be a density on <span class="arithmatex">\(\mathbb{R}^D\)</span>, <span class="arithmatex">\(u(x,t)\)</span> a velocity field, and <span class="arithmatex">\(V\subset\mathbb{R}^D\)</span> an arbitrary control volume with boundary <span class="arithmatex">\(\partial V\)</span> and outward unit normal <span class="arithmatex">\(n\)</span>. The total mass in <span class="arithmatex">\(V\)</span> is</p>
 <div class="arithmatex">\[

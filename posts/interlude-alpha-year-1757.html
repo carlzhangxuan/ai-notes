@@ -716,7 +716,7 @@
 </li>
 <li>Setup: take any control volume <span class="arithmatex">\(\Omega\)</span> fixed in space with boundary <span class="arithmatex">\(\partial\Omega\)</span> and outward normal <span class="arithmatex">\(n\)</span>. Newton’s laws apply to the <em>mass and momentum in that volume</em>.</li>
 <li>
-<p>Mass conservation (Newton does not create/destroy mass): integral form (Eq. (2)), differential form (Eq. (3)).</p>
+<p>Mass conservation (a separate balance law, with no mass sources): integral form (Eq. (2)), differential form (Eq. (3)).</p>
 </li>
 <li>
 <p>Momentum conservation (Newton’s 2nd law, <span class="arithmatex">\(F=ma\)</span>):</p>
@@ -724,7 +724,7 @@
 <p>Here <span class="arithmatex">\(b(x,t)\)</span> is body force per unit mass (e.g., gravity), and <span class="arithmatex">\(\sigma(x,t)\)</span> is the Cauchy stress tensor encoding surface forces.</p>
 </li>
 <li>
-<p>Newton’s 3rd law (action = reaction) implies <em>local balance of internal forces</em>, which yields a symmetric stress tensor in the classical setting: <span class="arithmatex">\(\sigma=\sigma^\top\)</span>.</p>
+<p>Angular-momentum balance implies a symmetric Cauchy stress tensor in the classical continuum without body couples or couple stresses: <span class="arithmatex">\(\sigma=\sigma^\top\)</span>. Action–reaction alone is not the full justification for this symmetry.</p>
 </li>
 <li>
 <p>For an inviscid fluid (no shear stress), stress reduces to isotropic pressure: <span class="arithmatex">\(\sigma = -p I\)</span>. Plugging this into the momentum balance yields the Euler equations:</p>
@@ -734,6 +734,7 @@
 </li>
 </ul>
 <p>Numbered equations:</p>
+<p>Work in <span class="arithmatex">\(\mathbb{R}^3\)</span>, with time in an interval <span class="arithmatex">\([0,T]\)</span>. The control volume <span class="arithmatex">\(\Omega\)</span> is fixed in space and has a piecewise smooth boundary with outward unit normal <span class="arithmatex">\(n\)</span>. Assume sufficiently regular fields, no mass sources, and no body couples or couple stresses. Here <span class="arithmatex">\(\rho\)</span> is mass density, <span class="arithmatex">\(v\)</span> velocity, <span class="arithmatex">\(b\)</span> body force per unit mass, <span class="arithmatex">\(\sigma\)</span> Cauchy stress, and <span class="arithmatex">\(p\)</span> physical pressure.</p>
 <p>Material derivative</p>
 <div class="arithmatex">\[
 \frac{D f}{D t} = \partial_t f + v\cdot\nabla f.
@@ -751,9 +752,14 @@
 \]</div>
 <p>Momentum balance (integral form)</p>
 <div class="arithmatex">\[
-\frac{d}{dt}\int_{\Omega}\rho v\,dx = \int_{\Omega}\rho b\,dx + \int_{\partial\Omega}\sigma n\,dS.
+\begin{aligned}
+\frac{d}{dt}\int_{\Omega}\rho v\,dx
+&amp;+\int_{\partial\Omega}\rho v\,(v\cdot n)\,dS\\
+&amp;=\int_{\Omega}\rho b\,dx+\int_{\partial\Omega}\sigma n\,dS.
+\end{aligned}
 \tag{4}
 \]</div>
+<p><strong>Correction (2026-10-14).</strong> The previous fixed-control-volume equation omitted the momentum carried through its boundary. The flux term in (4) is required because fluid crosses the fixed boundary. A volume moving with the fluid instead has a material-volume formulation. The accompanying stress-symmetry statement now invokes angular-momentum balance under the stated classical assumptions. See the <a href="https://www.sandia.gov/files/sierra/SM_Theory_5_30/main/balance_laws.html">Sandia balance-law derivation, Sections 8.3–8.4</a>.</p>
 <p>Euler equations (inviscid, differential form)</p>
 <div class="arithmatex">\[
 \rho\big(\partial_t v + (v\cdot\nabla)v\big) = -\nabla p + \rho b.
