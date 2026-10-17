@@ -1200,6 +1200,7 @@
 
 
 <h1 id="flow-bedrock">Flow Bedrock<a class="headerlink" href="#flow-bedrock" title="Permanent link">&para;</a></h1>
+<p><strong>Initial version:</strong> 2026-10-12 · <strong>Last content update:</strong> 2026-10-13</p>
 <p>This note documents a small ODE-based simulator I built to develop intuition for <em>flow models</em> (continuous normalizing flows / flow matching) and their relationship to <em>diffusion models</em> (typically defined via SDEs), with this update adding conditional control and 3D probability transport.</p>
 <p>In deterministic mode, the simulator evolves particles under a time-dependent velocity field by numerically integrating an ODE. Each particle has a position <span class="arithmatex">\(X_t\in\mathbb{R}^d\)</span>, where <span class="arithmatex">\(d=2\)</span> for the 2D demos and <span class="arithmatex">\(d=3\)</span> for the 3D demos. Learned sampling runs from noise at <span class="arithmatex">\(t=0\)</span> to the target at <span class="arithmatex">\(t=1\)</span>:</p>
 <div class="arithmatex">\[
