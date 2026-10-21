@@ -1200,7 +1200,7 @@
 
 
 <h1 id="flow-bedrock">Flow Bedrock<a class="headerlink" href="#flow-bedrock" title="Permanent link">&para;</a></h1>
-<p><strong>Initial version:</strong> 2026-10-12 · <strong>Last content update:</strong> 2026-10-13</p>
+<p><strong>Initial version:</strong> 2026-10-12 · <strong>First published:</strong> 2026-10-13 · <strong>Last content update:</strong> 2026-10-18</p>
 <p>This note documents a small ODE-based simulator I built to develop intuition for <em>flow models</em> (continuous normalizing flows / flow matching) and their relationship to <em>diffusion models</em> (typically defined via SDEs), with this update adding conditional control and 3D probability transport.</p>
 <p>In deterministic mode, the simulator evolves particles under a time-dependent velocity field by numerically integrating an ODE. Each particle has a position <span class="arithmatex">\(X_t\in\mathbb{R}^d\)</span>, where <span class="arithmatex">\(d=2\)</span> for the 2D demos and <span class="arithmatex">\(d=3\)</span> for the 3D demos. Learned sampling runs from noise at <span class="arithmatex">\(t=0\)</span> to the target at <span class="arithmatex">\(t=1\)</span>:</p>
 <div class="arithmatex">\[
@@ -1268,7 +1268,7 @@ cloud is a finite empirical approximation to a probability distribution at time
 particles are streamed to the browser. The <code>stream</code> number in the HUD is the
 measured backend broadcast rate; it is not the browser's rendering FPS.</p>
 <p>The optional density layer is computed from the displayed subsample. It is a
-binned, log-scaled visualization, not an exact normalized density.</p>
+binned, log-scaled visualization, not an exact normalized density. It is off by default in the clean presentation setup. A rendering overlay changes what is drawn, not the transport field or the particle law.</p>
 <h2 id="1-flow-matching">1. Flow Matching<a class="headerlink" href="#1-flow-matching" title="Permanent link">&para;</a></h2>
 <h3 id="11-hand-crafted-velocity-field-ring">1.1 Hand-Crafted Velocity Field: Ring<a class="headerlink" href="#11-hand-crafted-velocity-field-ring" title="Permanent link">&para;</a></h3>
 <p>The first stage uses an analytic vector field. No neural network or checkpoint is
@@ -1282,21 +1282,20 @@ r=\lVert x\rVert_2,
 r_\star(t)=1.7+0.2\sin(2\pi t).
 \tag{2}
 \]</div>
-<p>The implemented ring field is</p>
+<p>The non-rotating ring field is</p>
 <div class="arithmatex">\[
 u_t(x)
 =0.8\bigl(r_\star(t)-\rho\bigr)
-\frac{x}{\rho}
-+1.5
-\begin{bmatrix}
--x_2\\
-x_1
-\end{bmatrix}.
+\frac{x}{\rho}.
 \tag{3}
 \]</div>
-<p>The first term is radial negative feedback. For nonzero points inside the target radius, it pushes
-particles outward; outside that radius, it pulls them inward. The origin remains fixed. The second term
-is tangent to circles centered at the origin, so it rotates particles.</p>
+<p>This field is radial negative feedback. For nonzero points inside the target radius, it pushes
+particles outward; outside that radius, it pulls them inward. The origin remains fixed. There is no tangential component. For a nonzero trajectory, write <span class="arithmatex">\(r_t=\|X_t\|_2\)</span>. Its polar angle obeys</p>
+<div class="arithmatex">\[
+\frac{d\theta_t}{dt}
+=\frac{X_{t,1}u_{t,2}(X_t)-X_{t,2}u_{t,1}(X_t)}{r_t^2}=0.
+\]</div>
+<p>Thus particles can move inward or outward without rotating. The numerical safeguard <span class="arithmatex">\(\rho\)</span> changes the radial speed near zero but does not introduce angular motion.</p>
 <p>The simulator solves the ordinary differential equation</p>
 <div class="arithmatex">\[
 \frac{\mathrm{d}X_t}{\mathrm{d}t}=u_t(X_t).
@@ -1314,9 +1313,12 @@ is tangent to circles centered at the origin, so it rotates particles.</p>
 \tag{6}
 \]</div>
 <p>The field attracts particles toward the target radius, but does not bring the entire cloud exactly onto it in a finite run. Since the target radius changes with time, particles also show a tracking lag: at <span class="arithmatex">\(r_t=r_\star(t)\)</span>, their instantaneous radial velocity is zero even while the target circle may be expanding or shrinking. The animation shows a distribution with radial spread around the ideal circle. A smooth, invertible ODE flow cannot collapse a full-dimensional Gaussian distribution exactly onto a one-dimensional circle in finite time.</p>
-<video controls src="../assets/vidoes/flow-bedrock-v2-analytic-ring.mp4"></video>
-
-<p>The video uses RK4 to integrate this hand-designed field, showing radial attraction together with tangential rotation.</p>
+<p>The simulation clock in this analytic example can continue past <span class="arithmatex">\(t=1\)</span>. The radius schedule is periodic, so the ring can keep changing radius even though its particles do not rotate. This is not a learned sampler with a fixed terminal state at 1.</p>
+<p>The earlier recording used <span class="arithmatex">\(u_t^{\mathrm{old}}(x)=u_t(x)+1.5(-x_2,x_1)\)</span>, so its angular velocity was 1.5 radians per unit simulation time. Removing this term preserves the radial equation (6). For an isotropic Gaussian initial law, rotational symmetry also means that the ideal continuous-time marginal distributions are unchanged, despite different individual trajectories. This conclusion does not hold for an arbitrary anisotropic initial cloud, and finite numerical samples need not coincide.</p>
+<div class="admonition note">
+<p class="admonition-title">Recording pending review</p>
+<p>The existing <a href="../assets/vidoes/flow-bedrock-v2-analytic-ring.mp4">archived ring recording</a> shows the earlier rotating field. It is not embedded as a demonstration of equation (3). The live source, an isolated GPU integration, and the live Safari display were checked on 2026-10-18. The replacement browser recording is still pending; it must show no moving foreground light, no angular rotation, and the density layer disabled.</p>
+</div>
 <h3 id="12-learned-velocity-field-a-ps5-like-outline">1.2 Learned Velocity Field: A PS5-Like Outline<a class="headerlink" href="#12-learned-velocity-field-a-ps5-like-outline" title="Permanent link">&para;</a></h3>
 <p>The ring example writes geometric rules directly into a velocity field. For the PS5-like controller outline, we instead learn a field <span class="arithmatex">\(v_\theta:\mathbb{R}^2\times[0,1]\to\mathbb{R}^2\)</span> from target samples.</p>
 <p>The target is a distribution of two-dimensional coordinates representing a controller outline. The PS5 checkpoint uses a preprocessed point set derived from the outline; the sampler centers and scales these coordinates, then draws target points with Gaussian jitter. The image below shows the reference shape:</p>
