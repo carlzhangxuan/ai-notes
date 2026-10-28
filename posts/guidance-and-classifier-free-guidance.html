@@ -409,6 +409,34 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="1. Vanilla conditioning: learn the conditional field directly">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diffusion-predict-the-added-noise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Diffusion: predict the added noise
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#flow-matching-predict-the-constructed-path-velocity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Flow matching: predict the constructed path velocity
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -420,6 +448,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="2. Classifier guidance: obtain the conditional correction through Bayes&#39; rule">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-flow-correction-includes-a-schedule-dependent-factor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The flow correction includes a schedule-dependent factor
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -430,6 +475,23 @@
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="3. Classifier-free guidance: estimate the correction without a separate classifier">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#flow-cfg-combine-velocity-predictions-directly" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Flow CFG: combine velocity predictions directly
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -758,6 +820,34 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="1. Vanilla conditioning: learn the conditional field directly">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diffusion-predict-the-added-noise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Diffusion: predict the added noise
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#flow-matching-predict-the-constructed-path-velocity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Flow matching: predict the constructed path velocity
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -769,6 +859,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="2. Classifier guidance: obtain the conditional correction through Bayes&#39; rule">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-flow-correction-includes-a-schedule-dependent-factor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The flow correction includes a schedule-dependent factor
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -779,6 +886,23 @@
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="3. Classifier-free guidance: estimate the correction without a separate classifier">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#flow-cfg-combine-velocity-predictions-directly" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Flow CFG: combine velocity predictions directly
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -850,12 +974,14 @@
 
 
 <h1 id="guidance-and-classifier-free-guidance-how-conditioning-changes-sampling">Guidance and classifier-free guidance — How conditioning changes sampling<a class="headerlink" href="#guidance-and-classifier-free-guidance-how-conditioning-changes-sampling" title="Permanent link">&para;</a></h1>
-<p><strong>Initial version:</strong> 2026-10-28 · <strong>First published:</strong> 2026-10-29 · <strong>Last content update:</strong> 2026-10-28</p>
+<p><strong>Initial version:</strong> 2026-10-28 · <strong>First published:</strong> 2026-10-29 · <strong>Last content update:</strong> 2026-10-29</p>
 <p><em>Literature checked through 2026-10-28; recent preprints are identified separately.</em></p>
 <p>A conditional generator already receives the requested condition during training and sampling. Guidance introduces a further choice: whether to use its conditional prediction directly or modify the sampling field to emphasize the condition. These choices need to be separated, because stronger condition adherence, better perceptual quality, and more accurate sampling of the conditional data distribution are different objectives.</p>
 <p>We follow the progression used in the <a href="https://diffusion.csail.mit.edu/2026/docs/lecture_notes.pdf">MIT course notes, Chapter 5</a>: vanilla conditioning, classifier guidance, and classifier-free guidance. Here, “vanilla” means ordinary conditional generation, not unconditional generation. Conditioning on a prompt or class is also distinct from conditioning on a sampled endpoint when constructing flow-matching training paths.</p>
 <h2 id="1-vanilla-conditioning-learn-the-conditional-field-directly">1. Vanilla conditioning: learn the conditional field directly<a class="headerlink" href="#1-vanilla-conditioning-learn-the-conditional-field-directly" title="Permanent link">&para;</a></h2>
-<p>Let <span class="arithmatex">\((X_0,Y)\)</span> have the data joint law, with <span class="arithmatex">\(X_0\in\mathbb R^d\)</span> and condition <span class="arithmatex">\(Y\in\mathcal Y\)</span>. In this chapter, <span class="arithmatex">\(t\in[0,T]\)</span> runs in the <strong>forward noising direction</strong>, from data toward noise; generation traverses these times backwards. This differs from the noise-to-data convention used in our flow-matching examples.</p>
+<p>Let <span class="arithmatex">\((X_0,Y)\)</span> have the data joint law, with <span class="arithmatex">\(X_0\in\mathbb R^d\)</span> and condition <span class="arithmatex">\(Y\in\mathcal Y\)</span>. In the diffusion formulas, <span class="arithmatex">\(t\in[0,T]\)</span> runs in the <strong>forward noising direction</strong>, from data toward noise; generation traverses these times backwards. This differs from the noise-to-data convention used in our flow-matching examples.</p>
+<p>We use a separate parameter <span class="arithmatex">\(\tau\in[0,1]\)</span> for flow matching, running from noise to data. Equations (1)–(10) describe the diffusion/score formulation; equations (F1)–(F9) give its flow counterparts. The same data variable <span class="arithmatex">\(X_0\)</span> is used in both: its subscript labels the diffusion data endpoint, not the flow starting point.</p>
+<h3 id="diffusion-predict-the-added-noise">Diffusion: predict the added noise<a class="headerlink" href="#diffusion-predict-the-added-noise" title="Permanent link">&para;</a></h3>
 <p>For a Gaussian corruption, write</p>
 <div class="arithmatex">\[
 X_t=\alpha_tX_0+\sigma_t\varepsilon,
@@ -889,6 +1015,45 @@ s_t^{\mathrm c}(x,y)
 \tag{3}
 \]</div>
 <p>The score identity follows by differentiating the Gaussian mixture density, wherever differentiation under the integral is justified. Providing <span class="arithmatex">\(y\)</span> changes the conditional expectation being learned; the training target remains the sampled noise. With the exact conditional score, the appropriate reverse dynamics, and the correct terminal law, conditional generation does not require an additional amplification step. A shared Gaussian initialization is an approximation unless the terminal noising law actually removes dependence on <span class="arithmatex">\(y\)</span>.</p>
+<h3 id="flow-matching-predict-the-constructed-path-velocity">Flow matching: predict the constructed path velocity<a class="headerlink" href="#flow-matching-predict-the-constructed-path-velocity" title="Permanent link">&para;</a></h3>
+<p>Draw the same data–condition pair <span class="arithmatex">\((X_0,Y)\)</span>, but construct a path in the generation direction. With <span class="arithmatex">\(Z\sim\mathcal N(0,I_d)\)</span> independent of <span class="arithmatex">\((X_0,Y)\)</span>, set</p>
+<div class="arithmatex">\[
+R_\tau=a_\tau X_0+b_\tau Z,
+\qquad
+U_\tau=\dot a_\tau X_0+\dot b_\tau Z,
+\qquad
+(a_0,b_0)=(0,1),\quad(a_1,b_1)=(1,0).
+\tag{F1}
+\]</div>
+<p>Dots here denote derivatives with respect to <span class="arithmatex">\(\tau\)</span>. The schedules are differentiable, and the data have finite second moments. The condition <span class="arithmatex">\(Y\)</span>, or its embedding, is held fixed along this construction just as in the diffusion example. Train the velocity network with</p>
+<div class="arithmatex">\[
+\mathcal L_{\mathrm{FM}}(\theta)
+=\mathbb E\left[\|v_\theta(R_\tau,\tau,Y)-U_\tau\|^2\right],
+\qquad
+v_\tau^{\mathrm c}(x,y)
+=\mathbb E[U_\tau\mid R_\tau=x,Y=y].
+\tag{F2}
+\]</div>
+<p>The expectation samples <span class="arithmatex">\(\tau\)</span> independently of the endpoints. The second expression is the population-optimal regression field. For the straight interpolation,</p>
+<div class="arithmatex">\[
+a_\tau=\tau,\qquad b_\tau=1-\tau,
+\qquad R_\tau=\tau X_0+(1-\tau)Z,
+\qquad U_\tau=X_0-Z.
+\tag{F3}
+\]</div>
+<p>Thus diffusion uses a sampled noise label <span class="arithmatex">\(\varepsilon\)</span>, while this FM construction uses a sampled velocity label <span class="arithmatex">\(X_0-Z\)</span>. Both networks receive a noisy/intermediate state, its time, and the unchanged condition. The conditional average field need not reproduce each training pair's straight trajectory.</p>
+<p>Let <span class="arithmatex">\(q_\tau(x\mid y)\)</span> be the density of <span class="arithmatex">\(R_\tau\)</span> given <span class="arithmatex">\(Y=y\)</span>. Under the regularity needed for the continuity equation and a well-posed, uniquely transporting ODE, the exact field generates this conditional probability path:</p>
+<div class="arithmatex">\[
+\partial_\tau q_\tau(x\mid y)
++\nabla_x\!\cdot\!\left(q_\tau(x\mid y)v_\tau^{\mathrm c}(x,y)\right)=0,
+\qquad
+\frac{d\widehat R_\tau}{d\tau}
+=v_\tau^{\mathrm c}(\widehat R_\tau,y),
+\qquad \widehat R_0\sim\mathcal N(0,I_d).
+\tag{F4}
+\]</div>
+<p>The hats distinguish generated ODE samples from constructed training states. These statements apply on regular time intervals; if the data endpoint is singular, reaching it requires a limiting argument rather than assuming a smooth invertible flow through <span class="arithmatex">\(\tau=1\)</span>.</p>
+<p>The two time conventions can be matched at the level of marginal paths: if <span class="arithmatex">\(a_\tau=\alpha_{T(1-\tau)}\)</span> and <span class="arithmatex">\(b_\tau=\sigma_{T(1-\tau)}\)</span>, then <span class="arithmatex">\(q_\tau(\cdot\mid y)=p_{T(1-\tau)}(\cdot\mid y)\)</span>. This requires the corresponding schedules, including their endpoints, to match; an arbitrary diffusion schedule need not be the straight FM interpolation. Equality of these marginal paths does not identify an SDE's individual trajectories with an FM ODE's trajectories.</p>
 <h2 id="2-classifier-guidance-obtain-the-conditional-correction-through-bayes-rule">2. Classifier guidance: obtain the conditional correction through Bayes' rule<a class="headerlink" href="#2-classifier-guidance-obtain-the-conditional-correction-through-bayes-rule" title="Permanent link">&para;</a></h2>
 <p>For clarity, take <span class="arithmatex">\(Y\)</span> to be a discrete class and fix <span class="arithmatex">\(y\)</span> with positive probability. Where the densities are positive and differentiable,</p>
 <div class="arithmatex">\[
@@ -913,6 +1078,35 @@ s_{\mathrm{CG}}(x,t,y)
 \tag{6}
 \]</div>
 <p>With exact models, <span class="arithmatex">\(\gamma=1\)</span> recovers the conditional score. Choosing <span class="arithmatex">\(\gamma&gt;1\)</span> amplifies its conditional correction; this is a sampling modification rather than the Bayes identity itself. Classifier guidance can also be added to an already conditional base model, in which case the baseline and scale convention must be adjusted. <a href="https://arxiv.org/abs/2105.05233">Dhariwal and Nichol (2021)</a> develop classifier-guided diffusion sampling and examine its quality–diversity trade-off.</p>
+<h3 id="the-flow-correction-includes-a-schedule-dependent-factor">The flow correction includes a schedule-dependent factor<a class="headerlink" href="#the-flow-correction-includes-a-schedule-dependent-factor" title="Permanent link">&para;</a></h3>
+<p>A score is a spatial log-density gradient; a velocity is a time derivative of a sample state. They cannot be substituted for each other without a conversion. For the Gaussian affine path (F1), on interior times where <span class="arithmatex">\(a_\tau,b_\tau&gt;0\)</span>, define</p>
+<div class="arithmatex">\[
+A_\tau=\frac{\dot a_\tau}{a_\tau},
+\qquad
+B_\tau=\frac{\dot a_\tau}{a_\tau}b_\tau^2-b_\tau\dot b_\tau.
+\tag{F5}
+\]</div>
+<p>Gaussian differentiation gives <span class="arithmatex">\(\nabla_x\log q_\tau(x\mid y)=-\mathbb E[Z\mid R_\tau=x,Y=y]/b_\tau\)</span>. Taking the conditional expectation of <span class="arithmatex">\(R_\tau=a_\tau X_0+b_\tau Z\)</span> then eliminates <span class="arithmatex">\(X_0\)</span> from the expected velocity in (F2), yielding</p>
+<div class="arithmatex">\[
+\begin{aligned}
+v_\tau^{\mathrm c}(x,y)&amp;=A_\tau x+B_\tau\nabla_x\log q_\tau(x\mid y),\\
+v_\tau^{\mathrm u}(x)&amp;=A_\tau x+B_\tau\nabla_x\log q_\tau(x),\\
+v_\tau^{\mathrm c}(x,y)-v_\tau^{\mathrm u}(x)
+&amp;=B_\tau\nabla_x\log q_\tau(y\mid x).
+\end{aligned}
+\tag{F6}
+\]</div>
+<p>Here <span class="arithmatex">\(v_\tau^{\mathrm u}(x)=\mathbb E[U_\tau\mid R_\tau=x]\)</span>, and <span class="arithmatex">\(q_\tau(y\mid x)\)</span> is the class posterior under the constructed flow path. Both branches must use the same schedules and the independent Gaussian coupling in (F1). The final line follows from Bayes' rule, because the common <span class="arithmatex">\(A_\tau x\)</span> term cancels. This is also the Gaussian-path conversion used in the <a href="https://diffusion.csail.mit.edu/2025/docs/slides_lecture_4.pdf">MIT guidance lecture</a>.</p>
+<p>A classifier <span class="arithmatex">\(c_\phi^{\mathrm F}(y\mid x,\tau)\)</span> trained on these intermediate states therefore supplies the flow version of (6):</p>
+<div class="arithmatex">\[
+v_{\mathrm{CG}}(x,\tau,y)
+=v_\theta^{\mathrm u}(x,\tau)
++\gamma B_\tau\nabla_x\log c_\phi^{\mathrm F}(y\mid x,\tau),
+\qquad
+B_\tau=\frac{1-\tau}{\tau}\quad\text{for (F3), }0&lt;\tau&lt;1.
+\tag{F7}
+\]</div>
+<p>With exact fields and classifier, <span class="arithmatex">\(\gamma=1\)</span> recovers the conditional velocity. The factor <span class="arithmatex">\(B_\tau\)</span> is essential: simply adding a classifier score gradient to an arbitrary FM velocity is not this identity. The expression for the straight path is singular at <span class="arithmatex">\(\tau=0\)</span>; it must not be evaluated there by direct division. The original conditional-expectation definition of velocity is the primary object. More general paths or endpoint couplings require a separate derivation and need not admit this scalar conversion.</p>
 <h2 id="3-classifier-free-guidance-estimate-the-correction-without-a-separate-classifier">3. Classifier-free guidance: estimate the correction without a separate classifier<a class="headerlink" href="#3-classifier-free-guidance-estimate-the-correction-without-a-separate-classifier" title="Permanent link">&para;</a></h2>
 <p>Rearranging the same identity gives</p>
 <div class="arithmatex">\[
@@ -929,6 +1123,57 @@ s_{\mathrm{CFG}}(x,t,y)
 \tag{8}
 \]</div>
 <p>Under our convention, <span class="arithmatex">\(\gamma=0\)</span> gives the unconditional prediction, <span class="arithmatex">\(\gamma=1\)</span> the ordinary conditional prediction, and <span class="arithmatex">\(\gamma&gt;1\)</span> extrapolates beyond it. The original CFG paper also uses the form <span class="arithmatex">\((1+w)s_{\mathrm c}-ws_{\mathrm u}\)</span>, corresponding to <span class="arithmatex">\(\gamma=1+w\)</span>. Noise predictions admit the same linear combination when their noise scale and parameterization agree. “Classifier-free” removes the separate classifier, not the conditioning information or the usual two branch evaluations. <a href="https://arxiv.org/abs/2207.12598">Ho and Salimans (2022)</a>.</p>
+<h3 id="flow-cfg-combine-velocity-predictions-directly">Flow CFG: combine velocity predictions directly<a class="headerlink" href="#flow-cfg-combine-velocity-predictions-directly" title="Permanent link">&para;</a></h3>
+<p>Use independent condition dropout in the FM objective (F2), so the null-condition branch learns <span class="arithmatex">\(v_\tau^{\mathrm u}\)</span> and the retained-condition branch learns <span class="arithmatex">\(v_\tau^{\mathrm c}\)</span>. At inference,</p>
+<div class="arithmatex">\[
+\begin{aligned}
+v_{\mathrm{CFG}}(x,\tau,y)
+&amp;=v_\theta(x,\tau,\varnothing)
++\gamma\left[v_\theta(x,\tau,y)-v_\theta(x,\tau,\varnothing)\right],\\
+\frac{d\widehat R_\tau}{d\tau}
+&amp;=v_{\mathrm{CFG}}(\widehat R_\tau,\tau,y),
+\qquad \widehat R_0\sim\mathcal N(0,I_d).
+\end{aligned}
+\tag{F8}
+\]</div>
+<p>The scale convention is unchanged: <span class="arithmatex">\(\gamma=0\)</span> is unconditional, <span class="arithmatex">\(\gamma=1\)</span> is ordinary conditional generation, and <span class="arithmatex">\(\gamma&gt;1\)</span> extrapolates. There is no extra multiplication by <span class="arithmatex">\(B_\tau\)</span> in this formula: for the exact Gaussian-path fields, (F6) shows that the velocity difference <strong>already contains</strong> that factor. This allows direct velocity guidance without computing scores or a classifier gradient. For other FM constructions, the same combination can be defined, but its interpretation as a classifier correction is not automatic.</p>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Diffusion / score formulation</th>
+<th>Flow-matching formulation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Training construction</td>
+<td><span class="arithmatex">\(X_t=\alpha_tX_0+\sigma_t\varepsilon\)</span>, data → noise</td>
+<td><span class="arithmatex">\(R_\tau=a_\tau X_0+b_\tau Z\)</span>, noise → data</td>
+</tr>
+<tr>
+<td>Regression label</td>
+<td>Sampled noise <span class="arithmatex">\(\varepsilon\)</span></td>
+<td>Constructed velocity <span class="arithmatex">\(U_\tau\)</span></td>
+</tr>
+<tr>
+<td>Classifier correction</td>
+<td><span class="arithmatex">\(\gamma\nabla_x\log p_t(y\mid x)\)</span> added to the unconditional score</td>
+<td><span class="arithmatex">\(\gamma B_\tau\nabla_x\log q_\tau(y\mid x)\)</span> added to the unconditional velocity, under (F1)</td>
+</tr>
+<tr>
+<td>Classifier-free combination</td>
+<td><span class="arithmatex">\(s_{\mathrm u}+\gamma(s_{\mathrm c}-s_{\mathrm u})\)</span></td>
+<td><span class="arithmatex">\(v_{\mathrm u}+\gamma(v_{\mathrm c}-v_{\mathrm u})\)</span></td>
+</tr>
+<tr>
+<td>Use at sampling</td>
+<td>Insert the score into the chosen reverse SDE or probability-flow ODE, with its corresponding coefficients</td>
+<td>Integrate the guided velocity ODE forward in <span class="arithmatex">\(\tau\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>The diffusion column combines scores, not SDE drifts: the reverse SDE and probability-flow ODE multiply the score by different coefficients. The flow column combines velocities that can be integrated directly.</p>
 <h2 id="4-a-local-score-identity-does-not-identify-the-generated-endpoint-distribution">4. A local score identity does not identify the generated endpoint distribution<a class="headerlink" href="#4-a-local-score-identity-does-not-identify-the-generated-endpoint-distribution" title="Permanent link">&para;</a></h2>
 <p>For exact scores and a constant <span class="arithmatex">\(\gamma\)</span>, define, when the normalizer is finite,</p>
 <div class="arithmatex">\[
@@ -947,6 +1192,14 @@ Z_t(y)=\int_{\mathbb R^d}p_t(x\mid y)^\gamma p_t(x)^{1-\gamma}\,dx.
 <p>This is a spatial derivative identity. It does <strong>not</strong> establish that the family <span class="arithmatex">\(r_t\)</span> satisfies the forward Fokker–Planck equation associated with the original noising process. Consequently, replacing its reverse sampler's score with this expression does not generally produce <span class="arithmatex">\(r_0\)</span>. The missing requirement is consistency across time, not a missing normalization constant in the spatial gradient.</p>
 <p><a href="https://openreview.net/forum?id=zrWNtzSZsf">Bradley and Nakkiran, <em>Classifier-Free Guidance is a Predictor-Corrector</em> (2024 preprint; TMLR 2025)</a> analyze this distinction and show that CFG interacts differently with DDPM and DDIM. Their SDE-limit analysis connects CFG to denoising plus a Langevin sharpening correction. This directly qualifies the tempting claim that CFG simply samples a powered conditional distribution.</p>
 <p>The same caution applies when comparing guided ODE and SDE samplers: their unguided probability-flow correspondence cannot simply be assumed to survive an arbitrary score modification. For flow matching, linear combinations of conditional and unconditional velocities can be implemented, but the score derivation above is not by itself a theorem identifying their output law.</p>
+<p>For flow CFG, let <span class="arithmatex">\(h_\tau(x\mid y)\)</span> be the actual density of the guided ODE samples. Its governing equation is</p>
+<div class="arithmatex">\[
+\partial_\tau h_\tau
++\nabla_x\cdot(h_\tau v_{\mathrm{CFG}})=0,
+\qquad h_0(x\mid y)=\varphi_d(x),
+\tag{F9}
+\]</div>
+<p>where <span class="arithmatex">\(\varphi_d\)</span> is the standard Gaussian density. Even under (F1), the fixed-time powered density proportional to <span class="arithmatex">\(q_\tau(x\mid y)^\gamma q_\tau(x)^{1-\gamma}\)</span> need not solve (F9). Under the appropriate uniqueness assumptions, <span class="arithmatex">\(\gamma=1\)</span> with exact conditional velocities recovers <span class="arithmatex">\(q_\tau(\cdot\mid y)\)</span>; extrapolation beyond one has no such general guarantee. This is the flow counterpart of the diffusion caveat: an algebraic combination of fields does not, by itself, determine a proposed closed-form endpoint law.</p>
 <h2 id="5-recent-directions-and-reading-map">5. Recent directions and reading map<a class="headerlink" href="#5-recent-directions-and-reading-map" title="Permanent link">&para;</a></h2>
 <p>The following papers address different design choices. Their reported improvements concern the models, samplers and evaluation settings studied; they are not universal guarantees.</p>
 <table>
