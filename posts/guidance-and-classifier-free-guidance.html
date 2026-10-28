@@ -401,6 +401,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#notation-at-a-glance-diffusion-and-flow-matching" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Notation at a glance: diffusion and flow matching
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#1-vanilla-conditioning-learn-the-conditional-field-directly" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -812,6 +823,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#notation-at-a-glance-diffusion-and-flow-matching" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Notation at a glance: diffusion and flow matching
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#1-vanilla-conditioning-learn-the-conditional-field-directly" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -976,6 +998,104 @@
 <h1 id="guidance-and-classifier-free-guidance-how-conditioning-changes-sampling">Guidance and classifier-free guidance — How conditioning changes sampling<a class="headerlink" href="#guidance-and-classifier-free-guidance-how-conditioning-changes-sampling" title="Permanent link">&para;</a></h1>
 <p><strong>Initial version:</strong> 2026-10-28 · <strong>First published:</strong> 2026-10-29 · <strong>Last content update:</strong> 2026-10-29</p>
 <p><em>Literature checked through 2026-10-28; recent preprints are identified separately.</em></p>
+<h2 id="notation-at-a-glance-diffusion-and-flow-matching">Notation at a glance: diffusion and flow matching<a class="headerlink" href="#notation-at-a-glance-diffusion-and-flow-matching" title="Permanent link">&para;</a></h2>
+<p>The columns describe corresponding roles, not automatic numerical equalities. Both use data states in <span class="arithmatex">\(\mathbb R^d\)</span>. In the flow column, <span class="arithmatex">\(X_0\)</span> still means the <strong>data sample</strong> from the diffusion notation; the flow's initial state is <span class="arithmatex">\(R_0=Z\)</span>.</p>
+<table>
+<thead>
+<tr>
+<th>Role</th>
+<th>Diffusion formulation</th>
+<th>Flow-matching formulation</th>
+<th>Correspondence and difference</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Data and condition</td>
+<td><span class="arithmatex">\((X_0,Y)\)</span></td>
+<td>The same <span class="arithmatex">\((X_0,Y)\)</span></td>
+<td>A paired data sample and its condition; neither column changes the data joint law.</td>
+</tr>
+<tr>
+<td>Condition embedding</td>
+<td><span class="arithmatex">\(e_y=\operatorname{Encoder}(y)\)</span></td>
+<td>The same <span class="arithmatex">\(e_y\)</span></td>
+<td>Usually fixed during one generation, while the state and time change.</td>
+</tr>
+<tr>
+<td>Independent Gaussian noise</td>
+<td><span class="arithmatex">\(\varepsilon\sim\mathcal N(0,I_d)\)</span></td>
+<td><span class="arithmatex">\(Z\sim\mathcal N(0,I_d)\)</span></td>
+<td>Both are independent of <span class="arithmatex">\((X_0,Y)\)</span>; different letters distinguish the two constructions.</td>
+</tr>
+<tr>
+<td>Time and direction</td>
+<td><span class="arithmatex">\(t\in[0,T]\)</span>: data → noise; generation runs backwards</td>
+<td><span class="arithmatex">\(\tau\in[0,1]\)</span>: noise → data; generation runs forwards</td>
+<td>Matching reversed schedules uses <span class="arithmatex">\(t=T(1-\tau)\)</span>; derivatives also acquire the factor <span class="arithmatex">\(dt/d\tau=-T\)</span>.</td>
+</tr>
+<tr>
+<td>Schedule coefficients</td>
+<td><span class="arithmatex">\(\alpha_t\)</span>: data weight; <span class="arithmatex">\(\sigma_t\)</span>: noise weight</td>
+<td><span class="arithmatex">\(a_\tau\)</span>: data weight; <span class="arithmatex">\(b_\tau\)</span>: noise weight</td>
+<td>They match only if <span class="arithmatex">\(a_\tau=\alpha_{T(1-\tau)}\)</span> and <span class="arithmatex">\(b_\tau=\sigma_{T(1-\tau)}\)</span>. Lowercase <span class="arithmatex">\(b_\tau\)</span> is a noise weight, not a drift.</td>
+</tr>
+<tr>
+<td>Constructed training state</td>
+<td><span class="arithmatex">\(X_t=\alpha_tX_0+\sigma_t\varepsilon\)</span></td>
+<td><span class="arithmatex">\(R_\tau=a_\tau X_0+b_\tau Z\)</span></td>
+<td>Same affine form; opposite time conventions. Neither construction specifies all joint-in-time properties of a sampling SDE.</td>
+</tr>
+<tr>
+<td>Conditional / unconditional densities</td>
+<td><span class="arithmatex">\(p_t(x\mid y)\)</span>, <span class="arithmatex">\(p_t(x)\)</span></td>
+<td><span class="arithmatex">\(q_\tau(x\mid y)\)</span>, <span class="arithmatex">\(q_\tau(x)\)</span></td>
+<td>Densities of the constructed states; equal at corresponding times only for matched marginal paths.</td>
+</tr>
+<tr>
+<td>Class posterior</td>
+<td><span class="arithmatex">\(p_t(y\mid x)\)</span></td>
+<td><span class="arithmatex">\(q_\tau(y\mid x)\)</span></td>
+<td>Probability of the class given an intermediate state; distinct from the data-state density conditioned on that class.</td>
+</tr>
+<tr>
+<td>Sampled regression label</td>
+<td>Noise <span class="arithmatex">\(\varepsilon\)</span></td>
+<td>Velocity <span class="arithmatex">\(U_\tau=\dot a_\tau X_0+\dot b_\tau Z\)</span></td>
+<td>Noise prediction versus velocity prediction; these labels are not interchangeable. Dots denote <span class="arithmatex">\(\tau\)</span>-derivatives.</td>
+</tr>
+<tr>
+<td>Neural prediction</td>
+<td><span class="arithmatex">\(\varepsilon_\theta(x,t,y)\)</span>, or score <span class="arithmatex">\(s_\theta(x,t,y)\)</span></td>
+<td>Velocity <span class="arithmatex">\(v_\theta(x,\tau,y)\)</span></td>
+<td>Noise converts to score as <span class="arithmatex">\(s_\theta=-\varepsilon_\theta/\sigma_t\)</span> where <span class="arithmatex">\(\sigma_t&gt;0\)</span>; velocity converts to score only under a specified path relation.</td>
+</tr>
+<tr>
+<td>Exact conditional / unconditional fields</td>
+<td><span class="arithmatex">\(s_t^{\mathrm c}=\nabla_x\log p_t(x\mid y)\)</span>, <span class="arithmatex">\(s_t^{\mathrm u}=\nabla_x\log p_t(x)\)</span></td>
+<td><span class="arithmatex">\(v_\tau^{\mathrm c}=\mathbb E[U_\tau\mid R_\tau=x,Y=y]\)</span>, <span class="arithmatex">\(v_\tau^{\mathrm u}=\mathbb E[U_\tau\mid R_\tau=x]\)</span></td>
+<td>Superscripts <span class="arithmatex">\(\mathrm c\)</span> and <span class="arithmatex">\(\mathrm u\)</span> always mean conditional and unconditional. Scores are not velocities.</td>
+</tr>
+<tr>
+<td>Velocity–score conversion</td>
+<td>A score enters the chosen sampler with its prescribed coefficients</td>
+<td><span class="arithmatex">\(v_\tau=A_\tau x+B_\tau\nabla_x\log q_\tau\)</span> for the Gaussian affine path</td>
+<td><span class="arithmatex">\(A_\tau=\dot a_\tau/a_\tau\)</span>, <span class="arithmatex">\(B_\tau=A_\tau b_\tau^2-b_\tau\dot b_\tau\)</span>; see (F5)–(F6) for domains and conditioning. Uppercase <span class="arithmatex">\(B_\tau\)</span> is not the noise weight <span class="arithmatex">\(b_\tau\)</span>.</td>
+</tr>
+<tr>
+<td>CFG scale and null condition</td>
+<td><span class="arithmatex">\(\gamma\)</span>, <span class="arithmatex">\(\varnothing\)</span></td>
+<td>The same <span class="arithmatex">\(\gamma\)</span>, <span class="arithmatex">\(\varnothing\)</span></td>
+<td><span class="arithmatex">\(\gamma=0\)</span>: unconditional; <span class="arithmatex">\(\gamma=1\)</span>: ordinary conditional; <span class="arithmatex">\(\gamma&gt;1\)</span>: extrapolation. <span class="arithmatex">\(\rho\)</span> is the training condition-drop probability, not the guidance scale.</td>
+</tr>
+<tr>
+<td>Generated samples and their law</td>
+<td>The chosen reverse SDE / ODE determines the output law</td>
+<td><span class="arithmatex">\(\widehat R_\tau\)</span>: generated ODE sample; <span class="arithmatex">\(h_\tau(x\mid y)\)</span>: its guided density</td>
+<td>Constructed states <span class="arithmatex">\(R_\tau\)</span> and generated samples <span class="arithmatex">\(\widehat R_\tau\)</span> have different roles. The actual guided density <span class="arithmatex">\(h_\tau\)</span> need not equal <span class="arithmatex">\(q_\tau\)</span> or a powered version of it.</td>
+</tr>
+</tbody>
+</table>
 <p>A conditional generator already receives the requested condition during training and sampling. Guidance introduces a further choice: whether to use its conditional prediction directly or modify the sampling field to emphasize the condition. These choices need to be separated, because stronger condition adherence, better perceptual quality, and more accurate sampling of the conditional data distribution are different objectives.</p>
 <p>We follow the progression used in the <a href="https://diffusion.csail.mit.edu/2026/docs/lecture_notes.pdf">MIT course notes, Chapter 5</a>: vanilla conditioning, classifier guidance, and classifier-free guidance. Here, “vanilla” means ordinary conditional generation, not unconditional generation. Conditioning on a prompt or class is also distinct from conditioning on a sampled endpoint when constructing flow-matching training paths.</p>
 <h2 id="1-vanilla-conditioning-learn-the-conditional-field-directly">1. Vanilla conditioning: learn the conditional field directly<a class="headerlink" href="#1-vanilla-conditioning-learn-the-conditional-field-directly" title="Permanent link">&para;</a></h2>
