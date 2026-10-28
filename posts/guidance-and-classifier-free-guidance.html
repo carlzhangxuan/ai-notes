@@ -1,0 +1,1074 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="diffusion-models-intro.html">
+      
+      
+        <link rel="next" href="introduction-C-compare-and-code.html">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Guidance and Classifier-Free Guidance - AI Notes</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#guidance-and-classifier-free-guidance-how-conditioning-changes-sampling" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../index.html" title="AI Notes" class="md-header__button md-logo" aria-label="AI Notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            AI Notes
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Guidance and Classifier-Free Guidance
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../index.html" title="AI Notes" class="md-nav__button md-logo" aria-label="AI Notes" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    AI Notes
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Posts
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Posts
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="diffusion-models-intro.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diffusion Models Intro
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Guidance and Classifier-Free Guidance
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="guidance-and-classifier-free-guidance.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Guidance and Classifier-Free Guidance
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-vanilla-conditioning-learn-the-conditional-field-directly" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Vanilla conditioning: learn the conditional field directly
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-classifier-guidance-obtain-the-conditional-correction-through-bayes-rule" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Classifier guidance: obtain the conditional correction through Bayes' rule
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-classifier-free-guidance-estimate-the-correction-without-a-separate-classifier" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Classifier-free guidance: estimate the correction without a separate classifier
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-a-local-score-identity-does-not-identify-the-generated-endpoint-distribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. A local score identity does not identify the generated endpoint distribution
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-recent-directions-and-reading-map" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Recent directions and reading map
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Recent directions and reading map">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#october-2026-preprints-to-follow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        October 2026 preprints to follow
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="introduction-C-compare-and-code.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diffusion — Compare and Code
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="introduction-B-flow-matching.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diffusion — Flow Matching
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="flow-bedrock-v2.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Flow Bedrock V2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="mathematics-foundation.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diffusion — Mathematics Foundation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="interlude-alpha-year-1757.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diffusion — Interlude α (1757)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="introduction-beta-CFM-and-ELBO.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diffusion — CFM and ELBO
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="transformer.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Transformer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="vit-dit.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ViT and DiT
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-vanilla-conditioning-learn-the-conditional-field-directly" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Vanilla conditioning: learn the conditional field directly
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-classifier-guidance-obtain-the-conditional-correction-through-bayes-rule" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Classifier guidance: obtain the conditional correction through Bayes' rule
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-classifier-free-guidance-estimate-the-correction-without-a-separate-classifier" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Classifier-free guidance: estimate the correction without a separate classifier
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-a-local-score-identity-does-not-identify-the-generated-endpoint-distribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. A local score identity does not identify the generated endpoint distribution
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-recent-directions-and-reading-map" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Recent directions and reading map
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Recent directions and reading map">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#october-2026-preprints-to-follow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        October 2026 preprints to follow
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="guidance-and-classifier-free-guidance-how-conditioning-changes-sampling">Guidance and classifier-free guidance — How conditioning changes sampling<a class="headerlink" href="#guidance-and-classifier-free-guidance-how-conditioning-changes-sampling" title="Permanent link">&para;</a></h1>
+<p><strong>Initial version:</strong> 2026-10-28 · <strong>First published:</strong> 2026-10-29 · <strong>Last content update:</strong> 2026-10-28</p>
+<p><em>Literature checked through 2026-10-28; recent preprints are identified separately.</em></p>
+<p>A conditional generator already receives the requested condition during training and sampling. Guidance introduces a further choice: whether to use its conditional prediction directly or modify the sampling field to emphasize the condition. These choices need to be separated, because stronger condition adherence, better perceptual quality, and more accurate sampling of the conditional data distribution are different objectives.</p>
+<p>We follow the progression used in the <a href="https://diffusion.csail.mit.edu/2026/docs/lecture_notes.pdf">MIT course notes, Chapter 5</a>: vanilla conditioning, classifier guidance, and classifier-free guidance. Here, “vanilla” means ordinary conditional generation, not unconditional generation. Conditioning on a prompt or class is also distinct from conditioning on a sampled endpoint when constructing flow-matching training paths.</p>
+<h2 id="1-vanilla-conditioning-learn-the-conditional-field-directly">1. Vanilla conditioning: learn the conditional field directly<a class="headerlink" href="#1-vanilla-conditioning-learn-the-conditional-field-directly" title="Permanent link">&para;</a></h2>
+<p>Let <span class="arithmatex">\((X_0,Y)\)</span> have the data joint law, with <span class="arithmatex">\(X_0\in\mathbb R^d\)</span> and condition <span class="arithmatex">\(Y\in\mathcal Y\)</span>. In this chapter, <span class="arithmatex">\(t\in[0,T]\)</span> runs in the <strong>forward noising direction</strong>, from data toward noise; generation traverses these times backwards. This differs from the noise-to-data convention used in our flow-matching examples.</p>
+<p>For a Gaussian corruption, write</p>
+<div class="arithmatex">\[
+X_t=\alpha_tX_0+\sigma_t\varepsilon,
+\qquad \varepsilon\sim\mathcal N(0,I_d),
+\qquad \varepsilon\perp(X_0,Y).
+\tag{1}
+\]</div>
+<blockquote>
+<p><strong>The condition stays fixed while the data state changes.</strong></p>
+<p><span class="arithmatex">\((X_0,Y)\)</span> is a pair of random variables with the data joint law: a data sample and its associated condition. The notation <span class="arithmatex">\(\varepsilon\perp(X_0,Y)\)</span> means that the Gaussian noise is drawn independently of the entire pair; it does not mean that the data and condition are independent of each other. Equation (1) corrupts only the data state, not the condition.</p>
+<p>For a fixed condition <span class="arithmatex">\(y\)</span>, a typical implementation computes <span class="arithmatex">\(e_y=\operatorname{Encoder}(y)\)</span> once per generation and reuses it in every prediction <span class="arithmatex">\(\varepsilon_\theta(X_t,t,e_y)\)</span>. The embedding stays fixed while <span class="arithmatex">\(X_t\)</span> and <span class="arithmatex">\(t\)</span> change. Its effect need not stay fixed: in cross-attention, for example, queries depend on the current state, so attention weights can change even when the condition embedding does not.</p>
+<p>A fixed embedding during one sampling run is a common implementation choice, not a mathematical requirement. It also does not imply that the condition encoder is frozen during training. We write <span class="arithmatex">\(\varepsilon_\theta(x,t,y)\)</span> below as shorthand that includes the encoding of <span class="arithmatex">\(y\)</span>.</p>
+</blockquote>
+<p>The coefficients are fixed schedules. Statements involving division by <span class="arithmatex">\(\sigma_t\)</span> apply only where <span class="arithmatex">\(\sigma_t&gt;0\)</span>. Let <span class="arithmatex">\(p_t(x\mid y)\)</span> denote the resulting conditional density. A conditional noise predictor is trained with</p>
+<div class="arithmatex">\[
+\mathcal L_{\mathrm{cond}}(\theta)
+=
+\mathbb E\!\left[
+\|\varepsilon_\theta(X_t,t,Y)-\varepsilon\|^2
+\right],
+\tag{2}
+\]</div>
+<p>where the expectation also samples time from a chosen training distribution, independently of data and noise. Assuming finite second moments and sufficient model capacity, its population optimum is</p>
+<div class="arithmatex">\[
+\varepsilon^*(x,t,y)
+=\mathbb E[\varepsilon\mid X_t=x,Y=y],
+\qquad
+s_t^{\mathrm c}(x,y)
+:=\nabla_x\log p_t(x\mid y)
+=-\frac{\varepsilon^*(x,t,y)}{\sigma_t}.
+\tag{3}
+\]</div>
+<p>The score identity follows by differentiating the Gaussian mixture density, wherever differentiation under the integral is justified. Providing <span class="arithmatex">\(y\)</span> changes the conditional expectation being learned; the training target remains the sampled noise. With the exact conditional score, the appropriate reverse dynamics, and the correct terminal law, conditional generation does not require an additional amplification step. A shared Gaussian initialization is an approximation unless the terminal noising law actually removes dependence on <span class="arithmatex">\(y\)</span>.</p>
+<h2 id="2-classifier-guidance-obtain-the-conditional-correction-through-bayes-rule">2. Classifier guidance: obtain the conditional correction through Bayes' rule<a class="headerlink" href="#2-classifier-guidance-obtain-the-conditional-correction-through-bayes-rule" title="Permanent link">&para;</a></h2>
+<p>For clarity, take <span class="arithmatex">\(Y\)</span> to be a discrete class and fix <span class="arithmatex">\(y\)</span> with positive probability. Where the densities are positive and differentiable,</p>
+<div class="arithmatex">\[
+p_t(x\mid y)=\frac{p_t(x)p_t(y\mid x)}{p(y)},
+\tag{4}
+\]</div>
+<p>so</p>
+<div class="arithmatex">\[
+s_t^{\mathrm c}(x,y)
+=
+\underbrace{\nabla_x\log p_t(x)}_{s_t^{\mathrm u}(x)}
++
+\underbrace{\nabla_x\log p_t(y\mid x)}_{\text{conditional correction}}.
+\tag{5}
+\]</div>
+<p>The derivative of <span class="arithmatex">\(\log p(y)\)</span> vanishes because it does not depend on <span class="arithmatex">\(x\)</span>. A time-dependent classifier <span class="arithmatex">\(c_\phi(y\mid x,t)\)</span> can estimate the second term. It must handle the noisy states encountered at time <span class="arithmatex">\(t\)</span>; a classifier trained only on clean data does not automatically estimate this posterior.</p>
+<p>The unconditional-base form of classifier guidance is</p>
+<div class="arithmatex">\[
+s_{\mathrm{CG}}(x,t,y)
+=s_\theta^{\mathrm u}(x,t)
++\gamma\nabla_x\log c_\phi(y\mid x,t).
+\tag{6}
+\]</div>
+<p>With exact models, <span class="arithmatex">\(\gamma=1\)</span> recovers the conditional score. Choosing <span class="arithmatex">\(\gamma&gt;1\)</span> amplifies its conditional correction; this is a sampling modification rather than the Bayes identity itself. Classifier guidance can also be added to an already conditional base model, in which case the baseline and scale convention must be adjusted. <a href="https://arxiv.org/abs/2105.05233">Dhariwal and Nichol (2021)</a> develop classifier-guided diffusion sampling and examine its quality–diversity trade-off.</p>
+<h2 id="3-classifier-free-guidance-estimate-the-correction-without-a-separate-classifier">3. Classifier-free guidance: estimate the correction without a separate classifier<a class="headerlink" href="#3-classifier-free-guidance-estimate-the-correction-without-a-separate-classifier" title="Permanent link">&para;</a></h2>
+<p>Rearranging the same identity gives</p>
+<div class="arithmatex">\[
+\nabla_x\log p_t(y\mid x)
+=s_t^{\mathrm c}(x,y)-s_t^{\mathrm u}(x).
+\tag{7}
+\]</div>
+<p>Thus two generative predictions can supply the correction. During training, independently replace the condition with a reserved null token <span class="arithmatex">\(\varnothing\)</span> with probability <span class="arithmatex">\(\rho\in(0,1)\)</span>. Training on both retained and dropped conditions lets a single network estimate conditional and unconditional predictions. Independent dropping is important: the dropped subset should retain the marginal data law.</p>
+<p>At sampling time, combine the predictions:</p>
+<div class="arithmatex">\[
+s_{\mathrm{CFG}}(x,t,y)
+=s_\theta(x,t,\varnothing)
++\gamma\left[s_\theta(x,t,y)-s_\theta(x,t,\varnothing)\right].
+\tag{8}
+\]</div>
+<p>Under our convention, <span class="arithmatex">\(\gamma=0\)</span> gives the unconditional prediction, <span class="arithmatex">\(\gamma=1\)</span> the ordinary conditional prediction, and <span class="arithmatex">\(\gamma&gt;1\)</span> extrapolates beyond it. The original CFG paper also uses the form <span class="arithmatex">\((1+w)s_{\mathrm c}-ws_{\mathrm u}\)</span>, corresponding to <span class="arithmatex">\(\gamma=1+w\)</span>. Noise predictions admit the same linear combination when their noise scale and parameterization agree. “Classifier-free” removes the separate classifier, not the conditioning information or the usual two branch evaluations. <a href="https://arxiv.org/abs/2207.12598">Ho and Salimans (2022)</a>.</p>
+<h2 id="4-a-local-score-identity-does-not-identify-the-generated-endpoint-distribution">4. A local score identity does not identify the generated endpoint distribution<a class="headerlink" href="#4-a-local-score-identity-does-not-identify-the-generated-endpoint-distribution" title="Permanent link">&para;</a></h2>
+<p>For exact scores and a constant <span class="arithmatex">\(\gamma\)</span>, define, when the normalizer is finite,</p>
+<div class="arithmatex">\[
+r_t(x\mid y)
+=\frac{p_t(x\mid y)^\gamma p_t(x)^{1-\gamma}}{Z_t(y)},
+\qquad
+Z_t(y)=\int_{\mathbb R^d}p_t(x\mid y)^\gamma p_t(x)^{1-\gamma}\,dx.
+\tag{9}
+\]</div>
+<p>At each fixed time,</p>
+<div class="arithmatex">\[
+\nabla_x\log r_t(x\mid y)
+=\gamma s_t^{\mathrm c}(x,y)+(1-\gamma)s_t^{\mathrm u}(x).
+\tag{10}
+\]</div>
+<p>This is a spatial derivative identity. It does <strong>not</strong> establish that the family <span class="arithmatex">\(r_t\)</span> satisfies the forward Fokker–Planck equation associated with the original noising process. Consequently, replacing its reverse sampler's score with this expression does not generally produce <span class="arithmatex">\(r_0\)</span>. The missing requirement is consistency across time, not a missing normalization constant in the spatial gradient.</p>
+<p><a href="https://openreview.net/forum?id=zrWNtzSZsf">Bradley and Nakkiran, <em>Classifier-Free Guidance is a Predictor-Corrector</em> (2024 preprint; TMLR 2025)</a> analyze this distinction and show that CFG interacts differently with DDPM and DDIM. Their SDE-limit analysis connects CFG to denoising plus a Langevin sharpening correction. This directly qualifies the tempting claim that CFG simply samples a powered conditional distribution.</p>
+<p>The same caution applies when comparing guided ODE and SDE samplers: their unguided probability-flow correspondence cannot simply be assumed to survive an arbitrary score modification. For flow matching, linear combinations of conditional and unconditional velocities can be implemented, but the score derivation above is not by itself a theorem identifying their output law.</p>
+<h2 id="5-recent-directions-and-reading-map">5. Recent directions and reading map<a class="headerlink" href="#5-recent-directions-and-reading-map" title="Permanent link">&para;</a></h2>
+<p>The following papers address different design choices. Their reported improvements concern the models, samplers and evaluation settings studied; they are not universal guarantees.</p>
+<table>
+<thead>
+<tr>
+<th>Design choice</th>
+<th>Reference</th>
+<th>Contribution and role in this chapter</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>When to apply guidance</td>
+<td><a href="https://arxiv.org/abs/2404.07724">Applying Guidance in a Limited Interval Improves Sample and Distribution Quality in Diffusion Models</a>, Kynkäänniemi et al., 2024</td>
+<td>Finds that restricting guidance to an intermediate noise interval improves results in the evaluated settings. Motivates a schedule rather than one constant scale throughout sampling.</td>
+</tr>
+<tr>
+<td>Which prediction to use as the reference</td>
+<td><a href="https://arxiv.org/abs/2406.02507">Guiding a Diffusion Model with a Bad Version of Itself</a>, Karras et al., 2024</td>
+<td>Autoguidance uses a weaker version of the model rather than an unconditional model; also studies unconditional generation. Shows that guidance effects extend beyond enforcing a condition.</td>
+</tr>
+<tr>
+<td>How guidance enters a numerical update</td>
+<td><a href="https://arxiv.org/abs/2406.08070">CFG++: Manifold-constrained Classifier Free Guidance for Diffusion Models</a>, Chung et al., 2024</td>
+<td>Revises the guidance update, motivated by off-manifold behavior, and reports improvements in generation and inversion. Its geometric explanation should be presented with its assumptions, not as a general law of data geometry.</td>
+</tr>
+<tr>
+<td>What distribution the sampler produces</td>
+<td><a href="https://arxiv.org/abs/2408.09000">Classifier-Free Guidance is a Predictor-Corrector</a>, Bradley and Nakkiran, 2024 / TMLR 2025</td>
+<td>Establishes why the fixed-time powered-density score argument does not determine the endpoint law; central theoretical reading for Section 4.</td>
+</tr>
+<tr>
+<td>Whether two branches are needed at inference</td>
+<td><a href="https://arxiv.org/abs/2502.12154">Diffusion Models without Classifier-free Guidance</a>, Tang et al., 2025</td>
+<td>Proposes Model-guidance, changing the training objective to avoid standard two-branch CFG inference. This moves work into training rather than providing a free replacement for every pretrained model.</td>
+</tr>
+<tr>
+<td>How to choose guidance weights</td>
+<td><a href="https://arxiv.org/abs/2510.00815">Learn to Guide Your Diffusion Model</a>, Galashov et al., 2025 / <a href="https://openreview.net/forum?id=l8XOk4ylBH">ICLR 2026</a></td>
+<td>Learns weights depending on the condition and denoising interval by minimizing distributional mismatch; also considers reward-tilted targets. Makes the choice of evaluation objective explicit.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="october-2026-preprints-to-follow">October 2026 preprints to follow<a class="headerlink" href="#october-2026-preprints-to-follow" title="Permanent link">&para;</a></h3>
+<p>These are recent proposals, not established explanations adopted by this chapter. The summaries below reflect their stated methods; their detailed theoretical assumptions and experiments still require a closer reading.</p>
+<ul>
+<li><a href="https://arxiv.org/abs/2610.13369">Opening the Black Box of Classifier-Free Guidance via Information Bottleneck</a>, Gao et al., October 2026. Proposes an information-theoretic account of when conditioning is useful and an adaptive guidance activation rule. Relevant to the interval-guidance discussion.</li>
+<li><a href="https://arxiv.org/abs/2610.14153">TrajCFG: Token-Wise Classifier-Free Guidance via Denoising Trajectory Feedback</a>, Liu et al., October 2026. For flow-matching models, adapts token-wise guidance scales using historical changes in velocity direction, reusing ordinary CFG predictions without additional model evaluations. Relevant to replacing one global guidance scale with local allocation.</li>
+</ul>
+<p>For the first reading pass, prioritize the two original guidance papers, the predictor-corrector analysis, interval guidance, and learned guidance weights. Autoguidance and the newer preprints then broaden the discussion without interrupting the vanilla → classifier → classifier-free derivation.</p>
+<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Holderrieth and Erives. <a href="https://diffusion.csail.mit.edu/2026/docs/lecture_notes.pdf">An Introduction to Flow Matching and Diffusion Models, Chapter 5</a>. MIT course notes. Pedagogical organization and the distinction between endpoint conditioning and prompt conditioning.</li>
+<li>Dhariwal and Nichol. <a href="https://arxiv.org/abs/2105.05233">Diffusion Models Beat GANs on Image Synthesis</a>. NeurIPS 2021. Classifier-guided sampling.</li>
+<li>Ho and Salimans. <a href="https://arxiv.org/abs/2207.12598">Classifier-Free Diffusion Guidance</a>. 2021 workshop version; 2022 arXiv paper. Conditional/unconditional joint training and classifier-free extrapolation.</li>
+<li>Kynkäänniemi et al. <a href="https://arxiv.org/abs/2404.07724">Applying Guidance in a Limited Interval Improves Sample and Distribution Quality in Diffusion Models</a>. 2024. Guidance restricted to selected noise intervals.</li>
+<li>Karras et al. <a href="https://arxiv.org/abs/2406.02507">Guiding a Diffusion Model with a Bad Version of Itself</a>. 2024. Autoguidance using a weaker reference model.</li>
+<li>Chung et al. <a href="https://arxiv.org/abs/2406.08070">CFG++: Manifold-constrained Classifier Free Guidance for Diffusion Models</a>. 2024. Modified guidance updates for generation and inversion.</li>
+<li>Bradley and Nakkiran. <a href="https://arxiv.org/abs/2408.09000">Classifier-Free Guidance is a Predictor-Corrector</a>. 2024 preprint; <a href="https://openreview.net/forum?id=zrWNtzSZsf">TMLR 2025</a>. Sampler-dependent behavior and the limits of the powered-density interpretation.</li>
+<li>Tang et al. <a href="https://arxiv.org/abs/2502.12154">Diffusion Models without Classifier-free Guidance</a>. 2025. Model-guidance training to avoid standard two-branch CFG inference.</li>
+<li>Galashov et al. <a href="https://arxiv.org/abs/2510.00815">Learn to Guide Your Diffusion Model</a>. 2025 preprint; <a href="https://openreview.net/forum?id=l8XOk4ylBH">ICLR 2026</a>. Learned guidance weights for distribution matching and reward-guided sampling.</li>
+<li>Gao et al. <a href="https://arxiv.org/abs/2610.13369">Opening the Black Box of Classifier-Free Guidance via Information Bottleneck</a>. October 2026 preprint. Information-theoretic analysis and adaptive guidance activation; included for follow-up reading.</li>
+<li>Liu et al. <a href="https://arxiv.org/abs/2610.14153">TrajCFG: Token-Wise Classifier-Free Guidance via Denoising Trajectory Feedback</a>. October 2026 preprint. Token-wise guidance based on velocity-trajectory feedback; included for follow-up reading.</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.expand", "navigation.sections", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../javascripts/mathjax.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
